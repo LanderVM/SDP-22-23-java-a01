@@ -38,7 +38,7 @@ public class OrderTest {
         products = new ArrayList<Product>();
         products.add(new Product("Product 1",1, 10.0, 25.00));
         products.add(new Product("Product 2",1, 10.0, 25.00));
-        status = Status.UNPROCESSED;
+        status = Status.PROCESSED;
         transportService = TransportService.TEMPORARY_ONE;
         packaging = Packaging.TEMPORARY_TWO;
     }
