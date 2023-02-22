@@ -1,6 +1,11 @@
 package domain;
 
 public enum Status {
-    UNPROCESSED,
-    PROCESSED
+    POSTED,
+    PROCESSED,
+    DISPATCHED,
+    OUT_FOR_DELIVERY,
+    DELIVERED
+    
+    
 }
