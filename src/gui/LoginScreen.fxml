@@ -8,24 +8,20 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<fx:root prefHeight="185.0" prefWidth="300.0" type="GridPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<fx:root alignment="CENTER" hgap="5.0" prefHeight="153.0" prefWidth="358.0" type="GridPane" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginScreenController">
    <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="20.0" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
       <RowConstraints minHeight="10.0" prefHeight="40.0" />
       <RowConstraints minHeight="10.0" prefHeight="40.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
    </rowConstraints>
    <columnConstraints>
-      <ColumnConstraints maxWidth="68.5999755859375" minWidth="10.0" prefWidth="32.4000244140625" />
-      <ColumnConstraints maxWidth="105.9999755859375" minWidth="10.0" prefWidth="105.19999542236327" />
-      <ColumnConstraints maxWidth="146.99997558593748" minWidth="10.0" prefWidth="146.99997558593748" />
-      <ColumnConstraints maxWidth="80.60003662109372" minWidth="10.0" prefWidth="15.800024414062477" />
+      <ColumnConstraints maxWidth="167.19998321533203" minWidth="10.0" prefWidth="139.19998779296876" />
+      <ColumnConstraints maxWidth="220.0" minWidth="220.0" prefWidth="220.0" />
    </columnConstraints>
    <children>
-      <Label alignment="CENTER" prefHeight="27.0" prefWidth="98.0" text="User name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label alignment="CENTER" prefHeight="27.0" prefWidth="128.0" text="User name" GridPane.rowIndex="1">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
@@ -33,7 +29,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </Label>
-      <Label alignment="CENTER" prefHeight="27.0" prefWidth="93.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label alignment="CENTER" prefHeight="27.0" prefWidth="128.0" text="Password" GridPane.rowIndex="2">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
@@ -41,9 +37,9 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </Label>
-      <TextField fx:id="userNameTextfield" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <TextField fx:id="passwordTextfield" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="92.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TextField fx:id="userNameTextfield" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="passwordTextfield" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="127.0" text="Login" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
@@ -51,13 +47,13 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Button>
-      <Button fx:id="createAccountButton" mnemonicParsing="false" onAction="#createAccount" text="Create Account" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Button fx:id="exitApplicationButton" mnemonicParsing="false" onAction="#exitApplication" prefHeight="27.0" prefWidth="127.0" text="Exit application" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
       </Button>
    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </fx:root>

@@ -2,13 +2,14 @@ package domain;
 
 import exceptions.UserAlreadyExistsExcpetion;
 import exceptions.UserDoesntExistException;
+import repository.UserMapper;
 
 public class DomainController {
 	
 	private UserRepo userRepo;
 	
-	public DomainController (UserRepo userRepo) {
-		this.userRepo = userRepo;
+	public DomainController () {
+		userRepo = new UserRepo(new UserMapper());
 	}
 	
 	public boolean checkUser (String accountName,String password) throws UserDoesntExistException {

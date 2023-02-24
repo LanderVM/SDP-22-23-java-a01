@@ -2,20 +2,21 @@ package gui;
 
 import domain.DomainController;
 import exceptions.UserDoesntExistException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class LoginScreenController extends GridPane {
 	
 	private DomainController dc;
-
-    @FXML
-    private Button createAccountButton;
 
     @FXML
     private Button loginButton;
@@ -25,10 +26,17 @@ public class LoginScreenController extends GridPane {
 
     @FXML
     private TextField userNameTextfield;
-
+    
     @FXML
-    void createAccount(ActionEvent event) {
-
+    private Button exitApplicationButton;
+    
+    public LoginScreenController(DomainController dc) {
+    	
+    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LoginScreen.fxml"));
+    	loader.setController(this);
+    	loader.setRoot(this);
+    	
+    	this.dc = dc;
     }
 
     @FXML
@@ -51,9 +59,22 @@ public class LoginScreenController extends GridPane {
     		alert.showAndWait();
     	}
     }
+    
+    @FXML
+	void exitApplication(ActionEvent event) {
+    	Platform.exit();
+	}
 
 	private void goToWarehousmanScreen() {
+		WarehousemanOverviewScreenController wosc = new WarehousemanOverviewScreenController(dc, this);
+		Scene scene = new Scene(wosc);
+		Stage stage = (Stage)this.getScene().getWindow();
+		stage.setScene(scene);
+		stage.show();
 		
 	}
+	
+
+	
 
 }
