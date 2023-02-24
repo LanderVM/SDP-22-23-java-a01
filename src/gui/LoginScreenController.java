@@ -44,36 +44,47 @@ public class LoginScreenController extends GridPane {
     	try {
     		boolean authenticated = dc.checkUser(userNameTextfield.getText(), passwordTextfield.getText());
     		if (!authenticated) {
+    			passwordTextfield.setText("");
     			Alert alert = new Alert(AlertType.INFORMATION);
         		alert.setTitle("Wrong password!");
         		alert.setHeaderText("You have given the wrong password, try another!");
         		alert.showAndWait();
     		} else {
-    			goToWarehousmanScreen();
+    			if (dc.userIsAdmin()) {
+    				goToAdminScreen();
+    			}else {
+    				goToWarehousmanScreen();
+    			}
     		}
     		
     	} catch (UserDoesntExistException e) {
+    		userNameTextfield.setText("");
+    		passwordTextfield.setText("");
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Error!");
     		alert.setHeaderText(e.getMessage());
     		alert.showAndWait();
     	}
     }
-    
-    @FXML
+
+	@FXML
 	void exitApplication(ActionEvent event) {
     	Platform.exit();
 	}
 
 	private void goToWarehousmanScreen() {
-		WarehousemanOverviewScreenController wosc = new WarehousemanOverviewScreenController(dc, this);
-		Scene scene = new Scene(wosc);
+		WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(dc);
+		Scene scene = new Scene(warehousemanOverviewScreenController);
 		Stage stage = (Stage)this.getScene().getWindow();
 		stage.setScene(scene);
 		stage.show();
 		
 	}
 	
+	private void goToAdminScreen() {
+		// TODO
+		
+	}
 
 	
 

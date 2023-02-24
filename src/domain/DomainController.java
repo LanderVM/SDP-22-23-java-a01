@@ -7,6 +7,7 @@ import repository.UserMapper;
 public class DomainController {
 	
 	private UserRepo userRepo;
+	private User user;
 	
 	public DomainController () {
 		userRepo = new UserRepo(new UserMapper());
@@ -14,7 +15,7 @@ public class DomainController {
 	
 	public boolean checkUser (String accountName,String password) throws UserDoesntExistException {
 		
-		User user = userRepo.requestUser(accountName);
+		user = userRepo.requestUser(accountName);
 		
 		if (user==null) {
 			throw new UserDoesntExistException();
@@ -26,6 +27,10 @@ public class DomainController {
 		}
 	}
 	
+	public boolean userIsAdmin() {
+		return user.isAdmin()==true;
+	}
+
 	public void makeUser (String accountName,String password,boolean isAdmin) throws UserAlreadyExistsExcpetion {
 		
 		User user = userRepo.requestUser(accountName);

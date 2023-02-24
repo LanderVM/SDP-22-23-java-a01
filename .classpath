@@ -32,5 +32,13 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/eclipselink.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/jakarta.persistence.source_2.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/jakarta.persistence_2.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/mysql-connector-java-8.0.27 (1).jar"/>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/org.eclipse.persistence.jpa.modelgen.source_2.7.10.v20211216-fe64cd39c3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/org.eclipse.persistence.jpa.modelgen_2.7.10.v20211216-fe64cd39c3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/org.eclipse.persistence.jpars.source_2.7.10.v20211216-fe64cd39c3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sande/Desktop/advanced software development 2/jars/org.eclipse.persistence.jpars_2.7.10.v20211216-fe64cd39c3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

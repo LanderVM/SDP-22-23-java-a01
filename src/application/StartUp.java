@@ -14,7 +14,7 @@ public class StartUp extends Application {
 		try {
 			LoginScreenController root = new LoginScreenController(new DomainController());
 			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

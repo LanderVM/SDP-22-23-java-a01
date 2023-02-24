@@ -5,8 +5,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class WarehousemanOverviewScreenController extends GridPane{
 
@@ -26,16 +28,16 @@ public class WarehousemanOverviewScreenController extends GridPane{
     private Button viewOrdersButton;
     
     private DomainController dc;
-    private LoginScreenController parent;
     
-    public WarehousemanOverviewScreenController(DomainController dc, LoginScreenController parent) {
+    
+    public WarehousemanOverviewScreenController(DomainController dc) {
     	
-    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("warehousemanOverviewScreen.fxml"));
+    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("WarehousemanOverviewScreen.fxml"));
     	loader.setController(this);
     	loader.setRoot(this);
     	
     	this.dc = dc;
-    	this.parent = parent;
+    	
     }
 
     @FXML
@@ -45,7 +47,11 @@ public class WarehousemanOverviewScreenController extends GridPane{
 
     @FXML
     void logout(ActionEvent event) {
-
+    	Stage stage = (Stage)this.getScene().getWindow();
+    	LoginScreenController loginScreen = new LoginScreenController(new DomainController());
+    	Scene scene = new Scene(loginScreen);
+    	stage.setScene(scene);
+    	stage.show();
     }
 
     @FXML
