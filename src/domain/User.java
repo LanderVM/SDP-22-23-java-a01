@@ -22,6 +22,11 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 	
+	
+	
+	protected User() {
+	}
+
 	public String getAccountName() {
 		return accountName;
 	}

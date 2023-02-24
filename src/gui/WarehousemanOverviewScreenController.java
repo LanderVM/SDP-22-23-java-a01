@@ -47,8 +47,8 @@ public class WarehousemanOverviewScreenController extends GridPane{
 
     @FXML
     void logout(ActionEvent event) {
-    	Stage stage = (Stage)this.getScene().getWindow();
     	LoginScreenController loginScreen = new LoginScreenController(new DomainController());
+    	Stage stage = (Stage)this.getScene().getWindow();
     	Scene scene = new Scene(loginScreen);
     	stage.setScene(scene);
     	stage.show();
@@ -56,17 +56,17 @@ public class WarehousemanOverviewScreenController extends GridPane{
 
     @FXML
     void processOrder(ActionEvent event) {
-
+    	//TODO
     }
 
     @FXML
     void viewCustomers(ActionEvent event) {
-
+    	//TODO
     }
 
     @FXML
     void viewOrders(ActionEvent event) {
-
+    	//TODO
     }
 
 }
