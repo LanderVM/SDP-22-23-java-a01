@@ -1,8 +1,8 @@
-package main;
+package application;
 
 import domain.DomainController;
 
-public class startUp {
+public class BackEndDev {
 
     public static void main(String[] args) {
         DomainController domainController = new DomainController();

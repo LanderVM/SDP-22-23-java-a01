@@ -2,6 +2,8 @@ package domain;
 
 import java.util.List;
 
+import exceptions.UserDoesntExistException;
+import repository.UserMapper;
 import util.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -9,10 +11,12 @@ import javax.persistence.EntityManager;
 public class DomainController {
 
     private List<Product> orders;
+    private User user;
+    private UserRepo userRepo;
 
     public DomainController() {
-//		userRepo = new UserRepo(new UserMapper());
-		orders = getOrders();
+        userRepo = new UserRepo(new UserMapper());
+        orders = getOrders();
     }
 
     public List<Product> generateListOrders() {
@@ -32,21 +36,21 @@ public class DomainController {
         return ordersList;
     }
 
-//	public boolean checkUser (String accountName,String password) throws UserDoesntExistException {
-//
-//		user = userRepo.requestUser(accountName);
-//
-//		if (user==null) {
-//			throw new UserDoesntExistException();
-//		}
-//		if (user.getPassword().equals(password)) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-//
-//	public boolean userIsAdmin() {
-//		return user.isAdmin()==true;
-//	}
+    public boolean checkUser(String accountName, String password) throws UserDoesntExistException {
+
+        user = userRepo.requestUser(accountName);
+
+        if (user == null) {
+            throw new UserDoesntExistException();
+        }
+        if (user.getPassword().equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean userIsAdmin() {
+        return user.isAdmin() == true;
+    }
 }
