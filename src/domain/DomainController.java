@@ -31,14 +31,4 @@ public class DomainController {
 		return user.isAdmin()==true;
 	}
 
-	public void makeUser (String accountName,String password,boolean isAdmin) throws UserAlreadyExistsExcpetion {
-		
-		User user = userRepo.requestUser(accountName);
-		
-		if (user!=null) {
-			throw new UserAlreadyExistsExcpetion();
-		}
-		
-		userRepo.makeUser(accountName, password, isAdmin);
-	}
 }

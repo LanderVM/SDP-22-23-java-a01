@@ -14,7 +14,4 @@ public class UserRepo {
 		return userMapper.getUser(accountName);
 	}
 	
-	public void makeUser(String accountName, String password,boolean isAdmin) {
-		userMapper.makeUser(accountName, password, isAdmin);
-	}
 }

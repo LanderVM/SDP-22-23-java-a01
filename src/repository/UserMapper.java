@@ -22,7 +22,5 @@ public class UserMapper {
 		
 		return user;
 	}
-	public void makeUser (String accountName, String password,boolean isAdmin) {
-		//TODO
-	}
+	
 }
