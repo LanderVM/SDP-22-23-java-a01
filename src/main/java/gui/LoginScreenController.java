@@ -48,8 +48,6 @@ public class LoginScreenController extends GridPane {
     @FXML
     void login(ActionEvent event) {
         try {
-        	System.out.println("lol");
-        	System.out.println(userNameTextfield.getText());
             boolean authenticated = dc.checkUser(userNameTextfield.getText(), passwordTextfield.getText());
             System.out.println("lol");
             if (!authenticated) {
