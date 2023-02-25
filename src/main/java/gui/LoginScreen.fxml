@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root alignment="CENTER" hgap="5.0" prefHeight="153.0" prefWidth="358.0" type="GridPane" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginScreenController">
+<fx:root alignment="CENTER" hgap="5.0" prefHeight="153.0" prefWidth="358.0" type="GridPane" vgap="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="20.0" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
