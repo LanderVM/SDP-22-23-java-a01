@@ -36,6 +36,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="eclipselink" level="project" />
-    <orderEntry type="library" exported="" name="javafx.base" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
