@@ -1,6 +1,8 @@
 package domain;
 
 public enum Packaging {
-    TEMPORARY_ONE,
-    TEMPORARY_TWO
+    SMALL,
+    MEDIUM,
+    LARGE,
+    CUSTOM
 }

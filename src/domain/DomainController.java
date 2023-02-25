@@ -2,18 +2,32 @@ package domain;
 
 import java.util.List;
 
-import repository.ProductMapper;
+import util.JPAUtil;
+
+import javax.persistence.EntityManager;
 
 public class DomainController {
 
-	private List<Products> orders;
-	
-	public DomainController() {
-		orders = new ProductMapper().getOrders();
-	}
-	
-	public List<Products> generateListOrders() {
-		return orders;
-	}
-	
+    private List<Product> orders;
+
+    public DomainController() {
+        orders = getOrders();
+    }
+
+    public List<Product> generateListOrders() {
+        return orders;
+    }
+
+
+    private List<Product> getOrders() {
+        EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
+
+        entityManager.getTransaction().begin();
+        List<Product> ordersList = entityManager.createNamedQuery("Products.findAll", Product.class).getResultList();
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+        JPAUtil.getOrdersEntityManagerFactory().close();
+        return ordersList;
+    }
 }
