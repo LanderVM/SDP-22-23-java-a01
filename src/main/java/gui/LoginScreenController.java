@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Optional;
+
 import domain.DomainController;
 import exceptions.UserDoesntExistException;
 import javafx.application.Platform;
@@ -10,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -76,7 +80,13 @@ public class LoginScreenController extends GridPane {
 
     @FXML
     void exitApplication(ActionEvent event) {
-        Platform.exit();
+    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    	alert.setTitle("Confirmation");
+    	alert.setHeaderText("You sure you want to exit application?");
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get()==ButtonType.OK) {
+    		Platform.exit();
+    	}
     }
 
     private void goToWarehousmanScreen() {
@@ -92,6 +102,7 @@ public class LoginScreenController extends GridPane {
         // TODO
 
     }
+    
 
 
 }
