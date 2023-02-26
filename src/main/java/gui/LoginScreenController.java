@@ -14,6 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogEvent;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -26,7 +27,7 @@ public class LoginScreenController extends GridPane {
     private Button loginButton;
 
     @FXML
-    private TextField passwordTextfield;
+    private PasswordField passwordField;
 
     @FXML
     private TextField userNameTextfield;
@@ -52,10 +53,10 @@ public class LoginScreenController extends GridPane {
     @FXML
     void login(ActionEvent event) {
         try {
-            boolean authenticated = dc.checkUser(userNameTextfield.getText(), passwordTextfield.getText());
+            boolean authenticated = dc.checkUser(userNameTextfield.getText(), passwordField.getText());
            
             if (!authenticated) {
-                passwordTextfield.setText("");
+                passwordField.setText("");
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Wrong password!");
                 alert.setHeaderText("You have given the wrong password, try another!");
@@ -70,7 +71,7 @@ public class LoginScreenController extends GridPane {
 
         } catch (UserDoesntExistException e) {
             userNameTextfield.setText("");
-            passwordTextfield.setText("");
+            passwordField.setText("");
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error!");
             alert.setHeaderText(e.getMessage());

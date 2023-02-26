@@ -13,6 +13,7 @@ module SDP2_Java_a01 {
     requires javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
+	requires javafx.base;
 
     opens domain;
     opens application to javafx.fxml, javafx.graphics;
