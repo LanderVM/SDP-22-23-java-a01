@@ -13,9 +13,9 @@ public class User {
 	@Column(name="email")
 	private String accountName;
 	private String password;
-	private boolean isAdmin;
+	private int isAdmin;
 	
-	public User(String accountName, String password, boolean isAdmin) {
+	public User(String accountName, String password, int isAdmin) {
 		super();
 		this.accountName = accountName;
 		this.password = password;
@@ -39,10 +39,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isAdmin() {
+	public int isAdmin() {
 		return isAdmin;
 	}
-	public void setAdmin(boolean isAdmin) {
+	public void setAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 	

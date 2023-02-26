@@ -51,6 +51,6 @@ public class DomainController {
     }
 
     public boolean userIsAdmin() {
-        return user.isAdmin() == true;
+        return user.isAdmin() == 1;
     }
 }

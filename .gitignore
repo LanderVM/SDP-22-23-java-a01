@@ -35,3 +35,4 @@ replay_pid*
 # Vp files
 vpproject/
 /bin/
+/target/
