@@ -37,9 +37,9 @@ public class DomainController {
     }
 
     public boolean checkUser(String accountName, String password) throws UserDoesntExistException {
-
+    	
         user = userRepo.requestUser(accountName);
-
+        
         if (user == null) {
             throw new UserDoesntExistException();
         }

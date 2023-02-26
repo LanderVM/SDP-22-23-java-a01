@@ -32,12 +32,12 @@ public class LoginScreenController extends GridPane {
 
     public LoginScreenController(DomainController dc) {
 
+    	this.dc = dc;
+    	
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LoginScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 
-        this.dc = dc;
-        
         try {
         	loader.load();
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class LoginScreenController extends GridPane {
     void login(ActionEvent event) {
         try {
             boolean authenticated = dc.checkUser(userNameTextfield.getText(), passwordTextfield.getText());
-            System.out.println("lol");
+           
             if (!authenticated) {
                 passwordTextfield.setText("");
                 Alert alert = new Alert(AlertType.INFORMATION);
