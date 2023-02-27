@@ -2,6 +2,8 @@ package application;
 	
 import domain.DomainController;
 import gui.LoginScreenController;
+import gui.OrdersOverviewController;
+import gui.WarehousemanOverviewScreenController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -10,8 +12,8 @@ public class StartUp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			LoginScreenController root = new LoginScreenController(new DomainController());
-			Scene scene = new Scene(root,400,400);
+			OrdersOverviewController root = new OrdersOverviewController(new DomainController());
+			Scene scene = new Scene(root,670,600);
 			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
