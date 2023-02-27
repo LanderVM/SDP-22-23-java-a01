@@ -37,7 +37,7 @@ public class ProcessOrdersScreenController extends GridPane{
     	this.dc=dc;
     	this.parent=parent;
     	
-    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ProcessOrdersScreen.fxml"));
+    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/ProcessOrdersScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 

@@ -31,21 +31,21 @@ public class LoginScreenController extends AnchorPane {
 
 
     public LoginScreenController(DomainController dc) {
-    	this.dc = dc;    	
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LoginScreen.fxml"));
+        this.dc = dc;
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
         try {
-        	loader.load();
+            loader.load();
         } catch (Exception e) {
-			System.out.println(e);
-		}
+            System.out.println(e);
+        }
     }
 
     @FXML
     void SignIn(ActionEvent event) {
         try {
-            boolean authenticated = dc.checkUser(txtEmail.getText(), txtPassword.getText());           
+            boolean authenticated = dc.checkUser(txtEmail.getText(), txtPassword.getText());
             if (!authenticated) {
                 txtPassword.setText("");
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -75,28 +75,27 @@ public class LoginScreenController extends AnchorPane {
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
         stage.show();*/
-        
-        
+
+
     }
-    
+
     private void goToAdminScreen() {
-    	Test test = new Test(dc); 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("test.fxml"));
-		loader.setRoot(test);
-		loader.setController(test);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		
-        Scene scene = new Scene(test,600,600);
+        Test test = new Test(dc);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/test.fxml"));
+        loader.setRoot(test);
+        loader.setController(test);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Scene scene = new Scene(test, 600, 600);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
 
     }
-    
 
 
 }

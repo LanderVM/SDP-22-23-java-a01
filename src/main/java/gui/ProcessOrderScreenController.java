@@ -1,11 +1,6 @@
 package gui;
 
-import java.util.Arrays;
-
 import domain.DomainController;
-import domain.Order;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +42,7 @@ public class ProcessOrderScreenController extends GridPane{
     	this.parent=parent;
     	
     	
-    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ProcessOrderScreen.fxml"));
+    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/ProcessOrderScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 

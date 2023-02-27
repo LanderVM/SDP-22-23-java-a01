@@ -36,7 +36,7 @@ public class WarehousemanOverviewScreenController extends GridPane{
     
     public WarehousemanOverviewScreenController(DomainController dc) {
     	
-    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("WarehousemanOverviewScreen.fxml"));
+    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/WarehousemanOverviewScreen.fxml"));
     	loader.setController(this);
     	loader.setRoot(this);
     	
