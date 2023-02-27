@@ -1,4 +1,7 @@
+import java.util.Arrays;
+
 import domain.DomainController;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,12 +36,12 @@ public class ProcessOrderScreenController extends GridPane{
     private DomainController dc;
     private ProcessOrdersScreenController parent;
     private int id;
-    private ObservableList<String> transportServicesObservableList;
+    
     
     public ProcessOrderScreenController(DomainController dc,ProcessOrdersScreenController parent,int id) {
     	this.dc = dc;
     	this.parent=parent;
-    	this.transportServicesObservableList = new 
+    	
     	
     	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ProcessOrderScreen.fxml"));
         loader.setController(this);
@@ -52,7 +55,7 @@ public class ProcessOrderScreenController extends GridPane{
         
         overviewOrderLabel.setText("Overview order:"+Integer.toString(id));
         orderTextArea.setText(dc.giveOverviewOrder(id));
-        choiceBoxTransportServices.setv
+        choiceBoxTransportServices.setItems(dc.getTransportServicesObservableList());
     }
 
     @FXML

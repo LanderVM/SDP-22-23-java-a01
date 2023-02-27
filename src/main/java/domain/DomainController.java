@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Arrays;
 import java.util.List;
 
 import exceptions.UserDoesntExistException;
@@ -16,11 +17,13 @@ public class DomainController {
     private User user;
     private UserRepo userRepo;
     private ObservableList<Order> observableOrdersList;
+    private ObservableList<String> transportServicesObservableList;
 
     public DomainController() {
         userRepo = new UserRepo(new UserMapper());
         orders = getOrders();
         observableOrdersList = FXCollections.observableArrayList();//TODO opvullen observable lijst
+        transportServicesObservableList = FXCollections.observableArrayList(this.giveTransportServicesAsString());
     }
 
     public List<Product> generateListOrders() {
@@ -61,13 +64,13 @@ public class DomainController {
     public ObservableList<Order> getObservableOrdersList () {
     	return FXCollections.unmodifiableObservableList(this.observableOrdersList);
     }
-    public String[] giveTransportServices () {
+    private List<String> giveTransportServicesAsString () {
     	TransportService[] array =  TransportService.values();
     	String [] array2 = new String[array.length];
     	for (int i = 0;i<array.length;i++) {
     		array2[i]=array[i].toString();
     	}
-    	return array2;
+    	return Arrays.asList(array2);
     }
     public String giveOverviewOrder (int id) {
     	//TODO
@@ -75,5 +78,8 @@ public class DomainController {
     }
     public void processOrder (String transportService,int id) {
     	//TODO
+    }
+    public ObservableList<String> getTransportServicesObservableList () {
+    	return this.transportServicesObservableList;
     }
 }
