@@ -29,7 +29,7 @@
       </Button>
       <ImageView fitHeight="249.0" fitWidth="274.0" layoutX="300.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@LogoDelaware.png" />
+            <Image url="@../Images/LogoDelaware.png" />
          </image></ImageView>
       <PasswordField fx:id="txtPassword" layoutX="46.0" layoutY="161.0" prefHeight="35.0" prefWidth="242.0" promptText="Password" text="testAdmin" />
    </children>
