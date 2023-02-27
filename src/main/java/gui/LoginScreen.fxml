@@ -5,57 +5,32 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<fx:root alignment="CENTER" hgap="5.0" prefHeight="153.0" prefWidth="358.0" type="GridPane" vgap="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-   <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="20.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="40.0" />
-      <RowConstraints minHeight="10.0" prefHeight="40.0" />
-   </rowConstraints>
-   <columnConstraints>
-      <ColumnConstraints maxWidth="167.19998321533203" minWidth="10.0" prefWidth="139.19998779296876" />
-      <ColumnConstraints maxWidth="220.0" minWidth="220.0" prefWidth="220.0" />
-   </columnConstraints>
+<fx:root maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" prefHeight="27.0" prefWidth="128.0" text="User name" GridPane.rowIndex="1">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-         <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </GridPane.margin>
+      <TextField fx:id="txtEmail" layoutX="46.0" layoutY="105.0" prefHeight="35.0" prefWidth="242.0" promptText="e-mail" text="testAdmin@mail.com">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Label layoutX="46.0" layoutY="30.0" text="Log In">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
       </Label>
-      <Label alignment="CENTER" prefHeight="27.0" prefWidth="128.0" text="Password" GridPane.rowIndex="3">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-         <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </GridPane.margin>
-      </Label>
-      <TextField fx:id="userNameTextfield" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="127.0" text="Login" GridPane.rowIndex="4">
-         <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </GridPane.margin>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
+      <Button fx:id="btnSignIn" layoutX="46.0" layoutY="238.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: EC4842;" text="Sign In" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
       </Button>
-      <Button fx:id="exitApplicationButton" mnemonicParsing="false" onAction="#exitApplication" prefHeight="27.0" prefWidth="127.0" text="Exit application" GridPane.rowIndex="5">
-         <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </GridPane.margin>
-      </Button>
-      <PasswordField fx:id="passwordField" maxWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ImageView fitHeight="249.0" fitWidth="274.0" layoutX="300.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@LogoDelaware.png" />
+         </image></ImageView>
+      <PasswordField fx:id="txtPassword" layoutX="46.0" layoutY="161.0" prefHeight="35.0" prefWidth="242.0" promptText="Password" text="testAdmin" />
    </children>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
 </fx:root>
