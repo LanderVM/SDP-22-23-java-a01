@@ -12,6 +12,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class ProcessOrderScreenController extends GridPane {
 
     @FXML
@@ -48,11 +50,11 @@ public class ProcessOrderScreenController extends GridPane {
 
         try {
             loader.load();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        overviewLbl.setText("Overview order: " + Integer.toString(id));
+        overviewLbl.setText("Overview order: " + id);
         orderTxt.setText(domainController.getOrderOverview(id));
         transportServicesBox.setItems(domainController.getTransportServicesList());
     }

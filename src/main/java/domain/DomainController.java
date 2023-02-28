@@ -13,17 +13,6 @@ public class DomainController {
         transportServicesList = getTransportServicesList();
     }
 
-
-//    private List<Product> getProducts() {
-//        EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
-//        entityManager.getTransaction().begin();
-//        List<Product> ordersList = entityManager.createNamedQuery("Product.findAll", Product.class).getResultList();
-//        entityManager.getTransaction().commit();
-//
-//        entityManager.close();
-//        return ordersList;
-//    }
-
     public ObservableList<Order> getOrdersList() {
         return FXCollections.unmodifiableObservableList(this.ordersList);
     }
