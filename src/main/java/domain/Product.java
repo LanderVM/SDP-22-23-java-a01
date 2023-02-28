@@ -2,91 +2,73 @@ package domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
-@Table(name = "productdata")
-@NamedQueries({@NamedQuery(name = "Products.findAll", query = "SELECT d FROM Product d")})
+@NamedQueries({@NamedQuery(name = "Product.findAll", query = "SELECT d FROM Product d")})
 public class Product implements Serializable {
-    // UC attributes: name, amount, individualPrice, totalPrice
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String productId;
+    @Column(name = "product_id")
+    private int productId;
 
-    private int syncId;
-    private String unitOfMeasureId;
-    private String productCategoryId;
-    private String productAvailability;
+    private String name;
+    private double price;
 
-    public Product(int syncId, String unitOfMeasureId, String productCategoryId, String productAvailability) {
-        this.syncId = syncId;
-        this.unitOfMeasureId = unitOfMeasureId;
-        this.productCategoryId = productCategoryId;
-        this.productAvailability = productAvailability;
+    Product(String name, double price) {
+        setName(name);
+        setPrice(price);
     }
 
-    public Product() {
+    protected Product() {
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public int getSyncId() {
-        return syncId;
+    public String getName() {
+        return name;
     }
 
-    public void setSyncId(int syncId) {
-        this.syncId = syncId;
+    void setName(String name) {
+        this.name = name;
     }
 
-    public String getUnitOfMeasureId() {
-        return unitOfMeasureId;
+    public double getPrice() {
+        return price;
     }
 
-    public void setUnitOfMeasureId(String unitOfMeasureId) {
-        this.unitOfMeasureId = unitOfMeasureId;
-    }
-
-    public String getProductCategoryId() {
-        return productCategoryId;
-    }
-
-    public void setProductCategoryId(String productCategoryId) {
-        this.productCategoryId = productCategoryId;
-    }
-
-    public String getProductAvailability() {
-        return productAvailability;
-    }
-
-    public void setProductAvailability(String productAvailability) {
-        this.productAvailability = productAvailability;
+    void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
-    public String toString() {
-        return "Products [productId=" + productId + ", syncId=" + syncId + ", unitOfMeasureId=" + unitOfMeasureId + ", productCategoryId=" + productCategoryId + ", productAvailability=" + productAvailability + "]";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (Double.compare(product.price, price) != 0) return false;
+        return name.equals(product.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId);
+        int result;
+        long temp;
+        result = name.hashCode();
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        Product other = (Product) obj;
-        return Objects.equals(productId, other.productId);
+    public String toString() {
+        return "Product{" + "productId=" + productId + ", name='" + name + '\'' + ", price=" + price + '}';
     }
-
-
 }
