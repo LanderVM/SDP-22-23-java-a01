@@ -39,7 +39,6 @@ public class DomainController {
         entityManager.getTransaction().commit();
 
         entityManager.close();
-        JPAUtil.getOrdersEntityManagerFactory().close();
         return ordersList;
     }
 
