@@ -11,7 +11,7 @@ class UserTest {
     private User user;
     private final String accountName = "erik.dahl@outlook.com";
     private final String password = "ZRt5?.Up2!m";
-    private final int isAdmin = 1;
+    private final boolean isAdmin = true;
 
     @Test
     public void maakUser_checkFields() {
@@ -30,8 +30,8 @@ class UserTest {
         assertEquals(user.getAccountName(), "thomas.mann@outlook.com");
         user.setPassword("Pr5!H;?jk567");
         assertEquals(user.getPassword(), "Pr5!H;?jk567");
-        user.setAdmin(0);
-        assertEquals(user.isAdmin(),0);
+        user.setAdmin(false);
+        assertTrue(user.isAdmin());
     }
 
 }

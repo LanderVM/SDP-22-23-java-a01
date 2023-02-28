@@ -4,14 +4,14 @@ import jakarta.persistence.EntityManager;
 
 import domain.User;
 import jakarta.persistence.EntityManagerFactory;
-import util.JPAUserUtil;
+import util.JPAUtil;
 
 public class UserMapper {
 
     public User getUser(String accountName) {
 
-        EntityManagerFactory emf = JPAUserUtil.getEntityManagerFactory();
-        EntityManager em = JPAUserUtil.getEntityManagerFactory().createEntityManager();
+        EntityManagerFactory emf = JPAUtil.getUserEntityManagerFactory();
+        EntityManager em = emf.createEntityManager();
 
         User user;
 

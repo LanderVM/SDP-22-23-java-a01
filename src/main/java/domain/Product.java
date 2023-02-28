@@ -1,9 +1,11 @@
 package domain;
 
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 @Entity
+@Table (name = "product")
 @NamedQueries({@NamedQuery(name = "Product.findAll", query = "SELECT d FROM Product d")})
 public class Product implements Serializable {
     @Id

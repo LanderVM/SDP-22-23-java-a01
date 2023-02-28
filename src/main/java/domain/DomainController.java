@@ -43,42 +43,41 @@ public class DomainController {
     }
 
     public boolean checkUser(String accountName, String password) throws UserDoesntExistException {
-    	
+
         user = userRepo.requestUser(accountName);
-        
-        if (user == null) {
+
+        if (user == null)
             throw new UserDoesntExistException();
-        }
-        if (user.getPassword().equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
+        return user.getPassword().equals(password);
     }
 
     public boolean userIsAdmin() {
-        return user.isAdmin() == 1;
+        return user.isAdmin();
     }
-    
-    public ObservableList<Order> getObservableOrdersList () {
-    	return FXCollections.unmodifiableObservableList(this.observableOrdersList);
+
+    public ObservableList<Order> getObservableOrdersList() {
+        return FXCollections.unmodifiableObservableList(this.observableOrdersList);
     }
-    private List<String> giveTransportServicesAsString () {
-    	TransportService[] array =  TransportService.values();
-    	String [] array2 = new String[array.length];
-    	for (int i = 0;i<array.length;i++) {
-    		array2[i]=array[i].toString();
-    	}
-    	return Arrays.asList(array2);
+
+    private List<String> giveTransportServicesAsString() {
+        TransportService[] array = TransportService.values();
+        String[] array2 = new String[array.length];
+        for (int i = 0; i < array.length; i++) {
+            array2[i] = array[i].toString();
+        }
+        return Arrays.asList(array2);
     }
-    public String giveOverviewOrder (int id) {
-    	//TODO
-    	return "";
+
+    public String giveOverviewOrder(int id) {
+        //TODO
+        return "";
     }
-    public void processOrder (String transportService,int id) {
-    	//TODO
+
+    public void processOrder(String transportService, int id) {
+        //TODO
     }
-    public ObservableList<String> getTransportServicesObservableList () {
-    	return this.transportServicesObservableList;
+
+    public ObservableList<String> getTransportServicesObservableList() {
+        return this.transportServicesObservableList;
     }
 }

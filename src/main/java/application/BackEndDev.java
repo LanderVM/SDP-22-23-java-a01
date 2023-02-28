@@ -2,6 +2,7 @@ package application;
 
 import domain.DomainController;
 import domain.Product;
+import domain.User;
 import jakarta.persistence.EntityManager;
 import util.JPAUtil;
 
@@ -21,6 +22,9 @@ public class BackEndDev {
         Product p4 = new Product("test_product vier", 8.9);
         Product p5 = new Product("test_product vijf", 11.30);
 
+        User admin = new User("testAdmin@mail.com", "testAdmin", true);
+        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false);
+
         EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(p1);
@@ -30,5 +34,12 @@ public class BackEndDev {
         entityManager.persist(p5);
         entityManager.getTransaction().commit();
         entityManager.close();
+
+        EntityManager userManager = JPAUtil.getUserEntityManagerFactory().createEntityManager();
+        userManager.getTransaction().begin();
+        userManager.persist(admin);
+        userManager.persist(warehouseman);
+        userManager.getTransaction().commit();
+        userManager.close();
     }
 }
