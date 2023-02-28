@@ -12,70 +12,70 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class ProcessOrderScreenController extends GridPane{
+public class ProcessOrderScreenController extends GridPane {
 
     @FXML
-    private Button backToProcessOrdersScreenButton;
+    private Button backToProcessOrdersScreen;
 
     @FXML
     private GridPane baseGrid;
 
     @FXML
-    private ChoiceBox<String> choiceBoxTransportServices;
+    private ChoiceBox<String> transportServicesBox;
 
     @FXML
-    private TextArea orderTextArea;
+    private TextArea orderTxt;
 
     @FXML
-    private Label overviewOrderLabel;
+    private Label overviewLbl;
 
     @FXML
-    private Button processOrderButton;
-    
-    private DomainController dc;
-    private ProcessOrdersScreenController parent;
+    private Button processOrderBtn;
+
+    private DomainController domainController;
+    private final ProcessOrdersScreenController parent;
     private int id;
-    
-    
-    public ProcessOrderScreenController(DomainController dc,ProcessOrdersScreenController parent,int id) {
-    	this.dc = dc;
-    	this.parent=parent;
-    	
-    	
-    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/ProcessOrderScreen.fxml"));
+
+
+    public ProcessOrderScreenController(DomainController domainController, ProcessOrdersScreenController parent, int id) {
+        this.domainController = domainController;
+        this.parent = parent;
+
+
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/ProcessOrderScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 
         try {
-        	loader.load();
+            loader.load();
         } catch (Exception e) {
-			System.out.println(e);
-		}
-        
-        overviewOrderLabel.setText("Overview order: "+Integer.toString(id));
-        orderTextArea.setText(dc.giveOverviewOrder(id));
-        choiceBoxTransportServices.setItems(dc.getTransportServicesObservableList());
+            System.out.println(e);
+        }
+
+        overviewLbl.setText("Overview order: " + Integer.toString(id));
+        orderTxt.setText(domainController.getOrderOverview(id));
+        transportServicesBox.setItems(domainController.getTransportServicesList());
     }
 
     @FXML
     void backToProcessOrdersScreen(ActionEvent event) {
-    	Stage stage = (Stage) this.getScene().getWindow();
-    	stage.setScene(parent.getScene());
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(parent.getScene());
     }
 
     @FXML
     void processOrder(ActionEvent event) {
-    	String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
-    	if (selectionTransportService==null) {
-    		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    		alert.setTitle("Warning");
-    		alert.setHeaderText("You need to select a transport service in order to be able to process order");
-    		alert.showAndWait();
-    		return;
-    	}
-    	dc.processOrder(selectionTransportService, id);
-    	Stage stage = (Stage) this.getScene().getWindow();
-    	stage.setScene(parent.getScene());
+        String selectionTransportService = transportServicesBox.getSelectionModel().getSelectedItem();
+        if (selectionTransportService == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Warning");
+            alert.setHeaderText("You need to select a transport service in order to be able to process order");
+            alert.showAndWait();
+            return;
+        }
+        domainController.processOrder(id, selectionTransportService);
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(parent.getScene());
     }
 
 }

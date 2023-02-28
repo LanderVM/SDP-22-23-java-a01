@@ -3,6 +3,7 @@ package gui;
 import java.util.Optional;
 
 import domain.DomainController;
+import domain.UserController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,7 +63,7 @@ public class WarehousemanOverviewScreenController extends GridPane{
 
     @FXML
     void logout(ActionEvent event) {
-    	LoginScreenController loginScreen = new LoginScreenController(new DomainController());
+    	LoginScreenController loginScreen = new LoginScreenController(new DomainController(), new UserController());
     	Stage stage = (Stage)this.getScene().getWindow();
     	Scene scene = new Scene(loginScreen);
     	stage.setScene(scene);

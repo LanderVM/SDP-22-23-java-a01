@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 
 import domain.DomainController;
+import domain.UserController;
 import exceptions.UserDoesntExistException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +19,8 @@ import javafx.stage.Stage;
 
 public class LoginScreenController extends AnchorPane {
 
-    private DomainController dc;
+    private final DomainController domainController;
+    private final UserController userController;
 
     @FXML
     private Button btnSignIn;
@@ -30,22 +32,23 @@ public class LoginScreenController extends AnchorPane {
     private TextField txtEmail;
 
 
-    public LoginScreenController(DomainController dc) {
-        this.dc = dc;
+    public LoginScreenController(DomainController domainController, UserController userController) {
+        this.domainController = domainController;
+        this.userController = userController;
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
         try {
             loader.load();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @FXML
     void SignIn(ActionEvent event) {
         try {
-            boolean authenticated = dc.checkUser(txtEmail.getText(), txtPassword.getText());
+            boolean authenticated = userController.checkUser(txtEmail.getText(), txtPassword.getText());
             if (!authenticated) {
                 txtPassword.setText("");
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -54,7 +57,7 @@ public class LoginScreenController extends AnchorPane {
                 alert.setContentText("The password entered is incorrect");
                 alert.showAndWait();
             } else {
-                if (dc.userIsAdmin()) {
+                if (userController.userIsAdmin()) {
                     goToAdminScreen();
                 } else {
                     goToWarehousmanScreen();
@@ -81,7 +84,7 @@ public class LoginScreenController extends AnchorPane {
     }
 
     private void goToAdminScreen() {
-        HomeAdminController homeAdminController = new HomeAdminController(dc);
+        HomeAdminController homeAdminController = new HomeAdminController(domainController);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
         loader.setRoot(homeAdminController);
         loader.setController(homeAdminController);

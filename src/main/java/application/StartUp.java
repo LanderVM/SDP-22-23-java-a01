@@ -3,6 +3,7 @@ package application;
 import domain.DomainController;
 import domain.Product;
 import domain.User;
+import domain.UserController;
 import gui.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -14,10 +15,16 @@ import util.JPAUtil;
 import java.util.Objects;
 
 public class StartUp extends Application {
+
+    public static void main(String[] args) {
+        seedDatabase();
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         try {
-            LoginScreenController root = new LoginScreenController(new DomainController());
+            LoginScreenController root = new LoginScreenController(new DomainController(), new UserController());
             Scene scene = new Scene(root, 600, 300);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);
@@ -28,11 +35,6 @@ public class StartUp extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        seedDatabase();
-        launch(args);
     }
 
     private static void seedDatabase() {

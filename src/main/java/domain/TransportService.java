@@ -1,6 +1,16 @@
 package domain;
 
 public enum TransportService {
-    BPOST,
-    POSTNL
+    BPOST("BPost"),
+    POSTNL("PostNL");
+
+    final String name;
+
+    TransportService(String name) {
+        this.name = name;
+    }
+
+    public String toString() {
+        return name;
+    }
 }
