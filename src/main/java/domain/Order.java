@@ -141,4 +141,8 @@ public class Order {
                 ", trackingCode=" + trackingCode +
                 '}';
     }
+
+	public Date getDate() {
+		return date;
+	}
 }
