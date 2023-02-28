@@ -49,8 +49,9 @@ public class LoginScreenController extends AnchorPane {
             if (!authenticated) {
                 txtPassword.setText("");
                 Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Wrong password!");
-                alert.setHeaderText("You have given the wrong password, try another!");
+                alert.setTitle("Wrong password");
+                alert.setHeaderText(null);
+                alert.setContentText("The password entered is incorrect");
                 alert.showAndWait();
             } else {
                 if (dc.userIsAdmin()) {
@@ -60,11 +61,12 @@ public class LoginScreenController extends AnchorPane {
                 }
             }
         } catch (UserDoesntExistException e) {
-            txtEmail.setText("");
+            //txtEmail.setText("");
             txtPassword.setText("");
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText(e.getMessage());
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
     }
@@ -76,25 +78,24 @@ public class LoginScreenController extends AnchorPane {
         stage.setScene(scene);
         stage.show();*/
 
-
     }
 
     private void goToAdminScreen() {
-        Test test = new Test(dc);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/test.fxml"));
-        loader.setRoot(test);
-        loader.setController(test);
+        HomeAdminController homeAdminController = new HomeAdminController(dc);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
+        loader.setRoot(homeAdminController);
+        loader.setController(homeAdminController);
         try {
             loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        Scene scene = new Scene(test, 600, 600);
+        Scene scene = new Scene(homeAdminController, 600, 300);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
+        stage.setTitle("Home");
         stage.show();
-
     }
 
 
