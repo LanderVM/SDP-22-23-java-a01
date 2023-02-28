@@ -54,7 +54,7 @@ public class ProcessOrdersScreenController extends GridPane {
         processableOrdersTbl.setItems(domainController.getOrdersList());
 
         processableOrdersTbl.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
-            int id = newOrder.getId();
+            int id = newOrder.getOrderId();
             ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.domainController, this, id);
             Scene scene = new Scene(processOrderScreenController);
             Stage stage = (Stage) this.getScene().getWindow();

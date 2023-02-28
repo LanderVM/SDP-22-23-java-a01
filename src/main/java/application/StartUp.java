@@ -1,9 +1,6 @@
 package application;
 
-import domain.DomainController;
-import domain.Product;
-import domain.User;
-import domain.UserController;
+import domain.*;
 import gui.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -12,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.JPAUtil;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class StartUp extends Application {
@@ -63,5 +62,16 @@ public class StartUp extends Application {
         userManager.persist(warehouseman);
         userManager.getTransaction().commit();
         userManager.close();
+
+
+        Order o1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(p1, p2), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
+        Order o2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM);
+
+        EntityManager orderManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
+        orderManager.getTransaction().begin();
+        orderManager.persist(o1);
+        orderManager.persist(o2);
+        orderManager.getTransaction().commit();
+        orderManager.close();
     }
 }

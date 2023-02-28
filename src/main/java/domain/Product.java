@@ -3,9 +3,10 @@ package domain;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table (name = "product")
+@Table(name = "product")
 @NamedQueries({@NamedQuery(name = "Product.findAll", query = "SELECT d FROM Product d")})
 public class Product implements Serializable {
     @Id
@@ -15,6 +16,8 @@ public class Product implements Serializable {
 
     private String name;
     private double price;
+    @ManyToMany(mappedBy = "productsList")
+    private List<Order> orderList;
 
     public Product(String name, double price) {
         setName(name);
