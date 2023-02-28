@@ -12,8 +12,8 @@ public class StartUp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			OrdersOverviewController root = new OrdersOverviewController(new DomainController());
-			Scene scene = new Scene(root,670,600);
+			LoginScreenController root = new LoginScreenController(new DomainController());
+			Scene scene = new Scene(root,600,600);
 			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
