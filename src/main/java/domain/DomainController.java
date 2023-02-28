@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import repository.UserMapper;
 import util.JPAUtil;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 public class DomainController {
 
@@ -35,7 +35,7 @@ public class DomainController {
         EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
 
         entityManager.getTransaction().begin();
-        List<Product> ordersList = entityManager.createNamedQuery("Products.findAll", Product.class).getResultList();
+        List<Product> ordersList = entityManager.createNamedQuery("Product.findAll", Product.class).getResultList();
         entityManager.getTransaction().commit();
 
         entityManager.close();
