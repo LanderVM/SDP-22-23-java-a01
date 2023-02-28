@@ -87,7 +87,11 @@ public class WarehousemanOverviewScreenController extends GridPane{
 
     @FXML
     void viewOrders(ActionEvent event) {
-    	//TODO
+    	OrdersOverviewController ordersOverviewController = new OrdersOverviewController(dc);
+    	Scene scene = new Scene(ordersOverviewController);
+    	Stage stage = (Stage)this.getScene().getWindow();
+    	stage.setScene(scene);
+    	stage.show();
     }
 
 }
