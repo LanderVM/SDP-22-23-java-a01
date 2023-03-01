@@ -72,6 +72,90 @@ public class Order {
         return orderId;
     }
 
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Product> getProductsList() {
+        return productsList;
+    }
+
+    public void setProductsList(List<Product> productsList) {
+        this.productsList = productsList;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Packaging getPackaging() {
+        return packaging;
+    }
+
+    public void setPackaging(Packaging packaging) {
+        this.packaging = packaging;
+    }
+
+    public TransportService getTransportService() {
+        return transportService;
+    }
+
+    public void setTransportService(TransportService transportService) {
+        this.transportService = transportService;
+    }
+
+    public int getTrackingCode() {
+        return trackingCode;
+    }
+
+    public void setTrackingCode(int trackingCode) {
+        this.trackingCode = trackingCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

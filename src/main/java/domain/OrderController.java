@@ -1,39 +1,34 @@
 package domain;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import exceptions.OrderStatusException;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import persistence.OrderJPADao;
+import util.JPAUtil;
 
 public class OrderController {
 
-    private final ObservableList<Order> observableOrdersList;
-    private final FilteredList<Order> filteredOrdersList;
-    private final SortedList<Order> sortedOrdersList;
-    private final Comparator<Order> sortOrdersOnDate;
+    private final List<Order> orderList;
     private final ObservableList<String> transportServicesObservableList;
 
-    private final OrderJPADao orderJPADao;
+    private final OrderJPADao orderJPADao = null;
 
     public OrderController(OrderJPADao orderJPADao) {
-        this.orderJPADao = orderJPADao;
+//        this.orderJPADao = orderJPADao;
 
-        observableOrdersList = FXCollections.observableArrayList(orderJPADao.getAllPosted());
-        filteredOrdersList = new FilteredList<>(observableOrdersList, p -> true);
-        sortOrdersOnDate = Comparator.comparing(Order::getDate);
-        sortedOrdersList = new SortedList<>(filteredOrdersList);
+        EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
+        OrderJPADao orderJPADaoa = new OrderJPADao(entityManager);
+        orderList = orderJPADaoa.getAll();
         transportServicesObservableList = FXCollections.observableArrayList(this.giveTransportServicesAsString());
     }
 
-    public ObservableList<Order> getObservableOrdersList() {
-        return this.sortedOrdersList;
+    public List<Order> getOrderList() {
+        return this.orderList;
     }
 
     private List<String> giveTransportServicesAsString() {
@@ -44,23 +39,12 @@ public class OrderController {
         return this.transportServicesObservableList;
     }
 
-    public void changeFilter(String filterValue) {
-        this.filteredOrdersList.setPredicate(order -> {
-            if (filterValue == null || filterValue.isEmpty())
-                return true;
-
-            String id = Integer.toString(order.getOrderId());
-            return id.contains(filterValue);
-        });
-
-    }
-
     public String getOrderOverview(int orderId) {
-    	Order order = orderJPADao.get(orderId)
+        Order order = orderJPADao.get(orderId)
                 .orElseThrow(() -> {
                     throw new EntityNotFoundException("Order with current orderId could not be found");
                 });
-    	return order.toString();
+        return order.toString();
     }
 
     public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException, OrderStatusException {
@@ -71,10 +55,8 @@ public class OrderController {
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 
-        
-        
         order.setTransportService(transportService);
-        order.setTrackingCode();
+        order.setTrackingCode((int) (Math.random() * 10));
         order.setStatus(Status.PROCESSED);
 
         orderJPADao.update(order);

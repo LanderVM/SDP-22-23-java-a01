@@ -67,14 +67,14 @@ public class OrdersOverviewController extends AnchorPane {
     @FXML
     private Label lblOrderOverview;
 
-    private DomainController domainController;
+    private OrderController orderController;
     private UserController userController;
     private OrderView orderView;
 
 
-    public OrdersOverviewController(DomainController dc, UserController userController) {
+    public OrdersOverviewController(OrderController orderController, UserController userController) {
 
-        this.domainController = dc;
+        this.orderController = orderController;
         this.userController = userController;
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/OrdersOverview.fxml"));
@@ -92,22 +92,21 @@ public class OrdersOverviewController extends AnchorPane {
         DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateForTableProperty());
         CostColumnTable.setCellValueFactory(celldata -> celldata.getValue().costForTableProperty());
         StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusForTableProperty());
-//		setOrderView();
 
-        List<Order> ordersList = dc.getOrderList();
+        List<Order> ordersList = orderController.getOrderList();
 
         List<OrderView> viewList = new ArrayList<>();
 
         ordersList.forEach(order -> viewList.add(new OrderView(order)));
 
-		System.out.println();
-        TableOrdersView.setItems(FXCollections.observableArrayList(viewList));
-//        TableOrdersView.setItems(FXCollections.observableArrayList(new OrderView(new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM)), new OrderView(new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM))));
+        System.out.println();
+//        TableOrdersView.setItems(FXCollections.observableArrayList(viewList));
+        TableOrdersView.setItems(FXCollections.observableArrayList(new OrderView(new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM)), new OrderView(new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM))));
 
 
     }
 
-	@FXML
+    @FXML
     public void showOrders(ActionEvent event) {
 
     }
@@ -129,7 +128,7 @@ public class OrdersOverviewController extends AnchorPane {
     }
 
     private void goToWarehousmanScreen() {
-        WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(domainController, userController);
+        HomeWarehouseOperatorController warehousemanOverviewScreenController = new HomeWarehouseOperatorController(orderController, userController);
         Scene scene = new Scene(warehousemanOverviewScreenController, 600, 600);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
@@ -138,7 +137,7 @@ public class OrdersOverviewController extends AnchorPane {
     }
 
     private void goToAdminScreen() {
-        HomeAdminController homeAdminController = new HomeAdminController(domainController);
+        HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
         loader.setRoot(homeAdminController);
         loader.setController(homeAdminController);

@@ -2,8 +2,8 @@ package gui.controller;
 
 import java.util.Date;
 
-import domain.DomainController;
 import domain.Order;
+import domain.OrderController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -38,11 +37,11 @@ public class ProcessOrdersScreenController extends GridPane {
     @FXML
     private TextField txtFilter;
 
-    private DomainController dc;
-    private WarehousemanOverviewScreenController parent;
+    private OrderController orderController;
+    private HomeWarehouseOperatorController parent;
 
-    public ProcessOrdersScreenController(DomainController dc, WarehousemanOverviewScreenController parent) {
-        this.dc = dc;
+    public ProcessOrdersScreenController(OrderController orderController, HomeWarehouseOperatorController parent) {
+        this.orderController = orderController;
         this.parent = parent;
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ProcessOrdersScreen.fxml"));
@@ -59,11 +58,11 @@ public class ProcessOrdersScreenController extends GridPane {
 //        companyCol.setCellValueFactory(cellData->cellData.getValue().companyForTableProperty());
 //        dateCol.setCellValueFactory(cellData->cellData.getValue().dateForTableProperty());// TODO
 
-        processableOrdersTable.setItems(FXCollections.observableArrayList(dc.getOrderList())); // TODO
+        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getOrderList())); // TODO
 
         processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
             int id = newOrder.getOrderId();
-            ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.dc, this, id);
+            ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, this, id);
             Scene scene = new Scene(processOrderScreenController);
             Stage stage = (Stage) this.getScene().getWindow();
             stage.setScene(scene);

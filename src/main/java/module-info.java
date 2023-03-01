@@ -20,6 +20,5 @@ module SDP2_Java_a01 {
 
     opens domain;
     opens application to javafx.fxml, javafx.graphics;
-    opens gui to javafx.fxml, javafx.graphics;
     opens gui.controller to javafx.fxml, javafx.graphics;
 }
