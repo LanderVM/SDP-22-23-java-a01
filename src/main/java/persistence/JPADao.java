@@ -1,6 +1,5 @@
 package persistence;
 
-import domain.TransportService;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +10,5 @@ public interface JPADao<T> {
 
     List<?> getAll();
 
-    void process(int orderId, TransportService transportService);
-
+    void update(T order);
 }

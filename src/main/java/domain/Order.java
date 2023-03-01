@@ -14,11 +14,11 @@ import javafx.beans.property.StringProperty;
 @NamedQueries({
         @NamedQuery(
                 name = "Order.findById",
-                query = "SELECT d FROM Orders d WHERE order_id = ?1"
+                query = "SELECT w FROM Order w WHERE w.orderId = ?1"
         ),
         @NamedQuery(
                 name = "Order.findAll",
-                query = "SELECT d FROM Orders d"
+                query = "SELECT d FROM Order d"
         )
 })
 public class Order {
@@ -47,7 +47,7 @@ public class Order {
 
     @Column(name = "order_date")
     private Date date;
-    @ManyToMany
+    @OneToMany
     private List<Product> productsList;
     private Status status;
     private Packaging packaging;

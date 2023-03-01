@@ -36,7 +36,7 @@ public class StartUp extends Application {
         }
     }
 
-    private static void seedDatabase() {
+    public static void seedDatabase() {
         Product p1 = new Product("test_product een", 1.0);
         Product p2 = new Product("test_product twee", 2.0);
         Product p3 = new Product("test_product drie", 4.5);
@@ -63,7 +63,6 @@ public class StartUp extends Application {
         userManager.getTransaction().commit();
         userManager.close();
 
-
         Order o1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(p1, p2), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
         Order o2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM);
 
@@ -73,5 +72,6 @@ public class StartUp extends Application {
         orderManager.persist(o2);
         orderManager.getTransaction().commit();
         orderManager.close();
+
     }
 }
