@@ -1,9 +1,12 @@
 package persistence;
 
 import domain.Order;
+import domain.TransportService;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +29,17 @@ public class OrderJPADao implements JPADao<Order> {
 
     @Override
     public List<Order> getAll() {
-        return entityManager.createNamedQuery("Order.findAll", Order.class).getResultList();
+        return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAll", Order.class).getResultList());
+    }
+
+    @Override
+    public void process(int orderId, TransportService transportService) throws EntityNotFoundException {
+        Order order = get(orderId)
+                .orElseThrow(() -> {
+                    throw new EntityNotFoundException("Order with current orderId could not be found");
+                });
+
+        // TODO
+        order.setTransportService(transportService);
     }
 }

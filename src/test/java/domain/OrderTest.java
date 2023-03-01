@@ -56,4 +56,6 @@ public class OrderTest {
         assertEquals(ordersList, orderDao.getAll());
         verify(query).getResultList();
     }
+
+    // TODO process order test
 }

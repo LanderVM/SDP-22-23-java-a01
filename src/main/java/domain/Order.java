@@ -116,6 +116,11 @@ public class Order {
         return transportService == order.transportService;
     }
 
+    // TODO
+    public void setTransportService(TransportService transportService) {
+        this.transportService = transportService;
+    }
+
     @Override
     public int hashCode() {
         int result = company.hashCode();
