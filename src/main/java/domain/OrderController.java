@@ -63,7 +63,7 @@ public class OrderController {
     	return order.toString();
     }
 
-    public void processOrder(int orderId, String transportService) throws EntityNotFoundException, OrderStatusException {
+    public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException, OrderStatusException {
         Order order = orderJPADao.get(orderId)
                 .orElseThrow(() -> {
                     throw new EntityNotFoundException("Order with current orderId could not be found");
@@ -71,9 +71,9 @@ public class OrderController {
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 
-        TransportService ts = TransportService.giveTransportService(transportService);
         
-        order.setTransportService(ts);
+        
+        order.setTransportService(transportService);
         order.setTrackingCode();
         order.setStatus(Status.PROCESSED);
 
