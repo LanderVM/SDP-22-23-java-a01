@@ -3,11 +3,9 @@ package domain;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "product")
-@NamedQueries({@NamedQuery(name = "Product.findAll", query = "SELECT d FROM Product d")})
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,24 +23,8 @@ public class Product implements Serializable {
     protected Product() {
     }
 
-    public int getProductId() {
-        return productId;
-    }
-
-    void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     void setName(String name) {
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     void setPrice(double price) {
