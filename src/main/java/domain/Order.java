@@ -11,7 +11,12 @@ import javafx.beans.property.StringProperty;
 
 @Entity
 @Table(name = "orders")
-@NamedQueries({@NamedQuery(name = "Order.findAll", query = "SELECT d FROM Order d")})
+@NamedQueries({
+        @NamedQuery(
+                name = "Order.findById",
+                query = "SELECT d FROM Orders d WHERE order_id = ?1"
+        )
+})
 public class Order {
 
     @Transient
