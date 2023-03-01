@@ -22,16 +22,11 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblUser" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="240.0" text="John Doe" textFill="WHITE" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="358.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="17.0">
+            <Label fx:id="lblUser" alignment="CENTER_RIGHT" layoutX="358.0" layoutY="17.0" prefHeight="35.0" prefWidth="256.0" text="John Doe" textFill="WHITE" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="358.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="17.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="595.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="5.0">
-               <image>
-                  <Image url="@../images/adminIcon.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
       <Label layoutX="48.0" layoutY="133.0" prefHeight="35.0" prefWidth="103.0" text="Home">
@@ -50,17 +45,17 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnManageEmployees" mnemonicParsing="false" onAction="#manageEmployees" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: EC4842; -fx-cursor: hand;" text="Manage employees" textFill="WHITE">
+            <Button fx:id="btnViewCustomers" mnemonicParsing="false" onAction="#viewCustomers" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: EC4842; -fx-cursor: hand;" text="View customers" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnManageBoxes" mnemonicParsing="false" onAction="#manageBoxes" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: EC4842; -fx-cursor: hand;" text="Manage boxes" textFill="WHITE" GridPane.rowIndex="2">
+            <Button fx:id="btnChangeTrackAndTrace" mnemonicParsing="false" onAction="#changeTrackAndTrace" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: EC4842; -fx-cursor: hand;" text="Change track &amp; trace code" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnManageTransportServices" mnemonicParsing="false" onAction="#manageTransportServices" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: EC4842; -fx-cursor: hand;" text="Manage transport services" textFill="WHITE" GridPane.rowIndex="1">
+            <Button fx:id="btnViewOrders" mnemonicParsing="false" onAction="#viewOrders" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: EC4842; -fx-cursor: hand;" text="View orders" textFill="WHITE" GridPane.rowIndex="1">
                <font>
                   <Font size="16.0" />
                </font>

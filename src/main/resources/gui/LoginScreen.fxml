@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="txtEmail" layoutX="46.0" layoutY="105.0" prefHeight="35.0" prefWidth="242.0" promptText="e-mail" text="testAdmin@mail.com">
          <opaqueInsets>
@@ -22,7 +22,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnSignIn" layoutX="46.0" layoutY="238.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: EC4842;" text="Sign In" textFill="WHITE">
+      <Button fx:id="btnSignIn" layoutX="46.0" layoutY="238.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="35.0" prefWidth="146.0" style="-fx-cursor: hand; -fx-background-color: EC4842;" text="Sign In" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
