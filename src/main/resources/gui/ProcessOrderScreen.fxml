@@ -5,41 +5,54 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="baseGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="746.0" type="GridPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="baseGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="746.0" type="GridPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="214.9999755859375" minHeight="4.599987769126898" prefHeight="62.999996948242185" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="342.2000122308731" minHeight="10.0" prefHeight="209.79999389648435" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="277.40000000000003" minHeight="10.0" prefHeight="101.00000610351566" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="277.40000000000003" minHeight="10.0" prefHeight="101.00000610351566" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="277.40000000000003" minHeight="10.0" prefHeight="101.00000610351566" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="214.9999755859375" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="214.9999755859375" minHeight="10.0" prefHeight="38.400000000000006" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="214.9999755859375" minHeight="4.599987769126898" prefHeight="32.00000610351563" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="342.2000122308731" minHeight="10.0" prefHeight="248.80001373291014" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="277.40000000000003" minHeight="10.0" prefHeight="93.00003051757812" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="277.40000000000003" minHeight="10.0" prefHeight="71.4000366210937" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="277.40000000000003" minHeight="10.0" prefHeight="67.39997558593745" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="overviewOrderLabel" text="Overview order:" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Label fx:id="overviewOrderLabel" text="Overview order:" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextArea fx:id="orderTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <Label prefHeight="27.0" prefWidth="318.0" text="Select a transport service for this order:" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <TextArea fx:id="orderTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+      <Label prefHeight="27.0" prefWidth="318.0" text="Select a transport service for this order:" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="choiceBoxTransportServices" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <ChoiceBox fx:id="choiceBoxTransportServices" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin>
       </ChoiceBox>
-      <Button fx:id="processOrderButton" mnemonicParsing="false" onAction="#processOrder" prefWidth="180.0" text="Process order" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-      <Button fx:id="backToProcessOrdersScreenButton" mnemonicParsing="false" onAction="#backToProcessOrdersScreen" prefWidth="180.0" text="Back to process orders screen" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Button fx:id="processOrderButton" mnemonicParsing="false" onAction="#processOrder" prefWidth="180.0" style="-fx-background-color: #EF463C;" text="Process order" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+      <Button fx:id="backToProcessOrdersScreenButton" mnemonicParsing="false" onAction="#backToProcessOrdersScreen" prefWidth="180.0" style="-fx-background-color: #EF463C;" text="Back to process orders screen" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EF463C;" GridPane.columnSpan="2">
+         <children>
+            <Label layoutX="34.0" layoutY="10.0" prefHeight="55.0" prefWidth="150.0" text="Delaware" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cc372d;" GridPane.columnSpan="2" GridPane.rowIndex="1" />
    </children>
 </fx:root>
