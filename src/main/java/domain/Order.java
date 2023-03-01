@@ -15,6 +15,10 @@ import javafx.beans.property.StringProperty;
         @NamedQuery(
                 name = "Order.findById",
                 query = "SELECT d FROM Orders d WHERE order_id = ?1"
+        ),
+        @NamedQuery(
+                name = "Order.findAll",
+                query = "SELECT d FROM Orders d"
         )
 })
 public class Order {
@@ -147,7 +151,7 @@ public class Order {
                 '}';
     }
 
-	public Date getDate() {
-		return date;
-	}
+    public Date getDate() {
+        return date;
+    }
 }
