@@ -8,6 +8,7 @@ import exceptions.UserDoesntExistException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -74,36 +75,27 @@ public class LoginScreenController extends AnchorPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController);
+		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
-		loader.setRoot(homeWarehouseOperatorController);
-		loader.setController(homeWarehouseOperatorController);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		Scene scene = new Scene(homeWarehouseOperatorController);
-		Stage stage = (Stage) this.getScene().getWindow();
-		stage.setScene(scene);
-		stage.setTitle("Home");
-		stage.show();
-
+		changeStage(loader, homeWarehouseOperatorController);
 	}
 
 	private void goToHomeAdmin() {
-		HomeAdminController homeAdminController = new HomeAdminController(orderController);
+		HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
-		loader.setRoot(homeAdminController);
-		loader.setController(homeAdminController);
+		changeStage(loader, homeAdminController);
+	}
+
+	private void changeStage(FXMLLoader loader, Parent controller) {
+		loader.setRoot(controller);
+		loader.setController(controller);
 		try {
 			loader.load();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 
-		Scene scene = new Scene(homeAdminController);
+		Scene scene = new Scene(controller);
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
 		stage.setTitle("Home");

@@ -12,7 +12,7 @@
 
 <fx:root maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="txtEmail" layoutX="46.0" layoutY="105.0" prefHeight="35.0" prefWidth="242.0" promptText="e-mail" text="testAdmin@mail.com">
+      <TextField fx:id="txtEmail" layoutX="46.0" layoutY="105.0" prefHeight="35.0" prefWidth="242.0" promptText="e-mail" text="testMagazijnier@mail.com">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -31,6 +31,6 @@
          <image>
             <Image url="@../Images/LogoDelaware.png" />
          </image></ImageView>
-      <PasswordField fx:id="txtPassword" layoutX="46.0" layoutY="161.0" prefHeight="35.0" prefWidth="242.0" promptText="Password" text="testAdmin" />
+      <PasswordField fx:id="txtPassword" layoutX="46.0" layoutY="161.0" prefHeight="35.0" prefWidth="242.0" promptText="Password" text="testMagazijnier" />
    </children>
 </fx:root>
