@@ -22,7 +22,7 @@ import javafx.beans.property.StringProperty;
         ),
         @NamedQuery(
                 name = "Order.findAllPosted",
-                query = "SELECT d FROM Order d WHERE d.status = 'POSTED'"
+                query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED"
         )
 })
 public class Order {
