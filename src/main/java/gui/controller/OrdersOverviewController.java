@@ -9,6 +9,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,9 +94,15 @@ public class OrdersOverviewController extends AnchorPane {
         StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusForTableProperty());
 //		setOrderView();
 
-		System.out.println(dc.getObservableOrdersList());
-        // dc.getObservableOrdersList()
-        TableOrdersView.setItems(FXCollections.observableArrayList(new OrderView(new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM)), new OrderView(new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM))));
+        List<Order> ordersList = dc.getOrderList();
+
+        List<OrderView> viewList = new ArrayList<>();
+
+        ordersList.forEach(order -> viewList.add(new OrderView(order)));
+
+		System.out.println();
+        TableOrdersView.setItems(FXCollections.observableArrayList(viewList));
+//        TableOrdersView.setItems(FXCollections.observableArrayList(new OrderView(new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM)), new OrderView(new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM))));
 
 
     }
