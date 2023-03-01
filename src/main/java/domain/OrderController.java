@@ -25,7 +25,7 @@ public class OrderController {
     public OrderController(OrderJPADao orderJPADao) {
         this.orderJPADao = orderJPADao;
 
-        observableOrdersList = FXCollections.observableArrayList();//TODO opvullen observable lijst met arraylist van orders die unprocessed zijn
+        observableOrdersList = FXCollections.observableArrayList(orderJPADao.getAllPosted());
         filteredOrdersList = new FilteredList<>(observableOrdersList, p -> true);
         sortOrdersOnDate = Comparator.comparing(Order::getDate);
         sortedOrdersList = new SortedList<>(filteredOrdersList);
@@ -33,8 +33,6 @@ public class OrderController {
     }
 
     public ObservableList<Order> getObservableOrdersList() {
-        //return FXCollections.unmodifiableObservableList(this.observableOrdersList);
-        //return this.filteredOrdersList;
         return this.sortedOrdersList;
     }
 
@@ -58,11 +56,14 @@ public class OrderController {
     }
 
     public String getOrderOverview(int orderId) {
-        //TODO
-        return "";
+    	Order order = orderJPADao.get(orderId)
+                .orElseThrow(() -> {
+                    throw new EntityNotFoundException("Order with current orderId could not be found");
+                });
+    	return order.toString();
     }
 
-    public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException, OrderStatusException {
+    public void processOrder(int orderId, String transportService) throws EntityNotFoundException, OrderStatusException {
         Order order = orderJPADao.get(orderId)
                 .orElseThrow(() -> {
                     throw new EntityNotFoundException("Order with current orderId could not be found");
@@ -70,7 +71,9 @@ public class OrderController {
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 
-        order.setTransportService(transportService);
+        TransportService ts = TransportService.giveTransportService(transportService);
+        
+        order.setTransportService(ts);
         order.setTrackingCode();
         order.setStatus(Status.PROCESSED);
 
