@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -14,11 +18,11 @@ import javafx.beans.property.StringProperty;
 @NamedQueries({
         @NamedQuery(
                 name = "Order.findById",
-                query = "SELECT d FROM Orders d WHERE order_id = ?1"
+                query = "SELECT w FROM Order w WHERE w.orderId = ?1"
         ),
         @NamedQuery(
                 name = "Order.findAll",
-                query = "SELECT d FROM Orders d"
+                query = "SELECT d FROM Order d"
         )
 })
 public class Order {
@@ -29,7 +33,11 @@ public class Order {
     @Transient
     private SimpleStringProperty companyForTable;
     @Transient
-    private SimpleStringProperty dateForTable;
+    private ObjectProperty<Date> dateForTable;
+    @Transient
+    private SimpleObjectProperty<Double> costForTable;
+    @Transient
+    private ObjectProperty<Status> statusForTable;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +56,7 @@ public class Order {
 
     @Column(name = "order_date")
     private Date date;
-    @ManyToMany
+    @OneToMany
     private List<Product> productsList;
     private Status status;
     private Packaging packaging;
@@ -71,31 +79,45 @@ public class Order {
         this.transportService = transportService;
         this.packaging = packaging;
 
-        idForTable = new SimpleIntegerProperty();
-        idForTable.set(orderId);
-        companyForTable = new SimpleStringProperty();
-        companyForTable.set(company);
-        dateForTable = new SimpleStringProperty();
-        dateForTable.set(date.toString());
+        
+       
+        
     }
 
     protected Order() {
+    	 idForTable = new SimpleIntegerProperty();
+         idForTable.set(orderId);
+         companyForTable = new SimpleStringProperty();
+         companyForTable.set(this.company);
+        dateForTable = new SimpleObjectProperty<Date>();
+        dateForTable.set(date);
+         costForTable = new SimpleObjectProperty<Double>();
+         costForTable.set(10.25);
+         statusForTable = new SimpleObjectProperty<Status>();
+         statusForTable.set(status);
     }
 
     public int getOrderId() {
         return orderId;
     }
 
-    public IntegerProperty idForTableProperty() {
+    public SimpleIntegerProperty idForTableProperty() {
         return this.idForTable;
     }
 
-    public StringProperty companyForTableProperty() {
+    public SimpleStringProperty companyForTableProperty() {
         return this.companyForTable;
     }
 
-    public StringProperty dateForTableProperty() {
+    public ObjectProperty<Date> dateForTableProperty() {
         return this.dateForTable;
+    }
+    public SimpleObjectProperty<Double> costForTableProperty() {
+    	return this.costForTable;
+    }
+    
+    public ObjectProperty<Status> statusForTableProperty(){
+    	return this.statusForTable;
     }
 
     @Override

@@ -75,11 +75,11 @@ public class LoginScreenController extends AnchorPane {
     }
 
     private void goToWarehousmanScreen() {
-        /*WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(dc);
+        WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(domainController, userController);
         Scene scene = new Scene(warehousemanOverviewScreenController,600,600);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
-        stage.show();*/
+        stage.show();
 
     }
 

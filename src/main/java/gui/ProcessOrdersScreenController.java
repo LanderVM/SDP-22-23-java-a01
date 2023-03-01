@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Date;
+
 import domain.DomainController;
 import domain.Order;
 import javafx.event.ActionEvent;
@@ -21,7 +23,7 @@ public class ProcessOrdersScreenController extends GridPane{
     private TableColumn<Order, String> companyCol;
 
     @FXML
-    private TableColumn<Order, String> dateCol;
+    private TableColumn<Order, Date> dateCol;
 
     @FXML
     private TableColumn<Order, Number> idCol;

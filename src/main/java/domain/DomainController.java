@@ -4,10 +4,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import persistence.JPADao;
+import persistence.OrderJPADao;
+import util.JPAUtil;
 
 public class DomainController {
 
@@ -16,9 +21,16 @@ public class DomainController {
     private SortedList<Order> sortedOrdersList;
     private Comparator<Order> sortOrdersOnDate;
     private ObservableList<String> transportServicesObservableList;
+    
+    private List<Order> orderList;
+    
 
     public DomainController() {
-    	observableOrdersList = FXCollections.observableArrayList();//TODO opvullen observable lijst met arraylist van orders die unprocessed zijn
+    	
+    	EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
+        OrderJPADao orderJPADao = new OrderJPADao(entityManager);
+        orderList = orderJPADao.getAll();
+    	observableOrdersList = FXCollections.observableArrayList(orderList);//TODO opvullen observable lijst met arraylist van orders die unprocessed zijn
         filteredOrdersList = new FilteredList<Order>(observableOrdersList,p->true);
         sortOrdersOnDate = (o1,o2)->{
         	return o1.getDate().compareTo(o2.getDate());
@@ -26,6 +38,8 @@ public class DomainController {
         sortedOrdersList = new SortedList<Order>(filteredOrdersList);
         transportServicesObservableList = FXCollections.observableArrayList(this.giveTransportServicesAsString());
     }
+    
+    
 
     public ObservableList<Order> getObservableOrdersList () {
     	//return FXCollections.unmodifiableObservableList(this.observableOrdersList);
@@ -62,6 +76,15 @@ public class DomainController {
     }
 
     public void processOrder(int orderId, String transportService) {
-        //TODO
+    	EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
+        OrderJPADao orderJPADao = new OrderJPADao(entityManager);
+        Order order = orderJPADao.get(orderId)
+                .orElseThrow(() -> {
+                    throw new EntityNotFoundException("Order with current orderId could not be found");
+                });
+
+        // TODO
+        //order.setTransportService(transportService);
+        orderJPADao.update(order);
     }
 }

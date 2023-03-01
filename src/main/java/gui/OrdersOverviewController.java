@@ -6,6 +6,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Date;
 
 import domain.DomainController;
 import domain.Order;
@@ -55,9 +56,9 @@ public class OrdersOverviewController extends AnchorPane{
 	@FXML
 	private TableColumn<Order, Number> NumberColumnTable;
 	@FXML
-	private TableColumn<Order, String> DateColumnTable;
+	private TableColumn<Order, Date> DateColumnTable;
 	@FXML
-	private TableColumn<Order, Integer> CostColumnTable;
+	private TableColumn<Order, Double> CostColumnTable;
 	@FXML
 	private TableColumn<Order, String> OverviewColumnTable;
 	@FXML
@@ -67,6 +68,7 @@ public class OrdersOverviewController extends AnchorPane{
 
 	private DomainController dc;
 	private UserController uc;
+	private Order or;
 	
 	
 	
@@ -75,7 +77,7 @@ public class OrdersOverviewController extends AnchorPane{
 		this.dc=dc;
 		this.uc= uc;
 		
-		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("OrdersOverview.fxml"));
+		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/OrdersOverview.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 
@@ -87,12 +89,22 @@ public class OrdersOverviewController extends AnchorPane{
         OverviewColumnTable.setCellValueFactory(cellData -> cellData.getValue().companyForTableProperty());
         NumberColumnTable.setCellValueFactory(celldata -> celldata.getValue().idForTableProperty());
         DateColumnTable.setCellValueFactory(celldata-> celldata.getValue().dateForTableProperty());
+        CostColumnTable.setCellValueFactory(celldata -> celldata.getValue().costForTableProperty());
+        StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusForTableProperty());
         
+        System.out.println(dc.getObservableOrdersList());
         TableOrdersView.setItems(dc.getObservableOrdersList());
         
         
         
         
+        
+        
+	}
+	
+	@FXML 
+	public void showOrders(ActionEvent event) {
+		
 	}
 	// Event Listener on Hyperlink[#btnHome].onAction
 	@FXML

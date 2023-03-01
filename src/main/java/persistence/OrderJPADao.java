@@ -31,15 +31,14 @@ public class OrderJPADao implements JPADao<Order> {
     public List<Order> getAll() {
         return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAll", Order.class).getResultList());
     }
-
     @Override
-    public void process(int orderId, TransportService transportService) throws EntityNotFoundException {
-        Order order = get(orderId)
-                .orElseThrow(() -> {
-                    throw new EntityNotFoundException("Order with current orderId could not be found");
-                });
-
-        // TODO
-        order.setTransportService(transportService);
-    }
+    public void update(Order order) {
+//      T order = get(orderId)
+//              .orElseThrow(() -> {
+//                  throw new EntityNotFoundException("Order with current orderId could not be found");
+//              });
+//
+//      order.setTransportService(transportService);
+      entityManager.merge(order);
+  }
 }
