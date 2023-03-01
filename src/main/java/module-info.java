@@ -6,6 +6,7 @@ module SDP2_Java_a01 {
     exports application;
     exports exceptions;
     exports util;
+    exports persistence;
 
     requires java.sql;
     requires java.instrument;

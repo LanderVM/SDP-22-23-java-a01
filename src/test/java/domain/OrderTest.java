@@ -10,10 +10,10 @@ import persistence.OrderJPADao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderTest {
@@ -26,9 +26,11 @@ public class OrderTest {
 
     private OrderJPADao orderDao;
 
+    private Order order;
+
     @Test
-    public void get_returnsCorrectOrder() {
-        Order order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
+    public void getById_happyFlow() {
+        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -41,7 +43,19 @@ public class OrderTest {
     }
 
     @Test
-    public void getAll_returnsAllOrders() {
+    public void getById_invalidID_returnsEmptyOptional() {
+        when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
+        when(query.setParameter(1, 1)).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(null);
+
+        orderDao = new OrderJPADao(entityManager);
+
+        assertEquals(Optional.empty(), orderDao.get(1));
+        verify(query).setParameter(1, 1);
+    }
+
+    @Test
+    public void getAll_happyFlow() {
         List<Order> ordersList =
                 List.of(new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM),
                         new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(new Product("Test product 3", 7.40)), Status.PROCESSED, TransportService.POSTNL, Packaging.MEDIUM),
@@ -57,5 +71,24 @@ public class OrderTest {
         verify(query).getResultList();
     }
 
-    // TODO process order test from DomainController
+    @Test
+    public void processOrder_happyFlow() {
+        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
+
+        when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
+        when(query.setParameter(1, 1)).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(order);
+
+        orderDao = new OrderJPADao(entityManager);
+        DomainController domainController = new DomainController(orderDao);
+
+        domainController.processOrder(1, TransportService.BPOST);
+
+        Order orderAfterUpdate = orderDao.get(1).get();
+
+        assertEquals(TransportService.BPOST, orderAfterUpdate.getTransportService());
+        assertEquals(Status.PROCESSED, orderAfterUpdate.getStatus());
+        verify(query, times(2)).setParameter(1, 1);
+    }
+
 }

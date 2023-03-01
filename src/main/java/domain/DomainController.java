@@ -21,7 +21,11 @@ public class DomainController {
     private Comparator<Order> sortOrdersOnDate;
     private ObservableList<String> transportServicesObservableList;
 
-    public DomainController() {
+    private OrderJPADao orderJPADao;
+
+    public DomainController(OrderJPADao orderJPADao) {
+        this.orderJPADao = orderJPADao;
+
         observableOrdersList = FXCollections.observableArrayList();//TODO opvullen observable lijst met arraylist van orders die unprocessed zijn
         filteredOrdersList = new FilteredList<Order>(observableOrdersList, p -> true);
         sortOrdersOnDate = (o1, o2) -> {
@@ -68,15 +72,12 @@ public class DomainController {
     }
 
     public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException {
-        EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
-        OrderJPADao orderJPADao = new OrderJPADao(entityManager);
         Order order = orderJPADao.get(orderId)
                 .orElseThrow(() -> {
                     throw new EntityNotFoundException("Order with current orderId could not be found");
                 });
-
-        // TODO
         order.setTransportService(transportService);
+        order.setStatus(Status.PROCESSED);
         orderJPADao.update(order);
     }
 

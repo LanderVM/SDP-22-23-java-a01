@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import persistence.OrderJPADao;
 import util.JPAUtil;
 
 import java.util.Date;
@@ -23,7 +24,7 @@ public class StartUp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            LoginScreenController root = new LoginScreenController(new DomainController(), new UserController());
+            LoginScreenController root = new LoginScreenController(new DomainController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController());
             Scene scene = new Scene(root, 600, 300);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);

@@ -116,9 +116,12 @@ public class Order {
         return transportService == order.transportService;
     }
 
-    // TODO
     public void setTransportService(TransportService transportService) {
         this.transportService = transportService;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -158,5 +161,13 @@ public class Order {
 
     public Date getDate() {
         return date;
+    }
+
+    public TransportService getTransportService() {
+        return this.transportService;
+    }
+
+    public Status getStatus() {
+        return this.status;
     }
 }
