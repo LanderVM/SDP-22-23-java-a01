@@ -2,6 +2,7 @@ package gui;
 
 import domain.DomainController;
 import domain.TransportService;
+import exceptions.OrderStatusException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,7 +75,12 @@ public class ProcessOrderScreenController extends GridPane {
             alert.showAndWait();
             return;
         }
-        dc.processOrder(id, TransportService.valueOf(selectionTransportService));
+        try {
+            // TODO proper exception handling
+            dc.processOrder(id, TransportService.valueOf(selectionTransportService));
+        } catch (OrderStatusException e) {
+            throw new RuntimeException(e);
+        }
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(parent.getScene());
     }

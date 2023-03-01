@@ -1,5 +1,6 @@
 package domain;
 
+import exceptions.OrderStatusException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
@@ -72,8 +73,8 @@ public class OrderTest {
     }
 
     @Test
-    public void processOrder_happyFlow() {
-        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
+    public void processOrder_happyFlow() throws OrderStatusException {
+        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM);
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -83,12 +84,26 @@ public class OrderTest {
         DomainController domainController = new DomainController(orderDao);
 
         domainController.processOrder(1, TransportService.BPOST);
-
         Order orderAfterUpdate = orderDao.get(1).get();
 
         assertEquals(TransportService.BPOST, orderAfterUpdate.getTransportService());
         assertEquals(Status.PROCESSED, orderAfterUpdate.getStatus());
         verify(query, times(2)).setParameter(1, 1);
+    }
+
+    @Test
+    public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
+        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.OUT_FOR_DELIVERY, TransportService.POSTNL, Packaging.MEDIUM);
+
+        when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
+        when(query.setParameter(1, 1)).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(order);
+
+        orderDao = new OrderJPADao(entityManager);
+        DomainController domainController = new DomainController(orderDao);
+
+        assertThrows(OrderStatusException.class, () -> domainController.processOrder(1, TransportService.BPOST));
+        verify(query).setParameter(1, 1);
     }
 
 }

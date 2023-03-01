@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import jakarta.persistence.EntityManager;
+import exceptions.OrderStatusException;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import persistence.OrderJPADao;
-import util.JPAUtil;
 
 public class DomainController {
 
@@ -27,11 +26,9 @@ public class DomainController {
         this.orderJPADao = orderJPADao;
 
         observableOrdersList = FXCollections.observableArrayList();//TODO opvullen observable lijst met arraylist van orders die unprocessed zijn
-        filteredOrdersList = new FilteredList<Order>(observableOrdersList, p -> true);
-        sortOrdersOnDate = (o1, o2) -> {
-            return o1.getDate().compareTo(o2.getDate());
-        };
-        sortedOrdersList = new SortedList<Order>(filteredOrdersList);
+        filteredOrdersList = new FilteredList<>(observableOrdersList, p -> true);
+        sortOrdersOnDate = Comparator.comparing(Order::getDate);
+        sortedOrdersList = new SortedList<>(filteredOrdersList);
         transportServicesObservableList = FXCollections.observableArrayList(this.giveTransportServicesAsString());
     }
 
@@ -71,13 +68,18 @@ public class DomainController {
         return "";
     }
 
-    public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException {
+    public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException, OrderStatusException {
         Order order = orderJPADao.get(orderId)
                 .orElseThrow(() -> {
                     throw new EntityNotFoundException("Order with current orderId could not be found");
                 });
+        if (!order.getStatus().equals(Status.POSTED))
+            throw new OrderStatusException("Order must have status POSTED in order to get processed!");
+
         order.setTransportService(transportService);
+        order.setTrackingCode();
         order.setStatus(Status.PROCESSED);
+
         orderJPADao.update(order);
     }
 

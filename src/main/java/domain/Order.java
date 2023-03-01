@@ -170,4 +170,13 @@ public class Order {
     public Status getStatus() {
         return this.status;
     }
+
+    public void setTrackingCode() {
+        // range 1-100 incl 100
+        this.trackingCode = (int)(Math.random()*100) + 1;
+    }
+
+    public int getTrackingCode() {
+        return this.trackingCode;
+    }
 }
