@@ -17,14 +17,14 @@ import java.util.Objects;
 public class StartUp extends Application {
 
     public static void main(String[] args) {
-        seedDatabase();
+//        seedDatabase();
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            LoginScreenController root = new LoginScreenController(new DomainController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController());
+            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController());
             Scene scene = new Scene(root, 600, 300);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);

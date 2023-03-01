@@ -12,17 +12,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import persistence.OrderJPADao;
 
-public class DomainController {
+public class OrderController {
 
-    private ObservableList<Order> observableOrdersList;
-    private FilteredList<Order> filteredOrdersList;
-    private SortedList<Order> sortedOrdersList;
-    private Comparator<Order> sortOrdersOnDate;
-    private ObservableList<String> transportServicesObservableList;
+    private final ObservableList<Order> observableOrdersList;
+    private final FilteredList<Order> filteredOrdersList;
+    private final SortedList<Order> sortedOrdersList;
+    private final Comparator<Order> sortOrdersOnDate;
+    private final ObservableList<String> transportServicesObservableList;
 
-    private OrderJPADao orderJPADao;
+    private final OrderJPADao orderJPADao;
 
-    public DomainController(OrderJPADao orderJPADao) {
+    public OrderController(OrderJPADao orderJPADao) {
         this.orderJPADao = orderJPADao;
 
         observableOrdersList = FXCollections.observableArrayList();//TODO opvullen observable lijst met arraylist van orders die unprocessed zijn
@@ -39,12 +39,7 @@ public class DomainController {
     }
 
     private List<String> giveTransportServicesAsString() {
-        TransportService[] array = TransportService.values();
-        String[] array2 = new String[array.length];
-        for (int i = 0; i < array.length; i++) {
-            array2[i] = array[i].toString();
-        }
-        return Arrays.asList(array2);
+        return Arrays.stream(TransportService.values()).map(Enum::name).toList();
     }
 
     public ObservableList<String> getTransportServicesObservableList() {
@@ -53,12 +48,11 @@ public class DomainController {
 
     public void changeFilter(String filterValue) {
         this.filteredOrdersList.setPredicate(order -> {
-            if (filterValue == null || filterValue.isEmpty()) {
+            if (filterValue == null || filterValue.isEmpty())
                 return true;
-            }
+
             String id = Integer.toString(order.getOrderId());
             return id.contains(filterValue);
-
         });
 
     }

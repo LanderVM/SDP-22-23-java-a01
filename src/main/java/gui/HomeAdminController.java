@@ -1,6 +1,6 @@
 package gui;
 
-import domain.DomainController;
+import domain.OrderController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -13,11 +13,11 @@ public class HomeAdminController extends AnchorPane{
     private Button btnManageBoxes;
     @FXML
     private Button btnManageTransportServices;
-    
-	private DomainController dc;
-    
-	public HomeAdminController(DomainController dc) {
-		this.dc = dc;
+
+	private final OrderController orderController;
+
+	public HomeAdminController(OrderController orderController) {
+		this.orderController = orderController;
 	}
 	
 	@FXML

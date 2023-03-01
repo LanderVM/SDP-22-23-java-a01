@@ -2,7 +2,7 @@ package gui;
 
 import java.util.Optional;
 
-import domain.DomainController;
+import domain.OrderController;
 import domain.UserController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -34,16 +34,18 @@ public class WarehousemanOverviewScreenController extends GridPane {
     @FXML
     private Button viewOrdersButton;
 
-    private DomainController dc;
+    private final OrderController orderController;
+    private final UserController userController;
 
 
-    public WarehousemanOverviewScreenController(DomainController dc) {
+    public WarehousemanOverviewScreenController(OrderController orderController, UserController userController) {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/WarehousemanOverviewScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 
-        this.dc = dc;
+        this.orderController = orderController;
+        this.userController = userController;
 
         try {
             loader.load();
@@ -65,7 +67,7 @@ public class WarehousemanOverviewScreenController extends GridPane {
 
     @FXML
     void logout(ActionEvent event) {
-        LoginScreenController loginScreen = new LoginScreenController(new DomainController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController());
+        LoginScreenController loginScreen = new LoginScreenController(new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController());
         Stage stage = (Stage) this.getScene().getWindow();
         Scene scene = new Scene(loginScreen);
         stage.setScene(scene);
@@ -75,7 +77,7 @@ public class WarehousemanOverviewScreenController extends GridPane {
     @FXML
     void processOrder(ActionEvent event) {
 
-        ProcessOrdersScreenController processOrdersScreenController = new ProcessOrdersScreenController(this.dc, this);
+        ProcessOrdersScreenController processOrdersScreenController = new ProcessOrdersScreenController(this.orderController, this);
         Scene scene = new Scene(processOrdersScreenController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
@@ -90,7 +92,7 @@ public class WarehousemanOverviewScreenController extends GridPane {
 
     @FXML
     void viewOrders(ActionEvent event) {
-        OrdersOverviewController ordersOverviewController = new OrdersOverviewController(dc);
+        OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController);
         Scene scene = new Scene(ordersOverviewController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);

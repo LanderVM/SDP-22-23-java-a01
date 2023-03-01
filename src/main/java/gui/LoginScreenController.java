@@ -2,7 +2,7 @@ package gui;
 
 import java.io.IOException;
 
-import domain.DomainController;
+import domain.OrderController;
 import domain.UserController;
 import exceptions.UserDoesntExistException;
 import javafx.event.ActionEvent;
@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 
 public class LoginScreenController extends AnchorPane {
 
-    private final DomainController domainController;
+    private final OrderController orderController;
     private final UserController userController;
 
     @FXML
@@ -32,8 +32,8 @@ public class LoginScreenController extends AnchorPane {
     private TextField txtEmail;
 
 
-    public LoginScreenController(DomainController domainController, UserController userController) {
-        this.domainController = domainController;
+    public LoginScreenController(OrderController orderController, UserController userController) {
+        this.orderController = orderController;
         this.userController = userController;
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
         loader.setController(this);
@@ -84,7 +84,7 @@ public class LoginScreenController extends AnchorPane {
     }
 
     private void goToAdminScreen() {
-        HomeAdminController homeAdminController = new HomeAdminController(domainController);
+        HomeAdminController homeAdminController = new HomeAdminController(orderController);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
         loader.setRoot(homeAdminController);
         loader.setController(homeAdminController);

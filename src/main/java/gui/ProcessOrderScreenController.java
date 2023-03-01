@@ -1,6 +1,6 @@
 package gui;
 
-import domain.DomainController;
+import domain.OrderController;
 import domain.TransportService;
 import exceptions.OrderStatusException;
 import javafx.event.ActionEvent;
@@ -34,12 +34,12 @@ public class ProcessOrderScreenController extends GridPane {
     @FXML
     private Button processOrderButton;
 
-    private DomainController dc;
+    private OrderController dc;
     private ProcessOrdersScreenController parent;
     private int id;
 
 
-    public ProcessOrderScreenController(DomainController dc, ProcessOrdersScreenController parent, int id) {
+    public ProcessOrderScreenController(OrderController dc, ProcessOrdersScreenController parent, int id) {
         this.dc = dc;
         this.parent = parent;
         this.id = id;

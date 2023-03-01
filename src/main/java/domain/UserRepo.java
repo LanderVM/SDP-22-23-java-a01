@@ -4,7 +4,7 @@ import repository.UserMapper;
 
 public class UserRepo {
 	
-	private UserMapper userMapper;
+	private final UserMapper userMapper;
 	
 	public UserRepo (UserMapper userMapper) {
 		this.userMapper = userMapper;

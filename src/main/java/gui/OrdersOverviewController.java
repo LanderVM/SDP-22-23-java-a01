@@ -1,10 +1,11 @@
 package gui;
 
+import domain.UserController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import domain.DomainController;
+import domain.OrderController;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.Label;
@@ -16,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 
 import javafx.scene.control.TableColumn;
+
+import java.io.IOException;
 
 public class OrdersOverviewController extends AnchorPane {
     @FXML
@@ -59,11 +62,13 @@ public class OrdersOverviewController extends AnchorPane {
     @FXML
     private Label lblOrderOverview;
 
-    private DomainController dc;
+    private final OrderController orderController;
+    private final UserController userController;
 
-    public OrdersOverviewController(DomainController dc) {
+    public OrdersOverviewController(OrderController orderController, UserController userController) {
 
-        this.dc = dc;
+        this.orderController = orderController;
+        this.userController = userController;
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/OrdersOverview.fxml"));
         loader.setController(this);
@@ -71,21 +76,20 @@ public class OrdersOverviewController extends AnchorPane {
 
         try {
             loader.load();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
 
     }
 
     // Event Listener on Hyperlink[#btnHome].onAction
     @FXML
     public void showHome(ActionEvent event) {
-//        if (dc.userIsAdmin(user)) {
+        if (userController.userIsAdmin()){
             goToAdminScreen();
-//        } else {
-//            goToWarehousmanScreen();
-//        }
+        } else{
+            goToWarehousmanScreen();
+        }
     }
 
     // Event Listener on Hyperlink[#btnOrders].onAction
@@ -101,7 +105,7 @@ public class OrdersOverviewController extends AnchorPane {
     }
 
     private void goToWarehousmanScreen() {
-        WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(dc);
+        WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(orderController, userController);
         Scene scene = new Scene(warehousemanOverviewScreenController, 600, 600);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);

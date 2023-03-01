@@ -81,9 +81,9 @@ public class OrderTest {
         when(query.getSingleResult()).thenReturn(order);
 
         orderDao = new OrderJPADao(entityManager);
-        DomainController domainController = new DomainController(orderDao);
+        OrderController orderController = new OrderController(orderDao);
 
-        domainController.processOrder(1, TransportService.BPOST);
+        orderController.processOrder(1, TransportService.BPOST);
         Order orderAfterUpdate = orderDao.get(1).get();
 
         assertEquals(TransportService.BPOST, orderAfterUpdate.getTransportService());
@@ -100,9 +100,9 @@ public class OrderTest {
         when(query.getSingleResult()).thenReturn(order);
 
         orderDao = new OrderJPADao(entityManager);
-        DomainController domainController = new DomainController(orderDao);
+        OrderController orderController = new OrderController(orderDao);
 
-        assertThrows(OrderStatusException.class, () -> domainController.processOrder(1, TransportService.BPOST));
+        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1, TransportService.BPOST));
         verify(query).setParameter(1, 1);
     }
 

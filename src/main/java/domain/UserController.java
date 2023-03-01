@@ -6,7 +6,7 @@ import repository.UserMapper;
 public class UserController {
 
     private User user;
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
     public UserController() {
         userRepo = new UserRepo(new UserMapper());
@@ -18,6 +18,7 @@ public class UserController {
 
         if (user == null)
             throw new UserDoesntExistException();
+
         return user.getPassword().equals(password);
     }
 
