@@ -4,14 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 @Entity
 @Table(name = "orders")
@@ -26,18 +18,6 @@ import javafx.beans.property.StringProperty;
         )
 })
 public class Order {
-
-	
-    @Transient
-    private SimpleIntegerProperty idForTable;
-    @Transient
-    private SimpleStringProperty companyForTable;
-    @Transient
-    private ObjectProperty<Date> dateForTable;
-    @Transient
-    private SimpleObjectProperty<Double> costForTable;
-    @Transient
-    private ObjectProperty<Status> statusForTable;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,46 +58,13 @@ public class Order {
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
-
-        
-       
-        
     }
 
     protected Order() {
-    	 idForTable = new SimpleIntegerProperty();
-         idForTable.set(orderId);
-         companyForTable = new SimpleStringProperty();
-         companyForTable.set(this.company);
-        dateForTable = new SimpleObjectProperty<Date>();
-        dateForTable.set(date);
-         costForTable = new SimpleObjectProperty<Double>();
-         costForTable.set(10.25);
-         statusForTable = new SimpleObjectProperty<Status>();
-         statusForTable.set(status);
     }
 
     public int getOrderId() {
         return orderId;
-    }
-
-    public SimpleIntegerProperty idForTableProperty() {
-        return this.idForTable;
-    }
-
-    public SimpleStringProperty companyForTableProperty() {
-        return this.companyForTable;
-    }
-
-    public ObjectProperty<Date> dateForTableProperty() {
-        return this.dateForTable;
-    }
-    public SimpleObjectProperty<Double> costForTableProperty() {
-    	return this.costForTable;
-    }
-    
-    public ObjectProperty<Status> statusForTableProperty(){
-    	return this.statusForTable;
     }
 
     @Override
@@ -162,9 +109,6 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "idForTable=" + idForTable +
-                ", companyForTable=" + companyForTable +
-                ", dateForTable=" + dateForTable +
                 ", orderId=" + orderId +
                 ", company='" + company + '\'' +
                 ", customerName='" + customerName + '\'' +
@@ -177,6 +121,82 @@ public class Order {
                 ", transportService=" + transportService +
                 ", trackingCode=" + trackingCode +
                 '}';
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Product> getProductsList() {
+        return productsList;
+    }
+
+    public void setProductsList(List<Product> productsList) {
+        this.productsList = productsList;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Packaging getPackaging() {
+        return packaging;
+    }
+
+    public void setPackaging(Packaging packaging) {
+        this.packaging = packaging;
+    }
+
+    public TransportService getTransportService() {
+        return transportService;
+    }
+
+    public int getTrackingCode() {
+        return trackingCode;
+    }
+
+    public void setTrackingCode(int trackingCode) {
+        this.trackingCode = trackingCode;
     }
 
     public Date getDate() {

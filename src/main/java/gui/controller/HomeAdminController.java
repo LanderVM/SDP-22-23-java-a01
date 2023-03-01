@@ -1,4 +1,4 @@
-package gui;
+package gui.controller;
 
 import domain.DomainController;
 import javafx.fxml.FXML;

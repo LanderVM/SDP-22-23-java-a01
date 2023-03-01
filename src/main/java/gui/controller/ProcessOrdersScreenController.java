@@ -1,4 +1,4 @@
-package gui;
+package gui.controller;
 
 import java.util.Date;
 
@@ -54,9 +54,9 @@ public class ProcessOrdersScreenController extends GridPane{
 			System.out.println(e);
 		}
         
-        idCol.setCellValueFactory(cellData->cellData.getValue().idForTableProperty());
-        companyCol.setCellValueFactory(cellData->cellData.getValue().companyForTableProperty());
-        dateCol.setCellValueFactory(cellData->cellData.getValue().dateForTableProperty());
+//        idCol.setCellValueFactory(cellData->cellData.getValue().idForTableProperty());
+//        companyCol.setCellValueFactory(cellData->cellData.getValue().companyForTableProperty());
+//        dateCol.setCellValueFactory(cellData->cellData.getValue().dateForTableProperty());
         
         processableOrdersTable.setItems(dc.getObservableOrdersList());
         

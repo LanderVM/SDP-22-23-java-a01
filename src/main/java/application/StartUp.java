@@ -1,18 +1,15 @@
 package application;
 
 import domain.*;
-import gui.LoginScreenController;
-import gui.OrdersOverviewController;
+import gui.controller.OrdersOverviewController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.JPAUtil;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class StartUp extends Application {
 
