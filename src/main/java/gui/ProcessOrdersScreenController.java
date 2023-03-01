@@ -1,6 +1,6 @@
 package gui;
 
-import domain.OrderController;
+import domain.DomainController;
 import domain.Order;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class ProcessOrdersScreenController extends GridPane {
+public class ProcessOrdersScreenController extends GridPane{
 
 
     @FXML
@@ -28,10 +28,10 @@ public class ProcessOrdersScreenController extends GridPane {
 
     @FXML
     private TableView<Order> processableOrdersTable;
-
+    
     @FXML
     private Button backToOverviewButton;
-
+    
     @FXML
     private TextField txtFilter;
 
@@ -41,42 +41,42 @@ public class ProcessOrdersScreenController extends GridPane {
     public ProcessOrdersScreenController(OrderController orderController, WarehousemanOverviewScreenController parent) {
         this.orderController = orderController;
         this.parent = parent;
-
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ProcessOrdersScreen.fxml"));
+    	
+    	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ProcessOrdersScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 
         try {
-            loader.load();
+        	loader.load();
         } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        idCol.setCellValueFactory(cellData -> cellData.getValue().idForTableProperty());
-        companyCol.setCellValueFactory(cellData -> cellData.getValue().companyForTableProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateForTableProperty());
+			System.out.println(e);
+		}
+        
+        idCol.setCellValueFactory(cellData->cellData.getValue().idForTableProperty());
+        companyCol.setCellValueFactory(cellData->cellData.getValue().companyForTableProperty());
+        dateCol.setCellValueFactory(cellData->cellData.getValue().dateForTableProperty());
 
         processableOrdersTable.setItems(orderController.getObservableOrdersList());
-
-        processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
-            int id = newOrder.getOrderId();
-            ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, this, id);
-            Scene scene = new Scene(processOrderScreenController);
-            Stage stage = (Stage) this.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+        
+        processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder)->{
+        	int id = newOrder.getOrderId();
+        	ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.dc,this,id);
+        	Scene scene = new Scene(processOrderScreenController);
+        	Stage stage = (Stage)this.getScene().getWindow();
+        	stage.setScene(scene);
+        	stage.show();
         });
     }
-
+    
     @FXML
     void filter(KeyEvent event) {
-        String newValue = txtFilter.getText();
+    	String newValue = txtFilter.getText();
         orderController.changeFilter(newValue);
     }
-
+    
     @FXML
     void backToOverview(ActionEvent event) {
-        Stage stage = (Stage) this.getScene().getWindow();
-        stage.setScene(parent.getScene());
+    	Stage stage = (Stage)this.getScene().getWindow();
+    	stage.setScene(parent.getScene());
     }
 }

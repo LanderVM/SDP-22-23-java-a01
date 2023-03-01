@@ -5,10 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.*;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 @Entity
 @Table(name = "orders")
@@ -27,13 +23,6 @@ import javafx.beans.property.StringProperty;
         )
 })
 public class Order {
-
-    @Transient
-    private SimpleIntegerProperty idForTable;
-    @Transient
-    private SimpleStringProperty companyForTable;
-    @Transient
-    private SimpleStringProperty dateForTable;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,13 +63,6 @@ public class Order {
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
-
-        idForTable = new SimpleIntegerProperty();
-        idForTable.set(orderId);
-        companyForTable = new SimpleStringProperty();
-        companyForTable.set(company);
-        dateForTable = new SimpleStringProperty();
-        dateForTable.set(date.toString());
     }
 
     protected Order() {
@@ -88,43 +70,6 @@ public class Order {
 
     public int getOrderId() {
         return orderId;
-    }
-
-    public IntegerProperty idForTableProperty() {
-        return this.idForTable;
-    }
-
-    public StringProperty companyForTableProperty() {
-        return this.companyForTable;
-    }
-
-    public StringProperty dateForTableProperty() {
-        return this.dateForTable;
-    }
-
-    public void setTransportService(TransportService transportService) {
-        this.transportService = transportService;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public TransportService getTransportService() {
-        return this.transportService;
-    }
-
-    public Status getStatus() {
-        return this.status;
-    }
-
-    public void setTrackingCode() {
-        // range 1-100 incl 100
-        this.trackingCode = (int) (Math.random() * 100) + 1;
     }
 
     @Override

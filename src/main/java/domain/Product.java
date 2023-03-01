@@ -16,6 +16,7 @@ public class Product implements Serializable {
     private String name;
     private double price;
 
+
     public Product(String name, double price) {
         setName(name);
         setPrice(price);

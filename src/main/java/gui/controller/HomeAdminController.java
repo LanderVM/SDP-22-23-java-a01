@@ -1,4 +1,4 @@
-package gui;
+package gui.controller;
 
 import domain.OrderController;
 import javafx.fxml.FXML;

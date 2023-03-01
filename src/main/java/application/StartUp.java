@@ -1,18 +1,16 @@
 package application;
 
 import domain.*;
-import gui.LoginScreenController;
+import gui.controller.OrdersOverviewController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import persistence.OrderJPADao;
 import util.JPAUtil;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class StartUp extends Application {
 
@@ -73,6 +71,5 @@ public class StartUp extends Application {
         orderManager.persist(o2);
         orderManager.getTransaction().commit();
         orderManager.close();
-
     }
 }
