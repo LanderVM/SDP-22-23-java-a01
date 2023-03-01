@@ -6,30 +6,33 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="baseGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="829.0" type="GridPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="baseGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="829.0" type="GridPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="823.0000244140625" minWidth="415.79998168945315" prefWidth="415.79998168945315" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="412.8000183105469" minWidth="5.5999755859375" prefWidth="412.8000183105469" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="238.19998779296876" minHeight="0.0" prefHeight="73.39999389648438" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="238.19998779296876" minHeight="10.0" prefHeight="59.20000610351562" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="238.19998779296876" minHeight="10.0" prefHeight="42.399993896484375" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="238.19998779296876" minHeight="0.0" prefHeight="39.20000610351562" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="362.8" minHeight="10.0" prefHeight="69.60001220703126" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="362.8" minHeight="10.0" prefHeight="69.60001220703126" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="431.1999877929687" minHeight="10.0" prefHeight="431.1999877929687" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="30.0" minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" text="Process orders screen" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label alignment="CENTER" text="Process orders screen" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="processableOrdersTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+      <TableView fx:id="processableOrdersTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="130.0" sortable="false" text="id" />
           <TableColumn fx:id="companyCol" prefWidth="130.0" sortable="false" text="company" />
@@ -39,13 +42,23 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="backToOverviewButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backToOverview" text="Back to overview" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <Label text="This table contains all unprocessed orders. Click on an order to open it's process screen." GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Label text="Filter on id:" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button fx:id="backToOverviewButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backToOverview" style="-fx-background-color: #EF463C;" text="Back to overview" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+      <Label text="This table contains all unprocessed orders. Click on an order to open it's process screen." GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Label text="Filter on id:" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="15.0" />
          </GridPane.margin>
       </Label>
-      <TextField fx:id="txtFilter" maxWidth="650.0" onKeyReleased="#filter" prefHeight="26.0" prefWidth="650.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
+      <TextField fx:id="txtFilter" maxWidth="650.0" onKeyReleased="#filter" prefHeight="26.0" prefWidth="650.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cc372d;" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EF463C;" GridPane.columnSpan="2">
+         <children>
+            <Label layoutX="29.0" layoutY="1.0" prefHeight="54.0" prefWidth="167.0" text="Delaware" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </fx:root>
