@@ -2,6 +2,7 @@ package application;
 
 import domain.*;
 import gui.LoginScreenController;
+import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
