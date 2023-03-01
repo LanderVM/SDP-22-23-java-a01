@@ -45,7 +45,7 @@ public class ProcessOrderScreenController extends GridPane{
     public ProcessOrderScreenController(DomainController dc,ProcessOrdersScreenController parent,int id) {
     	this.dc = dc;
     	this.parent=parent;
-    	
+    	this.id = id;
     	
     	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ProcessOrderScreen.fxml"));
         loader.setController(this);
@@ -58,7 +58,7 @@ public class ProcessOrderScreenController extends GridPane{
 		}
         
         overviewOrderLabel.setText("Overview order: "+Integer.toString(id));
-        orderTextArea.setText(dc.giveOverviewOrder(id));
+        orderTextArea.setText(dc.getOrderOverview(id));
         choiceBoxTransportServices.setItems(dc.getTransportServicesObservableList());
     }
 
@@ -78,7 +78,7 @@ public class ProcessOrderScreenController extends GridPane{
     		alert.showAndWait();
     		return;
     	}
-    	dc.processOrder(selectionTransportService, id);
+    	dc.processOrder(id, selectionTransportService);
     	Stage stage = (Stage) this.getScene().getWindow();
     	stage.setScene(parent.getScene());
     }

@@ -1,26 +1,26 @@
 package repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
 
 import domain.User;
-import util.JPAUserUtil;
+import jakarta.persistence.EntityManagerFactory;
+import util.JPAUtil;
 
 public class UserMapper {
-	
-	public User getUser (String accountName) {
 
-		EntityManagerFactory emf = JPAUserUtil.getEntityManagerFactory();
-		EntityManager em = emf.createEntityManager();
-		
-		User user;
-		
-		em.getTransaction().begin();
-		user = em.find(User.class, accountName);
-		em.getTransaction().commit();
-		em.close();
+    public User getUser(String accountName) {
 
-		return user;
-	}
-	
+        EntityManagerFactory emf = JPAUtil.getUserEntityManagerFactory();
+        EntityManager em = emf.createEntityManager();
+
+        User user;
+
+        em.getTransaction().begin();
+        user = em.find(User.class, accountName);
+        em.getTransaction().commit();
+        em.close();
+
+        return user;
+    }
+
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<fx:root maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="46.0" layoutY="30.0" text="Home">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="17.0" layoutY="100.0" prefHeight="190.0" prefWidth="568.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnManageEmployees" mnemonicParsing="false" onAction="#manageEmployees" prefHeight="53.0" prefWidth="216.0" style="-fx-background-color: EC4842;" text="Manage employees" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnManageBoxes" mnemonicParsing="false" onAction="#manageBoxes" prefHeight="53.0" prefWidth="205.0" style="-fx-background-color: EC4842;" text="Manage boxes" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnManageTransportServices" mnemonicParsing="false" onAction="#manageTransportServices" prefHeight="53.0" prefWidth="211.0" style="-fx-background-color: EC4842;" text="Manage transport services" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+   </children>
+</fx:root>

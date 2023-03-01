@@ -1,10 +1,10 @@
 package gui;
 
-import java.util.Optional;
+import java.io.IOException;
 
 import domain.DomainController;
+import domain.UserController;
 import exceptions.UserDoesntExistException;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,98 +12,94 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogEvent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class LoginScreenController extends GridPane {
+public class LoginScreenController extends AnchorPane {
 
-    private DomainController dc;
-
-    @FXML
-    private Button loginButton;
+    private final DomainController domainController;
+    private final UserController userController;
 
     @FXML
-    private PasswordField passwordField;
+    private Button btnSignIn;
 
     @FXML
-    private TextField userNameTextfield;
+    private PasswordField txtPassword;
 
     @FXML
-    private Button exitApplicationButton;
+    private TextField txtEmail;
 
-    public LoginScreenController(DomainController dc) {
 
-    	this.dc = dc;
-    	
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LoginScreen.fxml"));
+    public LoginScreenController(DomainController domainController, UserController userController) {
+        this.domainController = domainController;
+        this.userController = userController;
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
         loader.setController(this);
         loader.setRoot(this);
-
         try {
-        	loader.load();
-        } catch (Exception e) {
-			System.out.println(e);
-		}
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
-    void login(ActionEvent event) {
+    void SignIn(ActionEvent event) {
         try {
-            boolean authenticated = dc.checkUser(userNameTextfield.getText(), passwordField.getText());
-           
+            boolean authenticated = userController.checkUser(txtEmail.getText(), txtPassword.getText());
             if (!authenticated) {
-                passwordField.setText("");
+                txtPassword.setText("");
                 Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Wrong password!");
-                alert.setHeaderText("You have given the wrong password, try another!");
+                alert.setTitle("Wrong password");
+                alert.setHeaderText(null);
+                alert.setContentText("The password entered is incorrect");
                 alert.showAndWait();
             } else {
-                if (dc.userIsAdmin()) {
+                if (userController.userIsAdmin()) {
                     goToAdminScreen();
                 } else {
                     goToWarehousmanScreen();
                 }
             }
-
         } catch (UserDoesntExistException e) {
-            userNameTextfield.setText("");
-            passwordField.setText("");
+            //txtEmail.setText("");
+            txtPassword.setText("");
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText(e.getMessage());
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
     }
 
-    @FXML
-    void exitApplication(ActionEvent event) {
-    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    	alert.setTitle("Confirmation");
-    	alert.setHeaderText("You sure you want to exit application?");
-    	Optional<ButtonType> result = alert.showAndWait();
-    	if (result.get()==ButtonType.OK) {
-    		Platform.exit();
-    	}
-    }
-
     private void goToWarehousmanScreen() {
-        WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(dc);
+        /*WarehousemanOverviewScreenController warehousemanOverviewScreenController = new WarehousemanOverviewScreenController(dc);
         Scene scene = new Scene(warehousemanOverviewScreenController,600,600);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
 
     }
 
     private void goToAdminScreen() {
-        // TODO
+        HomeAdminController homeAdminController = new HomeAdminController(domainController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
+        loader.setRoot(homeAdminController);
+        loader.setController(homeAdminController);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+        Scene scene = new Scene(homeAdminController, 600, 300);
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Home");
+        stage.show();
     }
-    
 
 
 }

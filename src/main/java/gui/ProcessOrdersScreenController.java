@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -29,6 +31,9 @@ public class ProcessOrdersScreenController extends GridPane{
     
     @FXML
     private Button backToOverviewButton;
+    
+    @FXML
+    private TextField txtFilter;
 
     private DomainController dc;
     private WarehousemanOverviewScreenController parent;
@@ -54,13 +59,19 @@ public class ProcessOrdersScreenController extends GridPane{
         processableOrdersTable.setItems(dc.getObservableOrdersList());
         
         processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder)->{
-        	int id = newOrder.getId();
+        	int id = newOrder.getOrderId();
         	ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.dc,this,id);
         	Scene scene = new Scene(processOrderScreenController);
         	Stage stage = (Stage)this.getScene().getWindow();
         	stage.setScene(scene);
         	stage.show();
         });
+    }
+    
+    @FXML
+    void filter(KeyEvent event) {
+    	String newValue = txtFilter.getText();
+    	dc.changeFilter(newValue);
     }
     
     @FXML
