@@ -2,6 +2,7 @@ package application;
 
 import domain.*;
 import gui.LoginScreenController;
+import gui.OrdersOverviewController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,8 +24,8 @@ public class StartUp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            LoginScreenController root = new LoginScreenController(new DomainController(), new UserController());
-            Scene scene = new Scene(root, 600, 300);
+            OrdersOverviewController root = new OrdersOverviewController(new DomainController(), new UserController());
+            Scene scene = new Scene(root, 670, 600);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));

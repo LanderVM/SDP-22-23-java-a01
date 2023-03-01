@@ -23,6 +23,7 @@ import javafx.beans.property.StringProperty;
 })
 public class Order {
 
+	
     @Transient
     private SimpleIntegerProperty idForTable;
     @Transient

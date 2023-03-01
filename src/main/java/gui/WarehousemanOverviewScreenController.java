@@ -33,15 +33,17 @@ public class WarehousemanOverviewScreenController extends GridPane{
     private Button viewOrdersButton;
     
     private DomainController dc;
+    private UserController uc;
     
     
-    public WarehousemanOverviewScreenController(DomainController dc) {
+    public WarehousemanOverviewScreenController(DomainController dc, UserController uc) {
     	
     	FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/WarehousemanOverviewScreen.fxml"));
     	loader.setController(this);
     	loader.setRoot(this);
     	
     	this.dc = dc;
+    	this.uc = uc;
     	
     	try {
         	loader.load();
@@ -88,7 +90,7 @@ public class WarehousemanOverviewScreenController extends GridPane{
 
     @FXML
     void viewOrders(ActionEvent event) {
-    	OrdersOverviewController ordersOverviewController = new OrdersOverviewController(dc);
+    	OrdersOverviewController ordersOverviewController = new OrdersOverviewController(dc, uc);
     	Scene scene = new Scene(ordersOverviewController);
     	Stage stage = (Stage)this.getScene().getWindow();
     	stage.setScene(scene);
