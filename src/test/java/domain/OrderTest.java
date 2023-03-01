@@ -29,6 +29,12 @@ public class OrderTest {
 
     private Order order;
 
+    private void mockFindAllPosted() {
+        when(entityManager.createNamedQuery("Order.findAllPosted", Order.class)).thenReturn(query);
+        when(query.setParameter(1, 1)).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(order);
+    }
+
     @Test
     public void getById_happyFlow() {
         order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", 10.30), new Product("Test product 2", 9.80)), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
@@ -80,6 +86,8 @@ public class OrderTest {
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(order);
 
+        mockFindAllPosted();
+
         orderDao = new OrderJPADao(entityManager);
         OrderController orderController = new OrderController(orderDao);
 
@@ -98,6 +106,8 @@ public class OrderTest {
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(order);
+
+        mockFindAllPosted();
 
         orderDao = new OrderJPADao(entityManager);
         OrderController orderController = new OrderController(orderDao);

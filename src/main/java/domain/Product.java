@@ -3,6 +3,7 @@ package domain;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product")
@@ -38,22 +39,11 @@ public class Product implements Serializable {
 
         Product product = (Product) o;
 
-        if (Double.compare(product.price, price) != 0) return false;
-        return name.equals(product.name);
+        return productId == product.productId;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = name.hashCode();
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" + "productId=" + productId + ", name='" + name + '\'' + ", price=" + price + '}';
+        return Objects.hash(productId);
     }
 }

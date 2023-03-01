@@ -2,6 +2,7 @@ package domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.*;
 import javafx.beans.property.IntegerProperty;
@@ -101,66 +102,12 @@ public class Order {
         return this.dateForTable;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Order order = (Order) o;
-
-        if (trackingCode != order.trackingCode) return false;
-        if (!company.equals(order.company)) return false;
-        if (!customerName.equals(order.customerName)) return false;
-        if (!customerEmail.equals(order.customerEmail)) return false;
-        if (!address.equals(order.address)) return false;
-        if (!date.equals(order.date)) return false;
-        if (!productsList.equals(order.productsList)) return false;
-        if (status != order.status) return false;
-        if (packaging != order.packaging) return false;
-        return transportService == order.transportService;
-    }
-
     public void setTransportService(TransportService transportService) {
         this.transportService = transportService;
     }
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = company.hashCode();
-        result = 31 * result + customerName.hashCode();
-        result = 31 * result + customerEmail.hashCode();
-        result = 31 * result + address.hashCode();
-        result = 31 * result + date.hashCode();
-        result = 31 * result + productsList.hashCode();
-        result = 31 * result + status.hashCode();
-        result = 31 * result + packaging.hashCode();
-        result = 31 * result + transportService.hashCode();
-        result = 31 * result + trackingCode;
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "idForTable=" + idForTable +
-                ", companyForTable=" + companyForTable +
-                ", dateForTable=" + dateForTable +
-                ", orderId=" + orderId +
-                ", company='" + company + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
-                ", address='" + address + '\'' +
-                ", date=" + date +
-                ", products=" + productsList +
-                ", status=" + status +
-                ", packaging=" + packaging +
-                ", transportService=" + transportService +
-                ", trackingCode=" + trackingCode +
-                '}';
     }
 
     public Date getDate() {
@@ -178,5 +125,20 @@ public class Order {
     public void setTrackingCode() {
         // range 1-100 incl 100
         this.trackingCode = (int) (Math.random() * 100) + 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        return orderId == order.orderId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId);
     }
 }
