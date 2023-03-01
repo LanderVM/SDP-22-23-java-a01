@@ -1,9 +1,15 @@
 package gui;
 
+import java.io.IOException;
+
 import domain.OrderController;
+import domain.UserController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class HomeWarehouseOperatorController extends AnchorPane{
 
@@ -15,9 +21,11 @@ public class HomeWarehouseOperatorController extends AnchorPane{
 	    private Button btnChangeTrackAndTrace;
 	    
 		private OrderController oc;
+		private UserController uc;
 	    
-		public HomeWarehouseOperatorController(OrderController oc) {
+		public HomeWarehouseOperatorController(OrderController oc, UserController uc) {
 			this.oc = oc;
+			this.uc = uc;
 		}
 		
 		@FXML
@@ -27,11 +35,26 @@ public class HomeWarehouseOperatorController extends AnchorPane{
 
 		@FXML
 		void viewOrders() {
-			//C
+			OrdersOverviewController ordersOverviewController = new OrdersOverviewController(oc, uc);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
+
+			loader.setRoot(ordersOverviewController);
+			loader.setController(ordersOverviewController);
+			try {
+				loader.load();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+			Scene scene = new Scene(ordersOverviewController);
+			Stage stage = (Stage) this.getScene().getWindow();
+			stage.setScene(scene);
+			stage.setTitle("Orders");
+			stage.show();
 		} 
 
 		@FXML
 		void changeTrackAndTrace() {
-			//TO DO
+			//C
 		} 
 }
