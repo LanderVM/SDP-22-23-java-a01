@@ -30,14 +30,12 @@ public class OrderJPADao implements JPADao<Order> {
         return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAll", Order.class).getResultList());
     }
 
+    public List<Order> getAllPosted() {
+        return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllPosted", Order.class).getResultList());
+    }
+
     @Override
     public void update(Order order) {
-//        T order = get(orderId)
-//                .orElseThrow(() -> {
-//                    throw new EntityNotFoundException("Order with current orderId could not be found");
-//                });
-//
-//        order.setTransportService(transportService);
         entityManager.merge(order);
     }
 }

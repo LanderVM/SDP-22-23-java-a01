@@ -19,6 +19,10 @@ import javafx.beans.property.StringProperty;
         @NamedQuery(
                 name = "Order.findAll",
                 query = "SELECT d FROM Order d"
+        ),
+        @NamedQuery(
+                name = "Order.findAllPosted",
+                query = "SELECT d FROM Order d WHERE d.status = 'POSTED'"
         )
 })
 public class Order {
