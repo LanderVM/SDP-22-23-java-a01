@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import domain.OrderController;
 import domain.TransportService;
+import domain.UserController;
 import exceptions.OrderStatusException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -42,9 +43,12 @@ public class ProcessOrderScreenController extends GridPane {
     private ProcessOrdersScreenController parent;
     private int id;
 
+	private UserController uc;
 
-    public ProcessOrderScreenController(OrderController dc, ProcessOrdersScreenController parent, int id) {
+
+    public ProcessOrderScreenController(OrderController dc, UserController uc, ProcessOrdersScreenController parent, int id) {
         this.dc = dc;
+        this.uc = uc;
         this.parent = parent;
         this.id = id;
 
@@ -64,8 +68,8 @@ public class ProcessOrderScreenController extends GridPane {
     }
 
     @FXML
-    void backToProcessOrdersScreen(ActionEvent event) {
-    	ProcessOrdersScreenController processOrdersScreenController = new ProcessOrdersScreenController(dc, null);
+    void backToProcessOrdersScreen(ActionEvent event) {/*
+    	ProcessOrdersScreenController processOrdersScreenController = new ProcessOrdersScreenController(dc, uc);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/processOrdersScreen.fxml"));
 		loader.setRoot(processOrdersScreenController);
 		loader.setController(processOrdersScreenController);
@@ -79,7 +83,14 @@ public class ProcessOrderScreenController extends GridPane {
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
 		stage.setTitle("ProcessOrders");
-		stage.show();
+		stage.show();*/
+    	
+
+    	ProcessOrdersScreenController processOrdersScreenController = new ProcessOrdersScreenController(dc, uc);
+        Scene scene = new Scene(processOrdersScreenController);
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

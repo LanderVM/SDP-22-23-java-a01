@@ -70,7 +70,7 @@ public class ProcessOrdersScreenController extends GridPane {
             if (newOrder == null)
                 return;
             int id = newOrder.getOrderId();
-            ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, this, id);
+            ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, uc, this, id);
             Scene scene = new Scene(processOrderScreenController);
             Stage stage = (Stage) this.getScene().getWindow();
             stage.setScene(scene);
