@@ -109,7 +109,11 @@ public class OrdersOverviewController extends AnchorPane {
 
     @FXML
     public void showOrders(ActionEvent event) {
-
+    	ProcessOrdersScreenController ordersOverviewController = new ProcessOrdersScreenController(orderController, userController);
+        Scene scene = new Scene(ordersOverviewController);
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     // Event Listener on Hyperlink[#btnHome].onAction
@@ -125,7 +129,7 @@ public class OrdersOverviewController extends AnchorPane {
 
     @FXML
     public void showNotifications(ActionEvent event) {
-
+    	
     }
 	private void goToHomeWarehouseOperator() {
 		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
