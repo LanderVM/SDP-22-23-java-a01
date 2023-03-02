@@ -12,7 +12,6 @@ import domain.Status;
 import domain.TransportService;
 import domain.User;
 import domain.UserController;
-import exceptions.OrderStatusException;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -27,18 +26,6 @@ public class StartUp extends Application {
     public static void main(String[] args) {
         seedDatabase();
         launch(args);
-//        OrderController oc = new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager()));
-//        List<Order> a = oc.getOrderList();
-//        System.out.println(oc.getOrderList());
-//        System.out.println(a.get(0));
-//        try {
-//            oc.processOrder(1, TransportService.BPOST);
-//        } catch (OrderStatusException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(a.get(0));
-//
-//        System.out.println(oc.getOrderList());
     }
 
     @Override
