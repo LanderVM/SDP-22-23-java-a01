@@ -10,27 +10,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #EF463C;" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="txtEmail" layoutX="46.0" layoutY="105.0" prefHeight="35.0" prefWidth="242.0" promptText="e-mail" text="testMagazijnier@mail.com">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </TextField>
-      <Label layoutX="46.0" layoutY="30.0" text="Log In">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnSignIn" layoutX="46.0" layoutY="238.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="35.0" prefWidth="146.0" style="-fx-cursor: hand; -fx-background-color: EC4842;" text="Sign In" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="249.0" fitWidth="274.0" layoutX="300.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/LogoDelaware.png" />
-         </image></ImageView>
-      <PasswordField fx:id="txtPassword" layoutX="46.0" layoutY="161.0" prefHeight="35.0" prefWidth="242.0" promptText="Password" text="testMagazijnier" />
+      <AnchorPane fx:id="loginPane" layoutX="371.0" layoutY="119.0" prefHeight="880.0" prefWidth="1219.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Button fx:id="btnSignIn" layoutX="133.0" layoutY="701.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="78.0" prefWidth="596.0" style="-fx-cursor: hand; -fx-background-color: #EF463C;" text="Sign In" textFill="WHITE" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="601.0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Button>
+            <TextField fx:id="txtEmail" layoutX="226.0" layoutY="417.0" prefHeight="78.0" prefWidth="596.0" promptText="e-mail" text="testMagazijnier@mail.com" AnchorPane.bottomAnchor="461.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="340.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </TextField>
+            <Label fx:id="lblLogin" layoutX="101.0" layoutY="165.0" prefHeight="156.0" prefWidth="300.0" text="Log In" AnchorPane.bottomAnchor="559.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="818.0" AnchorPane.topAnchor="165.0">
+               <font>
+                  <Font name="System Bold" size="64.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="txtPassword" layoutX="200.0" layoutY="598.0" prefHeight="78.0" prefWidth="596.0" promptText="Password" text="testMagazijnier" AnchorPane.bottomAnchor="340.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="458.0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </PasswordField>
+            <ImageView fx:id="imgDelaware" fitHeight="581.0" fitWidth="948.0" layoutX="603.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="603.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="164.0">
+               <image>
+                  <Image url="@2023-java-a01/src/main/resources/images/LogoDelaware.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </fx:root>
