@@ -90,7 +90,7 @@ public class ProcessOrdersScreenController extends GridPane {
     }
 
     public void refreshOrderList() {
-        ordersList = orderController.getOrderList();
+        ordersList = orderController.getPostedOrdersList();
         List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
         processableOrdersTable.setItems(FXCollections.observableArrayList(viewList));
     }

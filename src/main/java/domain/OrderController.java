@@ -23,6 +23,11 @@ public class OrderController {
     }
 
     public List<Order> getOrderList() {
+        return orderJPADao.getAll();
+    }
+
+
+    public List<Order> getPostedOrdersList() {
         return orderJPADao.getAllPosted();
     }
 
