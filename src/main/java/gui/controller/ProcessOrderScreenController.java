@@ -1,5 +1,7 @@
 package gui.controller;
 
+import java.io.IOException;
+
 import domain.OrderController;
 import domain.TransportService;
 import exceptions.OrderStatusException;
@@ -7,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -62,9 +65,21 @@ public class ProcessOrderScreenController extends GridPane {
 
     @FXML
     void backToProcessOrdersScreen(ActionEvent event) {
-        Stage stage = (Stage) this.getScene().getWindow();
-        parent.refreshOrderList();
-        stage.setScene(parent.getScene());
+    	ProcessOrdersScreenController processOrdersScreenController = new ProcessOrdersScreenController(dc, null);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/processOrdersScreen.fxml"));
+		loader.setRoot(processOrdersScreenController);
+		loader.setController(processOrdersScreenController);
+		try {
+			loader.load();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		Scene scene = new Scene(processOrdersScreenController);
+		Stage stage = (Stage) this.getScene().getWindow();
+		stage.setScene(scene);
+		stage.setTitle("ProcessOrders");
+		stage.show();
     }
 
     @FXML

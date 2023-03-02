@@ -1,5 +1,6 @@
 package gui.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -85,8 +86,21 @@ public class ProcessOrdersScreenController extends GridPane {
 
     @FXML
     void backToOverview(ActionEvent event) {
-        //Stage stage = (Stage) this.getScene().getWindow();
-        //stage.setScene(parent.getScene());
+    	OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, uc);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
+		loader.setRoot(ordersOverviewController);
+		loader.setController(ordersOverviewController);
+		try {
+			loader.load();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		Scene scene = new Scene(ordersOverviewController);
+		Stage stage = (Stage) this.getScene().getWindow();
+		stage.setScene(scene);
+		stage.setTitle("Orders Overview");
+		stage.show();
     }
 
     public void refreshOrderList() {
