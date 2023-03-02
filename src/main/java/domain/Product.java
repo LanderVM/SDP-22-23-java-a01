@@ -33,6 +33,9 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    public double getPrice() {
+        return this.price;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,5 +1,6 @@
 package gui.view;
 
+import domain.Product;
 import domain.Status;
 import domain.Order;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -20,7 +21,7 @@ public class OrderView {
         orderId = new SimpleIntegerProperty(order.getOrderId());
         company = new SimpleStringProperty(order.getCompany());
         date = new SimpleObjectProperty<>(order.getDate());
-        totalPrice = new SimpleObjectProperty<>(10.2); // TODO
+        totalPrice = new SimpleObjectProperty<>(order.getProductsList().stream().mapToDouble(Product::getPrice).sum());
         status = new SimpleObjectProperty<>(order.getStatus());
     }
 
