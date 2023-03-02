@@ -12,6 +12,7 @@ import domain.Status;
 import domain.TransportService;
 import domain.User;
 import domain.UserController;
+import exceptions.OrderStatusException;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -24,8 +25,20 @@ import util.JPAUtil;
 public class StartUp extends Application {
 
     public static void main(String[] args) {
-//        seedDatabase();
+        seedDatabase();
         launch(args);
+//        OrderController oc = new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager()));
+//        List<Order> a = oc.getOrderList();
+//        System.out.println(oc.getOrderList());
+//        System.out.println(a.get(0));
+//        try {
+//            oc.processOrder(1, TransportService.BPOST);
+//        } catch (OrderStatusException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(a.get(0));
+//
+//        System.out.println(oc.getOrderList());
     }
 
     @Override
@@ -71,7 +84,7 @@ public class StartUp extends Application {
         userManager.getTransaction().commit();
         userManager.close();
 
-        Order o1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(p1, p2), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM);
+        Order o1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM);
         Order o2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM);
 
         EntityManager orderManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();

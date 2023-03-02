@@ -21,7 +21,7 @@ public class OrderView {
         orderId = new SimpleIntegerProperty(order.getOrderId());
         company = new SimpleStringProperty(order.getCompany());
         date = new SimpleObjectProperty<>(order.getDate());
-        totalPrice = new SimpleObjectProperty<>(order.getProductsList().stream().mapToDouble(Product::getPrice).sum());
+        totalPrice = new SimpleObjectProperty<>(Math.round(order.getProductsList().stream().mapToDouble(Product::getPrice).sum() * 100.0) / 100.0);
         status = new SimpleObjectProperty<>(order.getStatus());
     }
 

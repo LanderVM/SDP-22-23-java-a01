@@ -13,19 +13,17 @@ import util.JPAUtil;
 
 public class OrderController {
 
-    private final List<Order> orderList;
     private final ObservableList<String> transportServicesObservableList;
 
     private final OrderJPADao orderJPADao;
 
     public OrderController(OrderJPADao orderJPADao) {
         this.orderJPADao = orderJPADao;
-        orderList = orderJPADao.getAll();
         transportServicesObservableList = FXCollections.observableArrayList(this.giveTransportServicesAsString());
     }
 
     public List<Order> getOrderList() {
-        return this.orderList;
+        return orderJPADao.getAllPosted();
     }
 
     private List<String> giveTransportServicesAsString() {

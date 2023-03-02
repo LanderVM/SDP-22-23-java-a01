@@ -36,6 +36,8 @@ public class OrderJPADao implements JPADao<Order> {
 
     @Override
     public void update(Order order) {
+        entityManager.getTransaction().begin();
         entityManager.merge(order);
+        entityManager.getTransaction().commit();
     }
 }

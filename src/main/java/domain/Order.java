@@ -170,4 +170,21 @@ public class Order {
     public int hashCode() {
         return Objects.hash(orderId);
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", company='" + company + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", customerEmail='" + customerEmail + '\'' +
+                ", address='" + address + '\'' +
+                ", date=" + date +
+                ", productsList=" + productsList +
+                ", status=" + status +
+                ", packaging=" + packaging +
+                ", transportService=" + transportService +
+                ", trackingCode=" + trackingCode +
+                '}';
+    }
 }
