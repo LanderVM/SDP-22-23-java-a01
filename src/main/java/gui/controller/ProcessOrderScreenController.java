@@ -3,6 +3,7 @@ package gui.controller;
 import domain.OrderController;
 import domain.TransportService;
 import exceptions.OrderStatusException;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +57,7 @@ public class ProcessOrderScreenController extends GridPane {
 
         //overviewOrderLabel.setText("Overview order: " + Integer.toString(id));
         orderTextArea.setText(dc.getOrderOverview(id));
-        choiceBoxTransportServices.setItems(dc.getTransportServicesObservableList());
+        choiceBoxTransportServices.setItems(FXCollections.observableArrayList(dc.getTransportServicesList()));
     }
 
     @FXML
