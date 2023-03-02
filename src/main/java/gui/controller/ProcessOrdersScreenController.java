@@ -5,9 +5,6 @@ import java.util.List;
 
 import domain.Order;
 import domain.OrderController;
-import domain.Packaging;
-import domain.Status;
-import domain.TransportService;
 import domain.UserController;
 import gui.view.OrderView;
 import javafx.collections.FXCollections;
@@ -46,6 +43,7 @@ public class ProcessOrdersScreenController extends GridPane {
     private OrderController orderController;
     private UserController uc;
     private OrderView orderView;
+    private List<Order> ordersList;
 
     public ProcessOrdersScreenController(OrderController orderController, UserController uc) {
         this.orderController = orderController;
@@ -65,11 +63,11 @@ public class ProcessOrdersScreenController extends GridPane {
         companyCol.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
         dateCol.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
 
-        List<Order> ordersList = orderController.getOrderList();
-        List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
-        processableOrdersTable.setItems(FXCollections.observableArrayList(viewList));
+        refreshOrderList();
 
         processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
+            if (newOrder == null)
+                return;
             int id = newOrder.getOrderId();
             ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, this, id);
             Scene scene = new Scene(processOrderScreenController);
@@ -89,5 +87,11 @@ public class ProcessOrdersScreenController extends GridPane {
     void backToOverview(ActionEvent event) {
         //Stage stage = (Stage) this.getScene().getWindow();
         //stage.setScene(parent.getScene());
+    }
+
+    public void refreshOrderList() {
+        ordersList = orderController.getOrderList();
+        List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
+        processableOrdersTable.setItems(FXCollections.observableArrayList(viewList));
     }
 }

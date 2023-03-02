@@ -69,7 +69,7 @@ public class OrdersOverviewController extends AnchorPane {
 
     private OrderController orderController;
     private UserController userController;
-    private OrderView orderView;
+    List<Order> ordersList;
 
 
     public OrdersOverviewController(OrderController orderController, UserController userController) {
@@ -93,14 +93,14 @@ public class OrdersOverviewController extends AnchorPane {
         CostColumnTable.setCellValueFactory(celldata -> celldata.getValue().totalPriceProperty());
         StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusProperty());
 
-        List<Order> ordersList = orderController.getOrderList();
+        ordersList = orderController.getOrderList();
         List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
         TableOrdersView.setItems(FXCollections.observableArrayList(viewList));
     }
 
     @FXML
     public void showOrders(ActionEvent event) {
-    	ProcessOrdersScreenController ordersOverviewController = new ProcessOrdersScreenController(orderController, userController);
+        ProcessOrdersScreenController ordersOverviewController = new ProcessOrdersScreenController(orderController, userController);
         Scene scene = new Scene(ordersOverviewController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
@@ -111,42 +111,43 @@ public class OrdersOverviewController extends AnchorPane {
     @FXML
     public void showHome(ActionEvent event) {
         if (userController.userIsAdmin()) {
-        	goToHomeAdmin();
+            goToHomeAdmin();
         } else {
-        	goToHomeWarehouseOperator();
+            goToHomeWarehouseOperator();
         }
     }
 
 
     @FXML
     public void showNotifications(ActionEvent event) {
-    	
+
     }
-	private void goToHomeWarehouseOperator() {
-		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
-		changeStage(loader, homeWarehouseOperatorController);
-	}
 
-	private void goToHomeAdmin() {
-		HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
-		changeStage(loader, homeAdminController);
-	}
+    private void goToHomeWarehouseOperator() {
+        HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
+        changeStage(loader, homeWarehouseOperatorController);
+    }
 
-	private void changeStage(FXMLLoader loader, Parent controller) {
-		loader.setRoot(controller);
-		loader.setController(controller);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+    private void goToHomeAdmin() {
+        HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
+        changeStage(loader, homeAdminController);
+    }
 
-		Scene scene = new Scene(controller);
-		Stage stage = (Stage) this.getScene().getWindow();
-		stage.setScene(scene);
-		stage.setTitle("Home");
-		stage.show();
-	}
+    private void changeStage(FXMLLoader loader, Parent controller) {
+        loader.setRoot(controller);
+        loader.setController(controller);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Scene scene = new Scene(controller);
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Home");
+        stage.show();
+    }
 }

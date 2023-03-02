@@ -62,6 +62,7 @@ public class ProcessOrderScreenController extends GridPane {
     @FXML
     void backToProcessOrdersScreen(ActionEvent event) {
         Stage stage = (Stage) this.getScene().getWindow();
+        parent.refreshOrderList();
         stage.setScene(parent.getScene());
     }
 
@@ -81,8 +82,7 @@ public class ProcessOrderScreenController extends GridPane {
         } catch (OrderStatusException e) {
             throw new RuntimeException(e);
         }
-        Stage stage = (Stage) this.getScene().getWindow();
-        stage.setScene(parent.getScene());
+        backToProcessOrdersScreen(event);
     }
 
 }
