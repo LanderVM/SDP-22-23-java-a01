@@ -1,74 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="600.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutY="69.0" prefHeight="31.0" prefWidth="701.0" style="-fx-background-color: #cc372d;" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="69.0">
+      <AnchorPane fx:id="HeaderPane" prefHeight="138.0" prefWidth="1920.0" style="-fx-background-color: #f21d11;" AnchorPane.bottomAnchor="942.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Hyperlink fx:id="btnSupport" layoutX="524.0" layoutY="1.0" prefHeight="26.0" prefWidth="96.0" style="-fx-font-family: arial;" text="Support 24/7" textFill="WHITE" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="524.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="1.0">
+            <Label fx:id="LblUser" layoutX="1685.0" layoutY="38.0" prefHeight="69.0" prefWidth="187.0" text="John Doe" textFill="WHITE" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="1685.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="38.0">
                <font>
-                  <Font size="14.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="btnHome" layoutX="11.0" layoutY="2.0" onAction="#showHome" prefHeight="26.0" prefWidth="55.0" style="-fx-font-family: arial;" text="Home" textFill="WHITE" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="589.0" AnchorPane.topAnchor="2.0">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="btnOrders" layoutX="76.0" layoutY="3.0" onAction="#showOrders" prefHeight="26.0" prefWidth="67.0" style="-fx-font-family: arial;" text="Orders" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="512.0" AnchorPane.topAnchor="3.0">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="btnNotifications" layoutX="145.0" layoutY="3.0" onAction="#showNotifications" prefHeight="26.0" prefWidth="123.0" style="-fx-font-family: arial;" text="Notifications" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="387.0" AnchorPane.topAnchor="3.0">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Hyperlink>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="69.0" prefWidth="655.0" style="-fx-background-color: #EF463C;" AnchorPane.bottomAnchor="531.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label layoutX="14.0" layoutY="8.0" prefHeight="35.0" prefWidth="189.0" text="Delaware" textFill="WHITE" AnchorPane.bottomAnchor="7.999999999999986" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="413.4" AnchorPane.topAnchor="8.0">
-               <font>
-                  <Font name="Arial Bold" size="24.0" />
+                  <Font size="36.0" />
                </font>
             </Label>
+            <Label fx:id="LabelNextPage" layoutX="1254.0" layoutY="458.0" prefHeight="539.0" prefWidth="374.0" text="&gt;" AnchorPane.bottomAnchor="-448.0" AnchorPane.leftAnchor="1254.0" AnchorPane.rightAnchor="292.0" AnchorPane.topAnchor="458.0" />
+            <Hyperlink fx:id="btnOrders" layoutX="1262.0" layoutY="10.0" onAction="#showOrders" prefHeight="133.0" prefWidth="266.0" style="-fx-font-family: arial;" text="Orders" textFill="WHITE" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="1262.0" AnchorPane.rightAnchor="392.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <ImageView fx:id="imgDelaware" fitHeight="121.0" fitWidth="233.0" layoutX="15.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="1673.3905792236328" AnchorPane.topAnchor="5.0">
+               <image>
+                  <Image url="@delaware.png" />
+               </image>
+            </ImageView>
+            <Hyperlink fx:id="btnNotifications" layoutX="835.0" layoutY="6.0" onAction="#showNotifications" prefHeight="139.0" prefWidth="321.0" style="-fx-font-family: arial;" text="Notifications" textFill="WHITE" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="835.0" AnchorPane.rightAnchor="764.0" AnchorPane.topAnchor="6.0">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="btnHome" layoutX="533.0" layoutY="21.0" onAction="#showHome" prefHeight="106.0" prefWidth="211.0" style="-fx-font-family: arial;" text="Home" textFill="WHITE" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="533.0" AnchorPane.rightAnchor="1176.0" AnchorPane.topAnchor="21.0">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="PathPane" layoutY="100.0" prefHeight="31.0" prefWidth="655.0" AnchorPane.bottomAnchor="469.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-         <children>
-            <Label fx:id="lblFirstPath" layoutX="33.0" layoutY="5.0" prefHeight="21.0" prefWidth="79.0" text="Home" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="543.0" AnchorPane.topAnchor="5.0" />
-            <Label fx:id="LabelNextPage" layoutX="78.0" layoutY="5.0" text="&gt;" AnchorPane.bottomAnchor="4.599999999999987" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="480.6" AnchorPane.topAnchor="5.0" />
-            <Label fx:id="LblSecondPath" layoutX="101.0" layoutY="5.0" text="Orders" AnchorPane.bottomAnchor="4.599999999999987" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="457.6" AnchorPane.topAnchor="5.0" />
-         </children>
-      </AnchorPane>
-      <Line endX="54.4000244140625" endY="-1.52587890625E-5" layoutX="153.0" layoutY="174.0" startX="-100.0" stroke="#6b6a6a" AnchorPane.bottomAnchor="425.29289323091507" AnchorPane.leftAnchor="52.29289245605469" AnchorPane.rightAnchor="446.8928680419922" AnchorPane.topAnchor="173.292877972126" />
-      <TableView fx:id="TableOrdersView" layoutX="50.0" layoutY="185.0" prefHeight="366.0" prefWidth="551.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="185.0">
+      <AnchorPane fx:id="PathPane" layoutX="193.0" layoutY="177.0" prefHeight="77.0" prefWidth="1242.0" AnchorPane.bottomAnchor="826.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="485.0" AnchorPane.topAnchor="177.0" />
+      <TableView fx:id="TableOrdersView" layoutX="84.0" layoutY="218.0" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="1380.0" AnchorPane.topAnchor="218.0">
         <columns>
-          <TableColumn fx:id="NumberColumnTable" prefWidth="75.0" text="Number" />
-            <TableColumn fx:id="DateColumnTable" prefWidth="103.20001220703125" text="Date" />
-            <TableColumn fx:id="CostColumnTable" prefWidth="81.5999755859375" text="Cost" />
-            <TableColumn fx:id="OverviewColumnTable" prefWidth="105.60003662109375" text="Overview" />
-            <TableColumn fx:id="StatusColumnTable" prefWidth="129.5999755859375" text="Status" />
+          <TableColumn fx:id="NumberColumnTable" prefWidth="108.79998779296875" style="-fx-font-size: 20px;" text="Number" />
+            <TableColumn fx:id="DateColumnTable" prefWidth="97.59999084472656" style="-fx-font-size: 20px;" text="Date" />
+            <TableColumn fx:id="OverviewColumnTable" prefWidth="130.4000244140625" style="-fx-font-size: 20;" text="Overview" />
+            <TableColumn fx:id="StatusColumnTable" prefWidth="129.5999755859375" style="-fx-font-size: 20px;" text="Status" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
-      <Label layoutX="49.0" layoutY="139.0" prefHeight="40.0" prefWidth="163.0" text="Orders Overview" AnchorPane.bottomAnchor="421.0" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="443.0" AnchorPane.topAnchor="139.0">
+      <TableView fx:id="processableOrdersTable" layoutX="618.0" layoutY="218.0" prefHeight="430.0" prefWidth="1124.0" style="-fx-font-size: 20px;" AnchorPane.bottomAnchor="431.6" AnchorPane.leftAnchor="618.0" AnchorPane.rightAnchor="178.0" AnchorPane.topAnchor="218.0">
+         <columns>
+            <TableColumn fx:id="idCol" prefWidth="130.0" style="-fx-font-size: 20px;" text="Number" />
+            <TableColumn fx:id="companyCol" prefWidth="130.0" style="-fx-font-size: 20px;" text="Company" />
+            <TableColumn fx:id="dateCol" prefWidth="130.0" style="-fx-font-size: 20px;" text="Date" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <TextArea fx:id="orderTextArea" layoutX="621.0" layoutY="682.0" prefHeight="143.0" prefWidth="1121.0" text="order order order order order order order order order order order order order " AnchorPane.bottomAnchor="254.8" AnchorPane.leftAnchor="621.0" AnchorPane.rightAnchor="177.4000000000001" AnchorPane.topAnchor="682.0">
          <font>
-            <Font size="14.0" />
+            <Font size="36.0" />
+         </font>
+      </TextArea>
+      <Label fx:id="lblSelectTransportService" layoutX="833.0" layoutY="851.0" prefHeight="54.0" prefWidth="644.0" text="Select a transport service for this order:" AnchorPane.bottomAnchor="174.6" AnchorPane.leftAnchor="833.0" AnchorPane.rightAnchor="443.0" AnchorPane.topAnchor="851.0">
+         <font>
+            <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lblUser" alignment="CENTER_RIGHT" layoutX="368.0" layoutY="27.0" prefHeight="35.0" prefWidth="256.0" text="John Doe" textFill="WHITE" AnchorPane.bottomAnchor="548.0" AnchorPane.leftAnchor="358.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="17.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+      <ChoiceBox fx:id="choiceBoxTransportServices" layoutX="1027.0" layoutY="918.0" prefHeight="61.0" prefWidth="240.0" AnchorPane.bottomAnchor="100.4" AnchorPane.leftAnchor="1027.0" AnchorPane.rightAnchor="653.0" AnchorPane.topAnchor="918.0" />
    </children>
 </fx:root>
