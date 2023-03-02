@@ -31,7 +31,7 @@ class UserTest {
         user.setPassword("Pr5!H;?jk567");
         assertEquals(user.getPassword(), "Pr5!H;?jk567");
         user.setAdmin(false);
-        assertTrue(user.isAdmin());
+        assertFalse(user.isAdmin());
     }
 
 }
