@@ -1,8 +1,18 @@
 package application;
 
-import domain.*;
-import gui.LoginScreenController;
-import gui.controller.OrdersOverviewController;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+import domain.Order;
+import domain.OrderController;
+import domain.Packaging;
+import domain.Product;
+import domain.Status;
+import domain.TransportService;
+import domain.User;
+import domain.UserController;
+import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -10,10 +20,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import persistence.OrderJPADao;
 import util.JPAUtil;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 public class StartUp extends Application {
 

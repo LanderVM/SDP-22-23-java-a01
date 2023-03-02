@@ -45,8 +45,8 @@
       </AnchorPane>
       <AnchorPane fx:id="PathPane" layoutY="100.0" prefHeight="31.0" prefWidth="655.0" AnchorPane.bottomAnchor="469.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Label fx:id="lblFirstPath" layoutX="16.0" layoutY="5.0" text="Dashboard" AnchorPane.bottomAnchor="4.599999999999987" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="542.6" AnchorPane.topAnchor="5.0" />
-            <Label fx:id="LabelNextPage" layoutX="83.0" layoutY="5.0" text="&gt;" AnchorPane.bottomAnchor="4.599999999999987" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="475.6" AnchorPane.topAnchor="5.0" />
+            <Label fx:id="lblFirstPath" layoutX="33.0" layoutY="5.0" prefHeight="21.0" prefWidth="79.0" text="Home" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="543.0" AnchorPane.topAnchor="5.0" />
+            <Label fx:id="LabelNextPage" layoutX="78.0" layoutY="5.0" text="&gt;" AnchorPane.bottomAnchor="4.599999999999987" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="480.6" AnchorPane.topAnchor="5.0" />
             <Label fx:id="LblSecondPath" layoutX="101.0" layoutY="5.0" text="Orders" AnchorPane.bottomAnchor="4.599999999999987" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="457.6" AnchorPane.topAnchor="5.0" />
          </children>
       </AnchorPane>

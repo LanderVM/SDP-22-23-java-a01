@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.control.TableView;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 
@@ -115,9 +116,9 @@ public class OrdersOverviewController extends AnchorPane {
     @FXML
     public void showHome(ActionEvent event) {
         if (userController.userIsAdmin()) {
-            goToAdminScreen();
+        	goToHomeAdmin();
         } else {
-            goToWarehousmanScreen();
+        	goToHomeWarehouseOperator();
         }
     }
 
@@ -126,31 +127,31 @@ public class OrdersOverviewController extends AnchorPane {
     public void showNotifications(ActionEvent event) {
 
     }
+	private void goToHomeWarehouseOperator() {
+		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
+		changeStage(loader, homeWarehouseOperatorController);
+	}
 
-    private void goToWarehousmanScreen() {
-        HomeWarehouseOperatorController warehousemanOverviewScreenController = new HomeWarehouseOperatorController(orderController, userController);
-        Scene scene = new Scene(warehousemanOverviewScreenController, 600, 600);
-        Stage stage = (Stage) this.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+	private void goToHomeAdmin() {
+		HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
+		changeStage(loader, homeAdminController);
+	}
 
-    }
+	private void changeStage(FXMLLoader loader, Parent controller) {
+		loader.setRoot(controller);
+		loader.setController(controller);
+		try {
+			loader.load();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
-    private void goToAdminScreen() {
-        HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
-        loader.setRoot(homeAdminController);
-        loader.setController(homeAdminController);
-        try {
-            loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        Scene scene = new Scene(homeAdminController, 600, 300);
-        Stage stage = (Stage) this.getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Home");
-        stage.show();
-    }
+		Scene scene = new Scene(controller);
+		Stage stage = (Stage) this.getScene().getWindow();
+		stage.setScene(scene);
+		stage.setTitle("Home");
+		stage.show();
+	}
 }

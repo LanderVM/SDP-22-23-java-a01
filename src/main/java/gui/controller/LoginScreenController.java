@@ -1,12 +1,10 @@
-package gui;
+package gui.controller;
 
 import java.io.IOException;
 
 import domain.OrderController;
 import domain.UserController;
 import exceptions.UserDoesntExistException;
-import gui.controller.HomeAdminController;
-import gui.controller.HomeWarehouseOperatorController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
