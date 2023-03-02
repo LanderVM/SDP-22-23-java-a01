@@ -86,7 +86,7 @@ public class ProcessOrdersScreenController extends GridPane {
 
     @FXML
     void backToOverview(ActionEvent event) {
-    	OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, uc);
+    	/*OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, uc);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
 		loader.setRoot(ordersOverviewController);
 		loader.setController(ordersOverviewController);
@@ -100,7 +100,13 @@ public class ProcessOrdersScreenController extends GridPane {
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
 		stage.setTitle("Orders Overview");
-		stage.show();
+		stage.show();*/
+
+        OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, uc);
+        Scene scene = new Scene(ordersOverviewController);
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void refreshOrderList() {
