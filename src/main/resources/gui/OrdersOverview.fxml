@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane fx:id="HeaderPane" prefHeight="138.0" prefWidth="1920.0" style="-fx-background-color: #f21d11;" AnchorPane.bottomAnchor="942.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -44,10 +44,11 @@
          </children>
       </AnchorPane>
       <AnchorPane fx:id="PathPane" layoutX="193.0" layoutY="177.0" prefHeight="77.0" prefWidth="1242.0" AnchorPane.bottomAnchor="826.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="485.0" AnchorPane.topAnchor="177.0" />
-      <TableView fx:id="TableOrdersView" layoutX="84.0" layoutY="218.0" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="1380.0" AnchorPane.topAnchor="218.0">
+      <TableView fx:id="TableOrdersView" layoutX="66.0" layoutY="218.0" prefHeight="737.0" prefWidth="582.0" style="-fx-font-size: 20px;" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="1272.0" AnchorPane.topAnchor="218.0">
         <columns>
-          <TableColumn fx:id="NumberColumnTable" prefWidth="108.79998779296875" style="-fx-font-size: 20px;" text="Number" />
-            <TableColumn fx:id="DateColumnTable" prefWidth="97.59999084472656" style="-fx-font-size: 20px;" text="Date" />
+          <TableColumn fx:id="NumberColumnTable" prefWidth="53.0" style="-fx-font-size: 20px;" text="Id" />
+            <TableColumn fx:id="DateColumnTable" prefWidth="179.0" style="-fx-font-size: 20px;" text="Date" />
+            <TableColumn fx:id="CostColumnTable" prefWidth="90.0" text="Cost" />
             <TableColumn fx:id="OverviewColumnTable" prefWidth="130.4000244140625" style="-fx-font-size: 20;" text="Overview" />
             <TableColumn fx:id="StatusColumnTable" prefWidth="129.5999755859375" style="-fx-font-size: 20px;" text="Status" />
         </columns>
@@ -55,7 +56,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TableView fx:id="processableOrdersTable" layoutX="618.0" layoutY="218.0" prefHeight="430.0" prefWidth="1124.0" style="-fx-font-size: 20px;" AnchorPane.bottomAnchor="431.6" AnchorPane.leftAnchor="618.0" AnchorPane.rightAnchor="178.0" AnchorPane.topAnchor="218.0">
+      <TableView fx:id="processableOrdersTable" layoutX="727.0" layoutY="218.0" prefHeight="430.0" prefWidth="1015.0" style="-fx-font-size: 20px;" AnchorPane.bottomAnchor="432.0" AnchorPane.leftAnchor="727.0" AnchorPane.rightAnchor="178.0" AnchorPane.topAnchor="218.0">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="130.0" style="-fx-font-size: 20px;" text="Number" />
             <TableColumn fx:id="companyCol" prefWidth="130.0" style="-fx-font-size: 20px;" text="Company" />
@@ -65,16 +66,16 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextArea fx:id="orderTextArea" layoutX="621.0" layoutY="682.0" prefHeight="143.0" prefWidth="1121.0" text="order order order order order order order order order order order order order " AnchorPane.bottomAnchor="254.8" AnchorPane.leftAnchor="621.0" AnchorPane.rightAnchor="177.4000000000001" AnchorPane.topAnchor="682.0">
+      <TextArea fx:id="orderTextArea" layoutX="728.0" layoutY="682.0" prefHeight="143.0" prefWidth="1015.0" text="order order order order order order order order order order order order order " AnchorPane.bottomAnchor="255.0" AnchorPane.leftAnchor="728.0" AnchorPane.rightAnchor="177.0" AnchorPane.topAnchor="682.0">
          <font>
             <Font size="36.0" />
          </font>
       </TextArea>
-      <Label fx:id="lblSelectTransportService" layoutX="833.0" layoutY="851.0" prefHeight="54.0" prefWidth="644.0" text="Select a transport service for this order:" AnchorPane.bottomAnchor="174.6" AnchorPane.leftAnchor="833.0" AnchorPane.rightAnchor="443.0" AnchorPane.topAnchor="851.0">
+      <Label fx:id="lblSelectTransportService" layoutX="914.0" layoutY="834.0" prefHeight="69.0" prefWidth="644.0" text="Select a transport service for this order:" AnchorPane.bottomAnchor="177.0" AnchorPane.leftAnchor="914.0" AnchorPane.rightAnchor="362.0" AnchorPane.topAnchor="834.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="choiceBoxTransportServices" layoutX="1027.0" layoutY="918.0" prefHeight="61.0" prefWidth="240.0" AnchorPane.bottomAnchor="100.4" AnchorPane.leftAnchor="1027.0" AnchorPane.rightAnchor="653.0" AnchorPane.topAnchor="918.0" />
+      <ChoiceBox fx:id="choiceBoxTransportServices" layoutX="1108.0" layoutY="915.0" prefHeight="61.0" prefWidth="240.0" AnchorPane.bottomAnchor="103.39999999999998" AnchorPane.leftAnchor="1108.0" AnchorPane.rightAnchor="572.0" AnchorPane.topAnchor="915.0" />
    </children>
 </fx:root>
