@@ -61,15 +61,16 @@ public class ProcessOrdersScreenController extends GridPane {
             System.out.println(e);
         }
 
-        idCol.setCellValueFactory(cellData->cellData.getValue().idForTableProperty());
-        companyCol.setCellValueFactory(cellData->cellData.getValue().companyForTableProperty());
-       dateCol.setCellValueFactory(cellData->cellData.getValue().dateForTableProperty());
+        idCol.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
+        companyCol.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
 
-        //processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getOrderList())); // TODO
-       processableOrdersTable.setItems(FXCollections.observableArrayList(new OrderView(new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM)), new OrderView(new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM))));
+        List<Order> ordersList = orderController.getOrderList();
+        List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
+        processableOrdersTable.setItems(FXCollections.observableArrayList(viewList));
 
         processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
-            int id = newOrder.getIdForTable();
+            int id = newOrder.getOrderId();
             ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, this, id);
             Scene scene = new Scene(processOrderScreenController);
             Stage stage = (Stage) this.getScene().getWindow();

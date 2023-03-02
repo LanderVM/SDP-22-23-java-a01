@@ -16,14 +16,11 @@ public class OrderController {
     private final List<Order> orderList;
     private final ObservableList<String> transportServicesObservableList;
 
-    private final OrderJPADao orderJPADao = null;
+    private final OrderJPADao orderJPADao;
 
     public OrderController(OrderJPADao orderJPADao) {
-//        this.orderJPADao = orderJPADao;
-
-        EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
-        OrderJPADao orderJPADaoa = new OrderJPADao(entityManager);
-        orderList = orderJPADaoa.getAll();
+        this.orderJPADao = orderJPADao;
+        orderList = orderJPADao.getAll();
         transportServicesObservableList = FXCollections.observableArrayList(this.giveTransportServicesAsString());
     }
 

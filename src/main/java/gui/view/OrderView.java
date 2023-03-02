@@ -10,57 +10,57 @@ import java.util.Date;
 
 public class OrderView {
 
-    private SimpleIntegerProperty idForTable;
-    private SimpleStringProperty companyForTable;
-    private SimpleObjectProperty<Date> dateForTable;
-    private SimpleObjectProperty<Double> costForTable;
-    private SimpleObjectProperty<Status> statusForTable;
+    private SimpleIntegerProperty orderId;
+    private SimpleStringProperty company;
+    private SimpleObjectProperty<Date> date;
+    private SimpleObjectProperty<Double> totalPrice;
+    private SimpleObjectProperty<Status> status;
 
     public OrderView(Order order) {
-        idForTable = new SimpleIntegerProperty(order.getOrderId());
-        companyForTable = new SimpleStringProperty(order.getCompany());
-        dateForTable = new SimpleObjectProperty<>(order.getDate());
-        costForTable = new SimpleObjectProperty<>(10.25);
-        statusForTable = new SimpleObjectProperty<>(order.getStatus());
+        orderId = new SimpleIntegerProperty(order.getOrderId());
+        company = new SimpleStringProperty(order.getCompany());
+        date = new SimpleObjectProperty<>(order.getDate());
+        totalPrice = new SimpleObjectProperty<>(10.2); // TODO
+        status = new SimpleObjectProperty<>(order.getStatus());
     }
 
-    public int getIdForTable() {
-        return idForTable.get();
+    public int getOrderId() {
+        return orderId.get();
     }
 
-    public SimpleIntegerProperty idForTableProperty() {
-        return idForTable;
+    public SimpleIntegerProperty orderIdProperty() {
+        return orderId;
     }
 
-    public SimpleStringProperty getCompanyForTable() {
-        return companyForTable;
+    public String getCompany() {
+        return company.get();
     }
 
-    public SimpleStringProperty companyForTableProperty() {
-        return companyForTable;
+    public SimpleStringProperty companyProperty() {
+        return company;
     }
 
-    public Date getDateForTable() {
-        return dateForTable.get();
+    public Date getDate() {
+        return date.get();
     }
 
-    public SimpleObjectProperty<Date> dateForTableProperty() {
-        return dateForTable;
+    public SimpleObjectProperty<Date> dateProperty() {
+        return date;
     }
 
-    public double getCostForTable() {
-        return costForTable.get();
+    public double getTotalPrice() {
+        return totalPrice.get();
     }
 
-    public SimpleObjectProperty<Double> costForTableProperty() {
-        return costForTable;
+    public SimpleObjectProperty<Double> totalPriceProperty() {
+        return totalPrice;
     }
 
-    public Status getStatusForTable() {
-        return statusForTable.get();
+    public Status getStatus() {
+        return status.get();
     }
 
-    public SimpleObjectProperty<Status> statusForTableProperty() {
-        return statusForTable;
+    public SimpleObjectProperty<Status> statusProperty() {
+        return status;
     }
 }

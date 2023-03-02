@@ -9,7 +9,6 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -88,23 +87,15 @@ public class OrdersOverviewController extends AnchorPane {
             System.out.println(e);
         }
 
-        OverviewColumnTable.setCellValueFactory(cellData -> cellData.getValue().getCompanyForTable());
-        NumberColumnTable.setCellValueFactory(celldata -> celldata.getValue().idForTableProperty());
-        DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateForTableProperty());
-        CostColumnTable.setCellValueFactory(celldata -> celldata.getValue().costForTableProperty());
-        StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusForTableProperty());
+        OverviewColumnTable.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
+        NumberColumnTable.setCellValueFactory(celldata -> celldata.getValue().orderIdProperty());
+        DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateProperty());
+        CostColumnTable.setCellValueFactory(celldata -> celldata.getValue().totalPriceProperty());
+        StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusProperty());
 
         List<Order> ordersList = orderController.getOrderList();
-
-        List<OrderView> viewList = new ArrayList<>();
-
-        ordersList.forEach(order -> viewList.add(new OrderView(order)));
-
-        System.out.println();
-//        TableOrdersView.setItems(FXCollections.observableArrayList(viewList));
-        TableOrdersView.setItems(FXCollections.observableArrayList(new OrderView(new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM)), new OrderView(new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM))));
-
-
+        List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
+        TableOrdersView.setItems(FXCollections.observableArrayList(viewList));
     }
 
     @FXML
