@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import persistence.OrderJPADao;
+import persistence.UserJPADoa;
 import util.JPAUtil;
 
 public class StartUp extends Application {
@@ -31,7 +32,7 @@ public class StartUp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController());
+            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController(new UserJPADoa(JPAUtil.getUserEntityManagerFactory().createEntityManager())));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(false);
