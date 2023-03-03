@@ -1,24 +1,29 @@
 package domain;
 
 import exceptions.UserDoesntExistException;
-import repository.UserMapper;
+import jakarta.persistence.EntityNotFoundException;
+import persistence.UserJPADoa;
 
 public class UserController {
 
+    private UserJPADoa userJPADoa;
     private User user;
-    private final UserRepo userRepo;
-
-    public UserController() {
-        userRepo = new UserRepo(new UserMapper());
+    
+    public UserController(UserJPADoa userJPADoa) {
+    	this.userJPADoa = userJPADoa;
     }
 
-    public boolean checkUser(String accountName, String password) throws UserDoesntExistException {
-
-        user = userRepo.requestUser(accountName);
-
-        if (user == null)
-            throw new UserDoesntExistException();
-
+    public boolean checkUser(String accountName, String password) throws EntityNotFoundException, UserDoesntExistException {
+    	
+    	try {
+    		user = userJPADoa.getUser(accountName).
+	            	orElseThrow(() -> {
+	            		throw new EntityNotFoundException("User does not exists");
+	        });
+    	}catch (Exception e) {
+			throw new UserDoesntExistException();
+		}
+	    	
         return user.getPassword().equals(password);
     }
 
