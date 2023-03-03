@@ -64,7 +64,6 @@ public class LoginScreenController extends AnchorPane {
 				}
 			}
 		} catch (UserDoesntExistException e) {
-			// txtEmail.setText("");
 			txtPassword.setText("");
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");

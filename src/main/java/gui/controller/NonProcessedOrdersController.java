@@ -1,6 +1,5 @@
 package gui.controller;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class ProcessOrdersScreenController extends GridPane {
+public class NonProcessedOrdersController extends GridPane {
 
 
     @FXML
@@ -46,11 +45,11 @@ public class ProcessOrdersScreenController extends GridPane {
     private OrderView orderView;
     private List<Order> ordersList;
 
-    public ProcessOrdersScreenController(OrderController orderController, UserController uc) {
+    public NonProcessedOrdersController(OrderController orderController, UserController uc) {
         this.orderController = orderController;
         this.uc = uc;
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/ProcessOrdersScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/NonProcessedOrders.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 
@@ -102,7 +101,7 @@ public class ProcessOrdersScreenController extends GridPane {
 		stage.setTitle("Orders Overview");
 		stage.show();*/
 
-        OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, uc);
+        AllOrdersOverviewController ordersOverviewController = new AllOrdersOverviewController(orderController, uc);
         Scene scene = new Scene(ordersOverviewController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);

@@ -40,13 +40,13 @@ public class ProcessOrderScreenController extends GridPane {
     private Button processOrderButton;
 
     private OrderController dc;
-    private ProcessOrdersScreenController parent;
+    private NonProcessedOrdersController parent;
     private int id;
 
 	private UserController uc;
 
 
-    public ProcessOrderScreenController(OrderController dc, UserController uc, ProcessOrdersScreenController parent, int id) {
+    public ProcessOrderScreenController(OrderController dc, UserController uc, NonProcessedOrdersController parent, int id) {
         this.dc = dc;
         this.uc = uc;
         this.parent = parent;
@@ -86,7 +86,7 @@ public class ProcessOrderScreenController extends GridPane {
 		stage.show();*/
     	
 
-    	ProcessOrdersScreenController processOrdersScreenController = new ProcessOrdersScreenController(dc, uc);
+    	NonProcessedOrdersController processOrdersScreenController = new NonProcessedOrdersController(dc, uc);
         Scene scene = new Scene(processOrdersScreenController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);

@@ -25,9 +25,7 @@ import javafx.scene.control.Hyperlink;
 
 import javafx.scene.control.TableColumn;
 
-public class OrdersOverviewController extends AnchorPane {
-    @FXML
-    private AnchorPane MenuPane;
+public class AllOrdersOverviewController extends AnchorPane {
     @FXML
     private Hyperlink btnSupport;
     @FXML
@@ -35,21 +33,7 @@ public class OrdersOverviewController extends AnchorPane {
     @FXML
     private Hyperlink btnOrders;
     @FXML
-    private Hyperlink btnNotifications;
-    @FXML
-    private AnchorPane HeaderPane;
-    @FXML
-    private Label LblLogo;
-    @FXML
     private Label LblUser;
-    @FXML
-    private AnchorPane PathPane;
-    @FXML
-    private Label lblFirstPath;
-    @FXML
-    private Label LabelNextPage;
-    @FXML
-    private Label LblSecondPath;
     @FXML
     private Line LineOrderOverview;
     @FXML
@@ -72,12 +56,12 @@ public class OrdersOverviewController extends AnchorPane {
     List<Order> ordersList;
 
 
-    public OrdersOverviewController(OrderController orderController, UserController userController) {
+    public AllOrdersOverviewController(OrderController orderController, UserController userController) {
 
         this.orderController = orderController;
         this.userController = userController;
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/OrdersOverview.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/AllOrdersOverview.fxml"));
         loader.setController(this);
         loader.setRoot(this);
 
@@ -100,7 +84,7 @@ public class OrdersOverviewController extends AnchorPane {
 
     @FXML
     public void showOrders(ActionEvent event) {
-        ProcessOrdersScreenController ordersOverviewController = new ProcessOrdersScreenController(orderController, userController);
+        NonProcessedOrdersController ordersOverviewController = new NonProcessedOrdersController(orderController, userController);
         Scene scene = new Scene(ordersOverviewController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
