@@ -50,10 +50,16 @@ public class Order {
 
     @Column(name = "tracking_code")
     private int trackingCode;
+    
+    @ManyToOne
+    private Supplier supplier;
+    
+    @ManyToOne
+    private Supplier customer;
 
 
     public Order(String company, String customerName, String customerEmail, String address, Date date, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging) {
+                 TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer) {
         this.company = company;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
@@ -63,6 +69,8 @@ public class Order {
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
+        this.supplier=supplier;
+        this.customer=customer;
     }
 
     protected Order() {
