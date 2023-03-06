@@ -3,10 +3,9 @@ package gui.controller;
 import domain.OrderController;
 import domain.UserController;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class HomeWarehouseOperatorController extends AnchorPane {
 
@@ -17,12 +16,12 @@ public class HomeWarehouseOperatorController extends AnchorPane {
 	@FXML
 	private Button btnChangeTrackAndTrace;
 
-	private OrderController oc;
-	private UserController uc;
+	private OrderController orderController;
+	private UserController userController;
 
-	public HomeWarehouseOperatorController(OrderController oc, UserController uc) {
-		this.oc = oc;
-		this.uc = uc;
+	public HomeWarehouseOperatorController(OrderController orderController, UserController userController) {
+		this.orderController = orderController;
+		this.userController = userController;
 	}
 
 	@FXML
@@ -32,11 +31,9 @@ public class HomeWarehouseOperatorController extends AnchorPane {
 
 	@FXML
 	void viewOrders() {
-		AllOrdersOverviewController ordersOverviewController = new AllOrdersOverviewController(oc, uc);
-		Scene scene = new Scene(ordersOverviewController);
-		Stage stage = (Stage) this.getScene().getWindow();
-		stage.setScene(scene);
-		stage.show();
+		AllOrdersOverviewController allOrdersOverviewController = new AllOrdersOverviewController(orderController, userController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/AllOrdersOverview.fxml"));
+		ChangeStage.change(this, loader, allOrdersOverviewController, "Orders Overview");
 	}
 
 	@FXML

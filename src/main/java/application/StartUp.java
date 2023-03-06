@@ -36,7 +36,7 @@ public class StartUp extends Application {
             LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController(new UserJPADao(JPAUtil.getUserEntityManagerFactory().createEntityManager())));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            primaryStage.setResizable(false);
+            primaryStage.setResizable(true);
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
             primaryStage.setTitle("Log In");
             primaryStage.setScene(scene);
