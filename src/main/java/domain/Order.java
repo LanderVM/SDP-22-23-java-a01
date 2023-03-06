@@ -28,14 +28,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private int orderId;
-
+    /*
     @Column(name = "company_name")
     private String company;
     @Column(name = "customer_name")
     private String customerName;
 
     @Column(name = "customer_email")
-    private String customerEmail;
+    private String customerEmail;*/
 
     private String address;
 
@@ -58,11 +58,11 @@ public class Order {
     private Supplier customer;
 
 
-    public Order(String company, String customerName, String customerEmail, String address, Date date, List<Product> productsList, Status status,
+    public Order(  String address, Date date, List<Product> productsList, Status status,
                  TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer) {
-        this.company = company;
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
+        //this.company = company;
+        //this.customerName = customerName;
+        //this.customerEmail = customerEmail;
         this.address = address;
         this.date = date;
         this.productsList = productsList;
@@ -83,7 +83,7 @@ public class Order {
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
-
+    /*
     public String getCompany() {
         return company;
     }
@@ -106,7 +106,7 @@ public class Order {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
-    }
+    }*/
 
     public String getAddress() {
         return address;
@@ -183,9 +183,9 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", company='" + company + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
+                ", company='" + supplier.getName() + '\'' +
+                ", customerName='" + customer.getName() + '\'' +
+                ", customerEmail='" + customer.getEmail() + '\'' +
                 ", address='" + address + '\'' +
                 ", date=" + date +
                 ", productsList=" + productsList +
