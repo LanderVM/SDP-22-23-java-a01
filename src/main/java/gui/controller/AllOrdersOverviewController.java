@@ -16,6 +16,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 
 public class AllOrdersOverviewController extends AnchorPane {
 	@FXML
