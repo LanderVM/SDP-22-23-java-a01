@@ -110,7 +110,7 @@ public class UserTest {
 
     @Test
     public void checkUser_invalidEmail_throwsNoResultException() {
-        admin = new User("testAdmin@mail.com", "testAdminFalse", true);
+        admin = new User("testAdmin@mail.com", "testAdminFalse", true, "Test", "Admin");
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
