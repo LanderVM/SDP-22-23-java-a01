@@ -53,8 +53,8 @@ public class StartUp extends Application {
         Product p4 = new Product("test_product vier", new BigDecimal("8.90"));
         Product p5 = new Product("test_product vijf", new BigDecimal("11.30"));
 
-        User admin = new User("testAdmin@mail.com", "testAdmin", true);
-        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false);
+        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
+        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier");
 
         EntityManager entityManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
         entityManager.getTransaction().begin();

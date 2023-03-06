@@ -27,13 +27,17 @@ public class User {
 
     @Column(name = "email")
     private String accountName;
+    private String surname;
+    private String name;
     private String password;
     private boolean isAdmin;
 
-    public User(String accountName, String password, boolean isAdmin) {
+    public User(String accountName, String password, boolean isAdmin, String surname, String name) {
         setAccountName(accountName);
         setPassword(password);
         setAdmin(isAdmin);
+        setSurname(surname);
+        setName(name);
     }
 
 
@@ -62,6 +66,22 @@ public class User {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
