@@ -1,7 +1,6 @@
 module SDP2_Java_a01 {
 
     exports domain;
-    exports repository;
     exports application;
     exports exceptions;
     exports util;

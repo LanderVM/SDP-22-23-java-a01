@@ -5,18 +5,25 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "user")
 @NamedQueries({
-	@NamedQuery(
-            name = "User.findAlll",
-            query = "SELECT u FROM User u"
-    ),
-    @NamedQuery(
-            name = "User.findByEmail",
-            query = "SELECT u FROM User u WHERE u.accountName = :email"
-    )
+        @NamedQuery(
+                name = "User.findAll",
+                query = "SELECT u FROM User u"
+        ),
+        @NamedQuery(
+                name = "User.findByEmail",
+                query = "SELECT u FROM User u WHERE u.accountName = ?1"
+        ),
+        @NamedQuery(
+                name = "User.findById",
+                query = "SELECT u FROM User u WHERE u.userId = ?1"
+        )
 })
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private int userId;
 
     @Column(name = "email")
     private String accountName;
