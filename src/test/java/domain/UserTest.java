@@ -94,7 +94,7 @@ public class UserTest {
     }
 
     @Test
-    public void checkUser_invalidPassword_throwsIncorrectPasswordException() {
+    public void checkUser_invalidPassword_throwsIncorrectLoginException() {
         admin = new User("testAdmin@mail.com", "testAdminFalse", true);
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
@@ -105,6 +105,21 @@ public class UserTest {
         userController = new UserController(userDao);
 
         assertThrows(IncorrectPasswordException.class, () -> userController.checkUser("testAdmin@mail.com", "testAdmin"));
+        verify(query).setParameter(1, "testAdmin@mail.com");
+    }
+
+    @Test
+    public void checkUser_invalidEmail_throwsNoResultException() {
+        admin = new User("testAdmin@mail.com", "testAdminFalse", true);
+
+        when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
+        when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
+        when(query.getSingleResult()).thenThrow(NoResultException.class);
+
+        userDao = new UserJPADao(entityManager);
+        userController = new UserController(userDao);
+
+        assertThrows(NoResultException.class, () -> userController.checkUser("testAdmin@mail.com", "testAdmin"));
         verify(query).setParameter(1, "testAdmin@mail.com");
     }
 
