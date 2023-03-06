@@ -1,25 +1,42 @@
 package persistence;
 
+import java.util.Collections;
 import java.util.List;
 
-public class SupplierJPADao implements JPADao{
+import domain.Order;
+import domain.Supplier;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
+public class SupplierJPADao implements JPADao<Supplier,String>{
+
+	private EntityManager entityManager;
+	
 	@Override
-	public Object get(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Supplier get(String id) {
+		TypedQuery<Supplier> query = entityManager.createNamedQuery("Supplier.findById", Supplier.class);
+	    return query.setParameter(1, id).getSingleResult();
 	}
 
+	
+	
 	@Override
-	public List getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void update(Object order) {
-		// TODO Auto-generated method stub
+	public List<Supplier> getAll() {
 		
+		 return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAll",Supplier.class).getResultList());
+		
+	}
+	
+	public List<Supplier> getAllWithOrdersAsCustomer () {
+		return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAllWithOrdersAsCustomer", Supplier.class).getResultList());
+	}
+
+	@Override
+	public void update(Supplier supplier) {
+		// TODO Auto-generated method stub
+		entityManager.getTransaction().begin();
+        entityManager.merge(supplier);
+        entityManager.getTransaction().commit();
 	}
 
 }

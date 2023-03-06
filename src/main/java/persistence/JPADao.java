@@ -3,9 +3,9 @@ package persistence;
 
 import java.util.List;
 
-public interface JPADao<T> {
+public interface JPADao<T,E> {
 
-    T get(int id);
+    T get(E id);
 
     List<?> getAll();
 
