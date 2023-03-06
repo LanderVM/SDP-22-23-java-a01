@@ -3,6 +3,7 @@ package domain;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -14,10 +15,10 @@ public class Product implements Serializable {
     private int productId;
 
     private String name;
-    private double price;
+    private BigDecimal price;
 
 
-    public Product(String name, double price) {
+    public Product(String name, BigDecimal price) {
         setName(name);
         setPrice(price);
     }
@@ -29,11 +30,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    void setPrice(double price) {
+    void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return this.price;
     }
     @Override

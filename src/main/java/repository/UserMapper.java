@@ -6,7 +6,7 @@ import domain.User;
 import jakarta.persistence.EntityManagerFactory;
 import util.JPAUtil;
 
-public class UserMapper {
+public class UserMapper { // TODO dao
 
     public User getUser(String accountName) {
 

@@ -9,6 +9,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class AllOrdersOverviewController extends AnchorPane {
     @FXML
     private TableColumn<OrderView, Date> DateColumnTable;
     @FXML
-    private TableColumn<OrderView, Double> CostColumnTable;
+    private TableColumn<OrderView, BigDecimal> CostColumnTable;
     @FXML
     private TableColumn<OrderView, String> OverviewColumnTable;
     @FXML

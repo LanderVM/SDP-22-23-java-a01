@@ -7,21 +7,22 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class OrderView {
 
-    private SimpleIntegerProperty orderId;
-    private SimpleStringProperty company;
-    private SimpleObjectProperty<Date> date;
-    private SimpleObjectProperty<Double> totalPrice;
-    private SimpleObjectProperty<Status> status;
+    private final SimpleIntegerProperty orderId;
+    private final SimpleStringProperty company;
+    private final SimpleObjectProperty<Date> date;
+    private final SimpleObjectProperty<BigDecimal> totalPrice;
+    private final SimpleObjectProperty<Status> status;
 
     public OrderView(Order order) {
         orderId = new SimpleIntegerProperty(order.getOrderId());
         company = new SimpleStringProperty(order.getCompany());
         date = new SimpleObjectProperty<>(order.getDate());
-        totalPrice = new SimpleObjectProperty<>(Math.round(order.getProductsList().stream().mapToDouble(Product::getPrice).sum() * 100.0) / 100.0);
+        totalPrice = new SimpleObjectProperty<>(order.getProductsList().stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
         status = new SimpleObjectProperty<>(order.getStatus());
     }
 
@@ -49,11 +50,11 @@ public class OrderView {
         return date;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice.get();
     }
 
-    public SimpleObjectProperty<Double> totalPriceProperty() {
+    public SimpleObjectProperty<BigDecimal> totalPriceProperty() {
         return totalPrice;
     }
 

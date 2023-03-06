@@ -1,5 +1,6 @@
 package application;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -46,11 +47,11 @@ public class StartUp extends Application {
     }
 
     public static void seedDatabase() {
-        Product p1 = new Product("test_product een", 1.0);
-        Product p2 = new Product("test_product twee", 2.0);
-        Product p3 = new Product("test_product drie", 4.5);
-        Product p4 = new Product("test_product vier", 8.9);
-        Product p5 = new Product("test_product vijf", 11.30);
+        Product p1 = new Product("test_product een", new BigDecimal("1.00"));
+        Product p2 = new Product("test_product twee", new BigDecimal("2.00"));
+        Product p3 = new Product("test_product drie", new BigDecimal("4.50"));
+        Product p4 = new Product("test_product vier", new BigDecimal("8.90"));
+        Product p5 = new Product("test_product vijf", new BigDecimal("11.30"));
 
         User admin = new User("testAdmin@mail.com", "testAdmin", true);
         User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false);
