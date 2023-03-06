@@ -78,9 +78,7 @@ public class AllOrdersOverviewController extends AnchorPane {
         CostColumnTable.setCellValueFactory(celldata -> celldata.getValue().totalPriceProperty());
         StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusProperty());
 
-        ordersList = orderController.getOrderList();
-        List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
-        TableOrdersView.setItems(FXCollections.observableArrayList(viewList));
+        TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
     }
 
     @FXML

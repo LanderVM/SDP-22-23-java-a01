@@ -29,7 +29,7 @@ public class UserTest {
 
     @Test
     public void getById_happyFlow() {
-        admin = new User("testAdmin@mail.com", "testAdmin", true);
+        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
 
         when(entityManager.createNamedQuery("User.findById", User.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -55,7 +55,7 @@ public class UserTest {
 
     @Test
     public void getByEmail_happyFlow() {
-        admin = new User("testAdmin@mail.com", "testAdmin", true);
+        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
@@ -81,7 +81,7 @@ public class UserTest {
 
     @Test
     public void checkUser_happyFlow() throws IncorrectPasswordException {
-        admin = new User("testAdmin@mail.com", "testAdmin", true);
+        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
@@ -94,8 +94,8 @@ public class UserTest {
     }
 
     @Test
-    public void checkUser_invalidPassword_throwsIncorrectLoginException() {
-        admin = new User("testAdmin@mail.com", "testAdminFalse", true);
+    public void checkUser_invalidPassword_throwsIncorrectPasswordException() {
+        admin = new User("testAdmin@mail.com", "testAdminFalse", true, "Test", "Admin");
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);

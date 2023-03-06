@@ -22,7 +22,7 @@ public class OrderView {
         orderId = new SimpleIntegerProperty(order.getOrderId());
         company = new SimpleStringProperty(order.getCompany());
         date = new SimpleObjectProperty<>(order.getDate());
-        totalPrice = new SimpleObjectProperty<>(order.getProductsList().stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
+        totalPrice = new SimpleObjectProperty<>(order.getOriginalAcquisitionPrice());
         status = new SimpleObjectProperty<>(order.getStatus());
     }
 
