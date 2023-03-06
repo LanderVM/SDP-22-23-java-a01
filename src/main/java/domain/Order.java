@@ -1,5 +1,6 @@
 package domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -51,9 +52,12 @@ public class Order {
     @Column(name = "tracking_code")
     private int trackingCode;
 
+    @Column(name = "original_acquisition_price")
+    private BigDecimal originalAcquisitionPrice;
+
 
     public Order(String company, String customerName, String customerEmail, String address, Date date, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging) {
+                 TransportService transportService, Packaging packaging, BigDecimal originalAcquisitionPrice) {
         this.company = company;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
@@ -63,6 +67,7 @@ public class Order {
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
+        this.originalAcquisitionPrice = originalAcquisitionPrice;
     }
 
     protected Order() {
@@ -154,6 +159,14 @@ public class Order {
 
     public void setTrackingCode(int trackingCode) {
         this.trackingCode = trackingCode;
+    }
+
+    public BigDecimal getOriginalAcquisitionPrice() {
+        return originalAcquisitionPrice;
+    }
+
+    public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
+        this.originalAcquisitionPrice = originalAcquisitionPrice;
     }
 
     @Override
