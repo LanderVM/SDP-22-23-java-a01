@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import exceptions.OrderStatusException;
+import gui.view.OrderView;
 import jakarta.persistence.EntityNotFoundException;
 import persistence.OrderJPADao;
 
@@ -16,12 +17,12 @@ public class OrderController {
         this.orderJPADao = orderJPADao;
     }
 
-    public List<Order> getOrderList() {
-        return orderJPADao.getAll();
+    public List<OrderView> getOrderList() {
+        return orderJPADao.getAll().stream().map(OrderView::new).toList();
     }
 
-    public List<Order> getPostedOrdersList() {
-        return orderJPADao.getAllPosted();
+    public List<OrderView> getPostedOrdersList() {
+        return orderJPADao.getAllPosted().stream().map(OrderView::new).toList();
     }
 
     public List<String> getTransportServicesList() {

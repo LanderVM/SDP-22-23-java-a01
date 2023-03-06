@@ -109,8 +109,6 @@ public class NonProcessedOrdersController extends GridPane {
     }
 
     public void refreshOrderList() {
-        ordersList = orderController.getPostedOrdersList();
-        List<OrderView> viewList = ordersList.stream().map(OrderView::new).toList();
-        processableOrdersTable.setItems(FXCollections.observableArrayList(viewList));
+        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersList()));
     }
 }
