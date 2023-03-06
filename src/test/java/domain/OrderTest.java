@@ -3,6 +3,7 @@ package domain;
 import exceptions.OrderStatusException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +14,6 @@ import persistence.OrderJPADao;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,7 +34,6 @@ public class OrderTest {
     private Order order;
 
     private void mockFindAllPosted() {
-//        when(entityManager.createNamedQuery("Order.findAllPosted", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(order);
     }
@@ -49,19 +48,19 @@ public class OrderTest {
 
         orderDao = new OrderJPADao(entityManager);
 
-        assertEquals(order, orderDao.get(1).orElse(null));
+        assertEquals(order, orderDao.get(1));
         verify(query).setParameter(1, 1);
     }
 
     @Test
-    public void getById_invalidID_returnsEmptyOptional() {
+    public void getById_invalidID_throwsNoResultException() {
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
-        when(query.getSingleResult()).thenReturn(null);
+        when(query.getSingleResult()).thenThrow(NoResultException.class);
 
         orderDao = new OrderJPADao(entityManager);
 
-        assertEquals(Optional.empty(), orderDao.get(1));
+        assertThrows(NoResultException.class, () -> orderDao.get(1));
         verify(query).setParameter(1, 1);
     }
 
@@ -97,7 +96,7 @@ public class OrderTest {
         OrderController orderController = new OrderController(orderDao);
 
         orderController.processOrder(1, TransportService.BPOST);
-        Order orderAfterUpdate = orderDao.get(1).get();
+        Order orderAfterUpdate = orderDao.get(1);
 
         assertEquals(TransportService.BPOST, orderAfterUpdate.getTransportService());
         assertEquals(Status.PROCESSED, orderAfterUpdate.getStatus());

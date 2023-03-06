@@ -1,14 +1,14 @@
 package domain;
 
+import exceptions.IncorrectPasswordException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import persistence.UserJPADoa;
-
-import java.util.Optional;
+import persistence.UserJPADao;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,7 +22,7 @@ public class UserTest {
     @Mock
     TypedQuery<User> query;
 
-    private UserJPADoa userDao;
+    private UserJPADao userDao;
     private UserController userController;
 
     private User admin;
@@ -35,21 +35,21 @@ public class UserTest {
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(admin);
 
-        userDao = new UserJPADoa(entityManager);
+        userDao = new UserJPADao(entityManager);
 
-        assertEquals(admin, userDao.get(1).orElse(null));
+        assertEquals(admin, userDao.get(1));
         verify(query).setParameter(1, 1);
     }
 
     @Test
-    public void getById_invalidID_returnsEmptyOptional() {
+    public void getById_invalidID_throwsNoResultException() {
         when(entityManager.createNamedQuery("User.findById", User.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
-        when(query.getSingleResult()).thenReturn(null);
+        when(query.getSingleResult()).thenThrow(NoResultException.class);
 
-        userDao = new UserJPADoa(entityManager);
+        userDao = new UserJPADao(entityManager);
 
-        assertEquals(Optional.empty(), userDao.get(1));
+        assertThrows(NoResultException.class, () -> userDao.get(1));
         verify(query).setParameter(1, 1);
     }
 
@@ -61,51 +61,50 @@ public class UserTest {
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
         when(query.getSingleResult()).thenReturn(admin);
 
-        userDao = new UserJPADoa(entityManager);
+        userDao = new UserJPADao(entityManager);
 
-        assertEquals(admin, userDao.get("testAdmin@mail.com").orElse(null));
+        assertEquals(admin, userDao.get("testAdmin@mail.com"));
         verify(query).setParameter(1, "testAdmin@mail.com");
     }
 
     @Test
-    public void getByEmail_invalidEmail_returnsEmptyOptional() {
+    public void getByEmail_invalidEmail_throwsNoResultException() {
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
-        when(query.getSingleResult()).thenReturn(null);
+        when(query.getSingleResult()).thenThrow(NoResultException.class);
 
-        userDao = new UserJPADoa(entityManager);
+        userDao = new UserJPADao(entityManager);
 
-        assertEquals(Optional.empty(), userDao.get("testAdmin@mail.com"));
+        assertThrows(NoResultException.class, () -> userDao.get("testAdmin@mail.com"));
         verify(query).setParameter(1, "testAdmin@mail.com");
     }
 
     @Test
-    public void checkUser_happyFlow() {
+    public void checkUser_happyFlow() throws IncorrectPasswordException {
         admin = new User("testAdmin@mail.com", "testAdmin", true);
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
         when(query.getSingleResult()).thenReturn(admin);
 
-        userDao = new UserJPADoa(entityManager);
+        userDao = new UserJPADao(entityManager);
         userController = new UserController(userDao);
-
-        assertTrue(userController.checkUser("testAdmin@mail.com", "testAdmin"));
+        userController.checkUser("testAdmin@mail.com", "testAdmin");
         verify(query).setParameter(1, "testAdmin@mail.com");
     }
 
     @Test
-    public void checkUser_invalidPassword_returnsFalse() {
+    public void checkUser_invalidPassword_throwsIncorrectPasswordException() {
         admin = new User("testAdmin@mail.com", "testAdminFalse", true);
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
         when(query.getSingleResult()).thenReturn(admin);
 
-        userDao = new UserJPADoa(entityManager);
+        userDao = new UserJPADao(entityManager);
         userController = new UserController(userDao);
 
-        assertFalse(userController.checkUser("testAdmin@mail.com", "testAdmin"));
+        assertThrows(IncorrectPasswordException.class, () -> userController.checkUser("testAdmin@mail.com", "testAdmin"));
         verify(query).setParameter(1, "testAdmin@mail.com");
     }
 

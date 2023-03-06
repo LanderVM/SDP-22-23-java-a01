@@ -29,18 +29,12 @@ public class OrderController {
     }
 
     public String getOrderOverview(int orderId) {
-        Order order = orderJPADao.get(orderId)
-                .orElseThrow(() -> {
-                    throw new EntityNotFoundException("Order with current orderId could not be found");
-                });
+        Order order = orderJPADao.get(orderId);
         return order.toString();
     }
 
     public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException, OrderStatusException {
-        Order order = orderJPADao.get(orderId)
-                .orElseThrow(() -> {
-                    throw new EntityNotFoundException("Order with current orderId could not be found");
-                });
+        Order order = orderJPADao.get(orderId);
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 

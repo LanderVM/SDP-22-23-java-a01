@@ -1,25 +1,22 @@
 package domain;
 
+import exceptions.IncorrectPasswordException;
 import jakarta.persistence.EntityNotFoundException;
-import persistence.UserJPADoa;
+import persistence.UserJPADao;
 
 public class UserController {
 
-    private final UserJPADoa userJPADoa;
+    private final UserJPADao userJPADao;
     private User user;
 
-    public UserController(UserJPADoa userJPADoa) {
-        this.userJPADoa = userJPADoa;
+    public UserController(UserJPADao userJPADao) {
+        this.userJPADao = userJPADao;
     }
 
-    public boolean checkUser(String accountName, String password) throws EntityNotFoundException {
-
-        user = userJPADoa.get(accountName).
-                orElseThrow(() -> {
-                    throw new EntityNotFoundException("User does not exists");
-                });
-
-        return user.getPassword().equals(password);
+    public void checkUser(String accountName, String password) throws EntityNotFoundException, IncorrectPasswordException {
+        user = userJPADao.get(accountName);
+        if (!user.getPassword().equals(password))
+            throw new IncorrectPasswordException();
     }
 
     public boolean userIsAdmin() {

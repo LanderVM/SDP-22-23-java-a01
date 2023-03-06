@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import domain.OrderController;
 import domain.UserController;
+import exceptions.IncorrectPasswordException;
 import jakarta.persistence.NoResultException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,85 +21,80 @@ import javafx.stage.Stage;
 
 public class LoginScreenController extends AnchorPane {
 
-	private final OrderController orderController;
-	private final UserController userController;
+    private final OrderController orderController;
+    private final UserController userController;
 
-	@FXML
-	private Button btnSignIn;
+    @FXML
+    private Button btnSignIn;
 
-	@FXML
-	private PasswordField txtPassword;
+    @FXML
+    private PasswordField txtPassword;
 
-	@FXML
-	private TextField txtEmail;
+    @FXML
+    private TextField txtEmail;
 
-	public LoginScreenController(OrderController orderController, UserController userController) {
-		this.orderController = orderController;
-		this.userController = userController;
-		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
-		loader.setController(this);
-		loader.setRoot(this);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public LoginScreenController(OrderController orderController, UserController userController) {
+        this.orderController = orderController;
+        this.userController = userController;
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
+        loader.setController(this);
+        loader.setRoot(this);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@FXML
-	void SignIn(ActionEvent event) {
-		try {
-			boolean authenticated = userController.checkUser(txtEmail.getText(), txtPassword.getText());
-			if (!authenticated) {
-				txtPassword.setText("");
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Wrong password");
-				alert.setHeaderText(null);
-				alert.setContentText("The password entered is incorrect");
-				alert.showAndWait();
-			} else {
-				if (userController.userIsAdmin()) {
-					goToHomeAdmin();
-				} else {
-					goToHomeWarehouseOperator();
-				}
-			}
-		} catch (NoResultException e) {
-			txtPassword.setText("");
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
-			alert.setHeaderText(null);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
-		}
-	}
+    @FXML
+    void SignIn(ActionEvent event) {
+        try {
+            userController.checkUser(txtEmail.getText(), txtPassword.getText());
+            if (userController.userIsAdmin())
+                goToHomeAdmin();
+            else
+                goToHomeWarehouseOperator();
+        } catch (NoResultException e) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("User not found");
+            alert.setHeaderText(null);
+            alert.setContentText("No user was found with the provided email address.");
+            alert.showAndWait();
+        } catch (IncorrectPasswordException e) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("The password provided was incorrect.");
+            alert.showAndWait();
+        }
+    }
 
-	private void goToHomeWarehouseOperator() {
-		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
-		changeStage(loader, homeWarehouseOperatorController);
-	}
+    private void goToHomeWarehouseOperator() {
+        HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
+        changeStage(loader, homeWarehouseOperatorController);
+    }
 
-	private void goToHomeAdmin() {
-		HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
-		changeStage(loader, homeAdminController);
-	}
+    private void goToHomeAdmin() {
+        HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
+        changeStage(loader, homeAdminController);
+    }
 
-	private void changeStage(FXMLLoader loader, Parent controller) {
-		loader.setRoot(controller);
-		loader.setController(controller);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+    private void changeStage(FXMLLoader loader, Parent controller) {
+        loader.setRoot(controller);
+        loader.setController(controller);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-		Scene scene = new Scene(controller);
-		Stage stage = (Stage) this.getScene().getWindow();
-		stage.setScene(scene);
-		stage.setTitle("Home");
-		stage.show();
-	}
+        Scene scene = new Scene(controller);
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Home");
+        stage.show();
+    }
 
 }

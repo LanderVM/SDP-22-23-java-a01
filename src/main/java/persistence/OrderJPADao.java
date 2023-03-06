@@ -2,11 +2,11 @@ package persistence;
 
 import domain.Order;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class OrderJPADao implements JPADao<Order> {
 
@@ -17,12 +17,9 @@ public class OrderJPADao implements JPADao<Order> {
     }
 
     @Override
-    public Optional<Order> get(int id) {
+    public Order get(int id) throws NoResultException {
         TypedQuery<Order> query = entityManager.createNamedQuery("Order.findById", Order.class);
-        Order order = query.setParameter(1, id).getSingleResult();
-        return order == null ?
-                Optional.empty() :
-                Optional.of(order);
+        return query.setParameter(1, id).getSingleResult();
     }
 
     @Override
