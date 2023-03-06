@@ -23,7 +23,7 @@ public class UserJPADoa implements JPADao<User> {
 
 	public Optional<User> get(String email) {
 		TypedQuery<User> query = entityManager.createNamedQuery("User.findByEmail", User.class);
-		User user = query.setParameter(1, email).getSingleResult();
+		User user = query.setParameter(1, email).getSingleResult(); // TODO
         return user == null ?
                 Optional.empty() :
                 Optional.of(user);

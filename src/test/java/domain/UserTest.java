@@ -23,6 +23,7 @@ public class UserTest {
     TypedQuery<User> query;
 
     private UserJPADoa userDao;
+    private UserController userController;
 
     private User admin;
 
@@ -77,5 +78,36 @@ public class UserTest {
         assertEquals(Optional.empty(), userDao.get("testAdmin@mail.com"));
         verify(query).setParameter(1, "testAdmin@mail.com");
     }
+
+    @Test
+    public void checkUser_happyFlow() {
+        admin = new User("testAdmin@mail.com", "testAdmin", true);
+
+        when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
+        when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(admin);
+
+        userDao = new UserJPADoa(entityManager);
+        userController = new UserController(userDao);
+
+        assertTrue(userController.checkUser("testAdmin@mail.com", "testAdmin"));
+        verify(query).setParameter(1, "testAdmin@mail.com");
+    }
+
+    @Test
+    public void checkUser_invalidPassword_returnsFalse() {
+        admin = new User("testAdmin@mail.com", "testAdminFalse", true);
+
+        when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
+        when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(admin);
+
+        userDao = new UserJPADoa(entityManager);
+        userController = new UserController(userDao);
+
+        assertFalse(userController.checkUser("testAdmin@mail.com", "testAdmin"));
+        verify(query).setParameter(1, "testAdmin@mail.com");
+    }
+
 
 }

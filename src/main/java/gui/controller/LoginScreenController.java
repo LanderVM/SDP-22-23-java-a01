@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import domain.OrderController;
 import domain.UserController;
-import exceptions.UserDoesntExistException;
+import jakarta.persistence.NoResultException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,7 +63,7 @@ public class LoginScreenController extends AnchorPane {
 					goToHomeWarehouseOperator();
 				}
 			}
-		} catch (UserDoesntExistException e) {
+		} catch (NoResultException e) {
 			txtPassword.setText("");
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
