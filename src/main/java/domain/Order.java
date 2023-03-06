@@ -58,12 +58,12 @@ public class Order {
     private Supplier customer;
 
 
-    public Order(  String address, Date date, List<Product> productsList, Status status,
+    public Order(   Date date, List<Product> productsList, Status status,
                  TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer) {
         //this.company = company;
         //this.customerName = customerName;
         //this.customerEmail = customerEmail;
-        this.address = address;
+        //this.address = address;
         this.date = date;
         this.productsList = productsList;
         this.status = status;
@@ -71,6 +71,20 @@ public class Order {
         this.packaging = packaging;
         this.supplier=supplier;
         this.customer=customer;
+    }
+    
+    public Order(   Date date, List<Product> productsList, Status status,
+            TransportService transportService, Packaging packaging) {
+    	//this.company = company;
+    	//this.customerName = customerName;
+    	//this.customerEmail = customerEmail;
+    	//this.address = address;
+    	this.date = date;
+    	this.productsList = productsList;
+    	this.status = status;
+    	this.transportService = transportService;
+    	this.packaging = packaging;
+   
     }
 
     protected Order() {
@@ -186,7 +200,7 @@ public class Order {
                 ", company='" + supplier.getName() + '\'' +
                 ", customerName='" + customer.getName() + '\'' +
                 ", customerEmail='" + customer.getEmail() + '\'' +
-                ", address='" + address + '\'' +
+                ", address='" + customer.getAdress() + '\'' +
                 ", date=" + date +
                 ", productsList=" + productsList +
                 ", status=" + status +

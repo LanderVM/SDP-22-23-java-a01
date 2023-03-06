@@ -33,7 +33,6 @@ public class SupplierJPADao implements JPADao<Supplier,String>{
 
 	@Override
 	public void update(Supplier supplier) {
-		// TODO Auto-generated method stub
 		entityManager.getTransaction().begin();
         entityManager.merge(supplier);
         entityManager.getTransaction().commit();

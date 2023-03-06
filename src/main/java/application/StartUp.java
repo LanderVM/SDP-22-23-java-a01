@@ -1,6 +1,10 @@
 package application;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +14,7 @@ import domain.OrderController;
 import domain.Packaging;
 import domain.Product;
 import domain.Status;
+import domain.Supplier;
 import domain.TransportService;
 import domain.User;
 import domain.UserController;
@@ -72,14 +77,37 @@ public class StartUp extends Application {
         userManager.persist(warehouseman);
         userManager.getTransaction().commit();
         userManager.close();
+        
+        File fi = new File("testImg.jpg");
+        byte[] fileContent = null;
+		try {
+			fileContent = Files.readAllBytes(fi.toPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-        Order o1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM);
-        Order o2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM);
+        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" ,0426343211,fileContent);
+        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst",0456443212,fileContent);
+        
+        Order o1 = new Order( new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM,s1,s2);
+        Order o2 = new Order( new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM,s2,s1);
+        
+        List<Order> l1 = new ArrayList<>();
+        l1.add(o1);
+        List<Order> l2 = new ArrayList<>();
+        l2.add(o2);
+        s1.setOrdersAsSupplier(l1);
+        s1.setOrdersAsCustomer(l2);
+        s2.setOrdersAsSupplier(l2);
+        s2.setOrdersAsCustomer(l1);
 
         EntityManager orderManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
         orderManager.getTransaction().begin();
         orderManager.persist(o1);
         orderManager.persist(o2);
+        orderManager.persist(s1);
+        orderManager.persist(s2);
         orderManager.getTransaction().commit();
         orderManager.close();
     }

@@ -6,6 +6,7 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -39,21 +40,33 @@ public class Supplier {
 	@Column(name="telephone_number")
 	private int telephoneNumber;
 	
+	@Lob
+	private byte[] logo;
+	
 	@OneToMany(mappedBy="supplier")
 	private List<Order> ordersAsSupplier;
 	
 	@OneToMany(mappedBy="customer")
 	private List<Order> ordersAsCustomer;
 
-	public Supplier(String name, String email, String adress, int telephoneNumber, List<Order> ordersAsSupplier,
+	public Supplier(String name, String email, String adress, int telephoneNumber,byte[] logo, List<Order> ordersAsSupplier,
 			List<Order> ordersAsCustomer) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.adress = adress;
 		this.telephoneNumber = telephoneNumber;
+		this.logo = logo;
 		this.ordersAsSupplier = ordersAsSupplier;
 		this.ordersAsCustomer = ordersAsCustomer;
+	}
+	public Supplier(String name, String email, String adress, int telephoneNumber,byte[] logo) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.adress = adress;
+		this.telephoneNumber = telephoneNumber;
+		this.logo = logo;
 	}
 
 	protected Supplier() {
