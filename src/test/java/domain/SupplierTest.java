@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,7 +48,7 @@ public class SupplierTest {
 
     @Test
     public void getByEmail_happyFlow() {
-        supplier = new Supplier("Test supplier", "testSupplier@mail.com", "testStraat 123", 123456789, getFile());
+        supplier = new Supplier("Test supplier", "testSupplier@mail.com", "testStraat 123", 123456789, getFile(), new ArrayList<Order>());
 
         when(entityManager.createNamedQuery("Supplier.findByEmail", Supplier.class)).thenReturn(query);
         when(query.setParameter(1, "testSupplier@mail.com")).thenReturn(query);
@@ -73,7 +74,7 @@ public class SupplierTest {
 
     @Test
     public void getById_happyFlow() {
-    	supplier = new Supplier("Test supplier", "testSupplier@mail.com", "testStraat 123", 123456789, getFile());
+    	supplier = new Supplier("Test supplier", "testSupplier@mail.com", "testStraat 123", 123456789, getFile(), new ArrayList<Order>());
 
         when(entityManager.createNamedQuery("Supplier.findById", Supplier.class)).thenReturn(query);
         when(query.setParameter(1, "1")).thenReturn(query);

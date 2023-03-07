@@ -10,15 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import domain.Order;
-import domain.OrderController;
-import domain.Packaging;
-import domain.Product;
-import domain.Status;
-import domain.Supplier;
-import domain.TransportService;
-import domain.User;
-import domain.UserController;
+import domain.*;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -79,8 +71,8 @@ public class StartUp extends Application {
         userManager.getTransaction().commit();
         userManager.close();
 
-        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
-        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile());
+        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile(), List.of());
+        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile(), List.of());
         
         Order o1 = new Order( new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM,s1,s2);
         Order o2 = new Order( new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM,s2,s1);
@@ -89,10 +81,8 @@ public class StartUp extends Application {
         l1.add(o1);
         List<Order> l2 = new ArrayList<>();
         l2.add(o2);
-        s1.setOrdersAsSupplier(l1);
-        s1.setOrdersAsCustomer(l2);
-        s2.setOrdersAsSupplier(l2);
-        s2.setOrdersAsCustomer(l1);
+        s1.setOrders(l1);
+        s2.setOrders(l2);
 
         EntityManager orderManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
         orderManager.getTransaction().begin();

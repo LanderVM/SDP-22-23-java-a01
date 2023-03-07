@@ -54,8 +54,8 @@ public class OrderTest {
 		return fileContent;
     }
     
-    Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" ,0426343211, getFile());
-    Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst",0456443212, getFile());
+    Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" ,426343211, getFile(), List.of());
+    Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst",456443212, getFile(), List.of());
     
     @Test
     public void getById_happyFlow() {
