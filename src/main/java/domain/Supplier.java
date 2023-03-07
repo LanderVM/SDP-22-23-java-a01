@@ -26,6 +26,10 @@ import jakarta.persistence.Table;
         @NamedQuery(
                 name = "Supplier.findAllWithOrdersAsCustomer",
                 query = "SELECT d FROM Supplier d WHERE d.ordersAsCustomer IS NOT EMPTY"
+        ),
+        @NamedQuery(
+                name = "Supplier.findAllWithOrdersAsCustomer",
+                query = "SELECT d FROM Supplier d WHERE d.ordersAsCustomer IS NOT EMPTY"
         )
 })
 public class Supplier {
