@@ -1,6 +1,5 @@
 package domain;
 
-import exceptions.IncorrectPasswordException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -10,15 +9,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import persistence.SupplierJPADao;
-import persistence.UserJPADao;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.util.List;
+import java.util.Objects;
 
 @ExtendWith(MockitoExtension.class)
 public class SupplierTest {
@@ -33,24 +32,23 @@ public class SupplierTest {
     private SupplierController supplierController;
 
     private Supplier supplier;
-    
+
     private byte[] getFile() {
-    	File fi = new File("testImg.jpg");
         byte[] fileContent = null;
 		try {
+            File fi = new File(Objects.requireNonNull(getClass().getResource("/gui/HomeAdmin.fxml")).toURI());
 			fileContent = Files.readAllBytes(fi.toPath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+        } catch (IOException | URISyntaxException exception) {
+			exception.printStackTrace();
 		}
-		return fileContent;
+        return fileContent;
     }
-    
+
 
     @Test
     public void getByEmail_happyFlow() {
         supplier = new Supplier("Test supplier", "testSupplier@mail.com", "testStraat 123", 123456789, getFile());
-      
+
         when(entityManager.createNamedQuery("Supplier.findByEmail", Supplier.class)).thenReturn(query);
         when(query.setParameter(1, "testSupplier@mail.com")).thenReturn(query);
         when(query.getSingleResult()).thenReturn(supplier);

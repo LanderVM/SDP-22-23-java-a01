@@ -3,21 +3,18 @@ package domain;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="suppliers")
+@Table(name = "supplier")
 @NamedQueries({
-		@NamedQuery(
+        @NamedQuery(
                 name = "Supplier.findByEmail",
                 query = "SELECT w FROM Supplier w WHERE w.email = ?1"
+        ),
+        @NamedQuery(
+                name = "Supplier.findById",
+                query = "SELECT w FROM Supplier w WHERE w.supplierId = ?1"
         ),
         @NamedQuery(
                 name = "Supplier.findAll",
@@ -27,120 +24,112 @@ import jakarta.persistence.Table;
                 name = "Supplier.findAllWithOrdersAsCustomer",
                 query = "SELECT d FROM Supplier d WHERE d.ordersAsCustomer IS NOT EMPTY"
         ),
-        @NamedQuery(
-                name = "Supplier.findAllWithOrdersAsCustomer",
-                query = "SELECT d FROM Supplier d WHERE d.ordersAsCustomer IS NOT EMPTY"
-        )
 })
 public class Supplier {
-	
-	private String name;
-	
-	@Id
-	private String email;
-	
-	private String adress;
-	
-	@Column(name="telephone_number")
-	private int telephoneNumber;
-	
-	@Lob
-	private byte[] logo;
-	
-	@OneToMany(mappedBy="supplier")
-	private List<Order> ordersAsSupplier;
-	
-	@OneToMany(mappedBy="customer")
-	private List<Order> ordersAsCustomer;
 
-	public Supplier(String name, String email, String adress, int telephoneNumber,byte[] logo, List<Order> ordersAsSupplier,
-			List<Order> ordersAsCustomer) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.adress = adress;
-		this.telephoneNumber = telephoneNumber;
-		this.logo = logo;
-		this.ordersAsSupplier = ordersAsSupplier;
-		this.ordersAsCustomer = ordersAsCustomer;
-	}
-	public Supplier(String name, String email, String adress, int telephoneNumber,byte[] logo) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.adress = adress;
-		this.telephoneNumber = telephoneNumber;
-		this.logo = logo;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "supplier_id")
+    private int supplierId;
 
-	protected Supplier() {
-	}
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    private String email;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String address;
 
-	public String getEmail() {
-		return email;
-	}
+    @Column(name = "phone_number")
+    private int phoneNumber;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Lob
+    private byte[] logo;
 
-	public String getAdress() {
-		return adress;
-	}
+    @OneToMany(mappedBy = "supplier")
+    private List<Order> ordersAsSupplier;
 
-	public void setAdress(String adress) {
-		this.adress = adress;
-	}
+    @OneToMany(mappedBy = "customer")
+    private List<Order> ordersAsCustomer;
 
-	public int getTelephoneNumber() {
-		return telephoneNumber;
-	}
+    public Supplier(String name, String email, String address, int phoneNumber, byte[] logo, List<Order> ordersAsSupplier,
+                    List<Order> ordersAsCustomer) {
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.logo = logo;
+        this.ordersAsSupplier = ordersAsSupplier;
+        this.ordersAsCustomer = ordersAsCustomer;
+    }
 
-	public void setTelephoneNumber(int telephoneNumber) {
-		this.telephoneNumber = telephoneNumber;
-	}
+    public Supplier(String name, String email, String address, int phoneNumber, byte[] logo) {
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.logo = logo;
+    }
 
-	public List<Order> getOrdersAsSupplier() {
-		return ordersAsSupplier;
-	}
+    protected Supplier() {
+    }
 
-	public void setOrdersAsSupplier(List<Order> ordersAsSupplier) {
-		this.ordersAsSupplier = ordersAsSupplier;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<Order> getOrdersAsCustomer() {
-		return ordersAsCustomer;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setOrdersAsCustomer(List<Order> ordersAsCustomer) {
-		this.ordersAsCustomer = ordersAsCustomer;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(email);
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Supplier other = (Supplier) obj;
-		return Objects.equals(email, other.email);
-	}
-	
-	
-	
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String adress) {
+        this.address = adress;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public List<Order> getOrdersAsSupplier() {
+        return ordersAsSupplier;
+    }
+
+    public void setOrdersAsSupplier(List<Order> ordersAsSupplier) {
+        this.ordersAsSupplier = ordersAsSupplier;
+    }
+
+    public List<Order> getOrdersAsCustomer() {
+        return ordersAsCustomer;
+    }
+
+    public void setOrdersAsCustomer(List<Order> ordersAsCustomer) {
+        this.ordersAsCustomer = ordersAsCustomer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Supplier supplier = (Supplier) o;
+        return supplierId == supplier.supplierId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(supplierId);
+    }
 }

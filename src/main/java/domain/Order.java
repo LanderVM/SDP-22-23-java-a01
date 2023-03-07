@@ -200,7 +200,7 @@ public class Order {
                 ", company='" + supplier.getName() + '\'' +
                 ", customerName='" + customer.getName() + '\'' +
                 ", customerEmail='" + customer.getEmail() + '\'' +
-                ", address='" + customer.getAdress() + '\'' +
+                ", address='" + customer.getAddress() + '\'' +
                 ", date=" + date +
                 ", productsList=" + productsList +
                 ", status=" + status +

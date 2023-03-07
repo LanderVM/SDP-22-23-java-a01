@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,18 +78,9 @@ public class StartUp extends Application {
         userManager.persist(warehouseman);
         userManager.getTransaction().commit();
         userManager.close();
-        
-        File fi = new File("testImg.jpg");
-        byte[] fileContent = null;
-		try {
-			fileContent = Files.readAllBytes(fi.toPath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" ,0426343211,fileContent);
-        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst",0456443212,fileContent);
+        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
+        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile());
         
         Order o1 = new Order( new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM,s1,s2);
         Order o2 = new Order( new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM,s2,s1);
@@ -110,5 +102,16 @@ public class StartUp extends Application {
         orderManager.persist(s2);
         orderManager.getTransaction().commit();
         orderManager.close();
+    }
+
+    private static byte[] getFile() {
+        byte[] fileContent = null;
+        try {
+            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/gui/HomeAdmin.fxml")).toURI());
+            fileContent = Files.readAllBytes(fi.toPath());
+        } catch (IOException | URISyntaxException exception) {
+            exception.printStackTrace();
+        }
+        return fileContent;
     }
 }
