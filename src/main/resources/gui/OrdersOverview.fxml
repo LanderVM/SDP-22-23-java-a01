@@ -33,7 +33,7 @@
    <children>
       <TableView fx:id="TableOrdersView" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
          <columns>
-            <TableColumn fx:id="NumberColumnTable" prefWidth="108.79998779296875" text="Number" />
+            <TableColumn fx:id="NumberColumnTable" prefWidth="108.79998779296875" text="Id" />
             <TableColumn fx:id="DateColumnTable" prefWidth="97.59999084472656" text="Date" />
             <TableColumn fx:id="OverviewColumnTable" prefWidth="130.4000244140625" text="Overview" />
             <TableColumn fx:id="StatusColumnTable" prefWidth="129.5999755859375" text="Status" />
@@ -65,10 +65,10 @@
       <ChoiceBox fx:id="choiceBoxTransportServices" prefHeight="42.0" prefWidth="240.0" style="-fx-font-size: 20px;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
       <GridPane fx:id="HeaderPane" style="-fx-background-color: RED;" GridPane.columnSpan="2147483647">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="483.5999755859375" minWidth="10.0" prefWidth="483.5999755859375" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="505.7999267578125" minWidth="10.0" prefWidth="268.0000244140625" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.7999755859374" minWidth="10.0" prefWidth="405.59992675781245" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="369.2000732421875" minWidth="10.0" prefWidth="369.2000732421875" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
