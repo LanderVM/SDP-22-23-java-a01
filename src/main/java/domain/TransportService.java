@@ -24,7 +24,7 @@ import java.util.Objects;
 })
 public class TransportService {
 
-    // TODO: validation
+    // TODO: validation for TransportController addTransportService, viewTransportService, deactivateTransportService, activateTransportService
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +51,7 @@ public class TransportService {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -63,7 +63,7 @@ public class TransportService {
         return contactPersonList;
     }
 
-    public void setContactPersonList(List<ContactPerson> contactPersonList) {
+    void setContactPersonList(List<ContactPerson> contactPersonList) {
         this.contactPersonList = contactPersonList;
     }
 
@@ -71,7 +71,7 @@ public class TransportService {
         return trackingCodeDetails;
     }
 
-    public void setTrackingCodeDetails(TrackingCodeDetails trackingCodeDetails) {
+    void setTrackingCodeDetails(TrackingCodeDetails trackingCodeDetails) {
         this.trackingCodeDetails = trackingCodeDetails;
     }
 
@@ -79,7 +79,7 @@ public class TransportService {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    void setActive(boolean active) {
         isActive = active;
     }
 
@@ -98,12 +98,12 @@ public class TransportService {
 
     @Override
     public String toString() {
-        return "NewTransportService{" +
+        return "TransportService{" +
                 "transportServiceId=" + transportServiceId +
+                ", name='" + name + '\'' +
                 ", contactPersonList=" + contactPersonList +
                 ", trackingCodeDetails=" + trackingCodeDetails +
                 ", isActive=" + isActive +
                 '}';
     }
-
 }

@@ -48,7 +48,7 @@ public class User {
         return accountName;
     }
 
-    public void setAccountName(String accountName) {
+    void setAccountName(String accountName) {
         this.accountName = accountName;
     }
 
@@ -56,7 +56,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 
@@ -64,7 +64,7 @@ public class User {
         return isAdmin;
     }
 
-    public void setAdmin(boolean isAdmin) {
+    void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -72,7 +72,7 @@ public class User {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    void setSurname(String surname) {
         this.surname = surname;
     }
 
@@ -80,7 +80,7 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
+     void setName(String name) {
         this.name = name;
     }
 
@@ -102,7 +102,10 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "accountName='" + accountName + '\'' +
+                "userId=" + userId +
+                ", accountName='" + accountName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
                 '}';

@@ -26,6 +26,14 @@ public class Product implements Serializable {
     protected Product() {
     }
 
+    public int getProductId() {
+        return productId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     void setName(String name) {
         this.name = name;
     }
@@ -37,6 +45,7 @@ public class Product implements Serializable {
     public BigDecimal getPrice() {
         return this.price;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,5 +59,14 @@ public class Product implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(productId);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

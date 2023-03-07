@@ -199,6 +199,7 @@ public class Order {
                 ", packaging=" + packaging +
                 ", transportService=" + transportService +
                 ", trackingCode=" + trackingCode +
+                ", originalAcquisitionPrice=" + originalAcquisitionPrice +
                 '}';
     }
 }

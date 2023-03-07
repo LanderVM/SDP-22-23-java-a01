@@ -6,6 +6,4 @@ public enum Status {
     DISPATCHED,
     OUT_FOR_DELIVERY,
     DELIVERED
-    
-    
 }

@@ -35,7 +35,7 @@ public class TrackingCodeDetails {
         return characterCount;
     }
 
-    public void setCharacterCount(int characterCount) {
+    void setCharacterCount(int characterCount) {
         this.characterCount = characterCount;
     }
 
@@ -43,7 +43,7 @@ public class TrackingCodeDetails {
         return integersOnly;
     }
 
-    public void setIntegersOnly(boolean integersOnly) {
+    void setIntegersOnly(boolean integersOnly) {
         this.integersOnly = integersOnly;
     }
 
@@ -51,7 +51,7 @@ public class TrackingCodeDetails {
         return prefix;
     }
 
-    public void setPrefix(String prefix) {
+    void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 
@@ -59,7 +59,7 @@ public class TrackingCodeDetails {
         return verificationType;
     }
 
-    public void setVerificationType(VerificationType verificationType) {
+    void setVerificationType(VerificationType verificationType) {
         this.verificationType = verificationType;
     }
 
