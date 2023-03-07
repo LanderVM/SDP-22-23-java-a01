@@ -92,4 +92,5 @@ public class TransportServiceTest {
         verify(query).getResultList();
     }
 
+    // TODO: test addTransportService, viewTransportService, deactiveTransportService, activeTransportService && all validations
 }

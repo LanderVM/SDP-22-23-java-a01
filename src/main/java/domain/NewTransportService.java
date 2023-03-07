@@ -24,6 +24,8 @@ import java.util.Objects;
 })
 public class NewTransportService {
 
+    // TODO: validation
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transport_service_id")

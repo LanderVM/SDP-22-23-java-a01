@@ -15,6 +15,14 @@ public class ContactPerson {
     private String email;
     private int phoneNumber;
 
+    public ContactPerson(String email, int phoneNumber) {
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    protected ContactPerson() {
+    }
+
     public int getContactPersonId() {
         return contactPersonId;
     }
