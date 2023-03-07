@@ -13,12 +13,12 @@ public class SupplierController {
 		this.supplierJPADao = supplierJPADao;
 	}
 
-	public Supplier getSupplierById(String id) throws NoResultException {
+	public Supplier getSupplier(int id) throws NoResultException {
 		return supplierJPADao.get(id);
 	}
 	
-	public Supplier getSupplierByEmail(String email) throws NoResultException {
-		return supplierJPADao.getByMail(email);
+	public Supplier getSupplier(String email) throws NoResultException {
+		return supplierJPADao.get(email);
 	}
 	
 	public List<Supplier> getAllSuppliers() {

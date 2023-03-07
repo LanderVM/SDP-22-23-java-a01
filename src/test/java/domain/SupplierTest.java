@@ -55,7 +55,7 @@ public class SupplierTest {
 
         supplierDao = new SupplierJPADao(entityManager);
 
-        assertEquals(supplier, supplierDao.getByMail("testSupplier@mail.com"));
+        assertEquals(supplier, supplierDao.get("testSupplier@mail.com"));
         verify(query).setParameter(1, "testSupplier@mail.com");
     }
 
@@ -67,7 +67,7 @@ public class SupplierTest {
 
         supplierDao = new SupplierJPADao(entityManager);
 
-        assertThrows(NoResultException.class, () -> supplierDao.getByMail("testMail@mail.com"));
+        assertThrows(NoResultException.class, () -> supplierDao.get("testMail@mail.com"));
         verify(query).setParameter(1, "testMail@mail.com");
     }
 
@@ -76,25 +76,25 @@ public class SupplierTest {
     	supplier = new Supplier("Test supplier", "testSupplier@mail.com", "testStraat 123", 123456789, getFile());
 
         when(entityManager.createNamedQuery("Supplier.findById", Supplier.class)).thenReturn(query);
-        when(query.setParameter(1, "1")).thenReturn(query);
+        when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(supplier);
 
         supplierDao = new SupplierJPADao(entityManager);
 
-        assertEquals(supplier, supplierDao.get("1"));
-        verify(query).setParameter(1, "1");
+        assertEquals(supplier, supplierDao.get(1));
+        verify(query).setParameter(1, 1);
     }
 
     @Test
     public void getById_invalidId_throwsNoResultException() {
         when(entityManager.createNamedQuery("Supplier.findById", Supplier.class)).thenReturn(query);
-        when(query.setParameter(1, "1")).thenReturn(query);
+        when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenThrow(NoResultException.class);
 
         supplierDao = new SupplierJPADao(entityManager);
 
-        assertThrows(NoResultException.class, () -> supplierDao.get("1"));
-        verify(query).setParameter(1, "1");
+        assertThrows(NoResultException.class, () -> supplierDao.get(1));
+        verify(query).setParameter(1, 1);
     }
 
 }

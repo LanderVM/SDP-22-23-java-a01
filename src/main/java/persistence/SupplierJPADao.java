@@ -9,7 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
-public class SupplierJPADao implements JPADao<Supplier,String>{
+public class SupplierJPADao implements JPADao<Supplier, Integer>{
 
 	private EntityManager entityManager;
 	
@@ -18,16 +18,16 @@ public class SupplierJPADao implements JPADao<Supplier,String>{
 	}
 	
 	@Override
-	public Supplier get(String id) throws NoResultException {
+	public Supplier get(Integer id) throws NoResultException {
 		TypedQuery<Supplier> query = entityManager.createNamedQuery("Supplier.findById", Supplier.class);
 	    return query.setParameter(1, id).getSingleResult();
 	}
 
-	public Supplier getByMail(String mail) throws NoResultException {
+	public Supplier get(String mail) throws NoResultException {
 		TypedQuery<Supplier> query = entityManager.createNamedQuery("Supplier.findByEmail", Supplier.class);
 	    return query.setParameter(1, mail).getSingleResult();
 	}
-	
+
 	@Override
 	public List<Supplier> getAll() {
 		
