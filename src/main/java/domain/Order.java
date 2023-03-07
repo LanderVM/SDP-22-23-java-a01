@@ -42,25 +42,25 @@ public class Order {
 
     @Column(name = "tracking_code")
     private int trackingCode;
-
+    
     @ManyToOne
     private Supplier supplier;
-
+    
     @ManyToOne
-    private Consumer consumer;
+    private Supplier customer;
 
 
     public Order(Date date, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging, Supplier supplier, Consumer consumer) {
+                 TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer) {
         this.date = date;
         this.productsList = productsList;
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
         this.supplier=supplier;
-        this.consumer = consumer;
+        this.customer=customer;
     }
-
+    
     public Order(Date date, List<Product> productsList, Status status,
             TransportService transportService, Packaging packaging) {
     	this.date = date;
@@ -68,7 +68,7 @@ public class Order {
     	this.status = status;
     	this.transportService = transportService;
     	this.packaging = packaging;
-
+   
     }
 
     protected Order() {
@@ -146,12 +146,12 @@ public class Order {
         this.supplier = supplier;
     }
 
-    public Consumer getConsumer() {
-        return consumer;
+    public Supplier getCustomer() {
+        return customer;
     }
 
-    public void setConsumer(Consumer consumer) {
-        this.consumer = consumer;
+    public void setCustomer(Supplier customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -174,9 +174,9 @@ public class Order {
         return "Order{" +
                 "orderId=" + orderId +
                 ", company='" + supplier.getName() + '\'' +
-                ", customerName='" + consumer.getName() + '\'' +
-                ", customerEmail='" + consumer.getEmail() + '\'' +
-                ", address='" + consumer.getAddress() + '\'' +
+                ", customerName='" + customer.getName() + '\'' +
+                ", customerEmail='" + customer.getEmail() + '\'' +
+                ", address='" + customer.getAddress() + '\'' +
                 ", date=" + date +
                 ", productsList=" + productsList +
                 ", status=" + status +
