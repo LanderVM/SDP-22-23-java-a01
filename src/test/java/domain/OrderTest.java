@@ -32,6 +32,7 @@ public class OrderTest {
     private OrderJPADao orderDao;
 
     private Order order;
+    private NewTransportService transportService;
 
     private void mockFindAllPosted() {
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -40,7 +41,8 @@ public class OrderTest {
 
     @Test
     public void getById_happyFlow() {
-        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM, new BigDecimal("20.10"));
+        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -66,10 +68,11 @@ public class OrderTest {
 
     @Test
     public void getAll_happyFlow() {
+        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         List<Order> ordersList =
-                List.of(new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM, new BigDecimal("20.10")),
-                        new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(new Product("Test product 3", new BigDecimal("7.40"))), Status.PROCESSED, TransportService.POSTNL, Packaging.MEDIUM, new BigDecimal("7.40")),
-                        new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(new Product("Test product 4", new BigDecimal("1.20")), new Product("Test product 5", new BigDecimal("88.30"))), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM, new BigDecimal("89.50"))
+                List.of(new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, new BigDecimal("20.10")),
+                        new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(new Product("Test product 3", new BigDecimal("7.40"))), Status.PROCESSED, transportService, Packaging.MEDIUM, new BigDecimal("7.40")),
+                        new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(new Product("Test product 4", new BigDecimal("1.20")), new Product("Test product 5", new BigDecimal("88.30"))), Status.POSTED, transportService, Packaging.CUSTOM, new BigDecimal("89.50"))
                 );
 
         when(entityManager.createNamedQuery("Order.findAll", Order.class)).thenReturn(query);
@@ -83,7 +86,9 @@ public class OrderTest {
 
     @Test
     public void processOrder_happyFlow() throws OrderStatusException {
-        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM, new BigDecimal("20.10"));
+        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
+
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(entityManager.getTransaction()).thenReturn(entityTransaction);
@@ -95,17 +100,18 @@ public class OrderTest {
         orderDao = new OrderJPADao(entityManager);
         OrderController orderController = new OrderController(orderDao);
 
-        orderController.processOrder(1, TransportService.BPOST);
+        orderController.processOrder(1, transportService);
         Order orderAfterUpdate = orderDao.get(1);
 
-        assertEquals(TransportService.BPOST, orderAfterUpdate.getTransportService());
+        assertEquals(transportService, orderAfterUpdate.getTransportService());
         assertEquals(Status.PROCESSED, orderAfterUpdate.getStatus());
 //        verify(query, times(2)).setParameter(1, 1);
     }
 
     @Test
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
-        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.OUT_FOR_DELIVERY, TransportService.POSTNL, Packaging.MEDIUM, new BigDecimal("20.10"));
+        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.OUT_FOR_DELIVERY, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -116,7 +122,7 @@ public class OrderTest {
         orderDao = new OrderJPADao(entityManager);
         OrderController orderController = new OrderController(orderDao);
 
-        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1, TransportService.BPOST));
+        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1, transportService));
         verify(query).setParameter(1, 1);
     }
 

@@ -19,10 +19,6 @@ public class ContactPerson {
         return contactPersonId;
     }
 
-    public void setContactPersonId(int contactPersonId) {
-        this.contactPersonId = contactPersonId;
-    }
-
     public String getEmail() {
         return email;
     }

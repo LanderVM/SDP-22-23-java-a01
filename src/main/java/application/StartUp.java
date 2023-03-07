@@ -5,14 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import domain.Order;
-import domain.OrderController;
-import domain.Packaging;
-import domain.Product;
-import domain.Status;
-import domain.TransportService;
-import domain.User;
-import domain.UserController;
+import domain.*;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -73,11 +66,21 @@ public class StartUp extends Application {
         userManager.getTransaction().commit();
         userManager.close();
 
-        Order o1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM, new BigDecimal("3.00"));
-        Order o2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM, new BigDecimal("24.70"));
+        TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
+        TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
+
+        NewTransportService bpost = new NewTransportService(List.of(), bpostDetails, true);
+        NewTransportService postnl = new NewTransportService(List.of(), postnlDetails, true);
+
+        Order o1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(p1, p2), Status.POSTED, postnl, Packaging.MEDIUM, new BigDecimal("3.00"));
+        Order o2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(p3, p4, p5), Status.POSTED, bpost, Packaging.CUSTOM, new BigDecimal("24.70"));
 
         EntityManager orderManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
         orderManager.getTransaction().begin();
+        orderManager.persist(bpostDetails);
+        orderManager.persist(postnlDetails);
+        orderManager.persist(bpost);
+        orderManager.persist(postnl);
         orderManager.persist(o1);
         orderManager.persist(o2);
         orderManager.getTransaction().commit();

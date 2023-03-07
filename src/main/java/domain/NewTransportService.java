@@ -8,6 +8,20 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "transport_service")
+@NamedQueries({
+        @NamedQuery(
+                name = "TransportService.findById",
+                query = "SELECT w FROM NewTransportService w WHERE w.transportServiceId = ?1"
+        ),
+        @NamedQuery(
+                name = "TransportService.findAll",
+                query = "SELECT d FROM NewTransportService d"
+        ),
+        @NamedQuery(
+                name = "TransportService.findAllActive",
+                query = "SELECT d FROM NewTransportService d WHERE d.isActive = true"
+        )
+})
 public class NewTransportService {
 
     @Id
@@ -16,17 +30,21 @@ public class NewTransportService {
     private int transportServiceId;
     @OneToMany
     private List<ContactPerson> contactPersonList;
-    private int trackingCodeCharacterCount;
     @OneToOne
     private TrackingCodeDetails trackingCodeDetails;
     private boolean isActive;
 
-    public int getTransportServiceId() {
-        return transportServiceId;
+    public NewTransportService(List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean isActive) {
+        this.contactPersonList = contactPersonList;
+        this.trackingCodeDetails = trackingCodeDetails;
+        this.isActive = isActive;
     }
 
-    public void setTransportServiceId(int transportServiceId) {
-        this.transportServiceId = transportServiceId;
+    protected NewTransportService() {
+    }
+
+    public int getTransportServiceId() {
+        return transportServiceId;
     }
 
     public List<ContactPerson> getContactPersonList() {
@@ -35,14 +53,6 @@ public class NewTransportService {
 
     public void setContactPersonList(List<ContactPerson> contactPersonList) {
         this.contactPersonList = contactPersonList;
-    }
-
-    public int getTrackingCodeCharacterCount() {
-        return trackingCodeCharacterCount;
-    }
-
-    public void setTrackingCodeCharacterCount(int trackingCodeCharacterCount) {
-        this.trackingCodeCharacterCount = trackingCodeCharacterCount;
     }
 
     public TrackingCodeDetails getTrackingCodeDetails() {
@@ -79,9 +89,9 @@ public class NewTransportService {
         return "NewTransportService{" +
                 "transportServiceId=" + transportServiceId +
                 ", contactPersonList=" + contactPersonList +
-                ", trackingCodeCharacterCount=" + trackingCodeCharacterCount +
                 ", trackingCodeDetails=" + trackingCodeDetails +
                 ", isActive=" + isActive +
                 '}';
     }
+
 }

@@ -1,11 +1,7 @@
 package gui.controller;
 
-import java.io.IOException;
-
 import domain.OrderController;
-import domain.TransportService;
 import domain.UserController;
-import exceptions.OrderStatusException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -103,12 +99,12 @@ public class ProcessOrderScreenController extends GridPane {
             alert.showAndWait();
             return;
         }
-        try {
+//        try {
             // TODO proper exception handling
-            dc.processOrder(id, TransportService.valueOf(selectionTransportService));
-        } catch (OrderStatusException e) {
-            throw new RuntimeException(e);
-        }
+//            dc.processOrder(id, NewTransportService.valueOf(selectionTransportService)); // TODO
+//        } catch (OrderStatusException e) {
+//            throw new RuntimeException(e);
+//        }
         backToProcessOrdersScreen(event);
     }
 
