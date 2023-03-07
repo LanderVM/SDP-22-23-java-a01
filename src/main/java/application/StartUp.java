@@ -86,18 +86,6 @@ public class StartUp extends Application {
 
         Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
         Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile());
-        
-        Order o1 = new Order( new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM,s1,s2);
-        Order o2 = new Order( new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM,s2,s1);
-        
-        List<Order> l1 = new ArrayList<>();
-        l1.add(o1);
-        List<Order> l2 = new ArrayList<>();
-        l2.add(o2);
-        s1.setOrdersAsSupplier(l1);
-        s1.setOrdersAsCustomer(l2);
-        s2.setOrdersAsSupplier(l2);
-        s2.setOrdersAsCustomer(l1);
 
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
@@ -109,9 +97,18 @@ public class StartUp extends Application {
         TransportService bpost = new TransportService("bpost", List.of(), bpostDetails, true);
         TransportService postnl = new TransportService("postnl", List.of(), postnlDetails, true);
 
-        Order order1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, new BigDecimal("3.00"));
-        Order order2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(product3, product4, product5), Status.POSTED, bpost, Packaging.CUSTOM, new BigDecimal("24.70"));
+        Order order1 = new Order( new Date(), List.of(product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
+        Order order2 = new Order( new Date(), List.of(product3, product4, product5), Status.POSTED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
 
+        List<Order> l1 = new ArrayList<>();
+        l1.add(order1);
+        List<Order> l2 = new ArrayList<>();
+        l2.add(order2);
+        s1.setOrdersAsSupplier(l1);
+        s1.setOrdersAsCustomer(l2);
+        s2.setOrdersAsSupplier(l2);
+        s2.setOrdersAsCustomer(l1);
+        
         EntityManager orderManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         orderManager.getTransaction().begin();
 
@@ -135,8 +132,6 @@ public class StartUp extends Application {
         orderManager.persist(order1);
         orderManager.persist(order2);
 
-        orderManager.persist(o1);
-        orderManager.persist(o2);
         orderManager.persist(s1);
         orderManager.persist(s2);
         orderManager.getTransaction().commit();

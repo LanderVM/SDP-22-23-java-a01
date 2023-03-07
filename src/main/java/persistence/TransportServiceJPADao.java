@@ -7,7 +7,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
-public class TransportServiceJPADao implements JPADao<TransportService> {
+public class TransportServiceJPADao implements JPADao<TransportService,Integer> {
 
     EntityManager entityManager;
 
@@ -17,7 +17,7 @@ public class TransportServiceJPADao implements JPADao<TransportService> {
 
 
     @Override
-    public TransportService get(int id) {
+    public TransportService get(Integer id) {
         TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findById", TransportService.class);
         return query.setParameter(1, id).getSingleResult();
     }

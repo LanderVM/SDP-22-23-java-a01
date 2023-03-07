@@ -150,6 +150,7 @@ public class Order {
 
     public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
         this.originalAcquisitionPrice = originalAcquisitionPrice;
+    }
     public Supplier getSupplier() {
         return supplier;
     }
