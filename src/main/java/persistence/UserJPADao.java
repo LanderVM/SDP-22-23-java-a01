@@ -8,7 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
-public class UserJPADao implements JPADao<User> {
+public class UserJPADao implements JPADao<User,Integer> {
 
     EntityManager entityManager;
 
@@ -28,7 +28,7 @@ public class UserJPADao implements JPADao<User> {
 
 
     @Override
-    public User get(int id) throws NoResultException {
+    public User get(Integer id) throws NoResultException {
         TypedQuery<User> query = entityManager.createNamedQuery("User.findById", User.class);
         return query.setParameter(1, id).getSingleResult();
     }

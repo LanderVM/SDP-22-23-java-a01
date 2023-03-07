@@ -30,14 +30,6 @@ public class Order {
     @Column(name = "order_id")
     private int orderId;
 
-    @Column(name = "company_name")
-    private String company;
-    @Column(name = "customer_name")
-    private String customerName;
-
-    @Column(name = "customer_email")
-    private String customerEmail;
-
     private String address;
 
     @Column(name = "order_date")
@@ -52,23 +44,37 @@ public class Order {
 
     @Column(name = "tracking_code")
     private int trackingCode;
+    
+    @ManyToOne
+    private Supplier supplier;
+    
+    @ManyToOne
+    private Supplier customer;
 
     @Column(name = "original_acquisition_price")
     private BigDecimal originalAcquisitionPrice;
 
 
-    public Order(String company, String customerName, String customerEmail, String address, Date date, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging, BigDecimal originalAcquisitionPrice) {
-        this.company = company;
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
-        this.address = address;
+    public Order(Date date, List<Product> productsList, Status status,
+                 TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer,BigDecimal originalAcquisitionPrice) {
         this.date = date;
         this.productsList = productsList;
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
         this.originalAcquisitionPrice = originalAcquisitionPrice;
+        this.supplier=supplier;
+        this.customer=customer;
+    }
+    
+    public Order(Date date, List<Product> productsList, Status status,
+            TransportService transportService, Packaging packaging) {
+    	this.date = date;
+    	this.productsList = productsList;
+    	this.status = status;
+    	this.transportService = transportService;
+    	this.packaging = packaging;
+   
     }
 
     protected Order() {
@@ -80,30 +86,6 @@ public class Order {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
     }
 
     public String getAddress() {
@@ -168,6 +150,20 @@ public class Order {
 
     public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
         this.originalAcquisitionPrice = originalAcquisitionPrice;
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public Supplier getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Supplier customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -189,10 +185,10 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", company='" + company + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
-                ", address='" + address + '\'' +
+                ", company='" + supplier.getName() + '\'' +
+                ", customerName='" + customer.getName() + '\'' +
+                ", customerEmail='" + customer.getEmail() + '\'' +
+                ", address='" + customer.getAddress() + '\'' +
                 ", date=" + date +
                 ", productsList=" + productsList +
                 ", status=" + status +

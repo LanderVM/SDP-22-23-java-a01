@@ -11,7 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import persistence.OrderJPADao;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.List;
 
@@ -37,13 +40,31 @@ public class OrderTest {
     private void mockFindAllPosted() {
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(order);
+    
     }
-
+    
+    private byte[] getFile() {
+    	File fi = new File("testImg.jpg");
+        byte[] fileContent = null;
+		try {
+			fileContent = Files.readAllBytes(fi.toPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return fileContent;
+    }
+    
+    Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" ,0426343211, getFile());
+    Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst",0456443212, getFile());
+    
     @Test
     public void getById_happyFlow() {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
 
+        order = new Order( new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM, s1, s2);
+        
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(order);
@@ -73,6 +94,9 @@ public class OrderTest {
                 List.of(new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, new BigDecimal("20.10")),
                         new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(new Product("Test product 3", new BigDecimal("7.40"))), Status.PROCESSED, transportService, Packaging.MEDIUM, new BigDecimal("7.40")),
                         new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(new Product("Test product 4", new BigDecimal("1.20")), new Product("Test product 5", new BigDecimal("88.30"))), Status.POSTED, transportService, Packaging.CUSTOM, new BigDecimal("89.50"))
+                List.of(new Order( new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, TransportService.POSTNL, Packaging.LARGE, s1, s2),
+                		new Order( new Date(), List.of(new Product("Test product 3", new BigDecimal("11.50")), new Product("Test product 1", new BigDecimal("9.80"))), Status.DISPATCHED, TransportService.BPOST, Packaging.MEDIUM, s2, s1),
+                		new Order( new Date(), List.of(new Product("Test product 2", new BigDecimal("9.80")), new Product("Test product 4", new BigDecimal("11.50"))), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM, s1, s2)
                 );
 
         when(entityManager.createNamedQuery("Order.findAll", Order.class)).thenReturn(query);
@@ -89,6 +113,7 @@ public class OrderTest {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
 
+        order = new Order( new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM, s1, s2);
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(entityManager.getTransaction()).thenReturn(entityTransaction);
@@ -112,6 +137,7 @@ public class OrderTest {
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.OUT_FOR_DELIVERY, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
+        order = new Order( new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, TransportService.POSTNL, Packaging.MEDIUM, s1, s2);
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);

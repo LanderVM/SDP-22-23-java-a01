@@ -1,11 +1,25 @@
 package application;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import domain.*;
+import domain.Order;
+import domain.OrderController;
+import domain.Packaging;
+import domain.Product;
+import domain.Status;
+import domain.Supplier;
+import domain.TransportService;
+import domain.User;
+import domain.UserController;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -60,6 +74,30 @@ public class StartUp extends Application {
         Product product3 = new Product("test_product drie", new BigDecimal("4.50"));
         Product product4 = new Product("test_product vier", new BigDecimal("8.90"));
         Product product5 = new Product("test_product vijf", new BigDecimal("11.30"));
+        
+        File fi = new File("/images/testImg.jpg");
+        byte[] fileContent = null;
+		try {
+			fileContent = Files.readAllBytes(fi.toPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
+        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile());
+        
+        Order o1 = new Order( new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM,s1,s2);
+        Order o2 = new Order( new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM,s2,s1);
+        
+        List<Order> l1 = new ArrayList<>();
+        l1.add(o1);
+        List<Order> l2 = new ArrayList<>();
+        l2.add(o2);
+        s1.setOrdersAsSupplier(l1);
+        s1.setOrdersAsCustomer(l2);
+        s2.setOrdersAsSupplier(l2);
+        s2.setOrdersAsCustomer(l1);
 
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
@@ -97,7 +135,22 @@ public class StartUp extends Application {
         orderManager.persist(order1);
         orderManager.persist(order2);
 
+        orderManager.persist(o1);
+        orderManager.persist(o2);
+        orderManager.persist(s1);
+        orderManager.persist(s2);
         orderManager.getTransaction().commit();
         orderManager.close();
+    }
+
+    private static byte[] getFile() {
+        byte[] fileContent = null;
+        try {
+            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/gui/HomeAdmin.fxml")).toURI());
+            fileContent = Files.readAllBytes(fi.toPath());
+        } catch (IOException | URISyntaxException exception) {
+            exception.printStackTrace();
+        }
+        return fileContent;
     }
 }

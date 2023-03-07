@@ -8,7 +8,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
-public class OrderJPADao implements JPADao<Order> {
+public class OrderJPADao implements JPADao<Order,Integer> {
 
     EntityManager entityManager;
 
@@ -17,7 +17,7 @@ public class OrderJPADao implements JPADao<Order> {
     }
 
     @Override
-    public Order get(int id) throws NoResultException {
+    public Order get(Integer id) throws NoResultException {
         TypedQuery<Order> query = entityManager.createNamedQuery("Order.findById", Order.class);
         return query.setParameter(1, id).getSingleResult();
     }
