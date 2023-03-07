@@ -3,6 +3,7 @@ package persistence;
 import java.util.Collections;
 import java.util.List;
 
+import domain.Order;
 import domain.Supplier;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -30,7 +31,7 @@ public class SupplierJPADao implements JPADao<Supplier,String>{
 	@Override
 	public List<Supplier> getAll() {
 		
-		 return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAll", Supplier.class).getResultList());
+		 return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAll",Supplier.class).getResultList());
 		
 	}
 	

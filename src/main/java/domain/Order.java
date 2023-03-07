@@ -51,7 +51,7 @@ public class Order {
 
 
     public Order(Date date, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer) {
+                 TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer) {
         this.date = date;
         this.productsList = productsList;
         this.status = status;
