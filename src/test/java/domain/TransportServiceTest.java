@@ -1,7 +1,6 @@
 package domain;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
@@ -23,21 +22,14 @@ public class TransportServiceTest {
 
     @Mock
     TypedQuery<NewTransportService> query;
-    @Mock
-    EntityTransaction entityTransaction;
 
     private TransportServiceJPADao transportServiceJPADao;
 
     private NewTransportService transportService;
 
-    private void mockFindAllPosted() {
-        when(query.setParameter(1, 1)).thenReturn(query);
-        when(query.getSingleResult()).thenReturn(transportService);
-    }
-
     @Test
     public void getById_happyFlow() {
-        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        transportService = new NewTransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
 
         when(entityManager.createNamedQuery("TransportService.findById", NewTransportService.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -64,8 +56,8 @@ public class TransportServiceTest {
     @Test
     public void getAll_happyFlow() {
         List<NewTransportService> transportServiceList =
-                List.of(new NewTransportService(List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
-                        new NewTransportService(List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
+                List.of(new NewTransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
+                        new NewTransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
                 );
 
         when(entityManager.createNamedQuery("TransportService.findAll", NewTransportService.class)).thenReturn(query);
@@ -73,15 +65,15 @@ public class TransportServiceTest {
 
         transportServiceJPADao = new TransportServiceJPADao(entityManager);
 
-        assertEquals(transportServiceList, transportServiceJPADao.getAll());
+        assertEquals(transportServiceList.stream().map(NewTransportService::getName).toList(), new TransportServiceController(transportServiceJPADao).getTransportServices());
         verify(query).getResultList();
     }
 
     @Test
     public void getAllActive_happyFlow() {
         List<NewTransportService> transportServiceList =
-                List.of(new NewTransportService(List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
-                        new NewTransportService(List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), true)
+                List.of(new NewTransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
+                        new NewTransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), true)
                 );
         when(entityManager.createNamedQuery("TransportService.findAllActive", NewTransportService.class)).thenReturn(query);
         when(query.getResultList()).thenReturn(transportServiceList);
@@ -91,6 +83,8 @@ public class TransportServiceTest {
         assertEquals(transportServiceList, transportServiceJPADao.getAllActive());
         verify(query).getResultList();
     }
+
+
 
     // TODO: test addTransportService, viewTransportService, deactiveTransportService, activeTransportService && all validations
 }

@@ -66,8 +66,8 @@ public class StartUp extends Application {
         ContactPerson bpostPerson2 = new ContactPerson("twe@bpost.be", 479554433);
         ContactPerson postnlPerson1 = new ContactPerson("postnl@post.nl", 899321480);
 
-        NewTransportService bpost = new NewTransportService(List.of(), bpostDetails, true);
-        NewTransportService postnl = new NewTransportService(List.of(), postnlDetails, true);
+        NewTransportService bpost = new NewTransportService("bpost", List.of(), bpostDetails, true);
+        NewTransportService postnl = new NewTransportService("postnl", List.of(), postnlDetails, true);
 
         Order order1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, new BigDecimal("3.00"));
         Order order2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(product3, product4, product5), Status.POSTED, bpost, Packaging.CUSTOM, new BigDecimal("24.70"));

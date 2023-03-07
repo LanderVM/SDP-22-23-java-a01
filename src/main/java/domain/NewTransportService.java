@@ -30,19 +30,29 @@ public class NewTransportService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transport_service_id")
     private int transportServiceId;
+    private String name;
     @OneToMany
     private List<ContactPerson> contactPersonList;
     @OneToOne
     private TrackingCodeDetails trackingCodeDetails;
     private boolean isActive;
 
-    public NewTransportService(List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean isActive) {
+    public NewTransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean isActive) {
+        this.name = name;
         this.contactPersonList = contactPersonList;
         this.trackingCodeDetails = trackingCodeDetails;
         this.isActive = isActive;
     }
 
     protected NewTransportService() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getTransportServiceId() {

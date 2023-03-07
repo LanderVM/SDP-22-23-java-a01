@@ -41,7 +41,7 @@ public class OrderTest {
 
     @Test
     public void getById_happyFlow() {
-        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        transportService = new NewTransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
@@ -68,7 +68,7 @@ public class OrderTest {
 
     @Test
     public void getAll_happyFlow() {
-        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        transportService = new NewTransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         List<Order> ordersList =
                 List.of(new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, new BigDecimal("20.10")),
                         new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(new Product("Test product 3", new BigDecimal("7.40"))), Status.PROCESSED, transportService, Packaging.MEDIUM, new BigDecimal("7.40")),
@@ -86,7 +86,7 @@ public class OrderTest {
 
     @Test
     public void processOrder_happyFlow() throws OrderStatusException {
-        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        transportService = new NewTransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
 
 
@@ -110,7 +110,7 @@ public class OrderTest {
 
     @Test
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
-        transportService = new NewTransportService(List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        transportService = new NewTransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         order = new Order("Testing BV", "Tes", "tes@mail.com", "Tessa 24 1000 Brussel", new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.OUT_FOR_DELIVERY, transportService, Packaging.MEDIUM, new BigDecimal("20.10"));
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
