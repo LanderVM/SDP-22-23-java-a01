@@ -3,6 +3,8 @@ package persistence;
 import java.util.Collections;
 import java.util.List;
 
+import domain.Consumer;
+import domain.Customer;
 import domain.Supplier;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -34,8 +36,8 @@ public class SupplierJPADao implements JPADao<Supplier,String>{
 		
 	}
 	
-	public List<Supplier> getAllWithOrdersAsCustomer() {
-		return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAllWithOrdersAsCustomer", Supplier.class).getResultList());
+	public List<Consumer> getAllWithOrdersAsCustomer() {
+		return Collections.unmodifiableList(entityManager.createNamedQuery("Consumer.findAll", Consumer.class).getResultList());
 	}
 
 	@Override

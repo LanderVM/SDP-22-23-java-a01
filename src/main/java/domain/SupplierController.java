@@ -25,7 +25,7 @@ public class SupplierController {
 		return supplierJPADao.getAll();
 	}
 	
-	public List<Supplier> getAllWithOrderAsCustomer() {
+	public List<Consumer> getAllWithOrderAsCustomer() {
 		return supplierJPADao.getAllWithOrdersAsCustomer();
 	}
 	

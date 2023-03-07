@@ -72,10 +72,12 @@ public class StartUp extends Application {
         userManager.close();
 
         Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile(), List.of());
+        Consumer c1 = new Consumer("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile(), List.of());
         Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile(), List.of());
-        
-        Order o1 = new Order( new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM,s1,s2);
-        Order o2 = new Order( new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM,s2,s1);
+        Consumer c2 = new Consumer("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile(), List.of());
+
+        Order o1 = new Order( new Date(), List.of(p1, p2), Status.POSTED, TransportService.POSTNL, Packaging.MEDIUM,s1,c2);
+        Order o2 = new Order( new Date(), List.of(p3, p4, p5), Status.POSTED, TransportService.BPOST, Packaging.CUSTOM,s2,c1);
         
         List<Order> l1 = new ArrayList<>();
         l1.add(o1);
@@ -90,6 +92,8 @@ public class StartUp extends Application {
         orderManager.persist(o2);
         orderManager.persist(s1);
         orderManager.persist(s2);
+        orderManager.persist(c1);
+        orderManager.persist(c2);
         orderManager.getTransaction().commit();
         orderManager.close();
     }
