@@ -28,14 +28,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private int orderId;
-    /*
-    @Column(name = "company_name")
-    private String company;
-    @Column(name = "customer_name")
-    private String customerName;
-
-    @Column(name = "customer_email")
-    private String customerEmail;*/
 
     private String address;
 
@@ -58,12 +50,8 @@ public class Order {
     private Supplier customer;
 
 
-    public Order(   Date date, List<Product> productsList, Status status,
+    public Order(Date date, List<Product> productsList, Status status,
                  TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer) {
-        //this.company = company;
-        //this.customerName = customerName;
-        //this.customerEmail = customerEmail;
-        //this.address = address;
         this.date = date;
         this.productsList = productsList;
         this.status = status;
@@ -73,12 +61,8 @@ public class Order {
         this.customer=customer;
     }
     
-    public Order(   Date date, List<Product> productsList, Status status,
+    public Order(Date date, List<Product> productsList, Status status,
             TransportService transportService, Packaging packaging) {
-    	//this.company = company;
-    	//this.customerName = customerName;
-    	//this.customerEmail = customerEmail;
-    	//this.address = address;
     	this.date = date;
     	this.productsList = productsList;
     	this.status = status;
@@ -97,30 +81,6 @@ public class Order {
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
-    /*
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }*/
 
     public String getAddress() {
         return address;
@@ -176,6 +136,22 @@ public class Order {
 
     public void setTrackingCode(int trackingCode) {
         this.trackingCode = trackingCode;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public Supplier getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Supplier customer) {
+        this.customer = customer;
     }
 
     @Override
