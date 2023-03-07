@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.Arrays;
 import java.util.List;
 
 import exceptions.OrderStatusException;
@@ -23,10 +22,6 @@ public class OrderController {
 
     public List<OrderView> getPostedOrdersList() {
         return orderJPADao.getAllPosted().stream().map(OrderView::new).toList();
-    }
-
-    public List<String> getTransportServicesList() {
-        return Arrays.stream(TransportService.values()).map(Enum::name).toList();
     }
 
     public String getOrderOverview(int orderId) {
