@@ -79,6 +79,16 @@ public class StartUp extends Application {
         userManager.getTransaction().commit();
         userManager.close();
 
+        
+        File fi = new File("/images/testImg.jpg");
+        byte[] fileContent = null;
+		try {
+			fileContent = Files.readAllBytes(fi.toPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
         Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
         Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile());
         
