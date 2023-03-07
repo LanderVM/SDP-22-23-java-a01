@@ -1,10 +1,9 @@
 package gui.controller;
 
 import java.util.Date;
-import java.util.List;
 
-import domain.Order;
 import domain.OrderController;
+import domain.TransportServiceController;
 import domain.UserController;
 import gui.view.OrderView;
 import javafx.collections.FXCollections;
@@ -42,12 +41,14 @@ public class NonProcessedOrdersController extends GridPane {
 
     private OrderController orderController;
     private UserController uc;
+    private final TransportServiceController transportServiceController;
     private OrderView orderView;
-    private List<Order> ordersList;
 
-    public NonProcessedOrdersController(OrderController orderController, UserController uc) {
+
+    public NonProcessedOrdersController(OrderController orderController, UserController uc, TransportServiceController transportServiceController) {
         this.orderController = orderController;
         this.uc = uc;
+        this.transportServiceController = transportServiceController;
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/NonProcessedOrders.fxml"));
         loader.setController(this);
@@ -69,7 +70,7 @@ public class NonProcessedOrdersController extends GridPane {
             if (newOrder == null)
                 return;
             int id = newOrder.getOrderId();
-            ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, uc, this, id);
+            ProcessOrderScreenController processOrderScreenController = new ProcessOrderScreenController(this.orderController, uc, transportServiceController, this, id);
             Scene scene = new Scene(processOrderScreenController);
             Stage stage = (Stage) this.getScene().getWindow();
             stage.setScene(scene);

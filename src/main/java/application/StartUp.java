@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import persistence.OrderJPADao;
+import persistence.TransportServiceJPADao;
 import persistence.UserJPADao;
 import util.JPAUtil;
 
@@ -26,7 +27,8 @@ public class StartUp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(JPAUtil.getOrdersEntityManagerFactory().createEntityManager())), new UserController(new UserJPADao(JPAUtil.getUserEntityManagerFactory().createEntityManager())));
+            EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(entityManager)), new UserController(new UserJPADao(entityManager)), new TransportServiceController(new TransportServiceJPADao(entityManager)));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);
@@ -43,7 +45,7 @@ public class StartUp extends Application {
         User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
         User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier");
 
-        EntityManager userManager = JPAUtil.getUserEntityManagerFactory().createEntityManager();
+        EntityManager userManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         userManager.getTransaction().begin();
 
         // Users
@@ -72,7 +74,7 @@ public class StartUp extends Application {
         Order order1 = new Order("Tim CO", "Tim", "tim@mail.com", "Timlaan 24 1000 Brussel", new Date(), List.of(product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, new BigDecimal("3.00"));
         Order order2 = new Order("Jan INC", "Jan", "jan@mail.com", "Janstraat 12 9000 Aalst", new Date(), List.of(product3, product4, product5), Status.POSTED, bpost, Packaging.CUSTOM, new BigDecimal("24.70"));
 
-        EntityManager orderManager = JPAUtil.getOrdersEntityManagerFactory().createEntityManager();
+        EntityManager orderManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         orderManager.getTransaction().begin();
 
         // Products

@@ -3,6 +3,7 @@ package gui.controller;
 import java.io.IOException;
 
 import domain.OrderController;
+import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.IncorrectPasswordException;
 import jakarta.persistence.NoResultException;
@@ -29,10 +30,12 @@ public class LoginScreenController extends AnchorPane {
 
 	private final OrderController orderController;
 	private final UserController userController;
+	private final TransportServiceController transportServiceController;
 
-	public LoginScreenController(OrderController orderController, UserController userController) {
+	public LoginScreenController(OrderController orderController, UserController userController, TransportServiceController transportServiceController) {
 		this.orderController = orderController;
 		this.userController = userController;
+		this.transportServiceController = transportServiceController;
 		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);

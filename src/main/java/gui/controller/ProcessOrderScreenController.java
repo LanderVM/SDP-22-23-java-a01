@@ -1,6 +1,7 @@
 package gui.controller;
 
 import domain.OrderController;
+import domain.TransportServiceController;
 import domain.UserController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -40,11 +41,13 @@ public class ProcessOrderScreenController extends GridPane {
     private int id;
 
 	private UserController uc;
+    private final TransportServiceController transportServiceController;
 
 
-    public ProcessOrderScreenController(OrderController dc, UserController uc, NonProcessedOrdersController parent, int id) {
+    public ProcessOrderScreenController(OrderController dc, UserController uc, TransportServiceController transportServiceController, NonProcessedOrdersController parent, int id) {
         this.dc = dc;
         this.uc = uc;
+        this.transportServiceController = transportServiceController;
         this.parent = parent;
         this.id = id;
 
@@ -60,7 +63,7 @@ public class ProcessOrderScreenController extends GridPane {
 
         //overviewOrderLabel.setText("Overview order: " + Integer.toString(id));
         orderTextArea.setText(dc.getOrderOverview(id));
-        choiceBoxTransportServices.setItems(FXCollections.observableArrayList(dc.getTransportServicesList()));
+        choiceBoxTransportServices.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices()));
     }
 
     @FXML
@@ -82,7 +85,7 @@ public class ProcessOrderScreenController extends GridPane {
 		stage.show();*/
     	
 
-    	NonProcessedOrdersController processOrdersScreenController = new NonProcessedOrdersController(dc, uc);
+    	NonProcessedOrdersController processOrdersScreenController = new NonProcessedOrdersController(dc, uc, transportServiceController);
         Scene scene = new Scene(processOrdersScreenController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);
