@@ -21,17 +21,17 @@ public class TransportServiceTest {
     EntityManager entityManager;
 
     @Mock
-    TypedQuery<NewTransportService> query;
+    TypedQuery<TransportService> query;
 
     private TransportServiceJPADao transportServiceJPADao;
 
-    private NewTransportService transportService;
+    private TransportService transportService;
 
     @Test
     public void getById_happyFlow() {
-        transportService = new NewTransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
 
-        when(entityManager.createNamedQuery("TransportService.findById", NewTransportService.class)).thenReturn(query);
+        when(entityManager.createNamedQuery("TransportService.findById", TransportService.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(transportService);
 
@@ -43,7 +43,7 @@ public class TransportServiceTest {
 
     @Test
     public void getById_invalidID_throwsNoResultException() {
-        when(entityManager.createNamedQuery("TransportService.findById", NewTransportService.class)).thenReturn(query);
+        when(entityManager.createNamedQuery("TransportService.findById", TransportService.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
         when(query.getSingleResult()).thenThrow(NoResultException.class);
 
@@ -55,27 +55,27 @@ public class TransportServiceTest {
 
     @Test
     public void getAll_happyFlow() {
-        List<NewTransportService> transportServiceList =
-                List.of(new NewTransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
-                        new NewTransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
+        List<TransportService> transportServiceList =
+                List.of(new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
+                        new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
                 );
 
-        when(entityManager.createNamedQuery("TransportService.findAll", NewTransportService.class)).thenReturn(query);
+        when(entityManager.createNamedQuery("TransportService.findAll", TransportService.class)).thenReturn(query);
         when(query.getResultList()).thenReturn(transportServiceList);
 
         transportServiceJPADao = new TransportServiceJPADao(entityManager);
 
-        assertEquals(transportServiceList.stream().map(NewTransportService::getName).toList(), new TransportServiceController(transportServiceJPADao).getTransportServices());
+        assertEquals(transportServiceList.stream().map(TransportService::getName).toList(), new TransportServiceController(transportServiceJPADao).getTransportServices());
         verify(query).getResultList();
     }
 
     @Test
     public void getAllActive_happyFlow() {
-        List<NewTransportService> transportServiceList =
-                List.of(new NewTransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
-                        new NewTransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), true)
+        List<TransportService> transportServiceList =
+                List.of(new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
+                        new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), true)
                 );
-        when(entityManager.createNamedQuery("TransportService.findAllActive", NewTransportService.class)).thenReturn(query);
+        when(entityManager.createNamedQuery("TransportService.findAllActive", TransportService.class)).thenReturn(query);
         when(query.getResultList()).thenReturn(transportServiceList);
 
         transportServiceJPADao = new TransportServiceJPADao(entityManager);

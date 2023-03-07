@@ -48,7 +48,7 @@ public class Order {
     private Packaging packaging;
 
     @ManyToOne
-    private NewTransportService transportService;
+    private TransportService transportService;
 
     @Column(name = "tracking_code")
     private int trackingCode;
@@ -58,7 +58,7 @@ public class Order {
 
 
     public Order(String company, String customerName, String customerEmail, String address, Date date, List<Product> productsList, Status status,
-                 NewTransportService transportService, Packaging packaging, BigDecimal originalAcquisitionPrice) {
+                 TransportService transportService, Packaging packaging, BigDecimal originalAcquisitionPrice) {
         this.company = company;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
@@ -146,11 +146,11 @@ public class Order {
         this.packaging = packaging;
     }
 
-    public NewTransportService getTransportService() {
+    public TransportService getTransportService() {
         return transportService;
     }
 
-    public void setTransportService(NewTransportService transportService) {
+    public void setTransportService(TransportService transportService) {
         this.transportService = transportService;
     }
 

@@ -11,18 +11,18 @@ import java.util.Objects;
 @NamedQueries({
         @NamedQuery(
                 name = "TransportService.findById",
-                query = "SELECT w FROM NewTransportService w WHERE w.transportServiceId = ?1"
+                query = "SELECT w FROM TransportService w WHERE w.transportServiceId = ?1"
         ),
         @NamedQuery(
                 name = "TransportService.findAll",
-                query = "SELECT d FROM NewTransportService d"
+                query = "SELECT d FROM TransportService d"
         ),
         @NamedQuery(
                 name = "TransportService.findAllActive",
-                query = "SELECT d FROM NewTransportService d WHERE d.isActive = true"
+                query = "SELECT d FROM TransportService d WHERE d.isActive = true"
         )
 })
-public class NewTransportService {
+public class TransportService {
 
     // TODO: validation
 
@@ -37,14 +37,14 @@ public class NewTransportService {
     private TrackingCodeDetails trackingCodeDetails;
     private boolean isActive;
 
-    public NewTransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean isActive) {
+    public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean isActive) {
         this.name = name;
         this.contactPersonList = contactPersonList;
         this.trackingCodeDetails = trackingCodeDetails;
         this.isActive = isActive;
     }
 
-    protected NewTransportService() {
+    protected TransportService() {
     }
 
     public String getName() {
@@ -87,7 +87,7 @@ public class NewTransportService {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NewTransportService that = (NewTransportService) o;
+        TransportService that = (TransportService) o;
         return transportServiceId == that.transportServiceId;
     }
 

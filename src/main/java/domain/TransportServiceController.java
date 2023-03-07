@@ -13,6 +13,6 @@ public class TransportServiceController {
     }
 
     public List<String> getTransportServices() {
-        return transportServiceJPADao.getAll().stream().map(NewTransportService::getName).toList();
+        return transportServiceJPADao.getAll().stream().map(TransportService::getName).toList();
     }
 }
