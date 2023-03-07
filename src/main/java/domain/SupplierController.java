@@ -21,12 +21,12 @@ public class SupplierController {
 		return supplierJPADao.get(email);
 	}
 	
-	public List<Supplier> getAllSuppliers() {
+	public List<Supplier> getSuppliers() {
 		return supplierJPADao.getAll();
 	}
 	
-	public List<Supplier> getAllWithOrderAsCustomer() {
-		return supplierJPADao.getAllWithOrdersAsCustomer();
+	public List<Supplier> getCustomers() {
+		return supplierJPADao.getCustomers();
 	}
 	
 }
