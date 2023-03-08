@@ -74,15 +74,6 @@ public class StartUp extends Application {
         Product product3 = new Product("test_product drie", new BigDecimal("4.50"));
         Product product4 = new Product("test_product vier", new BigDecimal("8.90"));
         Product product5 = new Product("test_product vijf", new BigDecimal("11.30"));
-        
-        File fi = new File("/images/testImg.jpg");
-        byte[] fileContent = null;
-		try {
-			fileContent = Files.readAllBytes(fi.toPath());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 
         Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
         Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile());
@@ -141,7 +132,7 @@ public class StartUp extends Application {
     private static byte[] getFile() {
         byte[] fileContent = null;
         try {
-            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/gui/HomeAdmin.fxml")).toURI());
+            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/images/testImg.jpg")).toURI());
             fileContent = Files.readAllBytes(fi.toPath());
         } catch (IOException | URISyntaxException exception) {
             exception.printStackTrace();
