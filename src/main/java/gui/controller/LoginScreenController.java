@@ -15,9 +15,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
-public class LoginScreenController extends AnchorPane {
+public class LoginScreenController extends GridPane {
 
 	@FXML
 	private Button btnSignIn;
