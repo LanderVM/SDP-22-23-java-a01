@@ -10,16 +10,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import domain.*;
+import domain.ContactPerson;
 import domain.Order;
 import domain.OrderController;
 import domain.Packaging;
 import domain.Product;
 import domain.Status;
 import domain.Supplier;
+import domain.TrackingCodeDetails;
 import domain.TransportService;
+import domain.TransportServiceController;
 import domain.User;
 import domain.UserController;
+import domain.VerificationType;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -40,7 +43,7 @@ public class StartUp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        try {
+        try {            
             EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
             LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(entityManager)), new UserController(new UserJPADao(entityManager)), new TransportServiceController(new TransportServiceJPADao(entityManager)));
             Scene scene = new Scene(root);
@@ -49,8 +52,6 @@ public class StartUp extends Application {
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
             primaryStage.setTitle("Log In");
             primaryStage.setScene(scene);
-            primaryStage.setMinHeight(600);
-            primaryStage.setMinWidth(900);
             primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (Exception e) {

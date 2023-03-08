@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
 
 public class LoginScreenController extends GridPane {
 
@@ -70,10 +71,18 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
-		ChangeStage.change(this, loader, homeWarehouseOperatorController, "Home");
+		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
+		ChangeStage.change(this, loader, ordersOverviewController, "Overview");
 	}
+	/*
+	 * private void goToHomeWarehouseOperatorBackup() {
+	 * HomeWarehouseOperatorController homeWarehouseOperatorController = new
+	 * HomeWarehouseOperatorController(orderController, userController); FXMLLoader
+	 * loader = new
+	 * FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
+	 * ChangeStage.change(this, loader, homeWarehouseOperatorController, "Home"); }
+	 */
 
 	private void goToHomeAdmin() {
 		HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);

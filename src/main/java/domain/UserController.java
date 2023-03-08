@@ -22,4 +22,11 @@ public class UserController {
     public boolean userIsAdmin() {
         return user.isAdmin();
     }
+    public String userName() {
+        return user.getName();
+    }
+
+    public String userSurname() {
+        return user.getSurname();
+    }
 }
