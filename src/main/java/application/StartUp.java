@@ -49,6 +49,9 @@ public class StartUp extends Application {
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
             primaryStage.setTitle("Log In");
             primaryStage.setScene(scene);
+            primaryStage.setMinHeight(600);
+            primaryStage.setMinWidth(900);
+            primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
