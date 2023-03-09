@@ -13,6 +13,7 @@ module SDP2_Java_a01 {
     requires javafx.fxml;
     requires javafx.base;
     requires jakarta.persistence;
+	requires java.desktop;
     
 
     opens domain;

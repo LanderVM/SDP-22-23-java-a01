@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CustomerVieuw {
+public class CustomerView {
 
     private final SimpleStringProperty email;
     private final SimpleStringProperty name;
@@ -20,7 +20,7 @@ public class CustomerVieuw {
     private final SimpleIntegerProperty phoneNumber;
     private final SimpleIntegerProperty numberOfOrders;
 
-    public CustomerVieuw(Supplier supplier) {
+    public CustomerView(Supplier supplier) {
        email = new SimpleStringProperty(supplier.getEmail());
        name = new SimpleStringProperty(supplier.getName());
        address = new SimpleStringProperty(supplier.getAddress());

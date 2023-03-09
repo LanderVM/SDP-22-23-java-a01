@@ -2,6 +2,7 @@ package gui.controller;
 
 import java.util.Date;
 
+import domain.ContactPersonSupplier;
 import domain.Order;
 import domain.OrderController;
 import domain.Status;
@@ -9,7 +10,7 @@ import domain.Supplier;
 import domain.SupplierController;
 import domain.UserController;
 import gui.view.CustomerOrdersView;
-import gui.view.CustomerVieuw;
+import gui.view.CustomerView;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,13 +50,13 @@ public class CustomersOverviewController extends GridPane{
     private ImageView logoImgView;
     
     @FXML
-    private TableView<CustomerVieuw> CustomersOverviewTable;
+    private TableView<CustomerView> CustomersOverviewTable;
     
     @FXML
-    private TableColumn<CustomerVieuw, String> nameCustomerCol;
+    private TableColumn<CustomerView, String> nameCustomerCol;
     
     @FXML
-    private TableColumn<CustomerVieuw, Number> numberOfOrdersCol;
+    private TableColumn<CustomerView, Number> numberOfOrdersCol;
 
     @FXML
     private TableView<CustomerOrdersView> ordersOfCustomerOverviewTable;
@@ -68,6 +69,16 @@ public class CustomersOverviewController extends GridPane{
     
     @FXML
     private TableColumn<CustomerOrdersView, Status> statusOrderOfCustomerCol;
+    
+    @FXML
+    private TableView<ContactPersonSupplier> contactpesronSupplierOverviewTable;
+    
+    @FXML
+    private TableColumn<ContactPersonSupplier, String> nameContactpersonSupplierCol;
+
+    @FXML
+    private TableColumn<ContactPersonSupplier, String> emailContactpersonSupplierCol;
+
     
     private SupplierController sc;
 	private UserController userController;

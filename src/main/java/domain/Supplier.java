@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.*;
+import logoMapper.LogoMapper;
 
 @Entity
 @Table(name = "supplier")
@@ -44,9 +45,12 @@ public class Supplier {
 
     @Column(name = "phone_number")
     private int phoneNumber;
-
-    @Lob // aparte table TODO
-    private byte[] logo;
+    
+    @OneToOne(mappedBy="supplier")
+    private Logo logo;
+    
+    @OneToMany
+    private List<ContactPersonSupplier> contactPersons;
 
     @OneToMany(mappedBy = "supplier")
     private List<Order> ordersAsSupplier;
@@ -55,14 +59,15 @@ public class Supplier {
     private List<Order> ordersAsCustomer;
 
     public Supplier(String name, String email, String address, int phoneNumber, byte[] logo, List<Order> ordersAsSupplier,
-                    List<Order> ordersAsCustomer) {
+                    List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons) {
         this.name = name;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.logo = logo;
+        this.logo = LogoMapper.makeLogo(logo, this);
         this.ordersAsSupplier = ordersAsSupplier;
         this.ordersAsCustomer = ordersAsCustomer;
+        this.contactPersons = contactPersons;
     }
 
     public Supplier(String name, String email, String address, int phoneNumber, byte[] logo) {
@@ -70,7 +75,7 @@ public class Supplier {
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.logo = logo;
+        this.logo = LogoMapper.makeLogo(logo, this);
     }
 
     protected Supplier() {
@@ -109,7 +114,7 @@ public class Supplier {
     }
 
     public byte[] getLogo() {
-    	return logo;
+    	return logo.getLogo();
     }
     
     public List<Order> getOrdersAsSupplier() {
