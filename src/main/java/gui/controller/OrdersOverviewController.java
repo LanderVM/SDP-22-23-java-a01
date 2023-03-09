@@ -68,7 +68,7 @@ public class OrdersOverviewController extends GridPane {
 
 	@FXML
 	private void initialize() {
-		LblUser.setText(String.format("%s %s", userController.userName(), userController.userSurname()));
+		LblUser.setText(userController.toString());
 		OverviewColumnTable.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
 		NumberColumnTable.setCellValueFactory(celldata -> celldata.getValue().orderIdProperty());
 		DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateProperty());

@@ -29,4 +29,8 @@ public class UserController {
     public String userSurname() {
         return user.getSurname();
     }
+    
+    public String toString() {
+    	return String.format("%s %s",user.getSurname(), user.getName());
+    }
 }
