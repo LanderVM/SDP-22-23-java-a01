@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="4.0" prefWidth="121.40000915527344" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="16.0" prefWidth="403.1999206542969" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="8.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="14.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="12.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="14.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="8.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="10.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="636.800048828125" minWidth="10.0" percentWidth="10.0" prefWidth="117.20004882812509" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="636.800048828125" minWidth="10.0" percentWidth="4.0" prefWidth="75.59995117187509" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="260.7999633789062" minHeight="0.0" percentHeight="14.0" prefHeight="127.60001373291016" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="766.4000061035156" minHeight="10.0" percentHeight="10.0" prefHeight="12.399986267089844" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="505.20002441406245" minHeight="10.0" percentHeight="17.0" prefHeight="118.79998779296875" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="505.20002441406245" minHeight="10.0" percentHeight="10.0" prefHeight="307.2000122070313" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="505.20002441406245" minHeight="10.0" percentHeight="17.0" prefHeight="307.2000122070313" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="366.800048828125" minHeight="10.0" percentHeight="4.0" prefHeight="65.4000244140625" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="366.800048828125" minHeight="0.0" percentHeight="10.0" prefHeight="65.4000244140625" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="366.800048828125" minHeight="10.0" percentHeight="8.0" prefHeight="57.59995117187498" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="85.59992675781257" minHeight="10.0" percentHeight="10.0" prefHeight="79.19990234375007" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <GridPane fx:id="HeaderPane" style="-fx-background-color: RED;" GridPane.columnSpan="2147483647">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="483.5999755859375" minWidth="10.0" percentWidth="10.0" prefWidth="483.5999755859375" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="483.5999755859375" minWidth="10.0" prefWidth="153.6000244140625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="569.5999755859375" minWidth="10.0" prefWidth="534.4000244140625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="629.5999267578123" minWidth="10.0" prefWidth="428.0000244140625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="531.1999755859376" minWidth="10.0" prefWidth="371.99997558593736" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.199951171875" minWidth="10.0" prefWidth="239.599853515625" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="imgDelaware" fitHeight="121.0" fitWidth="308.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@delaware.png" />
+               </image>
+            </ImageView>
+            <Hyperlink fx:id="btnTransportServices" onAction="#showHome" prefHeight="106.0" prefWidth="422.0" style="-fx-font-family: arial;" text="Transportservice" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="btnNotifications" onAction="#showNotifications" prefHeight="139.0" prefWidth="321.0" style="-fx-font-family: arial;" text="Employees" textFill="WHITE" GridPane.columnIndex="3">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="btnBoxes" onAction="#showOrders" prefHeight="133.0" prefWidth="266.0" style="-fx-font-family: arial;" text="Boxes" textFill="WHITE" GridPane.columnIndex="4">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <Label fx:id="LblUser" prefHeight="70.0" prefWidth="160.0" text="Admin" textFill="WHITE" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <VBox GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="4">
+         <children>
+            <TableView fx:id="TableContactPersons" editable="true" prefHeight="448.0" prefWidth="380.0" style="-fx-font-size: 20px;">
+               <columns>
+                  <TableColumn fx:id="ColumnTableContactPersons" prefWidth="75.0" text="Contact Persons">
+                     <columns>
+                        <TableColumn fx:id="PhoneColumnTableContactPersons" prefWidth="75.0" text="Phone" />
+                        <TableColumn fx:id="EmailColumnTableContactPersons" prefWidth="75.0" text="E-mail" />
+                     </columns>
+                  </TableColumn>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <HBox prefHeight="50.0" prefWidth="380.0">
+               <children>
+                  <TextField fx:id="AddPhoneNumber" prefHeight="57.0" prefWidth="148.0" />
+                  <TextField fx:id="AddEmail" prefHeight="62.0" prefWidth="148.0" />
+                  <Button fx:id="btnAddContactPerson" mnemonicParsing="false" onAction="#addToContactPersonsList" prefHeight="74.0" prefWidth="89.0" text="Add">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveTransportServices" prefHeight="78.0" prefWidth="283.0" text="Save" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <TableView fx:id="TableTransportServices" editable="true" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
+         <columns>
+            <TableColumn fx:id="NameColumnTableTransportServices" prefWidth="92.79997712373734" text="Name" />
+            <TableColumn fx:id="StatusColumnTableTransportServices" prefWidth="16.0" text="Status" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <GridPane fx:id="GridPaneAddTSInfo" prefHeight="498.0" prefWidth="813.0" style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="4">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="lblName" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Name" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCharacterAmount" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Character Amount" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPrefix" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Prefix" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblExtraVerificationCode" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="299.0" text="Extra Verification Code" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Status" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblOnlyNumbersAllowed" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="306.0" text="Only Numbers Allowed" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtName" prefHeight="59.0" prefWidth="339.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtCharacterAmount" prefHeight="59.0" prefWidth="352.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtPrefix" prefHeight="59.0" prefWidth="362.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="ComboBoxExtraVerificationCode" prefHeight="58.0" prefWidth="218.0" promptText="POST_CODE" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <CheckBox fx:id="CheckboxOnlyNumbersAllowed" mnemonicParsing="false" prefHeight="45.0" prefWidth="112.0" text="Yes" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="CheckBoxStatus" mnemonicParsing="false" selected="true" text="Active" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+         </children>
+      </GridPane>
+   </children>
+</GridPane>
