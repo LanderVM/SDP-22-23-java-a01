@@ -6,20 +6,24 @@ import java.util.List;
 import domain.Order;
 import domain.OrderController;
 import domain.Status;
+import domain.TransportService;
 import domain.TransportServiceController;
 import domain.UserController;
+import exceptions.OrderStatusException;
 import gui.view.OrderView;
+import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 
@@ -52,6 +56,14 @@ public class OrdersOverviewController extends GridPane {
 	private ChoiceBox<String> choiceBoxTransportServices;
 	@FXML
 	private TableView<OrderView> processableOrdersTable;
+	@FXML
+	private TableColumn<OrderView, Number> idCol;
+	@FXML
+	private TableColumn<OrderView, String> companyCol;
+	@FXML
+	private TableColumn<OrderView, Date> dateCol;
+	@FXML
+	private Button btnProcessOrder;
 
 	private OrderController orderController;
 	private UserController userController;
@@ -72,33 +84,47 @@ public class OrdersOverviewController extends GridPane {
 		OverviewColumnTable.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
 		NumberColumnTable.setCellValueFactory(celldata -> celldata.getValue().orderIdProperty());
 		DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateProperty());
-		// CostColumnTable.setCellValueFactory(celldata ->
-		// celldata.getValue().totalPriceProperty());
 		StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusProperty());
 
-		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
-		processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersList()));
+        choiceBoxTransportServices.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices()));
+        
+        idCol.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
+        companyCol.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+
+        refreshOrderList();
+
+		orderTextArea.setText(orderController.getOrderOverview(id));
+		
+        processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
+            if (newOrder == null) {
+            	return;
+            }
+            int id = newOrder.getOrderId();
+            TableOrdersView.requestFocus();
+            TableOrdersView.getSelectionModel().select(id-1);
+            TableOrdersView.getFocusModel().focus(id-1);
+            orderTextArea.setText(orderController.getOrderOverview(id));
+        });
+        TableOrdersView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
+            if (newOrder == null)
+                return;
+            int id = newOrder.getOrderId();
+            processableOrdersTable.requestFocus();
+            processableOrdersTable.getSelectionModel().select(id-1);
+            processableOrdersTable.getFocusModel().focus(id-1);
+            orderTextArea.setText(orderController.getOrderOverview(id));
+        });
 	}
 
 	@FXML
 	public void showOrders(ActionEvent event) {
 	}
 
-	@FXML
-	private void klikked(MouseEvent event) {
-		processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
-            if (newOrder == null)
-                return;
-            int id = newOrder.getOrderId();
-            System.out.println("test");
-		});
-		processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
-        	if (newOrder == null) {return;}
-        		id = newOrder.getOrderId();
-                orderTextArea.setText(orderController.getOrderOverview(id));
-                choiceBoxTransportServices.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices()));
-        });
-	}
+    public void refreshOrderList() {
+        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersList()));
+		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
+    }
 
 
 	@FXML
@@ -109,6 +135,26 @@ public class OrdersOverviewController extends GridPane {
 			goToHomeWarehouseOperator();
 		}
 	}
+	@FXML
+	private void ProcessOrder(ActionEvent event) {
+		  String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
+	        if (selectionTransportService == null) {
+	            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	            alert.setTitle("Warning");
+	            alert.setHeaderText("You need to select a transport service in order to be able to process order");
+	            alert.showAndWait();
+	            return;
+	        }
+	        try {
+				orderController.processOrder(id, new TransportService(selectionTransportService, null, null, isCache()));
+			} catch (EntityNotFoundException | OrderStatusException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        refreshOrderList();
+	    	
+	}
+	
 
 	@FXML
 	public void showNotifications(ActionEvent event) {
