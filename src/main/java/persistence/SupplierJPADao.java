@@ -28,10 +28,12 @@ public class SupplierJPADao implements JPADao<Supplier, Integer>{
 	}
 
 	@Override
-	public List<Supplier> getAll() {
-		
-		 return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAll",Supplier.class).getResultList());
-		
+	public List<Supplier> getAll() {		
+		 return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAll",Supplier.class).getResultList());	
+	}
+	
+	public List<Supplier> getAllCustomersOrderedByName() {
+		return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAllCustomersOrderedByName", Supplier.class).getResultList());
 	}
 	
 	public List<Supplier> getCustomers() {

@@ -1,6 +1,7 @@
 package gui.controller;
 
 import domain.OrderController;
+import domain.SupplierController;
 import domain.UserController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,10 +22,12 @@ public class TransportServicesOverviewController extends GridPane {
 
 	private OrderController orderController;
 	private UserController userController;
+	private SupplierController sc;
 	
-	public TransportServicesOverviewController(OrderController orderController, UserController userController) {
+	public TransportServicesOverviewController(OrderController orderController, UserController userController, SupplierController sc) {
 		this.orderController = orderController;
 		this.userController = userController;
+		this.sc = sc;
 	}
 
 
@@ -45,7 +48,7 @@ public class TransportServicesOverviewController extends GridPane {
 	private void showHome() {}
 	@FXML
 	private void ShowEmployees() {
-		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController);
+		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, sc);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
 		ChangeStage.change(this, loader, customersOverviewController, "Customer Overview");
 	}

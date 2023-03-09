@@ -1,6 +1,8 @@
 package gui.controller;
 
 import domain.OrderController;
+import domain.SupplierController;
+import domain.TransportServiceController;
 import domain.UserController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,26 +20,28 @@ public class HomeWarehouseOperatorController extends AnchorPane {
 
 	private OrderController orderController;
 	private UserController userController;
-
-	public HomeWarehouseOperatorController(OrderController orderController, UserController userController) {
+	private TransportServiceController transportServiceController;
+	
+	public HomeWarehouseOperatorController(OrderController orderController, UserController userController, TransportServiceController transportServiceController) {
 		this.orderController = orderController;
 		this.userController = userController;
+		this.transportServiceController = transportServiceController;
 	}
 
 	@FXML
 	void viewCustomers() {
-		// TODO
+		
 	}
 
 	@FXML
 	void viewOrders() {
-		AllOrdersOverviewController allOrdersOverviewController = new AllOrdersOverviewController(orderController, userController);
+		AllOrdersOverviewController allOrdersOverviewController = new AllOrdersOverviewController(orderController, userController, transportServiceController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/AllOrdersOverview.fxml"));
 		ChangeStage.change(this, loader, allOrdersOverviewController, "Orders Overview");
 	}
 
 	@FXML
 	void changeTrackAndTrace() {
-		// C
+
 	}
 }

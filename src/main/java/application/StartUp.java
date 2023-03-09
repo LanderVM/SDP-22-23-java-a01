@@ -17,6 +17,7 @@ import domain.Packaging;
 import domain.Product;
 import domain.Status;
 import domain.Supplier;
+import domain.SupplierController;
 import domain.TrackingCodeDetails;
 import domain.TransportService;
 import domain.TransportServiceController;
@@ -30,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import persistence.OrderJPADao;
+import persistence.SupplierJPADao;
 import persistence.TransportServiceJPADao;
 import persistence.UserJPADao;
 import util.JPAUtil;
@@ -45,7 +47,10 @@ public class StartUp extends Application {
     public void start(Stage primaryStage) {
         try {            
             EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(entityManager)), new UserController(new UserJPADao(entityManager)), new TransportServiceController(new TransportServiceJPADao(entityManager)));
+            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(entityManager)), 
+            		new UserController(new UserJPADao(entityManager)), 
+            		new TransportServiceController(new TransportServiceJPADao(entityManager)),
+            		new SupplierController(new SupplierJPADao(entityManager)));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);

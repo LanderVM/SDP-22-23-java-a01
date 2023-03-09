@@ -3,6 +3,7 @@ package gui.controller;
 import java.io.IOException;
 
 import domain.OrderController;
+import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.IncorrectPasswordException;
@@ -37,11 +38,14 @@ public class LoginScreenController extends GridPane {
 	private final OrderController orderController;
 	private final UserController userController;
 	private final TransportServiceController transportServiceController;
+	private final SupplierController sc;
 
-	public LoginScreenController(OrderController orderController, UserController userController, TransportServiceController transportServiceController) {
+	public LoginScreenController(OrderController orderController, UserController userController,
+			TransportServiceController transportServiceController, SupplierController sc) {
 		this.orderController = orderController;
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
+		this.sc = sc;
 		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -82,7 +86,7 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeAdmin() {
-		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(orderController, userController);
+		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(orderController, userController, sc);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServicesOverview.fxml"));
 		ChangeStage.change(this, loader, transportServicesOverviewController, "Orders Overview");
 	}
