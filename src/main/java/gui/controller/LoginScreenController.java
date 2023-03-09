@@ -24,6 +24,12 @@ public class LoginScreenController extends GridPane {
 	private Button btnSignIn;
 
 	@FXML
+	private Button btnSignInAdmin;
+
+	@FXML
+	private Button btnSignInWarhouse;
+
+	@FXML
 	private PasswordField txtPassword;
 
 	@FXML
@@ -71,7 +77,7 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController);
+		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
 		ChangeStage.change(this, loader, ordersOverviewController, "Overview");
 	}
@@ -88,6 +94,20 @@ public class LoginScreenController extends GridPane {
 		HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
 		ChangeStage.change(this, loader, homeAdminController, "Home");
+	}
+	
+	@FXML
+	private void TmpSignInWarhouse() {
+		txtEmail.setText("testMagazijnier@mail.com");
+		txtPassword.setText("testMagazijnier");
+		SignIn(null);
+	}	
+	
+	@FXML
+	private void TmpSignInAdmin() {
+		txtEmail.setText("testAdmin@mail.com");
+		txtPassword.setText("testAdmin");
+		SignIn(null);
 	}
 
 }

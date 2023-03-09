@@ -31,7 +31,7 @@
       <RowConstraints maxHeight="85.59992675781257" minHeight="10.0" percentHeight="10.0" prefHeight="79.19990234375007" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView fx:id="TableOrdersView" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
+      <TableView fx:id="TableOrdersView" onMouseClicked="#klikked" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
          <columns>
             <TableColumn fx:id="NumberColumnTable" prefWidth="108.79998779296875" text="Id" />
             <TableColumn fx:id="DateColumnTable" prefWidth="97.59999084472656" text="Date" />
