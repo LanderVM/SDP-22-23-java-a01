@@ -45,7 +45,7 @@ public class Supplier {
     @Column(name = "phone_number")
     private int phoneNumber;
 
-    @Lob
+    @Lob // aparte table TODO
     private byte[] logo;
 
     @OneToMany(mappedBy = "supplier")

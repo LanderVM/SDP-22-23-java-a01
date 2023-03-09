@@ -34,7 +34,7 @@ public class Order {
 
     @Column(name = "order_date")
     private Date date;
-    @OneToMany
+    @ManyToMany
     private List<Product> productsList;
     private Status status;
     private Packaging packaging;

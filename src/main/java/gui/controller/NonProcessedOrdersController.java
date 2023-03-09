@@ -102,7 +102,7 @@ public class NonProcessedOrdersController extends GridPane {
 		stage.setTitle("Orders Overview");
 		stage.show();*/
 
-        AllOrdersOverviewController ordersOverviewController = new AllOrdersOverviewController(orderController, uc);
+        AllOrdersOverviewController ordersOverviewController = new AllOrdersOverviewController(orderController, uc, transportServiceController);
         Scene scene = new Scene(ordersOverviewController);
         Stage stage = (Stage) this.getScene().getWindow();
         stage.setScene(scene);

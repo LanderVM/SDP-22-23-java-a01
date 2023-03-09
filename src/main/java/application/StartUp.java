@@ -43,12 +43,14 @@ public class StartUp extends Application {
         launch(args);
     }
 
+    EntityManager entityManager;
+
     @Override
     public void start(Stage primaryStage) {
-        try {            
-            EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(entityManager)), 
-            		new UserController(new UserJPADao(entityManager)), 
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(entityManager)),
+            		new UserController(new UserJPADao(entityManager)),
             		new TransportServiceController(new TransportServiceJPADao(entityManager)),
             		new SupplierController(new SupplierJPADao(entityManager)));
             Scene scene = new Scene(root);
@@ -62,6 +64,12 @@ public class StartUp extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void stop() throws Exception {
+        entityManager.close();
+        JPAUtil.getEntityManagerFactory().close();
     }
 
     public static void seedDatabase() {
@@ -109,7 +117,7 @@ public class StartUp extends Application {
         s1.setOrdersAsCustomer(l2);
         s2.setOrdersAsSupplier(l2);
         s2.setOrdersAsCustomer(l1);
-        
+
         EntityManager orderManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         orderManager.getTransaction().begin();
 
