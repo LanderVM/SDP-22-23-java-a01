@@ -7,6 +7,7 @@ import java.util.List;
 import domain.Order;
 import domain.OrderController;
 import domain.Status;
+import domain.TransportServiceController;
 import domain.UserController;
 import gui.view.OrderView;
 import javafx.collections.FXCollections;
@@ -48,11 +49,13 @@ public class AllOrdersOverviewController extends AnchorPane {
 
 	private OrderController orderController;
 	private UserController userController;
+	private TransportServiceController transportServiceController;
 	List<Order> ordersList;
 
-	public AllOrdersOverviewController(OrderController orderController, UserController userController) {
+	public AllOrdersOverviewController(OrderController orderController, UserController userController, TransportServiceController transportServiceController) {
 		this.orderController = orderController;
 		this.userController = userController;
+		this.transportServiceController = transportServiceController;
 	}
 
 	@FXML
@@ -92,7 +95,7 @@ public class AllOrdersOverviewController extends AnchorPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController);
+		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(orderController, userController, transportServiceController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
 		ChangeStage.change(this, loader, homeWarehouseOperatorController, "Home");
 	}

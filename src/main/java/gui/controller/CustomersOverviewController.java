@@ -1,10 +1,14 @@
 package gui.controller;
 
+import java.util.Date;
+
 import domain.Order;
 import domain.OrderController;
+import domain.Status;
 import domain.Supplier;
 import domain.SupplierController;
 import domain.UserController;
+import gui.view.CustomerOrdersView;
 import gui.view.CustomerVieuw;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -54,16 +58,16 @@ public class CustomersOverviewController extends GridPane{
     private TableColumn<CustomerVieuw, Number> numberOfOrdersCol;
 
     @FXML
-    private TableView<Order> ordersOfCustomerOverviewTable;
+    private TableView<CustomerOrdersView> ordersOfCustomerOverviewTable;
     
     @FXML
-    private TableColumn<Order, Number> idOrderOfCustomerCol;
+    private TableColumn<CustomerOrdersView, Number> idOrderOfCustomerCol;
 
     @FXML
-    private TableColumn<Order, String> dateOrderOfCustomerCol;
+    private TableColumn<CustomerOrdersView, Date> dateOrderOfCustomerCol;
     
     @FXML
-    private TableColumn<Order, String> statusOrderOfCustomerCol;
+    private TableColumn<CustomerOrdersView, Status> statusOrderOfCustomerCol;
     
     private SupplierController sc;
 	private UserController userController;
@@ -85,6 +89,10 @@ public class CustomersOverviewController extends GridPane{
 		nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 		numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());
 		
+		idOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getId());
+		dateOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getDate());
+		statusOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getStatus());
+		
 		refreshCustomersList();
 		
 		CustomersOverviewTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldCostumer, newCustomer) -> {
@@ -94,6 +102,8 @@ public class CustomersOverviewController extends GridPane{
 			lblCustomerName.setText(sc.getSupplier(email).getName());
 			lblCustomerAdress.setText(sc.getSupplier(email).getAddress());
 			lblCustomerPhoneNumber.setText(Integer.toString(sc.getSupplier(email).getPhoneNumber()));
+			
+			ordersOfCustomerOverviewTable.setItems(FXCollections.observableArrayList(sc.getCustomerOrderView(email)));
 			
 			nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 			numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());

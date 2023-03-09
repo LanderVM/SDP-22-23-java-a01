@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 
+import gui.view.CustomerOrdersView;
 import gui.view.CustomerVieuw;
 import gui.view.OrderView;
 import jakarta.persistence.NoResultException;
@@ -25,6 +26,10 @@ public class SupplierController {
 	
 	public List<CustomerVieuw> getSuppliersView() {
 		return supplierJPADao.getAll().stream().map(CustomerVieuw::new).toList();
+	}
+	
+	public List<CustomerOrdersView> getCustomerOrderView(String name) {
+		return supplierJPADao.get(name).getOrdersAsCustomer().stream().map(CustomerOrdersView::new).toList();
 	}
 	
 	public List<Supplier> getSuppliers() {

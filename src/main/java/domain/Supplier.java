@@ -108,6 +108,10 @@ public class Supplier {
         this.phoneNumber = phoneNumber;
     }
 
+    public byte[] getLogo() {
+    	return logo;
+    }
+    
     public List<Order> getOrdersAsSupplier() {
         return ordersAsSupplier;
     }
@@ -119,7 +123,7 @@ public class Supplier {
     public List<Order> getOrdersAsCustomer() {
         return ordersAsCustomer;
     }
-
+    
     public void setOrdersAsCustomer(List<Order> ordersAsCustomer) {
         this.ordersAsCustomer = ordersAsCustomer;
     }
