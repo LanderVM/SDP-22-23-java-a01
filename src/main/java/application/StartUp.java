@@ -93,7 +93,7 @@ public class StartUp extends Application {
         Product product5 = new Product("test_product vijf", new BigDecimal("11.30"));
 
         Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
-        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile());
+        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile2());
 
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
@@ -151,6 +151,17 @@ public class StartUp extends Application {
         byte[] fileContent = null;
         try {
             File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/images/testImg.jpg")).toURI());
+            fileContent = Files.readAllBytes(fi.toPath());
+        } catch (IOException | URISyntaxException exception) {
+            exception.printStackTrace();
+        }
+        return fileContent;
+    }
+    
+    private static byte[] getFile2() {
+        byte[] fileContent = null;
+        try {
+            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/images/adminIcon.png")).toURI());
             fileContent = Files.readAllBytes(fi.toPath());
         } catch (IOException | URISyntaxException exception) {
             exception.printStackTrace();

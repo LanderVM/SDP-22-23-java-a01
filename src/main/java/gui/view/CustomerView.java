@@ -3,6 +3,7 @@ package gui.view;
 import domain.Product;
 import domain.Status;
 import domain.Supplier;
+import domain.Logo;
 import domain.Order;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -19,6 +20,7 @@ public class CustomerView {
     private final SimpleStringProperty address;
     private final SimpleIntegerProperty phoneNumber;
     private final SimpleIntegerProperty numberOfOrders;
+    private final SimpleObjectProperty<byte[]> logo;
 
     public CustomerView(Supplier supplier) {
        email = new SimpleStringProperty(supplier.getEmail());
@@ -26,7 +28,7 @@ public class CustomerView {
        address = new SimpleStringProperty(supplier.getAddress());
        phoneNumber = new SimpleIntegerProperty(supplier.getPhoneNumber());
        numberOfOrders = new SimpleIntegerProperty(supplier.getOrdersAsCustomer().stream().filter(order -> order.getStatus() != Status.DELIVERED).toList().size());
-       
+       logo = new SimpleObjectProperty<byte[]>(supplier.getLogo());
     }
 
 	public SimpleStringProperty getEmail() {
@@ -47,6 +49,10 @@ public class CustomerView {
 	
 	public SimpleIntegerProperty getNumberOfOrders() {
 		return numberOfOrders;
+	}
+	
+	public SimpleObjectProperty<byte[]> getLogo() {
+		return logo;
 	}
 
 }

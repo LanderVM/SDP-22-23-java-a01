@@ -71,7 +71,7 @@
                   <Font name="Arial Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="btnEmployees" onAction="#ShowEmployees" prefHeight="139.0" prefWidth="321.0" text="Employees" textFill="WHITE" GridPane.columnIndex="3">
+            <Hyperlink fx:id="btnEmployees" onAction="#ShowEmployees" prefHeight="139.0" prefWidth="321.0" text="Customers" textFill="WHITE" GridPane.columnIndex="3">
                <font>
                   <Font name="Arial Bold" size="48.0" />
                </font>

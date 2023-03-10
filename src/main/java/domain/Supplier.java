@@ -46,7 +46,7 @@ public class Supplier {
     @Column(name = "phone_number")
     private int phoneNumber;
     
-    @OneToOne(mappedBy="supplier")
+    @OneToOne(mappedBy="supplier", cascade = CascadeType.PERSIST)
     private Logo logo;
     
     @OneToMany

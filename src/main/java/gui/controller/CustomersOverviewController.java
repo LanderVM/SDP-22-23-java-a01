@@ -1,5 +1,6 @@
 package gui.controller;
 
+import java.io.ByteArrayInputStream;
 import java.util.Date;
 
 import domain.ContactPersonSupplier;
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -113,6 +115,9 @@ public class CustomersOverviewController extends GridPane{
 			lblCustomerName.setText(sc.getSupplier(email).getName());
 			lblCustomerAdress.setText(sc.getSupplier(email).getAddress());
 			lblCustomerPhoneNumber.setText(Integer.toString(sc.getSupplier(email).getPhoneNumber()));
+			
+			Image img = new Image(new ByteArrayInputStream(sc.getSupplier(email).getLogo()));
+			logoImgView.setImage(img);
 			
 			ordersOfCustomerOverviewTable.setItems(FXCollections.observableArrayList(sc.getCustomerOrderView(email)));
 			
