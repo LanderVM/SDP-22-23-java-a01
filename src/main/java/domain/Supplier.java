@@ -51,6 +51,9 @@ public class Supplier {
     
     @OneToMany
     private List<ContactPersonSupplier> contactPersons;
+    
+    @OneToMany(mappedBy="supplier")
+    private List<User> users;
 
     @OneToMany(mappedBy = "supplier")
     private List<Order> ordersAsSupplier;
@@ -59,7 +62,7 @@ public class Supplier {
     private List<Order> ordersAsCustomer;
 
     public Supplier(String name, String email, String address, int phoneNumber, byte[] logo, List<Order> ordersAsSupplier,
-                    List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons) {
+                    List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
         this.name = name;
         this.email = email;
         this.address = address;
@@ -68,6 +71,7 @@ public class Supplier {
         this.ordersAsSupplier = ordersAsSupplier;
         this.ordersAsCustomer = ordersAsCustomer;
         this.contactPersons = contactPersons;
+        this.users = users;
     }
 
     public Supplier(String name, String email, String address, int phoneNumber, byte[] logo) {
@@ -132,8 +136,30 @@ public class Supplier {
     public void setOrdersAsCustomer(List<Order> ordersAsCustomer) {
         this.ordersAsCustomer = ordersAsCustomer;
     }
+    
+    
 
-    @Override
+    public List<ContactPersonSupplier> getContactPersons() {
+		return contactPersons;
+	}
+
+	public void setContactPersons(List<ContactPersonSupplier> contactPersons) {
+		this.contactPersons = contactPersons;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public void setLogo(Logo logo) {
+		this.logo = logo;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

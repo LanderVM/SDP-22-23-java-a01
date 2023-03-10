@@ -31,6 +31,9 @@ public class User {
     private String name;
     private String password;
     private boolean isAdmin;
+    
+    @ManyToOne
+    private Supplier supplier;
 
     public User(String accountName, String password, boolean isAdmin, String surname, String name) {
         setAccountName(accountName);

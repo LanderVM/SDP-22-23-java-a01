@@ -21,6 +21,14 @@ import jakarta.persistence.*;
         @NamedQuery(
                 name = "Order.findAllPosted",
                 query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED"
+        ),
+        @NamedQuery(
+        		name = "Order.findAllPostedForSupplier",
+                query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = ?1"
+        ),
+        @NamedQuery(
+        		name = "Order.findAllForSupplier",
+                query = "SELECT d FROM Order d WHERE d.supplier.supplierId = ?1"
         )
 })
 public class Order {
