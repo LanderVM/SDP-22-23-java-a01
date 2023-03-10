@@ -11,6 +11,7 @@ import domain.Supplier;
 import domain.SupplierController;
 import domain.User;
 import domain.UserController;
+import gui.view.ContactPersonSupplierView;
 import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
 import javafx.collections.FXCollections;
@@ -107,6 +108,9 @@ public class CustomersOverviewController extends GridPane{
 		dateOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getDate());
 		statusOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getStatus());
 		
+		nameContactpersonSupplierCol.setCellValueFactory(cellData->cellData.getValue().getName());
+		emailContactpersonSupplierCol.setCellValueFactory(cellData->cellData.getValue().getEmail());
+		
 		refreshCustomersList();
 		
 		CustomersOverviewTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldCostumer, newCustomer) -> {
@@ -124,6 +128,11 @@ public class CustomersOverviewController extends GridPane{
 			
 			nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 			numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());
+			
+			contactpesronSupplierOverviewTable.setItems(FXCollections.observableArrayList(sc.getContactPersonSupplierView(email)));
+			
+			nameContactpersonSupplierCol.setCellValueFactory(cellData->cellData.getValue().getName());
+			emailContactpersonSupplierCol.setCellValueFactory(cellData->cellData.getValue().getEmail());
 		});
 	}
 
@@ -145,7 +154,7 @@ public class CustomersOverviewController extends GridPane{
     }
     
     public void refreshCustomersList() {
-        CustomersOverviewTable.setItems(FXCollections.observableArrayList(sc.getSuppliersView()));
+        CustomersOverviewTable.setItems(FXCollections.observableArrayList(sc.getSuppliersView(userController.supplierIdFromUser())));
     }
 
 }

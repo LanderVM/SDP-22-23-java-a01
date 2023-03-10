@@ -1,9 +1,11 @@
 package persistence;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import domain.Supplier;
+import gui.view.CustomerView;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -39,6 +41,10 @@ public class SupplierJPADao implements JPADao<Supplier, Integer>{
 	public List<Supplier> getCustomers() {
 		return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAllWithOrdersAsCustomer", Supplier.class).getResultList());
 	}
+	
+	public List<Supplier> getAllCustomersForSupplier(int supplierId) {
+		return Collections.unmodifiableList(entityManager.createNamedQuery("Supplier.findAllCustomersForSupplier", Supplier.class).setParameter(1, supplierId).getResultList());
+	}
 
 	@Override
 	public void update(Supplier supplier) {
@@ -46,5 +52,6 @@ public class SupplierJPADao implements JPADao<Supplier, Integer>{
         entityManager.merge(supplier);
         entityManager.getTransaction().commit();
 	}
+
 
 }

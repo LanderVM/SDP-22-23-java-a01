@@ -5,10 +5,18 @@ import java.util.Objects;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="conactpersons_supplier")
+@NamedQueries({
+	@NamedQuery(
+			name="ContactPersonSupplier.findAllForSupplier",
+			query="SELECT w FROM ContactPersonSupplier w WHERE w.supplier.email = ?1"
+	)
+})
 public class ContactPersonSupplier {
 	
 	private String name;

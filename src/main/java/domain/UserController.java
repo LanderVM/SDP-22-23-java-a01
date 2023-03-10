@@ -34,6 +34,10 @@ public class UserController {
     	return user.getUserId();
     }
     
+    public int supplierIdFromUser () {
+    	return user.getSupplier().getSupplierId();
+    }
+    
     public String toString() {
     	return String.format("%s %s",user.getSurname(), user.getName());
     }

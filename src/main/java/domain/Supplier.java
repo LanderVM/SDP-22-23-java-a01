@@ -28,6 +28,10 @@ import logoMapper.LogoMapper;
         @NamedQuery(
         		name = "Supplier.findAllCustomersOrderedByName",
         		query = "SELECT s FROM Supplier s ORDER BY s.name"
+        ),
+        @NamedQuery(
+        		name = "Supplier.findAllCustomersForSupplier",
+        		query = "SELECT s FROM Supplier s ORDER BY s.name"
         )
 })
 public class Supplier {
