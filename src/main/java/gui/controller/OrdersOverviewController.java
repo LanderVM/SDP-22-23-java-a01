@@ -8,6 +8,7 @@ import domain.OrderController;
 import domain.Status;
 import domain.TransportService;
 import domain.TransportServiceController;
+import domain.User;
 import domain.UserController;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
@@ -69,13 +70,15 @@ public class OrdersOverviewController extends GridPane {
 	private UserController userController;
 	private TransportServiceController transportServiceController;
 	private int id = 1;
+	private int userId;
 	List<Order> ordersList;
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController) {
+			TransportServiceController transportServiceController,int userId) {
 		this.orderController = orderController;
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
+		this.userId = userId;
 	}
 
 	@FXML
@@ -122,8 +125,8 @@ public class OrdersOverviewController extends GridPane {
 	}
 
     public void refreshOrderList() {
-        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersList()));
-		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
+        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersListForSupplier(userId)));
+		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderListForSupplier(userId)));
     }
 
 

@@ -6,14 +6,17 @@ import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import jakarta.persistence.EntityNotFoundException;
 import persistence.OrderJPADao;
+import persistence.UserJPADao;
 
 public class OrderController {
 
 
     private final OrderJPADao orderJPADao;
+    private final UserJPADao userJPADao;
 
-    public OrderController(OrderJPADao orderJPADao) {
+    public OrderController(OrderJPADao orderJPADao,UserJPADao userJPADao) {
         this.orderJPADao = orderJPADao;
+        this.userJPADao = userJPADao;
     }
 
     public List<OrderView> getOrderList() {
@@ -22,6 +25,16 @@ public class OrderController {
 
     public List<OrderView> getPostedOrdersList() {
         return orderJPADao.getAllPosted().stream().map(OrderView::new).toList();
+    }
+    
+    public List<OrderView> getOrderListForSupplier(int userId) {
+    	User user = userJPADao.get(userId);
+        return orderJPADao.getAllForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
+    }
+
+    public List<OrderView> getPostedOrdersListForSupplier(int userId) {
+    	User user = userJPADao.get(userId);
+        return orderJPADao.getAllPostedForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
     }
 
     public String getOrderOverview(int orderId) {

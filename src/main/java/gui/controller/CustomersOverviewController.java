@@ -9,6 +9,7 @@ import domain.OrderController;
 import domain.Status;
 import domain.Supplier;
 import domain.SupplierController;
+import domain.User;
 import domain.UserController;
 import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
@@ -85,6 +86,7 @@ public class CustomersOverviewController extends GridPane{
     private SupplierController sc;
 	private UserController userController;
 	private OrderController orderController;
+	private int userId;
     
     public CustomersOverviewController(SupplierController sc) {
     	this.sc = sc;

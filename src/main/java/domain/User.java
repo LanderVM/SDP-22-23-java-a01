@@ -35,12 +35,13 @@ public class User {
     @ManyToOne
     private Supplier supplier;
 
-    public User(String accountName, String password, boolean isAdmin, String surname, String name) {
+    public User(String accountName, String password, boolean isAdmin, String surname, String name,Supplier supplier) {
         setAccountName(accountName);
         setPassword(password);
         setAdmin(isAdmin);
         setSurname(surname);
         setName(name);
+        this.supplier = supplier;
     }
 
 
@@ -87,7 +88,17 @@ public class User {
         this.name = name;
     }
 
-    @Override
+    public Supplier getSupplier() {
+		return supplier;
+	}
+
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -85,7 +85,11 @@ public class Supplier {
     protected Supplier() {
     }
 
-    public String getName() {
+    public int getSupplierId() {
+		return supplierId;
+	}
+
+	public String getName() {
         return name;
     }
 
