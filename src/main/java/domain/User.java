@@ -48,7 +48,12 @@ public class User {
     protected User() {
     }
 
-    public String getAccountName() {
+    public int getUserId() {
+		return userId;
+	}
+
+
+	public String getAccountName() {
         return accountName;
     }
 

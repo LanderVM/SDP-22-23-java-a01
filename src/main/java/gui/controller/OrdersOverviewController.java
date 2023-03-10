@@ -70,15 +70,13 @@ public class OrdersOverviewController extends GridPane {
 	private UserController userController;
 	private TransportServiceController transportServiceController;
 	private int id = 1;
-	private int userId;
 	List<Order> ordersList;
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController,int userId) {
+			TransportServiceController transportServiceController) {
 		this.orderController = orderController;
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
-		this.userId = userId;
 	}
 
 	@FXML
@@ -125,8 +123,8 @@ public class OrdersOverviewController extends GridPane {
 	}
 
     public void refreshOrderList() {
-        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersListForSupplier(userId)));
-		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderListForSupplier(userId)));
+        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersListForSupplier(userController.userId())));
+		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderListForSupplier(userController.userId())));
     }
 
 

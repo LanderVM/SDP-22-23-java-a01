@@ -30,6 +30,10 @@ public class UserController {
         return user.getSurname();
     }
     
+    public int userId () {
+    	return user.getUserId();
+    }
+    
     public String toString() {
     	return String.format("%s %s",user.getSurname(), user.getName());
     }

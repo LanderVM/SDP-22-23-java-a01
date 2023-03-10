@@ -74,19 +74,18 @@ public class CustomersOverviewController extends GridPane{
     private TableColumn<CustomerOrdersView, Status> statusOrderOfCustomerCol;
     
     @FXML
-    private TableView<ContactPersonSupplier> contactpesronSupplierOverviewTable;
+    private TableView<ContactPersonSupplierView> contactpesronSupplierOverviewTable;
     
     @FXML
-    private TableColumn<ContactPersonSupplier, String> nameContactpersonSupplierCol;
+    private TableColumn<ContactPersonSupplierView, String> nameContactpersonSupplierCol;
 
     @FXML
-    private TableColumn<ContactPersonSupplier, String> emailContactpersonSupplierCol;
+    private TableColumn<ContactPersonSupplierView, String> emailContactpersonSupplierCol;
 
     
     private SupplierController sc;
 	private UserController userController;
 	private OrderController orderController;
-	private int userId;
     
     public CustomersOverviewController(SupplierController sc) {
     	this.sc = sc;
