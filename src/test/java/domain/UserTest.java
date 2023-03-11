@@ -8,10 +8,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import application.StartUp;
 import persistence.UserJPADao;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.util.Objects;
 
 @ExtendWith(MockitoExtension.class)
 public class UserTest {
@@ -26,10 +34,13 @@ public class UserTest {
     private UserController userController;
 
     private User admin;
+    private Supplier supplier;
 
     @Test
     public void getById_happyFlow() {
-        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
+
+        supplier = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
+        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", supplier);
 
         when(entityManager.createNamedQuery("User.findById", User.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -39,6 +50,16 @@ public class UserTest {
 
         assertEquals(admin, userDao.get(1));
         verify(query).setParameter(1, 1);
+    }
+    private static byte[] getFile() {
+        byte[] fileContent = null;
+        try {
+            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/images/testImg.jpg")).toURI());
+            fileContent = Files.readAllBytes(fi.toPath());
+        } catch (IOException | URISyntaxException exception) {
+            exception.printStackTrace();
+        }
+        return fileContent;
     }
 
     @Test
@@ -55,7 +76,8 @@ public class UserTest {
 
     @Test
     public void getByEmail_happyFlow() {
-        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
+        supplier = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
+        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", supplier);
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
@@ -81,7 +103,8 @@ public class UserTest {
 
     @Test
     public void checkUser_happyFlow() throws IncorrectPasswordException {
-        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
+        supplier = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
+        admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", supplier);
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
@@ -95,7 +118,8 @@ public class UserTest {
 
     @Test
     public void checkUser_invalidPassword_throwsIncorrectPasswordException() {
-        admin = new User("testAdmin@mail.com", "testAdminFalse", true, "Test", "Admin");
+        supplier = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
+        admin = new User("testAdmin@mail.com", "testAdminFalse", true, "Test", "Admin", supplier);
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
@@ -110,7 +134,8 @@ public class UserTest {
 
     @Test
     public void checkUser_invalidEmail_throwsNoResultException() {
-        admin = new User("testAdmin@mail.com", "testAdminFalse", true, "Test", "Admin");
+        supplier = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
+        admin = new User("testAdmin@mail.com", "testAdminFalse", true, "Test", "Admin", supplier);
 
         when(entityManager.createNamedQuery("User.findByEmail", User.class)).thenReturn(query);
         when(query.setParameter(1, "testAdmin@mail.com")).thenReturn(query);
@@ -122,6 +147,4 @@ public class UserTest {
         assertThrows(NoResultException.class, () -> userController.checkUser("testAdmin@mail.com", "testAdmin"));
         verify(query).setParameter(1, "testAdmin@mail.com");
     }
-
-
 }

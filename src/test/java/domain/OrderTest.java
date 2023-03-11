@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import persistence.OrderJPADao;
+import persistence.UserJPADao;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class OrderTest {
     EntityTransaction entityTransaction;
 
     private OrderJPADao orderDao;
+    private UserJPADao userJPADao;
 
     private Order order;
     private TransportService transportService;
@@ -55,8 +57,8 @@ public class OrderTest {
 		return fileContent;
     }
     
-    Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" ,0426343211, getFile());
-    Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst",0456443212, getFile());
+    Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
+    Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", "0456443212", getFile());
     
     @Test
     public void getById_happyFlow() {
@@ -119,7 +121,8 @@ public class OrderTest {
         mockFindAllPosted();
 
         orderDao = new OrderJPADao(entityManager);
-        OrderController orderController = new OrderController(orderDao);
+        userJPADao = new UserJPADao(entityManager);
+        OrderController orderController = new OrderController(orderDao, userJPADao);
 
         orderController.processOrder(1, transportService);
         Order orderAfterUpdate = orderDao.get(1);
@@ -142,7 +145,8 @@ public class OrderTest {
         mockFindAllPosted();
 
         orderDao = new OrderJPADao(entityManager);
-        OrderController orderController = new OrderController(orderDao);
+        userJPADao = new UserJPADao(entityManager);
+        OrderController orderController = new OrderController(orderDao, userJPADao);
 
         assertThrows(OrderStatusException.class, () -> orderController.processOrder(1, transportService));
         verify(query).setParameter(1, 1);
