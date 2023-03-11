@@ -119,7 +119,7 @@ public class CustomersOverviewController extends GridPane{
 			
 			lblCustomerName.setText(sc.getSupplier(email).getName());
 			lblCustomerAdress.setText(sc.getSupplier(email).getAddress());
-			lblCustomerPhoneNumber.setText(Integer.toString(sc.getSupplier(email).getPhoneNumber()));
+			lblCustomerPhoneNumber.setText(sc.getSupplier(email).getPhoneNumber());
 			
 			Image img = new Image(new ByteArrayInputStream(sc.getSupplier(email).getLogo()));
 			logoImgView.setImage(img);

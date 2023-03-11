@@ -18,7 +18,7 @@ public class CustomerView {
     private final SimpleStringProperty email;
     private final SimpleStringProperty name;
     private final SimpleStringProperty address;
-    private final SimpleIntegerProperty phoneNumber;
+    private final SimpleStringProperty phoneNumber;
     private final SimpleIntegerProperty numberOfOrders;
     private final SimpleObjectProperty<byte[]> logo;
 
@@ -26,7 +26,7 @@ public class CustomerView {
        email = new SimpleStringProperty(supplier.getEmail());
        name = new SimpleStringProperty(supplier.getName());
        address = new SimpleStringProperty(supplier.getAddress());
-       phoneNumber = new SimpleIntegerProperty(supplier.getPhoneNumber());
+       phoneNumber = new SimpleStringProperty(supplier.getPhoneNumber());
        numberOfOrders = new SimpleIntegerProperty(supplier.getOrdersAsCustomer().stream().filter(order -> order.getStatus() != Status.DELIVERED).toList().size());
        logo = new SimpleObjectProperty<byte[]>(supplier.getLogo());
     }
@@ -43,7 +43,7 @@ public class CustomerView {
 		return address;
 	}
 
-	public SimpleIntegerProperty getPhoneNumber() {
+	public SimpleStringProperty getPhoneNumber() {
 		return phoneNumber;
 	}
 	

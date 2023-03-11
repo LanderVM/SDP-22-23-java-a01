@@ -48,7 +48,7 @@ public class Supplier {
     private String address;
 
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
     
     @OneToOne(mappedBy="supplier", cascade = CascadeType.PERSIST)
     private Logo logo;
@@ -65,7 +65,7 @@ public class Supplier {
     @OneToMany(mappedBy = "customer")
     private List<Order> ordersAsCustomer;
 
-    public Supplier(String name, String email, String address, int phoneNumber, byte[] logo, List<Order> ordersAsSupplier,
+    public Supplier(String name, String email, String address, String phoneNumber, byte[] logo, List<Order> ordersAsSupplier,
                     List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
         this.name = name;
         this.email = email;
@@ -78,7 +78,7 @@ public class Supplier {
         this.users = users;
     }
 
-    public Supplier(String name, String email, String address, int phoneNumber, byte[] logo) {
+    public Supplier(String name, String email, String address, String phoneNumber, byte[] logo) {
         this.name = name;
         this.email = email;
         this.address = address;
@@ -117,11 +117,11 @@ public class Supplier {
         this.address = adress;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

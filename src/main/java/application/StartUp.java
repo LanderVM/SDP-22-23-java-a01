@@ -30,6 +30,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import logoMapper.LogoMapper;
+import persistence.ContactPersonSupplierJPADao;
 import persistence.OrderJPADao;
 import persistence.SupplierJPADao;
 import persistence.TransportServiceJPADao;
@@ -49,10 +51,12 @@ public class StartUp extends Application {
     public void start(Stage primaryStage) {
         try {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            LoginScreenController root = new LoginScreenController(new OrderController(new OrderJPADao(entityManager)),
-            		new UserController(new UserJPADao(entityManager)),
+        	OrderJPADao orderJPADao = new OrderJPADao(entityManager);
+        	UserJPADao userJPADao = new UserJPADao(entityManager);
+            LoginScreenController root = new LoginScreenController(new OrderController(orderJPADao, userJPADao),
+            		new UserController(userJPADao),
             		new TransportServiceController(new TransportServiceJPADao(entityManager)),
-            		new SupplierController(new SupplierJPADao(entityManager)));
+            		new SupplierController(new SupplierJPADao(entityManager), orderJPADao, new ContactPersonSupplierJPADao(entityManager)));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);
@@ -73,11 +77,16 @@ public class StartUp extends Application {
     }
 
     public static void seedDatabase() {
-        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin");
-        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier");
-
         EntityManager userManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         userManager.getTransaction().begin();
+        
+        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
+        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", "0456443212",getFile2());
+        userManager.persist(s1);
+        userManager.persist(s2);
+        
+        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", s1);
+        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", s2);
 
         // Users
         userManager.persist(admin);
@@ -92,8 +101,6 @@ public class StartUp extends Application {
         Product product4 = new Product("test_product vier", new BigDecimal("8.90"));
         Product product5 = new Product("test_product vijf", new BigDecimal("11.30"));
 
-        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , 426343211, getFile());
-        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", 456443212,getFile2());
 
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);

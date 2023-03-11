@@ -35,9 +35,6 @@ public class HomeWarehouseOperatorController extends AnchorPane {
 
 	@FXML
 	void viewOrders() {
-		AllOrdersOverviewController allOrdersOverviewController = new AllOrdersOverviewController(orderController, userController, transportServiceController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/AllOrdersOverview.fxml"));
-		ChangeStage.change(this, loader, allOrdersOverviewController, "Orders Overview");
 	}
 
 	@FXML
