@@ -8,7 +8,6 @@ import domain.OrderController;
 import domain.Status;
 import domain.TransportService;
 import domain.TransportServiceController;
-import domain.User;
 import domain.UserController;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
@@ -87,7 +86,7 @@ public class OrdersOverviewController extends GridPane {
 		DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateProperty());
 		StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusProperty());
 
-        choiceBoxTransportServices.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices()));
+        choiceBoxTransportServices.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServiceNames()));
         
         idCol.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
         companyCol.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
