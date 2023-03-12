@@ -14,8 +14,8 @@ public class CustomerOrdersView {
     
     public CustomerOrdersView(Order order) {
        id = new SimpleIntegerProperty(order.getOrderId());
-       date = new SimpleObjectProperty<Date>(order.getDate());
-       status = new SimpleObjectProperty<Status>(order.getStatus());
+       date = new SimpleObjectProperty<>(order.getDate());
+       status = new SimpleObjectProperty<>(order.getStatus());
        
     }
 
