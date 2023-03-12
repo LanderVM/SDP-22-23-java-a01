@@ -1,11 +1,8 @@
 package application;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -24,13 +21,13 @@ import domain.TransportServiceController;
 import domain.User;
 import domain.UserController;
 import domain.VerificationType;
+import gui.controller.ChangeStage;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import logoMapper.LogoMapper;
 import persistence.ContactPersonSupplierJPADao;
 import persistence.OrderJPADao;
 import persistence.SupplierJPADao;
@@ -53,17 +50,23 @@ public class StartUp extends Application {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         	OrderJPADao orderJPADao = new OrderJPADao(entityManager);
         	UserJPADao userJPADao = new UserJPADao(entityManager);
-            LoginScreenController root = new LoginScreenController(new OrderController(orderJPADao, userJPADao),
+        	TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
+        	SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);
+        	ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
+        	new ChangeStage(primaryStage);
+        	
+            LoginScreenController root = new LoginScreenController(
+            		new OrderController(orderJPADao, userJPADao),
             		new UserController(userJPADao),
-            		new TransportServiceController(new TransportServiceJPADao(entityManager)),
-            		new SupplierController(new SupplierJPADao(entityManager), orderJPADao, new ContactPersonSupplierJPADao(entityManager)));
+            		new TransportServiceController(transportServiceJPADao),
+            		new SupplierController(supplierJPADao, orderJPADao, contactPersonSupplierJPADao));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
             primaryStage.setTitle("Log In");
-            primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
+            primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,15 +83,14 @@ public class StartUp extends Application {
         EntityManager userManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         userManager.getTransaction().begin();
         
-        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", getFile());
-        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", "0456443212",getFile2());
+        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", "/images/testImg.jpg");
+        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
         userManager.persist(s1);
         userManager.persist(s2);
         
         User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", s1);
         User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", s2);
 
-        // Users
         userManager.persist(admin);
         userManager.persist(warehouseman);
 
@@ -115,11 +117,8 @@ public class StartUp extends Application {
         Order order1 = new Order( new Date(), List.of(product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
         Order order2 = new Order( new Date(), List.of(product3, product4, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
 
-        List<Order> l1 = new ArrayList<>();
-        l1.add(order1);
-        l1.add(order2);
-        List<Order> l2 = new ArrayList<>();
-        l2.add(order2);
+        List<Order> l1 = new ArrayList<>(Arrays.asList(order1, order2));
+        List<Order> l2 = new ArrayList<>(Arrays.asList(order2));
         s1.setOrdersAsSupplier(l1);
         s1.setOrdersAsCustomer(l2);
         s2.setOrdersAsSupplier(l2);
@@ -152,27 +151,5 @@ public class StartUp extends Application {
         orderManager.persist(s2);
         orderManager.getTransaction().commit();
         orderManager.close();
-    }
-
-    private static byte[] getFile() {
-        byte[] fileContent = null;
-        try {
-            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/images/testImg.jpg")).toURI());
-            fileContent = Files.readAllBytes(fi.toPath());
-        } catch (IOException | URISyntaxException exception) {
-            exception.printStackTrace();
-        }
-        return fileContent;
-    }
-    
-    private static byte[] getFile2() {
-        byte[] fileContent = null;
-        try {
-            File fi = new File(Objects.requireNonNull(StartUp.class.getResource("/images/adminIcon.png")).toURI());
-            fileContent = Files.readAllBytes(fi.toPath());
-        } catch (IOException | URISyntaxException exception) {
-            exception.printStackTrace();
-        }
-        return fileContent;
     }
 }

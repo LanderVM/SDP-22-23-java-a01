@@ -65,25 +65,25 @@ public class Supplier {
     @OneToMany(mappedBy = "customer")
     private List<Order> ordersAsCustomer;
 
-    public Supplier(String name, String email, String address, String phoneNumber, byte[] logo, List<Order> ordersAsSupplier,
+    public Supplier(String name, String email, String address, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
                     List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
         this.name = name;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.logo = LogoMapper.makeLogo(logo, this);
+        this.logo = LogoMapper.makeLogo(logoLocation, this);
         this.ordersAsSupplier = ordersAsSupplier;
         this.ordersAsCustomer = ordersAsCustomer;
         this.contactPersons = contactPersons;
         this.users = users;
     }
 
-    public Supplier(String name, String email, String address, String phoneNumber, byte[] logo) {
+    public Supplier(String name, String email, String address, String phoneNumber, String logoLocation) {
         this.name = name;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.logo = LogoMapper.makeLogo(logo, this);
+        this.logo = LogoMapper.makeLogo(logoLocation, this);
     }
 
     protected Supplier() {

@@ -19,33 +19,29 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class LoginScreenController extends GridPane {
-
 	@FXML
 	private Button btnSignIn;
-
 	@FXML
 	private Button btnSignInAdmin;
-
 	@FXML
 	private Button btnSignInWarhouse;
-
 	@FXML
 	private PasswordField txtPassword;
-
 	@FXML
 	private TextField txtEmail;
 
 	private final OrderController orderController;
 	private final UserController userController;
 	private final TransportServiceController transportServiceController;
-	private final SupplierController sc;
+	private final SupplierController supplierController;
 
 	public LoginScreenController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController, SupplierController sc) {
+			TransportServiceController transportServiceController, SupplierController supplierController) {
 		this.orderController = orderController;
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
-		this.sc = sc;
+		this.supplierController = supplierController;
+		
 		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -60,10 +56,12 @@ public class LoginScreenController extends GridPane {
 	void SignIn(ActionEvent event) {
 		try {
 			userController.checkUser(txtEmail.getText(), txtPassword.getText());
-			if (userController.userIsAdmin())
+			if (userController.userIsAdmin()) {
 				goToHomeAdmin();
-			else
+			}
+			else {
 				goToHomeWarehouseOperator();
+			}
 		} catch (NoResultException e) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("User not found");
@@ -86,20 +84,20 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeAdmin() {
-		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(orderController, userController, sc);
+		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(orderController, userController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServicesOverview.fxml"));
 		ChangeStage.change(this, loader, transportServicesOverviewController, "Orders Overview");
 	}
 	
 	@FXML
-	private void TmpSignInWarhouse() {
+	private void tmpSignInWarhouse() {
 		txtEmail.setText("testMagazijnier@mail.com");
 		txtPassword.setText("testMagazijnier");
 		SignIn(null);
 	}	
 	
 	@FXML
-	private void TmpSignInAdmin() {
+	private void tmpSignInAdmin() {
 		txtEmail.setText("testAdmin@mail.com");
 		txtPassword.setText("testAdmin");
 		SignIn(null);

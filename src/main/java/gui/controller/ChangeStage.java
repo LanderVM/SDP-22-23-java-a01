@@ -8,24 +8,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ChangeStage {
-
-	// int width = (int) Screen.getPrimary().getBounds().getWidth();
-	// int height = (int) Screen.getPrimary().getBounds().getHeight();
+	private static Stage stage;
+	
+	public ChangeStage(Stage primaryStage) {
+		stage = primaryStage;
+	}
 
 	public static void change(Parent current, FXMLLoader loader, Parent controller, String title) {
-		loader.setRoot(controller);
-		loader.setController(controller);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		Scene scene = new Scene(controller);
-		Stage stage = (Stage) current.getScene().getWindow();
-		stage.setScene(scene);
-		stage.setTitle(title);
-		stage.show();
+		int width = (int) stage.getWidth();
+		int height = (int) stage.getHeight();
+		change(current, loader, controller, title, width, height);
 	}
 
 	public static void change(Parent current, FXMLLoader loader, Parent controller, String title, int width, int height) {
@@ -38,11 +30,11 @@ public class ChangeStage {
 		}
 
 		Scene scene = new Scene(controller);
-		Stage stage = (Stage) current.getScene().getWindow();
-		stage.setScene(scene);
+		stage = (Stage) current.getScene().getWindow();
 		stage.setWidth(width);
 		stage.setHeight(height);
 		stage.setTitle(title);
+		stage.setScene(scene);
 		stage.show();
 
 	}

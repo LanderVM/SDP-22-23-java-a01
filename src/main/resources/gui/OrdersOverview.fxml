@@ -79,7 +79,7 @@
          <children>
             <ImageView fx:id="imgDelaware" fitHeight="121.0" fitWidth="233.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@delaware.png" />
+                  <Image url="@../images/LogoDelaware.png" />
                </image>
             </ImageView>
             <Hyperlink fx:id="btnHome" onAction="#showHome" prefHeight="106.0" prefWidth="211.0" style="-fx-font-family: arial;" text="Home" textFill="WHITE" GridPane.columnIndex="1">

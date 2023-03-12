@@ -1,14 +1,13 @@
 package gui.view;
 
-import domain.Product;
-import domain.Status;
+import java.math.BigDecimal;
+import java.util.Date;
+
 import domain.Order;
+import domain.Status;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 public class OrderView {
 
