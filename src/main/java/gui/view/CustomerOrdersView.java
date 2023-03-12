@@ -21,7 +21,7 @@ public class CustomerOrdersView {
 
 	public SimpleIntegerProperty getId() {
 		return id;
-	}
+	} // TODO consistency between getters view
 
 	public SimpleObjectProperty<Date> getDate() {
 		return date;

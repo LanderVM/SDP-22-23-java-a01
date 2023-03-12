@@ -5,11 +5,13 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.stream.Collectors;
+
 public class TransportServiceView {
 
     private final SimpleIntegerProperty transportServiceId;
     private final SimpleStringProperty name;
-    private final SimpleListProperty<ContactPerson> contactPeople; // TODO ContactpersonView
+    private final SimpleListProperty<ContactPersonView> contactPeople; // TODO ContactpersonView
     private final SimpleIntegerProperty characterCount;
     private final SimpleBooleanProperty integersOnly;
     private final SimpleStringProperty prefix;
@@ -19,7 +21,7 @@ public class TransportServiceView {
     public TransportServiceView(TransportService transportService) {
         transportServiceId = new SimpleIntegerProperty(transportService.getTransportServiceId());
         name = new SimpleStringProperty(transportService.getName());
-        contactPeople = new SimpleListProperty<>(FXCollections.observableList(transportService.getContactPersonList()));
+        contactPeople = new SimpleListProperty<>(transportService.getContactPersonList().stream().map(ContactPersonView::new).collect(Collectors.toCollection(FXCollections::observableArrayList)));
         TrackingCodeDetails trackingCodeDetails = transportService.getTrackingCodeDetails();
         characterCount = new SimpleIntegerProperty(trackingCodeDetails.getCharacterCount());
         integersOnly = new SimpleBooleanProperty(trackingCodeDetails.isIntegersOnly());
@@ -44,11 +46,11 @@ public class TransportServiceView {
         return name;
     }
 
-    public ObservableList<ContactPerson> getContactPeople() {
+    public ObservableList<ContactPersonView> getContactPeople() {
         return contactPeople.get();
     }
 
-    public SimpleListProperty<ContactPerson> contactPeopleProperty() {
+    public SimpleListProperty<ContactPersonView> contactPeopleProperty() {
         return contactPeople;
     }
 
