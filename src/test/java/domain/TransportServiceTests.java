@@ -34,12 +34,14 @@ public class TransportServiceTests {
 
     private ContactPerson contactPerson;
     List<TransportService> transportServiceList;
+    TransportService transportService;
 
     @Nested
     class GetTests {
+
         @Test
         public void getById_happyFlow() {
-            TransportService transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
 
             when(entityManager.createNamedQuery("TransportService.findById", TransportService.class)).thenReturn(query);
             when(query.setParameter(1, 1)).thenReturn(query);
@@ -82,7 +84,7 @@ public class TransportServiceTests {
 
         @Test
         public void getAllActive_happyFlow() {
-            List<TransportService> transportServiceList =
+            transportServiceList =
                     List.of(new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
                             new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), true)
                     );
@@ -95,10 +97,6 @@ public class TransportServiceTests {
             verify(query).getResultList();
         }
     }
-
-
-
-    // TODO: viewTransportService, deactiveTransportService, activeTransportService && all validations
 
     @Nested
     class AddTests {
@@ -147,4 +145,39 @@ public class TransportServiceTests {
         }
     }
 
+    @Nested
+    class UpdateTransportServiceTests {
+
+        @BeforeEach
+        public void setupUpdateTests() {
+            transportServiceJPADao = new TransportServiceJPADao(entityManager);
+            transportServiceController = new TransportServiceController(transportServiceJPADao);
+
+            when(entityManager.createNamedQuery("TransportService.findById", TransportService.class)).thenReturn(query);
+            when(query.setParameter(1, 0)).thenReturn(query);
+        }
+
+        @Test
+        public void updateActive_happyFlow() {
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+
+            when(query.getSingleResult()).thenReturn(transportService);
+            when(entityManager.getTransaction()).thenReturn(entityTransaction);
+
+            transportServiceController.setActive(0, true);
+
+            verify(query).setParameter(1, 0);
+
+        }
+
+        @Test
+        public void updateActive_transactionDoesntExist_throwsNoResultException() {
+            when(query.getSingleResult()).thenThrow(NoResultException.class);
+
+            assertThrows(NoResultException.class, () -> transportServiceController.setActive(0, true));
+
+            verify(query).setParameter(1, 0);
+
+        }
+    }
 }

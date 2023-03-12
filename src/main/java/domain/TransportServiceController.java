@@ -1,5 +1,6 @@
 package domain;
 
+import jakarta.persistence.NoResultException;
 import persistence.TransportServiceJPADao;
 
 import java.util.List;
@@ -28,5 +29,11 @@ public class TransportServiceController {
                         new TrackingCodeDetails(characterCount, isIntegersOnly, prefix, VerificationType.valueOf(verificationTypeValue)),
                         isActive)
         );
+    }
+
+    public void setActive(int transportServiceId, boolean active) throws NoResultException {
+        TransportService transportService = transportServiceJPADao.get(transportServiceId);
+        transportService.setActive(active);
+        transportServiceJPADao.update(transportService);
     }
 }

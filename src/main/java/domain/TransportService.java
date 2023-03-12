@@ -19,7 +19,7 @@ import java.util.Objects;
         ),
         @NamedQuery(
                 name = "TransportService.findAllActive",
-                query = "SELECT d FROM TransportService d WHERE d.isActive = true"
+                query = "SELECT d FROM TransportService d WHERE d.active = true"
         )
 })
 public class TransportService {
@@ -35,13 +35,13 @@ public class TransportService {
     private List<ContactPerson> contactPersonList;
     @OneToOne
     private TrackingCodeDetails trackingCodeDetails;
-    private boolean isActive;
+    private boolean active;
 
-    public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean isActive) {
+    public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean active) {
         this.name = name;
         this.contactPersonList = contactPersonList;
         this.trackingCodeDetails = trackingCodeDetails;
-        this.isActive = isActive;
+        this.active = active;
     }
 
     protected TransportService() {
@@ -76,11 +76,11 @@ public class TransportService {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     void setActive(boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class TransportService {
                 ", name='" + name + '\'' +
                 ", contactPersonList=" + contactPersonList +
                 ", trackingCodeDetails=" + trackingCodeDetails +
-                ", isActive=" + isActive +
+                ", isActive=" + active +
                 '}';
     }
 }
