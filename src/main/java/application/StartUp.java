@@ -53,7 +53,7 @@ public class StartUp extends Application {
         	TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
         	SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);
         	ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
-        	new ChangeStage(primaryStage);
+        	new ChangeStage(primaryStage); // TODO Maurice
         	
             LoginScreenController root = new LoginScreenController(
             		new OrderController(orderJPADao, userJPADao),
@@ -74,7 +74,7 @@ public class StartUp extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         entityManager.close();
         JPAUtil.getEntityManagerFactory().close();
     }
@@ -107,18 +107,18 @@ public class StartUp extends Application {
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
 
-        ContactPerson bpostPerson1 = new ContactPerson("een@bpost.be", 499334455);
-        ContactPerson bpostPerson2 = new ContactPerson("twe@bpost.be", 479554433);
-        ContactPerson postnlPerson1 = new ContactPerson("postnl@post.nl", 899321480);
+        ContactPerson bpostPerson1 = new ContactPerson("een@bpost.be", "499334455");
+        ContactPerson bpostPerson2 = new ContactPerson("twe@bpost.be", "479554433");
+        ContactPerson postnlPerson1 = new ContactPerson("postnl@post.nl", "899321480");
 
-        TransportService bpost = new TransportService("bpost", List.of(), bpostDetails, true);
-        TransportService postnl = new TransportService("postnl", List.of(), postnlDetails, true);
+        TransportService bpost = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, true);
+        TransportService postnl = new TransportService("postnl", List.of(postnlPerson1), postnlDetails, true);
 
         Order order1 = new Order( new Date(), List.of(product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
         Order order2 = new Order( new Date(), List.of(product3, product4, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
 
-        List<Order> l1 = new ArrayList<>(Arrays.asList(order1, order2));
-        List<Order> l2 = new ArrayList<>(Arrays.asList(order2));
+        List<Order> l1 = List.of(order1, order2);
+        List<Order> l2 = List.of(order2);
         s1.setOrdersAsSupplier(l1);
         s1.setOrdersAsCustomer(l2);
         s2.setOrdersAsSupplier(l2);

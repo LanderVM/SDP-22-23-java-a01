@@ -123,8 +123,8 @@ public class OrdersOverviewController extends GridPane {
 	}
 
     public void refreshOrderList() {
-        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersListForSupplier(userController.userId())));
-		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderListForSupplier(userController.userId())));
+        processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersList()));
+		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
     }
 
 
