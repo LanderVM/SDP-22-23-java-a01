@@ -1,5 +1,6 @@
 package domain;
 
+import gui.view.TransportServiceView;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
@@ -78,7 +79,7 @@ public class TransportServiceTests {
             transportServiceJPADao = new TransportServiceJPADao(entityManager);
             transportServiceController = new TransportServiceController(transportServiceJPADao);
 
-            assertEquals(transportServiceList.stream().map(TransportService::getName).toList(), transportServiceController.getTransportServiceNames());
+            assertEquals(transportServiceList.stream().map(TransportService::getName).toList(), transportServiceController.getTransportServices().stream().map(TransportServiceView::getName).toList());
             verify(query).getResultList();
         }
 
