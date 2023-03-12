@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -32,7 +34,7 @@ public class TransportServiceTest {
 
     private TransportService transportService;
     private ContactPerson contactPerson;
-
+    List<TransportService> transportServiceList;
 
     @Test
     public void getById_happyFlow() {
@@ -62,10 +64,10 @@ public class TransportServiceTest {
 
     @Test
     public void getAll_happyFlow() {
-        List<TransportService> transportServiceList =
-                List.of(new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
-                        new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
-                );
+        transportServiceList = List.of(
+                new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
+                new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
+        );
 
         when(entityManager.createNamedQuery("TransportService.findAll", TransportService.class)).thenReturn(query);
         when(query.getResultList()).thenReturn(transportServiceList);
@@ -93,27 +95,53 @@ public class TransportServiceTest {
     }
 
 
+    // TODO: viewTransportService, deactiveTransportService, activeTransportService && all validations
 
-    // TODO: test addTransportService, viewTransportService, deactiveTransportService, activeTransportService && all validations
+    @Nested
+    class AddTransactionServiceTests {
 
-    @Test
-    public void add_happyFlow() {
-        contactPerson = new ContactPerson("test@mail.com", "0477982037");
-        when(entityManager.getTransaction()).thenReturn(entityTransaction);
+        @BeforeEach
+        public void setupAddTransportationServiceTests() {
+            contactPerson = new ContactPerson("test@mail.com", "0477982037");
+            transportServiceList =
+                    List.of(new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
+                            new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
+                    );
 
-        List<TransportService> transportServiceList =
-                List.of(new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
-                        new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
-                );
+            when(entityManager.createNamedQuery("TransportService.findAll", TransportService.class)).thenReturn(query);
+            when(query.getResultList()).thenReturn(transportServiceList);
 
-        when(entityManager.createNamedQuery("TransportService.findAll", TransportService.class)).thenReturn(query);
-        when(query.getResultList()).thenReturn(transportServiceList);
+            transportServiceJPADao = new TransportServiceJPADao(entityManager);
+            transportServiceController = new TransportServiceController(transportServiceJPADao);
+        }
 
-        transportServiceJPADao = new TransportServiceJPADao(entityManager);
-        transportServiceController = new TransportServiceController(transportServiceJPADao);
+        @Test
+        public void addTransportService_happyFlow() {
+            when(entityManager.getTransaction()).thenReturn(entityTransaction);
 
-        transportServiceController.addTransportService("test", List.of(contactPerson), 10, false, "test", "POST_CODE", true);
-        verify(query).getResultList();
-        verify(entityManager, times(2)).getTransaction();
+            transportServiceController.addTransportService("test", List.of(contactPerson), 10, false, "test", "POST_CODE", true);
+
+            verify(query).getResultList();
+            verify(entityManager, times(2)).getTransaction();
+        }
+
+        @Test
+        public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true));
+            verify(query).getResultList();
+        }
+
+        @Test
+        public void addTransportService_contactPersonListEmpty_throwsIllegalArgumentException() {
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("test", List.of(), 10, false, "test", "POST_CODE", true));
+            verify(query).getResultList();
+        }
+
+        @Test
+        public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("test", List.of(), 10, false, "test", "invalid_type", true));
+            verify(query).getResultList();
+        }
     }
+
 }
