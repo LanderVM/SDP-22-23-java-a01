@@ -15,7 +15,7 @@ public class ContactPersonSupplierView {
 
 	public SimpleStringProperty getEmail() {
 		return email;
-	}
+	} // TODO getters consistency between views
 
 	public SimpleStringProperty getName() {
 		return name;

@@ -27,8 +27,20 @@ public class TransportServiceJPADao implements JPADao<TransportService,Integer> 
         return Collections.unmodifiableList(entityManager.createNamedQuery("TransportService.findAll", TransportService.class).getResultList());
     }
 
+    public boolean exists(String name) {
+        TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findNameExists", TransportService.class);
+        return !query.setParameter(1, name).getResultList().isEmpty();
+    }
+
     public List<TransportService> getAllActive() {
         return Collections.unmodifiableList(entityManager.createNamedQuery("TransportService.findAllActive", TransportService.class).getResultList());
+    }
+
+    public void add(TransportService transportService) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(transportService.getTrackingCodeDetails());
+        entityManager.persist(transportService);
+        entityManager.getTransaction().commit();
     }
 
     @Override

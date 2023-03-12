@@ -2,16 +2,17 @@ package gui.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.Order;
 import domain.OrderController;
 import domain.Status;
 import domain.TransportService;
 import domain.TransportServiceController;
-import domain.User;
 import domain.UserController;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
+import gui.view.TransportServiceView;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -87,7 +88,7 @@ public class OrdersOverviewController extends GridPane {
 		DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateProperty());
 		StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusProperty());
 
-        choiceBoxTransportServices.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices()));
+        choiceBoxTransportServices.setItems(transportServiceController.getTransportServices().stream().map(TransportServiceView::getName).collect(Collectors.toCollection(FXCollections::observableArrayList)));
         
         idCol.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
         companyCol.setCellValueFactory(cellData -> cellData.getValue().companyProperty());

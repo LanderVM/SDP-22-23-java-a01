@@ -1,17 +1,10 @@
 package gui.view;
 
-import domain.Product;
 import domain.Status;
 import domain.Supplier;
-import domain.Logo;
-import domain.Order;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 public class CustomerView {
 
@@ -27,13 +20,13 @@ public class CustomerView {
        name = new SimpleStringProperty(supplier.getName());
        address = new SimpleStringProperty(supplier.getAddress());
        phoneNumber = new SimpleStringProperty(supplier.getPhoneNumber());
-       numberOfOrders = new SimpleIntegerProperty(supplier.getOrdersAsCustomer().stream().filter(order -> order.getStatus() != Status.DELIVERED).toList().size());
+       numberOfOrders = new SimpleIntegerProperty(supplier.getOrdersAsCustomer().stream().filter(order -> order.getStatus() != Status.DELIVERED).toList().size()); // TODO mag geen filters gebruiken, moet vanuit databank. bekijken
        logo = new SimpleObjectProperty<byte[]>(supplier.getLogo());
     }
 
 	public SimpleStringProperty getEmail() {
 		return email;
-	}
+	} // TODO consistency between getters view
 
 	public SimpleStringProperty getName() {
 		return name;
