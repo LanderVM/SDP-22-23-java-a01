@@ -31,6 +31,13 @@ public class TransportServiceJPADao implements JPADao<TransportService,Integer> 
         return Collections.unmodifiableList(entityManager.createNamedQuery("TransportService.findAllActive", TransportService.class).getResultList());
     }
 
+    public void add(TransportService transportService) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(transportService.getTrackingCodeDetails());
+        entityManager.persist(transportService);
+        entityManager.getTransaction().commit();
+    }
+
     @Override
     public void update(TransportService transportService) {
         entityManager.getTransaction().begin();

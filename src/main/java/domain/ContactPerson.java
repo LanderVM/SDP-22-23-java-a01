@@ -13,9 +13,9 @@ public class ContactPerson {
     private int contactPersonId;
 
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public ContactPerson(String email, int phoneNumber) {
+    public ContactPerson(String email, String phoneNumber) {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -35,11 +35,11 @@ public class ContactPerson {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    void setPhoneNumber(int phoneNumber) {
+    void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
