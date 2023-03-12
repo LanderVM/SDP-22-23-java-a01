@@ -1,10 +1,8 @@
 package gui.controller;
 
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.Order;
 import domain.OrderController;
 import domain.Status;
 import domain.TransportService;
@@ -67,11 +65,9 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private Button btnProcessOrder;
 
-	private OrderController orderController;
-	private UserController userController;
-	private TransportServiceController transportServiceController;
-	private int id = 1;
-	List<Order> ordersList;
+	private final OrderController orderController;
+	private final UserController userController;
+	private final TransportServiceController transportServiceController;
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
 			TransportServiceController transportServiceController) {
@@ -96,10 +92,9 @@ public class OrdersOverviewController extends GridPane {
 
         refreshOrderList();
 
-		orderTextArea.setText(orderController.getOrderOverview(id));
-		
         processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
             if (newOrder == null) {
+				orderTextArea.setText("");
             	return;
             }
             int id = newOrder.getOrderId();
@@ -124,6 +119,7 @@ public class OrdersOverviewController extends GridPane {
 	}
 
     public void refreshOrderList() {
+		orderTextArea.setText("");
         processableOrdersTable.setItems(FXCollections.observableArrayList(orderController.getPostedOrdersList()));
 		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
     }
@@ -140,6 +136,7 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private void ProcessOrder(ActionEvent event) {
 		  String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
+		  int id = processableOrdersTable.getSelectionModel().getSelectedItem().getOrderId();
 	        if (selectionTransportService == null) {
 	            Alert alert = new Alert(Alert.AlertType.INFORMATION);
 	            alert.setTitle("Warning");
