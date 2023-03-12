@@ -71,6 +71,7 @@ public class TransportServiceTest {
         when(query.getResultList()).thenReturn(transportServiceList);
 
         transportServiceJPADao = new TransportServiceJPADao(entityManager);
+        transportServiceController = new TransportServiceController(transportServiceJPADao);
 
         assertEquals(transportServiceList.stream().map(TransportService::getName).toList(), transportServiceController.getTransportServices());
         verify(query).getResultList();
