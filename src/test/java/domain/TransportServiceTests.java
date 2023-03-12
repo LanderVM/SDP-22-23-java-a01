@@ -97,6 +97,34 @@ public class TransportServiceTests {
             assertEquals(transportServiceList, transportServiceJPADao.getAllActive());
             verify(query).getResultList();
         }
+
+        @Test
+        public void findExists_exists_returnsTrue() {
+            transportServiceList = List.of(new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true));
+
+            when(entityManager.createNamedQuery("TransportService.findNameExists", TransportService.class)).thenReturn(query);
+            when(query.setParameter(1, "test")).thenReturn(query);
+            when(query.getResultList()).thenReturn(transportServiceList);
+
+            transportServiceJPADao = new TransportServiceJPADao(entityManager);
+
+            assertTrue(transportServiceJPADao.exists("test"));
+            verify(query).setParameter(1, "test");
+        }
+
+        @Test
+        public void findExists_doesNotExist_returnsFalse() {
+            transportServiceList = List.of();
+
+            when(entityManager.createNamedQuery("TransportService.findNameExists", TransportService.class)).thenReturn(query);
+            when(query.setParameter(1, "test")).thenReturn(query);
+            when(query.getResultList()).thenReturn(transportServiceList);
+
+            transportServiceJPADao = new TransportServiceJPADao(entityManager);
+
+            assertFalse(transportServiceJPADao.exists("test"));
+            verify(query).setParameter(1, "test");
+        }
     }
 
     @Nested
@@ -109,8 +137,7 @@ public class TransportServiceTests {
                     List.of(new TransportService("bpost", List.of(), new TrackingCodeDetails(13, true, "32", VerificationType.POST_CODE), true),
                             new TransportService("postnl", List.of(), new TrackingCodeDetails(9, false, "postnlprefix", VerificationType.ORDER_ID), false)
                     );
-
-            when(entityManager.createNamedQuery("TransportService.findAll", TransportService.class)).thenReturn(query);
+            when(entityManager.createNamedQuery("TransportService.findNameExists", TransportService.class)).thenReturn(query);
             when(query.getResultList()).thenReturn(transportServiceList);
 
             transportServiceJPADao = new TransportServiceJPADao(entityManager);
@@ -119,7 +146,10 @@ public class TransportServiceTests {
 
         @Test
         public void addTransportService_happyFlow() {
+            transportServiceList = List.of();
             when(entityManager.getTransaction()).thenReturn(entityTransaction);
+            when(query.setParameter(1, "test")).thenReturn(query);
+            when(query.getResultList()).thenReturn(transportServiceList);
 
             transportServiceController.addTransportService("test", List.of(contactPerson), 10, false, "test", "POST_CODE", true);
 
@@ -129,18 +159,21 @@ public class TransportServiceTests {
 
         @Test
         public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
+            when(query.setParameter(1, "bpost")).thenReturn(query);
             assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true));
             verify(query).getResultList();
         }
 
         @Test
         public void addTransportService_contactPersonListEmpty_throwsIllegalArgumentException() {
+            when(query.setParameter(1, "test")).thenReturn(query);
             assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("test", List.of(), 10, false, "test", "POST_CODE", true));
             verify(query).getResultList();
         }
 
         @Test
         public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
+            when(query.setParameter(1, "test")).thenReturn(query);
             assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("test", List.of(), 10, false, "test", "invalid_type", true));
             verify(query).getResultList();
         }

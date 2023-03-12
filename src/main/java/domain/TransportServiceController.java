@@ -19,7 +19,7 @@ public class TransportServiceController {
     }
 
     public void addTransportService(String name, List<ContactPerson> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) {
-        if (transportServiceJPADao.getAll().stream().map(TransportService::getName).toList().contains(name)) // TODO SQL Like?
+        if (transportServiceJPADao.exists(name))
             throw new IllegalArgumentException("A TransportService with the name " + name + " already exists!");
         if (contactPersonList.isEmpty())
             throw new IllegalArgumentException("You must add at least one contact person for this Transport Service!");
