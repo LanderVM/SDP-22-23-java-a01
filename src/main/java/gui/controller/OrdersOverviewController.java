@@ -160,15 +160,8 @@ public class OrdersOverviewController extends GridPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		HomeWarehouseOperatorController homeWarehouseOperatorController = new HomeWarehouseOperatorController(
-				orderController, userController, transportServiceController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeWarehouseOperator.fxml"));
-		ChangeStage.change(this, loader, homeWarehouseOperatorController, "Home");
 	}
 
 	private void goToHomeAdmin() {
-		HomeAdminController homeAdminController = new HomeAdminController(orderController, userController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/HomeAdmin.fxml"));
-		ChangeStage.change(this, loader, homeAdminController, "Home");
 	}
 }

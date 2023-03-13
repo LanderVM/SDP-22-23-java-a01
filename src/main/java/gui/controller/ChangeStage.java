@@ -14,28 +14,25 @@ public class ChangeStage {
 		stage = primaryStage;
 	}
 
-	public static void change(Parent current, FXMLLoader loader, Parent controller, String title) {
+	public static void change(Parent current, FXMLLoader loader, Object controller, String title) {
 		int width = (int) stage.getWidth();
 		int height = (int) stage.getHeight();
 		change(current, loader, controller, title, width, height);
 	}
 
-	public static void change(Parent current, FXMLLoader loader, Parent controller, String title, int width, int height) {
-		loader.setRoot(controller);
-		loader.setController(controller);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		Scene scene = new Scene(controller);
-		stage = (Stage) current.getScene().getWindow();
-		stage.setWidth(width);
-		stage.setHeight(height);
-		stage.setTitle(title);
-		stage.setScene(scene);
-		stage.show();
-
+	public static void change(Parent current, FXMLLoader loader, Object controller, String title, int width, int height) {
+	    loader.setController(controller);
+	    try {
+	        Parent root = loader.load();
+	        Scene scene = new Scene(root);
+	        Stage stage = (Stage) current.getScene().getWindow();
+	        stage.setWidth(width);
+	        stage.setHeight(height);
+	        stage.setTitle(title);
+	        stage.setScene(scene);
+	        stage.show();
+	    } catch (IOException e) {
+	        throw new RuntimeException(e);
+	    }
 	}
 }

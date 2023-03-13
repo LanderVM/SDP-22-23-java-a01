@@ -1,8 +1,6 @@
 package application;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +23,7 @@ import gui.controller.ChangeStage;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -71,6 +70,15 @@ public class StartUp extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void start2(Stage primaryStage) {
+       /* FXMLLoader loader = new FXMLLoader(getClass().getResource("myfxmlfile.fxml"));
+        LoginScreenController root = new LoginScreenController(
+        		new OrderController(orderJPADao, userJPADao),
+        		new UserController(userJPADao),
+        		new TransportServiceController(transportServiceJPADao),
+        		new SupplierController(supplierJPADao, orderJPADao, contactPersonSupplierJPADao));
+        change(primaryStage, loader, controller, "My Title", 400, 400);*/
     }
 
     @Override
