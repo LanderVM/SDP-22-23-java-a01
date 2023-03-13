@@ -19,7 +19,7 @@ import domain.TransportServiceController;
 import domain.User;
 import domain.UserController;
 import domain.VerificationType;
-import gui.controller.ChangeStage;
+import util.ChangeStage;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
