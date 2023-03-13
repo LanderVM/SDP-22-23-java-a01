@@ -21,7 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import util.ChangeStage;
+import util.FXStageUtil;
 
 public class CustomersOverviewController extends GridPane {
 
@@ -151,7 +151,7 @@ public class CustomersOverviewController extends GridPane {
 		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(
 				orderController, userController, sc);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServicesOverview.fxml"));
-		ChangeStage.change(this, loader, transportServicesOverviewController, "Overview");
+		FXStageUtil.change(this, loader, transportServicesOverviewController, "Overview");
 	}
 
 	public void refreshCustomersList() {

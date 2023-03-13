@@ -7,11 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ChangeStage {
+public class FXStageUtil {
 	private static Stage stage;
 
 	public static void init(Stage stage) {
-		ChangeStage.stage = stage;
+		FXStageUtil.stage = stage;
 	}
 
 	public static void change(Parent current, FXMLLoader loader, Object controller, String title) {

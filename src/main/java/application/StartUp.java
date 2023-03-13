@@ -19,7 +19,7 @@ import domain.TransportServiceController;
 import domain.User;
 import domain.UserController;
 import domain.VerificationType;
-import util.ChangeStage;
+import util.FXStageUtil;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
@@ -45,7 +45,7 @@ public class StartUp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            ChangeStage.init(primaryStage);
+            FXStageUtil.init(primaryStage);
 
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         	OrderJPADao orderJPADao = new OrderJPADao(entityManager);

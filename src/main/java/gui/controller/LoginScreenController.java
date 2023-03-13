@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import util.ChangeStage;
+import util.FXStageUtil;
 
 public class LoginScreenController extends GridPane {
 	@FXML
@@ -81,13 +81,13 @@ public class LoginScreenController extends GridPane {
 	private void goToHomeWarehouseOperator() {
 		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
-		ChangeStage.change(this, loader, ordersOverviewController, "Overview");
+		FXStageUtil.change(this, loader, ordersOverviewController, "Overview");
 	}
 
 	private void goToHomeAdmin() {
 		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(orderController, userController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServicesOverview.fxml"));
-		ChangeStage.change(this, loader, transportServicesOverviewController, "Orders Overview");
+		FXStageUtil.change(this, loader, transportServicesOverviewController, "Orders Overview");
 	}
 	
 	@FXML

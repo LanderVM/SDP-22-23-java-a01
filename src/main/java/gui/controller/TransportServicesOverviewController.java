@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import util.ChangeStage;
+import util.FXStageUtil;
 
 public class TransportServicesOverviewController extends GridPane {
 
@@ -51,7 +51,7 @@ public class TransportServicesOverviewController extends GridPane {
 	private void ShowEmployees() {
 		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, sc);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
-		ChangeStage.change(this, loader, customersOverviewController, "Customer Overview");
+		FXStageUtil.change(this, loader, customersOverviewController, "Customer Overview");
 	}
 	@FXML
 	private void showOrders() {}
