@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EF463C;" type="GridPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EC4842;" type="GridPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="628.7999267578125" minWidth="10.0" percentWidth="20.0" prefWidth="454.3999938964844" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="833.6000061035156" minWidth="10.0" percentWidth="60.0" prefWidth="825.6000061035156" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="628.7999267578125" minWidth="10.0" percentWidth="10.0" prefWidth="454.3999938964844" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="833.6000061035156" minWidth="10.0" percentWidth="80.0" prefWidth="825.6000061035156" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -73,8 +73,8 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Button fx:id="btnSignInWarhouse" mnemonicParsing="false" onAction="#tmpSignInWarhouse" prefHeight="60.0" prefWidth="144.0" text="Sign In Warehouse" GridPane.rowIndex="5" />
-            <Button fx:id="btnSignInAdmin" mnemonicParsing="false" onAction="#tmpSignInAdmin" prefHeight="50.0" prefWidth="144.0" text="Sign In Admin" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Button fx:id="btnSignInWarhouse" mnemonicParsing="false" onAction="#tmpSignInWarhouse" prefHeight="60.0" prefWidth="194.0" text="Sign In Warehouse" GridPane.rowIndex="5" />
+            <Button fx:id="btnSignInAdmin" mnemonicParsing="false" onAction="#tmpSignInAdmin" prefHeight="50.0" prefWidth="195.0" text="Sign In Admin" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>

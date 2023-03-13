@@ -13,9 +13,9 @@ import gui.view.OrderView;
 import gui.view.TransportServiceView;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -79,39 +79,49 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private void initialize() {
 		LblUser.setText(userController.toString());
-		NumberColumnTable.setCellValueFactory(celldata -> celldata.getValue().orderIdProperty());
+		
+		NumberColumnTable.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
 		OverviewColumnTable.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
-		DateColumnTable.setCellValueFactory(celldata -> celldata.getValue().dateProperty());
-		StatusColumnTable.setCellValueFactory(celldata -> celldata.getValue().statusProperty());
-
-        choiceBoxTransportServices.setItems(transportServiceController.getTransportServices().stream().map(TransportServiceView::getName).collect(Collectors.toCollection(FXCollections::observableArrayList)));
-        
-        idCol.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
-        companyCol.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+		DateColumnTable.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+		StatusColumnTable.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+		
+		idCol.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
+		companyCol.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
+		dateCol.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
 
         refreshOrderList();
 
+		ObservableList<String> transportServiceNames = transportServiceController.getTransportServices()
+		        .stream()
+		        .map(TransportServiceView::getName)
+		        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+		choiceBoxTransportServices.setItems(transportServiceNames);
+		choiceBoxTransportServices.setValue(transportServiceNames.get(0));
+
+
+
         processableOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
             if (newOrder == null) {
-				orderTextArea.setText("");
             	return;
             }
+            btnProcessOrder.setDisable(false);
             int id = newOrder.getOrderId();
             TableOrdersView.requestFocus();
-            TableOrdersView.getSelectionModel().select(id-1);
-            TableOrdersView.getFocusModel().focus(id-1);
             orderTextArea.setText(orderController.getOrderOverview(id));
+            TableOrdersView.getSelectionModel().clearSelection();
         });
         TableOrdersView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
             if (newOrder == null)
                 return;
+
+            btnProcessOrder.setDisable(true);
             int id = newOrder.getOrderId();
             processableOrdersTable.requestFocus();
-            processableOrdersTable.getSelectionModel().select(id-1);
-            processableOrdersTable.getFocusModel().focus(id-1);
             orderTextArea.setText(orderController.getOrderOverview(id));
+            processableOrdersTable.getSelectionModel().clearSelection();
         });
+
+		TableOrdersView.getSelectionModel().select(0);
 	}
 
 	@FXML
@@ -137,21 +147,13 @@ public class OrdersOverviewController extends GridPane {
 	private void ProcessOrder(ActionEvent event) {
 		  String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
 		  int id = processableOrdersTable.getSelectionModel().getSelectedItem().getOrderId();
-	        if (selectionTransportService == null) {
-	            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	            alert.setTitle("Warning");
-	            alert.setHeaderText("You need to select a transport service in order to be able to process order");
-	            alert.showAndWait();
-	            return;
-	        }
 	        try {
 				orderController.processOrder(id, new TransportService(selectionTransportService, null, null, isCache()));
 			} catch (EntityNotFoundException | OrderStatusException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	        refreshOrderList();
-	    	
+			TableOrdersView.getSelectionModel().select(0);
 	}
 	
 

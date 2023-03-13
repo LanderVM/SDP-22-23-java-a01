@@ -34,6 +34,9 @@
   </rowConstraints>
    <children>
       <TableView fx:id="TableOrdersView" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
+        <placeholder>
+	        <Label text="No orders found"/>
+	    </placeholder>
          <columns>
             <TableColumn fx:id="NumberColumnTable" prefWidth="108.79998779296875" text="Id" />
             <TableColumn fx:id="DateColumnTable" prefWidth="97.59999084472656" text="Date" />
@@ -45,6 +48,9 @@
          </columnResizePolicy>
       </TableView>
       <TableView fx:id="processableOrdersTable" prefHeight="420.0" prefWidth="1075.0" style="-fx-font-size: 20px;" GridPane.columnIndex="3" GridPane.rowIndex="2">
+        <placeholder>
+	        <Label text="No unprocessed orders found"/>
+	    </placeholder>
          <columns>
             <TableColumn fx:id="idCol" prefWidth="130.0" text="Number" />
             <TableColumn fx:id="companyCol" prefWidth="130.0" text="Company" />

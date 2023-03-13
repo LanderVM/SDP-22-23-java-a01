@@ -7,15 +7,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="4.0" prefWidth="121.40000915527344" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="16.0" prefWidth="403.1999206542969" />
@@ -39,7 +37,10 @@
       <RowConstraints maxHeight="85.59992675781257" minHeight="10.0" percentHeight="10.0" prefHeight="79.19990234375007" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <TableView fx:id="TableOrdersView" editable="true" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
+      <TableView fx:id="TableOrdersView" editable="true" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">   
+	    <placeholder>
+	        <Label text="No orders found"/>
+	    </placeholder>
          <columns>
             <TableColumn fx:id="NumberColumnTable" prefWidth="92.79997712373734" text="Name" />
             <TableColumn fx:id="StatusColumnTable" prefWidth="16.0" text="Status" />
@@ -48,10 +49,8 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <GridPane fx:id="HeaderPane" style="-fx-background-color: RED;" GridPane.columnSpan="2147483647">
+      <GridPane fx:id="HeaderPane" prefHeight="115.0" prefWidth="1920.0" style="-fx-background-color: #EC4842;" GridPane.columnSpan="2147483647">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="483.5999755859375" minWidth="10.0" percentWidth="10.0" prefWidth="483.5999755859375" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="483.5999755859375" minWidth="10.0" prefWidth="153.6000244140625" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="569.5999755859375" minWidth="10.0" prefWidth="534.4000244140625" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="629.5999267578123" minWidth="10.0" prefWidth="428.0000244140625" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="531.1999755859376" minWidth="10.0" prefWidth="371.99997558593736" />
@@ -61,27 +60,22 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="imgDelaware" fitHeight="121.0" fitWidth="308.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../delaware.png" />
-               </image>
-            </ImageView>
-            <Hyperlink fx:id="btnHome" onAction="#showHome" prefHeight="106.0" prefWidth="422.0" text="Transportservice" textFill="WHITE" GridPane.columnIndex="2">
+            <Hyperlink fx:id="btnHome" onAction="#showHome" prefHeight="106.0" prefWidth="417.0" text="Transportservice" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="btnEmployees" onAction="#ShowEmployees" prefHeight="139.0" prefWidth="321.0" text="Customers" textFill="WHITE" GridPane.columnIndex="3">
+            <Hyperlink fx:id="btnEmployees" onAction="#ShowEmployees" prefHeight="127.0" prefWidth="277.0" text="Customers" textFill="WHITE" GridPane.columnIndex="1">
                <font>
                   <Font name="Arial Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="btnOrders" onAction="#showOrders" prefHeight="133.0" prefWidth="266.0" text="Boxes" textFill="WHITE" GridPane.columnIndex="4">
+            <Hyperlink fx:id="btnOrders" onAction="#showOrders" prefHeight="127.0" prefWidth="174.0" text="Boxes" textFill="WHITE" GridPane.columnIndex="2">
                <font>
                   <Font name="Arial Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Label fx:id="lblUser" prefHeight="70.0" prefWidth="160.0" text="Admin" textFill="WHITE" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+            <Label fx:id="lblUser" prefHeight="137.0" prefWidth="266.0" text="Admin" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
                <font>
                   <Font size="36.0" />
                </font>
@@ -89,7 +83,7 @@
          </children>
       </GridPane>
       <TableView fx:id="OrderDetailsTable" editable="true" prefHeight="154.0" prefWidth="1184.0" style="-fx-font-size: 20px;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
-         <columns>
+	    <columns>
             <TableColumn fx:id="IdColumnOrderTable" prefWidth="307.19996947050095" text="Name" />
             <TableColumn prefWidth="244.800048828125" text="Character Amount" />
             <TableColumn prefWidth="325.599853515625" text="Prefix" />
@@ -138,6 +132,9 @@
          </children>
       </GridPane>
       <TableView editable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-font-size: 20px;" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
+        <placeholder>
+	        <Label text="No unprocessed orders found"/>
+	    </placeholder>
         <columns>
             <TableColumn prefWidth="75.0" text="Contact Persons">
                <columns>

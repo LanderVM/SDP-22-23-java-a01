@@ -71,15 +71,6 @@ public class StartUp extends Application {
             e.printStackTrace();
         }
     }
-    public void start2(Stage primaryStage) {
-       /* FXMLLoader loader = new FXMLLoader(getClass().getResource("myfxmlfile.fxml"));
-        LoginScreenController root = new LoginScreenController(
-        		new OrderController(orderJPADao, userJPADao),
-        		new UserController(userJPADao),
-        		new TransportServiceController(transportServiceJPADao),
-        		new SupplierController(supplierJPADao, orderJPADao, contactPersonSupplierJPADao));
-        change(primaryStage, loader, controller, "My Title", 400, 400);*/
-    }
 
     @Override
     public void stop() {
