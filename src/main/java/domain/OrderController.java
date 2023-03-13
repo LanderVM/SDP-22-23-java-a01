@@ -4,6 +4,7 @@ import java.util.List;
 
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
+import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
 import persistence.OrderJPADao;
 import persistence.UserJPADao;
@@ -36,12 +37,27 @@ public class OrderController {
     	User user = userJPADao.get(userId);
         return orderJPADao.getAllPostedForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
     }
+    
+    public OrderView getOrderByIdView(int id) {
+        OrderView ov = new OrderView(orderJPADao.get(id));
+        return ov;
+    }
 
     public String getOrderOverview(int orderId) {
         Order order = orderJPADao.get(orderId);
         return order.toString();
     }
+    
+    public Order getOrderById(int id) {
+    	Order order = orderJPADao.get(id);  	
+        return order;
+    }
 
+    public List<ProductView> getProductsList(int id) {
+    	Order order = orderJPADao.get(id);    	
+        return order.getProductsList().stream().distinct().map(ProductView::new).toList();
+    }
+    
     public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException, OrderStatusException {
         Order order = orderJPADao.get(orderId);
         if (!order.getStatus().equals(Status.POSTED))

@@ -42,7 +42,7 @@ public class Order {
 
     @Column(name = "order_date")
     private Date date;
-    @ManyToMany
+    @ManyToMany(mappedBy = "orders")
     private List<Product> productsList;
     private Status status;
     private Packaging packaging;

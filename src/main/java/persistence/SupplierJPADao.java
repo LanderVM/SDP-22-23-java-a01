@@ -28,6 +28,11 @@ public class SupplierJPADao implements JPADao<Supplier, Integer>{
 		TypedQuery<Supplier> query = entityManager.createNamedQuery("Supplier.findByEmail", Supplier.class);
 	    return query.setParameter(1, mail).getSingleResult();
 	}
+	
+	public Supplier getByName(String name) {
+		TypedQuery<Supplier> query = entityManager.createNamedQuery("Supplier.findByName", Supplier.class);
+	    return query.setParameter(1, name).getSingleResult();
+	}
 
 	@Override
 	public List<Supplier> getAll() {		
@@ -52,6 +57,5 @@ public class SupplierJPADao implements JPADao<Supplier, Integer>{
         entityManager.merge(supplier);
         entityManager.getTransaction().commit();
 	}
-
 
 }

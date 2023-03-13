@@ -113,9 +113,15 @@ public class StartUp extends Application {
         TransportService bpost = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, true);
         TransportService postnl = new TransportService("postnl", List.of(postnlPerson1), postnlDetails, true);
 
-        Order order1 = new Order( new Date(), List.of(product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
+        Order order1 = new Order( new Date(), List.of(product1, product1, product2), Status.POSTED, postnl, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
         Order order2 = new Order( new Date(), List.of(product3, product4, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
 
+        product1.setOrdersList(List.of(order1));
+        product2.setOrdersList(List.of(order1));
+        product3.setOrdersList(List.of(order2));
+        product4.setOrdersList(List.of(order2));
+        product5.setOrdersList(List.of(order2));
+        
         List<Order> l1 = List.of(order1, order2);
         List<Order> l2 = List.of(order2);
         s1.setOrdersAsSupplier(l1);
@@ -146,8 +152,6 @@ public class StartUp extends Application {
         orderManager.persist(order1);
         orderManager.persist(order2);
 
-        orderManager.persist(s1);
-        orderManager.persist(s2);
         orderManager.getTransaction().commit();
         orderManager.close();
     }
