@@ -28,8 +28,6 @@ import java.util.Objects;
 })
 public class TransportService {
 
-    // TODO: validation for TransportController addTransportService, viewTransportService, deactivateTransportService, activateTransportService
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transport_service_id")

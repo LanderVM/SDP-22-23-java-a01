@@ -45,18 +45,6 @@ public class OrderTest {
     
     }
     
-    private byte[] getFile() {
-    	File fi = new File("testImg.jpg");
-        byte[] fileContent = null;
-		try {
-			fileContent = Files.readAllBytes(fi.toPath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return fileContent;
-    }
-    
     Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", "/images/testImg.jpg");
     Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
     
