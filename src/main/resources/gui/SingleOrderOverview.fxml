@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="4.0" prefWidth="121.40000915527344" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="22.0" prefWidth="403.1999206542969" />
@@ -64,19 +64,19 @@
                   <Image url="@delaware.png" />
                </image>
             </ImageView>
-            <Hyperlink fx:id="btnHome" onAction="#showHome" prefHeight="106.0" prefWidth="211.0" style="-fx-font-family: arial;" text="Home" textFill="WHITE" GridPane.columnIndex="2">
+            <Hyperlink fx:id="btnHome" onAction="#showHome" prefHeight="106.0" prefWidth="211.0" text="Home" textFill="WHITE" GridPane.columnIndex="2">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font name="Arial Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="btnNotifications" onAction="#showNotifications" prefHeight="139.0" prefWidth="321.0" style="-fx-font-family: arial;" text="Notifications" textFill="WHITE" GridPane.columnIndex="3">
+            <Hyperlink fx:id="btnNotifications" onAction="#showNotifications" prefHeight="139.0" prefWidth="321.0" text="Notifications" textFill="WHITE" GridPane.columnIndex="3">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font name="Arial Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="btnOrders" onAction="#showOrders" prefHeight="133.0" prefWidth="266.0" style="-fx-font-family: arial;" text="Orders" textFill="WHITE" GridPane.columnIndex="4">
+            <Hyperlink fx:id="btnOrders" onAction="#showOrders" prefHeight="133.0" prefWidth="266.0" text="Orders" textFill="WHITE" GridPane.columnIndex="4">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font name="Arial Bold" size="48.0" />
                </font>
             </Hyperlink>
             <Label fx:id="LblUser" prefHeight="70.0" prefWidth="160.0" text="John Doe" textFill="WHITE" GridPane.columnIndex="5" GridPane.halignment="CENTER">

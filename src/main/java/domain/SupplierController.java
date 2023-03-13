@@ -31,6 +31,10 @@ public class SupplierController {
 		return supplierJPADao.get(email);
 	}
 	
+	public Supplier getSupplierByName(String name) throws NoResultException {
+		return supplierJPADao.getByName(name);
+	}
+	
 	public List<CustomerView> getSuppliersView(int supplierId) {
 		return ordersJPADao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList();
 	}

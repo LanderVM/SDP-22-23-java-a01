@@ -18,6 +18,10 @@ import logoMapper.LogoMapper;
                 query = "SELECT w FROM Supplier w WHERE w.supplierId = ?1"
         ),
         @NamedQuery(
+                name = "Supplier.findByName",
+                query = "SELECT s FROM Supplier s WHERE s.name = ?1"
+        ),
+        @NamedQuery(
                 name = "Supplier.findAll",
                 query = "SELECT d FROM Supplier d"
         ),

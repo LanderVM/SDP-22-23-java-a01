@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import domain.OrderController;
 import domain.Status;
+import domain.SupplierController;
 import domain.TransportService;
 import domain.TransportServiceController;
 import domain.UserController;
@@ -68,12 +69,14 @@ public class OrdersOverviewController extends GridPane {
 	private final OrderController orderController;
 	private final UserController userController;
 	private final TransportServiceController transportServiceController;
+	private final SupplierController supplierController;
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController) {
+			TransportServiceController transportServiceController, SupplierController supplierController) {
 		this.orderController = orderController;
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
+		this.supplierController = supplierController;
 	}
 
 	@FXML

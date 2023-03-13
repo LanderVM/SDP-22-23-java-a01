@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,9 +15,11 @@ public class Product implements Serializable {
     @Column(name = "product_id")
     private int productId;
 
+    @ManyToMany
+    private List<Order> orders;
+    
     private String name;
     private BigDecimal price;
-
 
     public Product(String name, BigDecimal price) {
         setName(name);
@@ -44,6 +47,14 @@ public class Product implements Serializable {
 
     public BigDecimal getPrice() {
         return this.price;
+    }
+    
+    public void setOrdersList(List<Order> orders) {
+    	this.orders = orders;
+    }
+    
+    public List<Order> getOrders() {
+    	return orders;
     }
 
     @Override
