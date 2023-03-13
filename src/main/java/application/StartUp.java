@@ -23,7 +23,6 @@ import gui.controller.ChangeStage;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -46,14 +45,15 @@ public class StartUp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            ChangeStage.init(primaryStage);
+
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         	OrderJPADao orderJPADao = new OrderJPADao(entityManager);
         	UserJPADao userJPADao = new UserJPADao(entityManager);
         	TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
         	SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);
         	ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
-        	new ChangeStage(primaryStage); // TODO Maurice
-        	
+
             LoginScreenController root = new LoginScreenController(
             		new OrderController(orderJPADao, userJPADao),
             		new UserController(userJPADao),
