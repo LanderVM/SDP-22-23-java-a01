@@ -18,6 +18,10 @@ import java.util.Objects;
                 query = "SELECT d FROM TransportService d"
         ),
         @NamedQuery(
+                name = "TransportService.findByName",
+                query = "SELECT d FROM TransportService d WHERE d.name = ?1"
+        ),
+        @NamedQuery(
                 name = "TransportService.findAllActive",
                 query = "SELECT d FROM TransportService d WHERE d.active = true"
         ),
