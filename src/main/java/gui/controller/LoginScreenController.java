@@ -79,9 +79,9 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		SingleOrderOverviewController singleOrderOverviewController = new SingleOrderOverviewController(orderController, userController, transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SingleOrderOverview.fxml"));
-		FXStageUtil.change(this, loader, singleOrderOverviewController, "Overview");
+		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
+		FXStageUtil.change(this, loader, ordersOverviewController, "Overview");
 	}
 
 	private void goToHomeAdmin() {
