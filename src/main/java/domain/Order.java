@@ -64,9 +64,10 @@ public class Order {
     private Set<Notification> notifications = new HashSet<>();
 
 
-    public Order(Date date, List<Product> productsList, Status status,
+    public Order(Date date,String adress, List<Product> productsList, Status status,
                  TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer,BigDecimal originalAcquisitionPrice) {
         this.date = date;
+        this.address = adress;
         this.productsList = productsList;
         this.status = status;
         this.transportService = transportService;

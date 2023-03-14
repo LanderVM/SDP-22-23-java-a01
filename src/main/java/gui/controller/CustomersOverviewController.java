@@ -6,6 +6,7 @@ import java.util.Date;
 import domain.OrderController;
 import domain.Status;
 import domain.SupplierController;
+import domain.TransportServiceController;
 import domain.UserController;
 import gui.view.ContactPersonSupplierView;
 import gui.view.CustomerOrdersView;
@@ -79,19 +80,17 @@ public class CustomersOverviewController extends GridPane {
 	@FXML
 	private TableColumn<ContactPersonSupplierView, String> emailContactpersonSupplierCol;
 
-	private SupplierController sc;
+	private SupplierController supplierController;
 	private UserController userController;
 	private OrderController orderController;
+	private TransportServiceController transportServiceController;
 
-	public CustomersOverviewController(SupplierController sc) {
-		this.sc = sc;
-	}
-
-	public CustomersOverviewController(OrderController orderController, UserController userController,
-			SupplierController sc) {
+	public CustomersOverviewController(OrderController orderController, UserController userController,TransportServiceController transportServiceController,
+			SupplierController supplierController) {
 		this.userController = userController;
 		this.orderController = orderController;
-		this.sc = sc;
+		this.supplierController = supplierController;
+		this.transportServiceController = transportServiceController;
 	}
 
 	@FXML
@@ -115,21 +114,21 @@ public class CustomersOverviewController extends GridPane {
 
 					String email = CustomersOverviewTable.getSelectionModel().getSelectedItem().getEmail().get();
 
-					lblCustomerName.setText(sc.getSupplier(email).getName());
-					lblCustomerAdress.setText(sc.getSupplier(email).getAddress());
-					lblCustomerPhoneNumber.setText(sc.getSupplier(email).getPhoneNumber());
+					lblCustomerName.setText(supplierController.getSupplier(email).getName());
+					lblCustomerAdress.setText(supplierController.getSupplier(email).getAddress());
+					lblCustomerPhoneNumber.setText(supplierController.getSupplier(email).getPhoneNumber());
 
-					Image img = new Image(new ByteArrayInputStream(sc.getSupplier(email).getLogo()));
+					Image img = new Image(new ByteArrayInputStream(supplierController.getSupplier(email).getLogo()));
 					logoImgView.setImage(img);
 
 					ordersOfCustomerOverviewTable
-							.setItems(FXCollections.observableArrayList(sc.getCustomerOrderView(email)));
+							.setItems(FXCollections.observableArrayList(supplierController.getCustomerOrderView(email)));
 
 					nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 					numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());
 
 					contactpesronSupplierOverviewTable
-							.setItems(FXCollections.observableArrayList(sc.getContactPersonSupplierView(email)));
+							.setItems(FXCollections.observableArrayList(supplierController.getContactPersonSupplierView(email)));
 
 					nameContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 					emailContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getEmail());
@@ -148,15 +147,14 @@ public class CustomersOverviewController extends GridPane {
 
 	@FXML
 	void showOrders(ActionEvent event) {
-		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(
-				orderController, userController, sc);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServicesOverview.fxml"));
-		FXStageUtil.change(this, loader, transportServicesOverviewController, "Overview");
+		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
+		FXStageUtil.change(this, loader, ordersOverviewController, "Overview");
 	}
 
 	public void refreshCustomersList() {
 		CustomersOverviewTable
-				.setItems(FXCollections.observableArrayList(sc.getSuppliersView(userController.supplierIdFromUser())));
+				.setItems(FXCollections.observableArrayList(supplierController.getSuppliersView(userController.supplierIdFromUser())));
 	}
 
 }
