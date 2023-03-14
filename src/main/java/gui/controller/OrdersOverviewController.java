@@ -167,13 +167,11 @@ public class OrdersOverviewController extends GridPane {
 
 	private void setCustomerInfo(int id) {
 		CustomerDetailsList.getItems().clear();	
-		CustomerDetailsList.getItems().add(supplierController.getSupplier(id).getName());
-		CustomerDetailsList.getItems().add(supplierController.getSupplier(id).getEmail());
-		CustomerDetailsList.getItems().add(supplierController.getSupplier(id).getAddress());
-		CustomerDetailsList.getItems().add(supplierController.getSupplier(id).getPhoneNumber());
-		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getDate().toString());
-	
-		
+		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getSupplier().getName());
+		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getSupplier().getEmail());
+		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getSupplier().getAddress());
+		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getSupplier().getPhoneNumber());
+		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getDate().toString());	
 	}
 
 	@FXML
