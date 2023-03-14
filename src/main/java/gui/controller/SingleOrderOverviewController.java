@@ -68,7 +68,7 @@ public class SingleOrderOverviewController extends GridPane {
 	@FXML
 	private TableColumn<OrderView, Packaging> PackagingColumnOrderTable;
 	@FXML
-	private TableColumn<OrderView, TransportService> TransportServiceColumnOrderTable;
+	private TableColumn<OrderView, String> TransportServiceColumnOrderTable;
 	@FXML
 	private TableColumn<OrderView, Number> TrackingColumnOrderTable;
 	@FXML
