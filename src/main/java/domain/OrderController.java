@@ -1,7 +1,7 @@
 package domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
@@ -9,6 +9,9 @@ import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
 import persistence.OrderJPADao;
 import persistence.UserJPADao;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public class OrderController {
 
@@ -28,7 +31,7 @@ public class OrderController {
     public List<OrderView> getPostedOrdersList() {
         return orderJPADao.getAllPosted().stream().map(OrderView::new).toList();
     }
-    
+
     public List<OrderView> getOrderListForSupplier(int userId) {
     	User user = userJPADao.get(userId);
         return orderJPADao.getAllForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
@@ -38,7 +41,7 @@ public class OrderController {
     	User user = userJPADao.get(userId);
         return orderJPADao.getAllPostedForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
     }
-    
+
     public OrderView getOrderByIdView(int id) {
         return new OrderView(orderJPADao.get(id));
     }
@@ -46,7 +49,7 @@ public class OrderController {
     public String getOrderOverview(int orderId) {
         return orderJPADao.get(orderId).toString();
     }
-    
+
     public Order getOrderById(int id) {
         return orderJPADao.get(id);
     }
@@ -55,7 +58,7 @@ public class OrderController {
         Order order = orderJPADao.get(id);
         return order.getProductsList()
                 .stream()
-                .collect(Collectors.groupingBy(product -> product, Collectors.counting()))
+                .collect(groupingBy(Function.identity(), counting()))
                 .entrySet()
                 .stream()
                 .map(entry -> new ProductView(entry.getKey(), entry.getValue().intValue()))
