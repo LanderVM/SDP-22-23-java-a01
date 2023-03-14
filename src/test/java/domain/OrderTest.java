@@ -52,7 +52,7 @@ public class OrderTest {
     public void getById_happyFlow() {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
 
-        order = new Order( new Date(), List.of(new Product("Test product 1",new BigDecimal("11.70") ),new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, s1, s2, new BigDecimal("10.30"));
+        order = new Order( new Date(),"Takellaan 32 Gent", List.of(new Product("Test product 1",new BigDecimal("11.70") ),new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, s1, s2, new BigDecimal("10.30"));
         
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
@@ -81,9 +81,9 @@ public class OrderTest {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         List<Order> ordersList =
                 
-                List.of(new Order( new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.LARGE, s1, s2,new BigDecimal("8.30")),
-                		new Order( new Date(), List.of(new Product("Test product 3", new BigDecimal("11.50")), new Product("Test product 1", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, s2, s1,new BigDecimal("5.50")),
-                		new Order( new Date(), List.of(new Product("Test product 2", new BigDecimal("9.80")), new Product("Test product 4", new BigDecimal("11.50"))), Status.POSTED, transportService, Packaging.MEDIUM, s1, s2,new BigDecimal("6.90"))
+                List.of(new Order( new Date(),"Helperslaan 5 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.LARGE, s1, s2,new BigDecimal("8.30")),
+                		new Order( new Date(),"Hengellaan 23 Gent", List.of(new Product("Test product 3", new BigDecimal("11.50")), new Product("Test product 1", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, s2, s1,new BigDecimal("5.50")),
+                		new Order( new Date(),"Ergernislaan 67 Gent", List.of(new Product("Test product 2", new BigDecimal("9.80")), new Product("Test product 4", new BigDecimal("11.50"))), Status.POSTED, transportService, Packaging.MEDIUM, s1, s2,new BigDecimal("6.90"))
                 );
 
         when(entityManager.createNamedQuery("Order.findAll", Order.class)).thenReturn(query);
@@ -99,7 +99,7 @@ public class OrderTest {
     public void processOrder_happyFlow() throws OrderStatusException {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
 
-        order = new Order( new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, Packaging.MEDIUM, s1, s2,new BigDecimal("7.70"));
+        order = new Order( new Date(),"Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, Packaging.MEDIUM, s1, s2,new BigDecimal("7.70"));
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(entityManager.getTransaction()).thenReturn(entityTransaction);
@@ -124,7 +124,7 @@ public class OrderTest {
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         
-        order = new Order( new Date(), List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, s1, s2,new BigDecimal("12.40"));
+        order = new Order( new Date(),"Nagellaan 44 gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, s1, s2,new BigDecimal("12.40"));
 
         when(entityManager.createNamedQuery("Order.findById", Order.class)).thenReturn(query);
         when(query.setParameter(1, 1)).thenReturn(query);
