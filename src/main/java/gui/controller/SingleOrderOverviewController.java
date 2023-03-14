@@ -3,7 +3,6 @@ package gui.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -83,7 +82,7 @@ public class SingleOrderOverviewController extends GridPane {
 	@FXML
 	private TableColumn<ProductView, Number> UnitPriceColumnTable;
 	@FXML
-	private TableColumn<ProductView, Number> TotalPriceColumnTable;
+	private TableColumn<ProductView, BigDecimal> TotalPriceColumnTable;
 	@FXML
 	private ListView<String> CustomerDetailsList;
 
@@ -120,7 +119,7 @@ public class SingleOrderOverviewController extends GridPane {
         ProductColumnTable.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         UnitPriceColumnTable.setCellValueFactory(cellData -> cellData.getValue().untitPriceProperty());
         AmountColumnTable.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
-        TotalPriceColumnTable.setCellValueFactory(cellData -> cellData.getValue().totalAmountProperty());
+        TotalPriceColumnTable.setCellValueFactory(cellData -> cellData.getValue().totalPriceProperty());
         
         refreshOrderList();
         

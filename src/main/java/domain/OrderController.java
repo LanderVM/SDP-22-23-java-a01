@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
@@ -39,25 +40,28 @@ public class OrderController {
     }
     
     public OrderView getOrderByIdView(int id) {
-        OrderView ov = new OrderView(orderJPADao.get(id));
-        return ov;
+        return new OrderView(orderJPADao.get(id));
     }
 
     public String getOrderOverview(int orderId) {
-        Order order = orderJPADao.get(orderId);
-        return order.toString();
+        return orderJPADao.get(orderId).toString();
     }
     
     public Order getOrderById(int id) {
-    	Order order = orderJPADao.get(id);  	
-        return order;
+        return orderJPADao.get(id);
     }
 
     public List<ProductView> getProductsList(int id) {
-    	Order order = orderJPADao.get(id);    	
-        return order.getProductsList().stream().distinct().map(ProductView::new).toList();
+        Order order = orderJPADao.get(id);
+        return order.getProductsList()
+                .stream()
+                .collect(Collectors.groupingBy(product -> product, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .map(entry -> new ProductView(entry.getKey(), entry.getValue().intValue()))
+                .toList();
     }
-    
+
     public void processOrder(int orderId, TransportService transportService) throws EntityNotFoundException, OrderStatusException {
         Order order = orderJPADao.get(orderId);
         if (!order.getStatus().equals(Status.POSTED))

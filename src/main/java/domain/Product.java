@@ -49,14 +49,6 @@ public class Product implements Serializable {
         return this.price;
     }
     
-    public void setOrdersList(List<Order> orders) {
-    	this.orders = orders;
-    }
-    
-    public List<Order> getOrders() {
-    	return orders;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
