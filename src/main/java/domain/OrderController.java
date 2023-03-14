@@ -71,8 +71,9 @@ public class OrderController {
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 
         order.setTransportService(transportService);
-        order.setTrackingCode((int) (Math.random() * 10));
+        order.setTrackingCode((int) (Math.random() * 10)); // TODO
         order.setStatus(Status.PROCESSED);
+        order.addNotification(new Notification(order));
 
         orderJPADao.update(order);
     }
