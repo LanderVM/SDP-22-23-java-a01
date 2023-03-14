@@ -29,7 +29,7 @@ public class OrderView {
         totalPrice = new SimpleObjectProperty<>(order.getOriginalAcquisitionPrice());
         status = new SimpleObjectProperty<>(order.getStatus());
         packagingProperty = new SimpleObjectProperty<>(order.getPackaging());
-        transportServiceProperty = new SimpleStringProperty(order.getTransportService().getName());
+        transportServiceProperty = new SimpleStringProperty(order.getTransportService() == null ?  "None" : order.getTransportService().getName());
         trackingCodeProperty = new SimpleIntegerProperty(order.getTrackingCode());
     }
 
