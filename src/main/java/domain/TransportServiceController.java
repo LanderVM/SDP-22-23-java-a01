@@ -17,6 +17,10 @@ public class TransportServiceController {
     public List<TransportServiceView> getTransportServices() {
         return transportServiceJPADao.getAll().stream().map(TransportServiceView::new).toList();
     }
+    
+    public TransportService getTransportServiceByName(String name) throws NoResultException {
+		return transportServiceJPADao.get(name);
+	}
 
     public void addTransportService(String name, List<ContactPerson> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) {
         if (transportServiceJPADao.exists(name))

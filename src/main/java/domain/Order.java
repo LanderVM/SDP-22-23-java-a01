@@ -1,9 +1,7 @@
 package domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import jakarta.persistence.*;
 
@@ -61,6 +59,9 @@ public class Order {
 
     @Column(name = "original_acquisition_price")
     private BigDecimal originalAcquisitionPrice;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    private Set<Notification> notifications = new HashSet<>();
 
 
     public Order(Date date, List<Product> productsList, Status status,
@@ -173,6 +174,16 @@ public class Order {
 
     public void setCustomer(Supplier customer) {
         this.customer = customer;
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        if (!notification.getOrder().equals(this))
+            throw new RuntimeException("Notification doesn't belong to this order"); // TODO testing & proper exception
+        notifications.add(notification);
     }
 
     @Override

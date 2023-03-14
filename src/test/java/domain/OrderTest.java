@@ -117,7 +117,7 @@ public class OrderTest {
 
         assertEquals(transportService, orderAfterUpdate.getTransportService());
         assertEquals(Status.PROCESSED, orderAfterUpdate.getStatus());
-//        verify(query, times(2)).setParameter(1, 1);
+        assertEquals(1, orderAfterUpdate.getNotifications().size());
     }
 
     @Test

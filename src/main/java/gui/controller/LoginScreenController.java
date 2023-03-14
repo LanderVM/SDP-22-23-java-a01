@@ -87,7 +87,7 @@ public class LoginScreenController extends GridPane {
 	private void goToHomeAdmin() {
 		TransportServicesOverviewController transportServicesOverviewController = new TransportServicesOverviewController(orderController, userController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServicesOverview.fxml"));
-		FXStageUtil.change(this, loader, transportServicesOverviewController, "Orders Overview");
+		FXStageUtil.change(this, loader, transportServicesOverviewController, "Transport Service Overview");
 	}
 	
 	@FXML

@@ -1,24 +1,12 @@
 package application;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import domain.ContactPerson;
-import domain.Order;
-import domain.OrderController;
-import domain.Packaging;
-import domain.Product;
-import domain.Status;
-import domain.Supplier;
-import domain.SupplierController;
-import domain.TrackingCodeDetails;
-import domain.TransportService;
-import domain.TransportServiceController;
-import domain.User;
-import domain.UserController;
-import domain.VerificationType;
+import domain.*;
 import util.FXStageUtil;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
@@ -48,17 +36,17 @@ public class StartUp extends Application {
             FXStageUtil.init(primaryStage);
 
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        	OrderJPADao orderJPADao = new OrderJPADao(entityManager);
-        	UserJPADao userJPADao = new UserJPADao(entityManager);
-        	TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
-        	SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);
-        	ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
+            OrderJPADao orderJPADao = new OrderJPADao(entityManager);
+            UserJPADao userJPADao = new UserJPADao(entityManager);
+            TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
+            SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);
+            ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
 
             LoginScreenController root = new LoginScreenController(
-            		new OrderController(orderJPADao, userJPADao),
-            		new UserController(userJPADao),
-            		new TransportServiceController(transportServiceJPADao),
-            		new SupplierController(supplierJPADao, orderJPADao, contactPersonSupplierJPADao));
+                    new OrderController(orderJPADao, userJPADao),
+                    new UserController(userJPADao),
+                    new TransportServiceController(transportServiceJPADao),
+                    new SupplierController(supplierJPADao, orderJPADao, contactPersonSupplierJPADao));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);
@@ -81,12 +69,12 @@ public class StartUp extends Application {
     public static void seedDatabase() {
         EntityManager userManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         userManager.getTransaction().begin();
-        
-        Supplier s1 = new Supplier("Tim CO","tim@mail.com","Timlaan 24 1000 Brussel" , "0426343211", "/images/testImg.jpg");
-        Supplier s2 = new Supplier("Jan INC","jan@mail.com","Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
+
+        Supplier s1 = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
+        Supplier s2 = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
         userManager.persist(s1);
         userManager.persist(s2);
-        
+
         User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", s1);
         User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", s2);
 
@@ -113,9 +101,17 @@ public class StartUp extends Application {
         TransportService bpost = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, true);
         TransportService postnl = new TransportService("postnl", List.of(postnlPerson1), postnlDetails, true);
 
-        Order order1 = new Order( new Date(), List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, postnl, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
-        Order order2 = new Order( new Date(), List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
-        
+        Order order1 = new Order(new Date(), List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, postnl, Packaging.MEDIUM, s1, s2, new BigDecimal("3.00"));
+        Order order2 = new Order(new Date(), List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, Packaging.CUSTOM, s2, s1, new BigDecimal("24.70"));
+
+        Notification postedNotification = new Notification(order1);
+        Notification processedNotification = new Notification(order2, LocalDate.of(2023, 3, 12));
+        Notification deliveredNotification = new Notification(order2, LocalDate.of(2023, 3, 14));
+
+        order1.addNotification(postedNotification);
+        order1.addNotification(processedNotification);
+        order2.addNotification(deliveredNotification);
+
         List<Order> l1 = List.of(order1, order2);
         List<Order> l2 = List.of(order2);
         s1.setOrdersAsSupplier(l1);
@@ -143,10 +139,13 @@ public class StartUp extends Application {
         orderManager.persist(postnl);
 
         // Orders
+        orderManager.persist(postedNotification);
+        orderManager.persist(processedNotification);
+        orderManager.persist(deliveredNotification);
         orderManager.persist(order1);
         orderManager.persist(order2);
-
         orderManager.getTransaction().commit();
+
         orderManager.close();
     }
 }

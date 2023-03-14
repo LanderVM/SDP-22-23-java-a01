@@ -1,7 +1,9 @@
 package persistence;
 
+import domain.Supplier;
 import domain.TransportService;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.Collections;
@@ -21,6 +23,11 @@ public class TransportServiceJPADao implements JPADao<TransportService,Integer> 
         TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findById", TransportService.class);
         return query.setParameter(1, id).getSingleResult();
     }
+    
+    public TransportService get(String name) throws NoResultException {
+		TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findByName", TransportService.class);
+	    return query.setParameter(1, name).getSingleResult();
+	}
 
     @Override
     public List<TransportService> getAll() {
