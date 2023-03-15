@@ -71,7 +71,7 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private TableColumn<OrderView, String> TransportServiceColumnOrderTable;
 	@FXML
-	private TableColumn<OrderView, Number> TrackingColumnOrderTable;
+	private TableColumn<OrderView, String> TrackingColumnOrderTable;
 	@FXML
 	private TableColumn<OrderView, BigDecimal> TotalPriceColumnOrderTable;
 	@FXML

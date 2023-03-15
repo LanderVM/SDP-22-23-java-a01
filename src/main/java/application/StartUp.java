@@ -90,8 +90,8 @@ public class StartUp extends Application {
         Product product5 = new Product("test_product vijf", new BigDecimal("11.30"));
 
 
-        TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
-        TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
+        TrackingCodeDetails bpostDetails = new TrackingCodeDetails(9, true, "32post", VerificationType.POST_CODE);
+        TrackingCodeDetails postnlDetails = new TrackingCodeDetails(15, false, "nlP", VerificationType.ORDER_ID);
 
         ContactPerson bpostPerson1 = new ContactPerson("een@bpost.be", "499334455");
         ContactPerson bpostPerson2 = new ContactPerson("twe@bpost.be", "479554433");

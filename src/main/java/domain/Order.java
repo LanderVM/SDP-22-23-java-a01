@@ -1,6 +1,7 @@
 package domain;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -50,8 +51,8 @@ public class Order {
     private TransportService transportService;
 
     @Column(name = "tracking_code")
-    private int trackingCode;
-    
+    private String trackingCode;
+
     @ManyToOne
     private Supplier supplier;
     
@@ -147,12 +148,25 @@ public class Order {
         this.transportService = transportService;
     }
 
-    public int getTrackingCode() {
+    public String getTrackingCode() {
         return trackingCode;
     }
 
-    public void setTrackingCode(int trackingCode) {
-        this.trackingCode = trackingCode;
+    public void generateTrackingCode() {
+        SecureRandom secureRandom = new SecureRandom();
+        TrackingCodeDetails trackingCodeDetails = getTransportService().getTrackingCodeDetails();
+
+        int leftLimit = 48;
+        int rightLimit = trackingCodeDetails.isIntegersOnly() ? 57 : 90;
+        int targetLength = trackingCodeDetails.getCharacterCount();
+        String prefix = trackingCodeDetails.getPrefix();
+
+        trackingCode = prefix +
+                secureRandom.ints(leftLimit, rightLimit + 1)
+                        .filter(i -> (i <= 57 || i >= 65))
+                        .limit(targetLength)
+                        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                        .toString();
     }
 
     public BigDecimal getOriginalAcquisitionPrice() {
