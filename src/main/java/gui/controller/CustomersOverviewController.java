@@ -1,7 +1,8 @@
 package gui.controller;
 
 import java.io.ByteArrayInputStream;
-import java.util.Date;
+import java.io.IOException;
+import java.time.LocalDate;
 
 import domain.OrderController;
 import domain.Status;
@@ -66,7 +67,7 @@ public class CustomersOverviewController extends GridPane {
 	private TableColumn<CustomerOrdersView, Number> idOrderOfCustomerCol;
 
 	@FXML
-	private TableColumn<CustomerOrdersView, Date> dateOrderOfCustomerCol;
+	private TableColumn<CustomerOrdersView, LocalDate> dateOrderOfCustomerCol;
 
 	@FXML
 	private TableColumn<CustomerOrdersView, Status> statusOrderOfCustomerCol;
@@ -82,7 +83,7 @@ public class CustomersOverviewController extends GridPane {
 
 	private SupplierController supplierController;
 	private UserController userController;
-	private OrderController orderController;
+	private OrderController orderController; // TODO
 	private TransportServiceController transportServiceController;
 
 	public CustomersOverviewController(OrderController orderController, UserController userController,TransportServiceController transportServiceController,
@@ -149,7 +150,7 @@ public class CustomersOverviewController extends GridPane {
 	void showOrders(ActionEvent event) {
 		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
-		FXStageUtil.change(this, loader, ordersOverviewController, "Overview");
+		FXStageUtil.change(loader, ordersOverviewController, "Overview");
 	}
 
 	public void refreshCustomersList() {

@@ -1,14 +1,13 @@
 package gui.controller;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import domain.OrderController;
 import domain.Packaging;
 import domain.Status;
 import domain.SupplierController;
-import domain.TransportService;
 import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.OrderStatusException;
@@ -31,7 +30,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -54,7 +52,7 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private TableColumn<OrderView, Number> NumberColumnTable;
 	@FXML
-	private TableColumn<OrderView, Date> DateColumnTable;
+	private TableColumn<OrderView, LocalDate> DateColumnTable;
 	@FXML
 	private TableColumn<OrderView, String> CompanyColumnTable;
 	@FXML
@@ -96,12 +94,12 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private Button btnProcessOrder;
 	
-	private Alert a1;
+	private Alert a1; // TODO
 
 	private final OrderController orderController;
 	private final UserController userController;
 	private final TransportServiceController transportServiceController;
-	private final SupplierController supplierController;
+	private final SupplierController supplierController; // TODO
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
 			TransportServiceController transportServiceController, SupplierController supplierController) {
@@ -216,9 +214,9 @@ public class OrdersOverviewController extends GridPane {
 
 	@FXML
 	public void showCustomers(ActionEvent event) {
-//		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, transportServiceController, supplierController);
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
-//		FXStageUtil.change(this, loader, customersOverviewController, "Customers");
+		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
+		FXStageUtil.change(loader, customersOverviewController, "Customers");
 	}
 
 	

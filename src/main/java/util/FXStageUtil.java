@@ -8,24 +8,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class FXStageUtil {
-	private static Stage stage;
+    private static Stage stage;
+    private static int width;
+    private static int height;
 
-	public static void init(Stage stage) {
-		FXStageUtil.stage = stage;
-	}
+    public static void init(Stage stage) {
+        FXStageUtil.stage = stage;
+        width = (int) stage.getWidth();
+        height = (int) stage.getHeight();
+    }
 
-	public static void change(Parent current, FXMLLoader loader, Object controller, String title) {
+	public static void change(FXMLLoader loader, Object controller, String title) {
 		if (stage == null)
 			throw new IllegalStateException("Primary stage must be initialized before running this method");
 
-		int width = (int) stage.getWidth();
-		int height = (int) stage.getHeight();
-
-		loader.setController(controller);
 		try {
-			Parent root = loader.load();
+            loader.setController(controller);
+            Parent root = loader.load();
 			Scene scene = new Scene(root);
-			stage = (Stage) current.getScene().getWindow();
 			stage.setWidth(width);
 			stage.setHeight(height);
 			stage.setTitle(title);
