@@ -9,27 +9,27 @@ import java.time.LocalDate;
 
 public class CustomerOrdersView {
 
-    private final SimpleIntegerProperty id;
-    private final SimpleObjectProperty<LocalDate> date;
-    private final SimpleObjectProperty<Status> status;
+    private final SimpleIntegerProperty orderPropertyId;
+    private final SimpleObjectProperty<LocalDate> orderPropertyDate;
+    private final SimpleObjectProperty<Status> orderPropertyStatus;
     
     public CustomerOrdersView(Order order) {
-       id = new SimpleIntegerProperty(order.getOrderId());
-       date = new SimpleObjectProperty<>(order.getDate());
-       status = new SimpleObjectProperty<>(order.getStatus());
+    	orderPropertyId = new SimpleIntegerProperty(order.getOrderId());
+    	orderPropertyDate = new SimpleObjectProperty<>(order.getDate());
+    	orderPropertyStatus = new SimpleObjectProperty<>(order.getStatus());
        
     }
 
-	public SimpleIntegerProperty getId() {
-		return id;
+	public SimpleIntegerProperty getOrderPropertyId() {
+		return orderPropertyId;
 	} // TODO consistency between getters view
 
-	public SimpleObjectProperty<LocalDate> getDate() {
-		return date;
+	public SimpleObjectProperty<LocalDate> getOrderPropertyDate() {
+		return orderPropertyDate;
 	}
 
-	public SimpleObjectProperty<Status> getStatus() {
-		return status;
+	public SimpleObjectProperty<Status> getOrderPropertyStatus() {
+		return orderPropertyStatus;
 	}
 
 }

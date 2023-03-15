@@ -32,12 +32,18 @@ public class CustomersOverviewController extends GridPane {
 
 	@FXML
 	private Label lblUser;
+	
+	@FXML
+	private GridPane GridPaneCustomerInfo;
 
 	@FXML
-	private Hyperlink homeBtn;
+	private Hyperlink btnHome;
 
 	@FXML
-	private Hyperlink ordersBtn;
+	private Hyperlink btnOrders;
+
+	@FXML
+	private Hyperlink btnCustomers;
 
 	@FXML
 	private Label lblCustomerAdress;
@@ -101,9 +107,9 @@ public class CustomersOverviewController extends GridPane {
 		nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 		numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());
 
-		idOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getId());
-		dateOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getDate());
-		statusOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getStatus());
+		idOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getOrderPropertyId());
+		dateOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getOrderPropertyDate());
+		statusOrderOfCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getOrderPropertyStatus());
 
 		nameContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 		emailContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getEmail());
@@ -122,9 +128,10 @@ public class CustomersOverviewController extends GridPane {
 					Image img = new Image(new ByteArrayInputStream(supplierController.getSupplier(email).getLogo()));
 					logoImgView.setImage(img);
 
+					ordersOfCustomerOverviewTable.getSortOrder().add(idOrderOfCustomerCol);
 					ordersOfCustomerOverviewTable
 							.setItems(FXCollections.observableArrayList(supplierController.getCustomerOrderView(email)));
-
+					
 					nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 					numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());
 
@@ -142,7 +149,7 @@ public class CustomersOverviewController extends GridPane {
 	}
 
 	@FXML
-	void showNotifications(ActionEvent event) {
+	void showCustomers(ActionEvent event) {
 
 	}
 

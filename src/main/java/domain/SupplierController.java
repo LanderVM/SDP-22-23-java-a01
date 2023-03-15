@@ -39,8 +39,8 @@ public class SupplierController {
 		return ordersJPADao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList();
 	}
 	
-	public List<CustomerOrdersView> getCustomerOrderView(String name) {
-		return supplierJPADao.get(name).getOrdersAsCustomer().stream().map(CustomerOrdersView::new).toList();
+	public List<CustomerOrdersView> getCustomerOrderView(String mail) {
+		return supplierJPADao.get(mail).getOrdersAsCustomer().stream().map(CustomerOrdersView::new).toList();
 	}
 	
 	public List<ContactPersonSupplierView> getContactPersonSupplierView (String supplierEmail) {
