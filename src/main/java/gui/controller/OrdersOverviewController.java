@@ -141,6 +141,9 @@ public class OrdersOverviewController extends GridPane {
 		        .stream()
 		        .map(TransportServiceView::getName)
 		        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+		if(transportServiceNames.size()== 0) {
+			a1 = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
+		}
 		choiceBoxTransportServices.setItems(transportServiceNames);
 		choiceBoxTransportServices.setValue(transportServiceNames.get(0));
 
@@ -201,7 +204,7 @@ public class OrdersOverviewController extends GridPane {
 	        try {
 				orderController.processOrder(id, transportServiceController.getTransportServiceByName(selectionTransportService));
 				a1 = new Alert(AlertType.CONFIRMATION,
-	                    "Succesfully processed the order",ButtonType.CLOSE);
+	                    "Succesfully processed the order.",ButtonType.CLOSE);
 	            a1.show();
 			} catch (EntityNotFoundException | OrderStatusException e) {
 				e.printStackTrace();
