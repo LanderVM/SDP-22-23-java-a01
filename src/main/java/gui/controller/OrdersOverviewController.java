@@ -22,7 +22,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -93,6 +95,8 @@ public class OrdersOverviewController extends GridPane {
 	private Pane PaneOrderProcess;
 	@FXML
 	private Button btnProcessOrder;
+	
+	private Alert a1;
 
 	private final OrderController orderController;
 	private final UserController userController;
@@ -196,6 +200,9 @@ public class OrdersOverviewController extends GridPane {
 		  int id = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
 	        try {
 				orderController.processOrder(id, transportServiceController.getTransportServiceByName(selectionTransportService));
+				a1 = new Alert(AlertType.CONFIRMATION,
+	                    "Succesfully processed the order",ButtonType.CLOSE);
+	            a1.show();
 			} catch (EntityNotFoundException | OrderStatusException e) {
 				e.printStackTrace();
 			}
