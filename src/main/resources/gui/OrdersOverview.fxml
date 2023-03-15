@@ -90,7 +90,7 @@
                   <Font name="System Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="btnNotifications" onAction="#showNotifications" prefHeight="126.0" prefWidth="414.0" style="-fx-font-family: arial;" text="Customers" textFill="WHITE" GridPane.columnIndex="2">
+            <Hyperlink fx:id="btnCustomers" onAction="#showCustomers" prefHeight="126.0" prefWidth="414.0" style="-fx-font-family: arial;" text="Customers" textFill="WHITE" GridPane.columnIndex="2">
                <font>
                   <Font name="System Bold" size="48.0" />
                </font>

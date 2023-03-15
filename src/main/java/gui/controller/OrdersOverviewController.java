@@ -36,8 +36,9 @@ import javafx.scene.shape.Line;
 import util.FXStageUtil;
 
 public class OrdersOverviewController extends GridPane {
-	@FXML
-	private Hyperlink btnSupport;
+	
+	@FXML 
+	private Hyperlink btnCustomers;
 	@FXML
 	private Hyperlink btnHome;
 	@FXML
@@ -204,7 +205,10 @@ public class OrdersOverviewController extends GridPane {
 	
 
 	@FXML
-	public void showNotifications(ActionEvent event) {
+	public void showCustomers(ActionEvent event) {
+//		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, transportServiceController, supplierController);
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
+//		FXStageUtil.change(this, loader, customersOverviewController, "Customers");
 	}
 
 	
