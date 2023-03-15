@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -32,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import util.FXStageUtil;
 
 public class OrdersOverviewController extends GridPane {
 	
@@ -92,12 +94,12 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private Button btnProcessOrder;
 	
-	private Alert a1;
+	private Alert a1; // TODO
 
 	private final OrderController orderController;
 	private final UserController userController;
 	private final TransportServiceController transportServiceController;
-	private final SupplierController supplierController;
+	private final SupplierController supplierController; // TODO
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
 			TransportServiceController transportServiceController, SupplierController supplierController) {
@@ -212,9 +214,9 @@ public class OrdersOverviewController extends GridPane {
 
 	@FXML
 	public void showCustomers(ActionEvent event) {
-//		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, transportServiceController, supplierController);
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
-//		FXStageUtil.change(this, loader, customersOverviewController, "Customers");
+		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
+		FXStageUtil.change(loader, customersOverviewController, "Customers");
 	}
 
 	
