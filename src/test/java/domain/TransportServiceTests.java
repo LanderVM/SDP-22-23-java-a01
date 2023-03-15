@@ -187,8 +187,71 @@ public class TransportServiceTests {
             transportServiceJPADao = new TransportServiceJPADao(entityManager);
             transportServiceController = new TransportServiceController(transportServiceJPADao);
 
-            when(entityManager.createNamedQuery("TransportService.findById", TransportService.class)).thenReturn(query);
-            when(query.setParameter(1, 0)).thenReturn(query);
+            lenient().when(entityManager.createNamedQuery("TransportService.findById", TransportService.class)).thenReturn(query);
+            lenient().when(query.setParameter(1, 0)).thenReturn(query);
+        }
+
+        @Test
+        public void updateService_happyFlow() {
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+            contactPerson = new ContactPerson("email@email.com", "4994233050");
+
+            when(query.getSingleResult()).thenReturn(transportService);
+            when(entityManager.getTransaction()).thenReturn(entityTransaction);
+
+            String name = "new name";
+            List<ContactPerson> contactPersonList = List.of(contactPerson);
+            int characterCount = 14;
+            boolean integersOnly = true;
+            String prefix = "new";
+            String verificationTypeValue = "POST_CODE";
+            boolean isActive = false;
+
+            transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive);
+
+            TransportService updatedTransportService = transportServiceJPADao.get(0);
+            TrackingCodeDetails updatedTrackingCodeDetails = updatedTransportService.getTrackingCodeDetails();
+            assertEquals(updatedTransportService.getName(), name);
+            assertEquals(updatedTransportService.getContactPersonList(), contactPersonList);
+            assertEquals(updatedTrackingCodeDetails.getCharacterCount(), characterCount);
+            assertEquals(updatedTrackingCodeDetails.isIntegersOnly(), integersOnly);
+            assertEquals(updatedTrackingCodeDetails.getPrefix(), prefix);
+            assertEquals(updatedTrackingCodeDetails.getVerificationType(), VerificationType.valueOf(verificationTypeValue));
+            assertEquals(transportService.isActive(), isActive);
+            verify(query, times(2)).setParameter(1, 0);
+        }
+
+        @Test
+        public void updateService_invalidVerificationType_throwsIllegalArgumentException() {
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+            contactPerson = new ContactPerson("email@email.com", "4994233050");
+
+            when(query.getSingleResult()).thenReturn(transportService);
+
+            String name = "new name";
+            List<ContactPerson> contactPersonList = List.of(contactPerson);
+            int characterCount = 14;
+            boolean integersOnly = true;
+            String prefix = "new";
+            String verificationTypeValue = "invalid_type";
+            boolean isActive = false;
+
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
+        }
+
+        @Test
+        public void updateService_emptyContactPersonList_throwsIllegalArgumentException() {
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+
+            String name = "new name";
+            List<ContactPerson> contactPersonList = List.of();
+            int characterCount = 14;
+            boolean integersOnly = true;
+            String prefix = "new";
+            String verificationTypeValue = "POST_CODE";
+            boolean isActive = false;
+
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
         }
 
         @Test

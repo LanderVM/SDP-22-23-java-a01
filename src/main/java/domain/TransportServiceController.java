@@ -36,6 +36,21 @@ public class TransportServiceController {
         );
     }
 
+    public void updateTransportService(int id, String name, List<ContactPerson> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) {
+        if (contactPersonList.isEmpty())
+            throw new IllegalArgumentException("You must add at least one contact person for this Transport Service!");
+        TransportService transportService = transportServiceJPADao.get(id);
+        transportService.setName(name);
+        transportService.setContactPersonList(contactPersonList);
+        transportService.getTrackingCodeDetails().setCharacterCount(characterCount);
+        transportService.getTrackingCodeDetails().setIntegersOnly(isIntegersOnly);
+        transportService.getTrackingCodeDetails().setPrefix(prefix);
+        transportService.getTrackingCodeDetails().setVerificationType(VerificationType.valueOf(verificationTypeValue));
+        transportService.setActive(isActive);
+
+        transportServiceJPADao.update(transportService);
+    }
+
     public void setActive(int transportServiceId, boolean active) throws NoResultException {
         TransportService transportService = transportServiceJPADao.get(transportServiceId);
         transportService.setActive(active);
