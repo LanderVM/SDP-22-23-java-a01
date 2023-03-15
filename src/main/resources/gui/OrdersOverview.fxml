@@ -52,9 +52,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Pane fx:id="PaneOrderProcess" visible="false" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.rowSpan="2">
+      <Pane fx:id="PaneOrderProcess" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.rowSpan="2">
          <children>
-            <Label fx:id="lblSelectTransportService" alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="915.0" text="Select a transport service for this order:" textAlignment="CENTER">
+            <Label fx:id="lblSelectTransportService" alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="773.0" text="Select a transport service for this order:" textAlignment="CENTER">
                <font>
                   <Font size="30.0" />
                </font>
