@@ -1,7 +1,7 @@
 package gui.controller;
 
 import java.io.ByteArrayInputStream;
-import java.util.Date;
+import java.time.LocalDate;
 
 import domain.OrderController;
 import domain.Status;
@@ -66,7 +66,7 @@ public class CustomersOverviewController extends GridPane {
 	private TableColumn<CustomerOrdersView, Number> idOrderOfCustomerCol;
 
 	@FXML
-	private TableColumn<CustomerOrdersView, Date> dateOrderOfCustomerCol;
+	private TableColumn<CustomerOrdersView, LocalDate> dateOrderOfCustomerCol;
 
 	@FXML
 	private TableColumn<CustomerOrdersView, Status> statusOrderOfCustomerCol;

@@ -1,14 +1,13 @@
 package gui.controller;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import domain.OrderController;
 import domain.Packaging;
 import domain.Status;
 import domain.SupplierController;
-import domain.TransportService;
 import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.OrderStatusException;
@@ -20,7 +19,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -31,11 +29,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import util.FXStageUtil;
 
 public class OrdersOverviewController extends GridPane {
 	
@@ -54,7 +50,7 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private TableColumn<OrderView, Number> NumberColumnTable;
 	@FXML
-	private TableColumn<OrderView, Date> DateColumnTable;
+	private TableColumn<OrderView, LocalDate> DateColumnTable;
 	@FXML
 	private TableColumn<OrderView, String> CompanyColumnTable;
 	@FXML

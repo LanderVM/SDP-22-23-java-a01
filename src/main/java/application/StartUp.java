@@ -2,7 +2,6 @@ package application;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -101,10 +100,10 @@ public class StartUp extends Application {
         TransportService bpost = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, true);
         TransportService postnl = new TransportService("postnl", List.of(postnlPerson1), postnlDetails, true);
 
-        Order order1 = new Order( new Date(),"Honkstraat 33 Lokeren",List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
-        Order order2 = new Order( new Date(),"Bellelaan 12 Haaltert",List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
-        Order order3 = new Order( new Date(),"Doodskoplaan 73 Gent",List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl, Packaging.SMALL,s1,s2, new BigDecimal("23.80"));
-        Order order4 = new Order( new Date(),"Bekerstraat 66 Bilzen",List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, Packaging.LARGE,s2,s1, new BigDecimal("21.20"));
+        Order order1 = new Order(LocalDate.now(),"Honkstraat 33 Lokeren",List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
+        Order order2 = new Order(LocalDate.now(),"Bellelaan 12 Haaltert",List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
+        Order order3 = new Order(LocalDate.now(),"Doodskoplaan 73 Gent",List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl, Packaging.SMALL,s1,s2, new BigDecimal("23.80"));
+        Order order4 = new Order(LocalDate.now(),"Bekerstraat 66 Bilzen",List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, Packaging.LARGE,s2,s1, new BigDecimal("21.20"));
         
         Notification postedNotification = new Notification(order1);
         Notification processedNotification = new Notification(order2, LocalDate.of(2023, 3, 12));

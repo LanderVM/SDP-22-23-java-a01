@@ -1,6 +1,7 @@
 package domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 import jakarta.persistence.*;
@@ -39,7 +40,7 @@ public class Order {
     private String address;
 
     @Column(name = "order_date")
-    private Date date;
+    private LocalDate date;
     @ManyToMany(mappedBy = "orders")
     private List<Product> productsList;
     private Status status;
@@ -64,8 +65,8 @@ public class Order {
     private Set<Notification> notifications = new HashSet<>();
 
 
-    public Order(Date date,String adress, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging,Supplier supplier,Supplier customer,BigDecimal originalAcquisitionPrice) {
+    public Order(LocalDate date, String adress, List<Product> productsList, Status status,
+                 TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
         this.date = date;
         this.address = adress;
         this.productsList = productsList;
@@ -77,7 +78,7 @@ public class Order {
         this.customer=customer;
     }
     
-    public Order(Date date, List<Product> productsList, Status status,
+    public Order(LocalDate date, List<Product> productsList, Status status,
             TransportService transportService, Packaging packaging) {
     	this.date = date;
     	this.productsList = productsList;
@@ -106,11 +107,11 @@ public class Order {
         this.address = address;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

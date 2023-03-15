@@ -4,12 +4,13 @@ import domain.Status;
 import domain.Order;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class CustomerOrdersView {
 
     private final SimpleIntegerProperty id;
-    private final SimpleObjectProperty<Date> date;
+    private final SimpleObjectProperty<LocalDate> date;
     private final SimpleObjectProperty<Status> status;
     
     public CustomerOrdersView(Order order) {
@@ -23,7 +24,7 @@ public class CustomerOrdersView {
 		return id;
 	} // TODO consistency between getters view
 
-	public SimpleObjectProperty<Date> getDate() {
+	public SimpleObjectProperty<LocalDate> getDate() {
 		return date;
 	}
 
