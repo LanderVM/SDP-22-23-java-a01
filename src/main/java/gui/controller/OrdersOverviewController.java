@@ -94,12 +94,12 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private Button btnProcessOrder;
 	
-	private Alert a1; // TODO
+	private Alert alert;
 
-	private final OrderController orderController;
-	private final UserController userController;
-	private final TransportServiceController transportServiceController;
-	private final SupplierController supplierController; // TODO
+    private final OrderController orderController;
+    private final UserController userController;
+    private final TransportServiceController transportServiceController;
+    private final SupplierController supplierController;
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
 			TransportServiceController transportServiceController, SupplierController supplierController) {
@@ -125,7 +125,7 @@ public class OrdersOverviewController extends GridPane {
         PackagingColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().packagingProperty());
         TransportServiceColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().transportServiceProperty());
         TrackingColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().trackingCodeProperty());
-        TotalPriceColumnOrderTable.setCellValueFactory(cellData-> cellData.getValue().totalPriceProperty());
+        TotalPriceColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().totalPriceProperty());
         
         //fill Products table of specified order
         ProductColumnTable.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
@@ -135,41 +135,32 @@ public class OrdersOverviewController extends GridPane {
 
         refreshOrderList();
 
-		ObservableList<String> transportServiceNames = transportServiceController.getTransportServices()
-		        .stream()
-		        .map(TransportServiceView::getName)
-		        .collect(Collectors.toCollection(FXCollections::observableArrayList));
-		if(transportServiceNames.size()== 0) {
-			a1 = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
-		}
-		choiceBoxTransportServices.setItems(transportServiceNames);
-		choiceBoxTransportServices.setValue(transportServiceNames.get(0));
+        // TransportServices
+        ObservableList<String> transportServiceNames = transportServiceController.getTransportServices()
+                .stream()
+                .map(TransportServiceView::getName)
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        if (transportServiceNames.size() == 0)
+            alert = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
+        choiceBoxTransportServices.setItems(transportServiceNames);
+        choiceBoxTransportServices.setValue(transportServiceNames.get(0));
 
-
-
+        // Orders
         TableOrdersView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
             PaneOrderProcess.setVisible(false);
-        	if (newOrder == null) {
-            	return;
-            }
-            
+            if (newOrder == null)
+                return;
+
             int id = newOrder.getOrderId();
             OrderDetailsTable.setItems(FXCollections.observableArrayList(orderController.getOrderByIdView(id)));
-            
-            if(orderController.getOrderById(id).getTransportService()== null) {
-            	PaneOrderProcess.setVisible(true);
-            }
-        	setCustomerInfo(id);
-        	ProductsTableView.setItems(FXCollections.observableArrayList(orderController.getProductsList(id)));
-        	
-	
-        });
-       
-		
-	
 
-		
-	}
+            if (orderController.getOrderById(id).getTransportService() == null)
+                PaneOrderProcess.setVisible(true);
+
+            setCustomerInfo(id);
+            ProductsTableView.setItems(FXCollections.observableArrayList(orderController.getProductsList(id)));
+        });
+    }
 
 	private void setCustomerInfo(int id) {
 		CustomerDetailsList.getItems().clear();	
@@ -180,37 +171,34 @@ public class OrdersOverviewController extends GridPane {
 		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getDate().toString());	
 	}
 
-	@FXML
-	public void showOrders(ActionEvent event) {
-	}
+    @FXML
+    public void showOrders(ActionEvent event) {
+    }
 
     public void refreshOrderList() {
-		
-
-		TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
+        TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
     }
 
 
-	@FXML
-	public void showHome(ActionEvent event) {
-		
-	}
-	@FXML
-	private void ProcessOrder(ActionEvent event) {
-		  String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
-		  int id = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
-	        try {
-				orderController.processOrder(id, transportServiceController.getTransportServiceByName(selectionTransportService));
-				a1 = new Alert(AlertType.CONFIRMATION,
-	                    "Succesfully processed the order.",ButtonType.CLOSE);
-	            a1.show();
-			} catch (EntityNotFoundException | OrderStatusException e) {
-				e.printStackTrace();
-			}
-	        refreshOrderList();
-			TableOrdersView.getSelectionModel().select(0);
-	}
-	
+    @FXML
+    public void showHome(ActionEvent event) {
+    }
+
+    @FXML
+    private void ProcessOrder(ActionEvent event) {
+        String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
+        int id = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
+        try {
+            orderController.processOrder(id, transportServiceController.getTransportServiceByName(selectionTransportService));
+            alert = new Alert(AlertType.CONFIRMATION,
+                    "Succesfully processed the order.", ButtonType.CLOSE);
+            alert.show();
+        } catch (EntityNotFoundException | OrderStatusException e) {
+            e.printStackTrace();
+        }
+        refreshOrderList();
+        TableOrdersView.getSelectionModel().select(0);
+    }
 
 	@FXML
 	public void showCustomers(ActionEvent event) {
@@ -219,5 +207,4 @@ public class OrdersOverviewController extends GridPane {
 		FXStageUtil.change(loader, customersOverviewController, "Customers");
 	}
 
-	
 }

@@ -91,7 +91,7 @@ public class StartUp extends Application {
 
 
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(9, true, "32post", VerificationType.POST_CODE);
-        TrackingCodeDetails postnlDetails = new TrackingCodeDetails(15, false, "nlP", VerificationType.ORDER_ID);
+        TrackingCodeDetails postnlDetails = new TrackingCodeDetails(15, false, "nlP_", VerificationType.ORDER_ID);
 
         ContactPerson bpostPerson1 = new ContactPerson("een@bpost.be", "499334455");
         ContactPerson bpostPerson2 = new ContactPerson("twe@bpost.be", "479554433");

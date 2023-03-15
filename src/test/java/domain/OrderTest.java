@@ -77,7 +77,6 @@ public class OrderTest {
     public void getAll_happyFlow() {
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
         List<Order> ordersList =
-                
                 List.of(new Order(LocalDate.now(),"Helperslaan 5 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.LARGE, s1, s2,new BigDecimal("8.30")),
                 		new Order(LocalDate.now(),"Hengellaan 23 Gent", List.of(new Product("Test product 3", new BigDecimal("11.50")), new Product("Test product 1", new BigDecimal("9.80"))), Status.DISPATCHED, transportService, Packaging.MEDIUM, s2, s1,new BigDecimal("5.50")),
                 		new Order(LocalDate.now(),"Ergernislaan 67 Gent", List.of(new Product("Test product 2", new BigDecimal("9.80")), new Product("Test product 4", new BigDecimal("11.50"))), Status.POSTED, transportService, Packaging.MEDIUM, s1, s2,new BigDecimal("6.90"))

@@ -81,10 +81,10 @@ public class CustomersOverviewController extends GridPane {
 	@FXML
 	private TableColumn<ContactPersonSupplierView, String> emailContactpersonSupplierCol;
 
-	private SupplierController supplierController;
-	private UserController userController;
-	private OrderController orderController; // TODO
-	private TransportServiceController transportServiceController;
+	private final SupplierController supplierController;
+	private final UserController userController;
+	private final OrderController orderController;
+	private final TransportServiceController transportServiceController;
 
 	public CustomersOverviewController(OrderController orderController, UserController userController,TransportServiceController transportServiceController,
 			SupplierController supplierController) {
