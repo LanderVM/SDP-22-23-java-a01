@@ -86,7 +86,7 @@ public class TransportServicesOverviewController extends GridPane {
 			tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
 
 			tblTransportServicesInfo.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices().get(id)));
-			//tblContactPerson.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices().get(id)));
+			//tblContactPerson.setItems(FXCollections.observableArrayList(supplierController.getContactPersonSupplierView(name)));
 		});
 	}
 	public void refreshCustomersList() {
@@ -100,7 +100,8 @@ public class TransportServicesOverviewController extends GridPane {
 	}
 
 	@FXML
-	private void Add() {}
+	private void Add() {
+	}
 	
 	@FXML
 	private void showHome() {}
