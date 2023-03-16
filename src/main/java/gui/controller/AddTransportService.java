@@ -156,8 +156,11 @@ public class AddTransportService extends GridPane {
 	@FXML
 	private void addToContactPersonsList() {
 		if (txtAddEmail.getText().isBlank() || txtAddPhoneNumber.getText().isBlank()) {
-            Alert alert = new Alert(AlertType.ERROR, "email or phone are empty", ButtonType.CLOSE);
-            alert.show();
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Incorrect data");
+			alert.setHeaderText(null);
+			alert.setContentText("Contact person needs an email address and phonenumber");
+			alert.showAndWait();
 		}
 		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByName(name).getContactPersonList();
 		contactPersonList.add(new ContactPerson(txtAddEmail.getText(), txtAddPhoneNumber.getText()));
