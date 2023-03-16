@@ -99,8 +99,8 @@
             </TableView>
             <HBox prefHeight="50.0" prefWidth="380.0">
                <children>
-                  <TextField fx:id="AddPhoneNumber" prefHeight="57.0" prefWidth="148.0" />
-                  <TextField fx:id="AddEmail" prefHeight="62.0" prefWidth="148.0" />
+                  <TextField fx:id="txtAddPhoneNumber" prefHeight="57.0" prefWidth="148.0" />
+                  <TextField fx:id="txtAddEmail" prefHeight="62.0" prefWidth="148.0" />
                   <Button fx:id="btnAddContactPerson" mnemonicParsing="false" onAction="#addToContactPersonsList" prefHeight="74.0" prefWidth="89.0" text="Add">
                      <font>
                         <Font size="18.0" />

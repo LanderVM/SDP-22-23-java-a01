@@ -15,12 +15,16 @@ import gui.view.TransportServiceView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 
 public class AddTransportService extends GridPane {
@@ -51,6 +55,14 @@ public class AddTransportService extends GridPane {
 	private TextField txtPrefix;
 	@FXML
 	private ChoiceBox<String> ChoiceBoxExtraVerificationCode;
+	@FXML
+	private TextField txtAddPhoneNumber;
+	@FXML
+	private TextField txtAddEmail;
+	@FXML
+	private Button btnSave;
+	@FXML
+	private Button btnAddContactPerson;
 
 	private OrderController orderController;
 	private UserController userController;
@@ -70,7 +82,9 @@ public class AddTransportService extends GridPane {
 	@FXML
 	private void initialize() {
 		lblUser.setText(userController.toString());
-		
+		btnSave.setDisable(true);
+		btnAddContactPerson.setDisable(true);
+
 		List<String> typeList = Arrays.stream(VerificationType.values()).map(VerificationType::name)
 				.collect(Collectors.toList());
 		ObservableList<String> verificationTypes = FXCollections.observableList(typeList);
@@ -83,23 +97,27 @@ public class AddTransportService extends GridPane {
 		refreshCustomersList();
 
 		tblTransportServices.getSelectionModel().selectedItemProperty()
-				.addListener((observableValue, oldCostumer, newCustomer) -> {
+				.addListener((observableValue, oldService, newService) -> {
+					if (newService != null) {
 
-					name = newCustomer.getName();
-					id = newCustomer.getTransportServiceId();
+					btnSave.setDisable(false);
+					btnAddContactPerson.setDisable(false);
+					name = newService.getName();
+					id = newService.getTransportServiceId();
 
 					// Table info TransportService
-					txtName.setText(newCustomer.getName());
-					txtCharacterAmount.setText(newCustomer.characterCountProperty().getValue().toString());
-					txtPrefix.setText(newCustomer.getPrefix());
-					chkboxIsActive.setSelected(newCustomer.isActive());
-					chkboxOnlyNumbers.setSelected(newCustomer.isIntegersOnly());
-					ChoiceBoxExtraVerificationCode.setValue(newCustomer.getVerificationType().toString());
+					txtName.setText(newService.getName());
+					txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
+					txtPrefix.setText(newService.getPrefix());
+					chkboxIsActive.setSelected(newService.isActive());
+					chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
+					ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
 
 					// Table ContactPersonSupplier
 					tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
 					tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-					tblContactPerson.setItems(FXCollections.observableArrayList(newCustomer.getContactPeople()));
+					tblContactPerson.setItems(FXCollections.observableArrayList(newService.getContactPeople()));
+					}
 				});
 	}
 
@@ -115,7 +133,9 @@ public class AddTransportService extends GridPane {
 		transportServiceController.updateTransportService(id, txtName.getText(), contactPersonList,
 				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
 				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
+		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
 		refreshCustomersList();
+		tblTransportServices.getSelectionModel().select(index);
 	}
 
 	@FXML
@@ -135,8 +155,19 @@ public class AddTransportService extends GridPane {
 
 	@FXML
 	private void addToContactPersonsList() {
-		transportServiceController.addTransportService(getAccessibleText(), null, id, isDisable(),
-				getAccessibleRoleDescription(), getAccessibleHelp(), isCache());
+		if (txtAddEmail.getText().isBlank() || txtAddPhoneNumber.getText().isBlank()) {
+            Alert alert = new Alert(AlertType.ERROR, "email or phone are empty", ButtonType.CLOSE);
+            alert.show();
+		}
+		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByName(name).getContactPersonList();
+		contactPersonList.add(new ContactPerson(txtAddEmail.getText(), txtAddPhoneNumber.getText()));
+
+		transportServiceController.updateTransportService(id, txtName.getText(), contactPersonList,
+				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
+				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
+		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
+		refreshCustomersList();
+		tblTransportServices.getSelectionModel().select(index);
 	}
 
 }
