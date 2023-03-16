@@ -19,7 +19,7 @@ public class OrderView {
     private final SimpleObjectProperty<Status> status;
     private final SimpleObjectProperty<Packaging> packagingProperty;
     private final SimpleStringProperty transportServiceProperty;
-    private final SimpleIntegerProperty trackingCodeProperty;
+    private final SimpleStringProperty trackingCodeProperty;
 
     public OrderView(Order order) {
         orderId = new SimpleIntegerProperty(order.getOrderId());
@@ -29,7 +29,7 @@ public class OrderView {
         status = new SimpleObjectProperty<>(order.getStatus());
         packagingProperty = new SimpleObjectProperty<>(order.getPackaging());
         transportServiceProperty = new SimpleStringProperty(order.getTransportService() == null ?  "None" : order.getTransportService().getName());
-        trackingCodeProperty = new SimpleIntegerProperty(order.getTrackingCode());
+        trackingCodeProperty = new SimpleStringProperty(order.getTrackingCode());
     }
 
     public int getOrderId() {
@@ -80,7 +80,7 @@ public class OrderView {
     	return transportServiceProperty;
     }
     
-    public SimpleIntegerProperty trackingCodeProperty() {
+    public SimpleStringProperty trackingCodeProperty() {
     	return trackingCodeProperty;
     }
 }

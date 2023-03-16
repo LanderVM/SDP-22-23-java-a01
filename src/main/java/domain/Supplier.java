@@ -57,7 +57,7 @@ public class Supplier {
     @OneToOne(mappedBy="supplier", cascade = CascadeType.PERSIST)
     private Logo logo;
     
-    @OneToMany
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST)
     private List<ContactPersonSupplier> contactPersons;
     
     @OneToMany(mappedBy="supplier")
