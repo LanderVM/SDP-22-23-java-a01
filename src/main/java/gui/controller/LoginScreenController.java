@@ -64,17 +64,9 @@ public class LoginScreenController extends GridPane {
 				goToHomeWarehouseOperator();
 			}
 		} catch (NoResultException e) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("User not found");
-			alert.setHeaderText(null);
-			alert.setContentText("No user was found with the provided email address.");
-			alert.showAndWait();
+			showLoginError();
 		} catch (IncorrectPasswordException e) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Error");
-			alert.setHeaderText(null);
-			alert.setContentText("The password provided was incorrect.");
-			alert.showAndWait();
+			showLoginError();
 		}
 	}
 
@@ -88,6 +80,14 @@ public class LoginScreenController extends GridPane {
 		AddTransportService addTransportService = new AddTransportService(orderController, userController, supplierController, transportServiceController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/AddTransportService.fxml"));
 		FXStageUtil.change(loader, addTransportService, "Transport Service Overview");
+	}
+	
+	private void showLoginError () {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Login error");
+		alert.setHeaderText(null);
+		alert.setContentText("Either password or username is incorrect!");
+		alert.showAndWait();
 	}
 	
 	@FXML
