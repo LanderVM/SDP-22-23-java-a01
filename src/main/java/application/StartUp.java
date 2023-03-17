@@ -42,7 +42,7 @@ public class StartUp extends Application {
             ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
 
             LoginScreenController root = new LoginScreenController(
-                    new OrderController(orderJPADao, userJPADao),
+                    new OrderController(orderJPADao, userJPADao,transportServiceJPADao),
                     new UserController(userJPADao),
                     new TransportServiceController(transportServiceJPADao),
                     new SupplierController(supplierJPADao, orderJPADao, contactPersonSupplierJPADao));

@@ -176,7 +176,7 @@ public class OrdersOverviewController extends GridPane {
     }
 
     public void refreshOrderList() {
-        TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
+        TableOrdersView.setItems(orderController.getOrderList());
     }
 
 
@@ -189,7 +189,7 @@ public class OrdersOverviewController extends GridPane {
         String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
         int id = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
-            orderController.processOrder(id, transportServiceController.getTransportServiceByName(selectionTransportService));
+            orderController.processOrder(id, selectionTransportService);
             alert = new Alert(AlertType.CONFIRMATION,
                     "Succesfully processed the order.", ButtonType.CLOSE);
             alert.show();

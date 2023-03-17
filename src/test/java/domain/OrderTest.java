@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import persistence.OrderJPADao;
+import persistence.TransportServiceJPADao;
 import persistence.UserJPADao;
 
 import java.math.BigDecimal;
@@ -32,6 +33,7 @@ public class OrderTest {
 
     private OrderJPADao orderDao;
     private UserJPADao userJPADao;
+    private TransportServiceJPADao transportServiceJPADao;
 
     private Order order;
     private TransportService transportService;
@@ -106,9 +108,9 @@ public class OrderTest {
 
         orderDao = new OrderJPADao(entityManager);
         userJPADao = new UserJPADao(entityManager);
-        OrderController orderController = new OrderController(orderDao, userJPADao);
+        OrderController orderController = new OrderController(orderDao, userJPADao,transportServiceJPADao);
 
-        orderController.processOrder(1, transportService);
+        orderController.processOrder(1, transportService.getName());
         Order orderAfterUpdate = orderDao.get(1);
 
         assertEquals(transportService, orderAfterUpdate.getTransportService());
@@ -130,9 +132,9 @@ public class OrderTest {
 
         orderDao = new OrderJPADao(entityManager);
         userJPADao = new UserJPADao(entityManager);
-        OrderController orderController = new OrderController(orderDao, userJPADao);
+        OrderController orderController = new OrderController(orderDao, userJPADao,transportServiceJPADao);
 
-        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1, transportService));
+        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1, transportService.getName()));
         verify(query).setParameter(1, 1);
     }
 
