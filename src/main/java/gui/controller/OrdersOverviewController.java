@@ -197,7 +197,14 @@ public class OrdersOverviewController extends GridPane {
             e.printStackTrace();
         }
         refreshOrderList();
-        TableOrdersView.getSelectionModel().select(0);
+        int index = 0;
+        for (int i = 0; i < TableOrdersView.getItems().size(); i++) {
+            if (TableOrdersView.getItems().get(i).getOrderId()==id) {
+                index = i;
+                break;
+            }
+        }
+        TableOrdersView.getSelectionModel().select(index);
     }
 
 	@FXML
