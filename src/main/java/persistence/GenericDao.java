@@ -10,4 +10,6 @@ public interface GenericDao<T> {
 
     void update(T entity);
 
+    void insert(T entity);
+
 }

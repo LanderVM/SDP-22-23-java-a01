@@ -34,4 +34,11 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
         entityManager.getTransaction().commit();
     }
 
+    @Override
+    public void insert(T entity) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
+    }
+
 }

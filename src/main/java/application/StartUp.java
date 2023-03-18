@@ -7,10 +7,7 @@ import java.util.Objects;
 
 import domain.*;
 import persistence.*;
-import persistence.impl.ContactPersonSupplierDaoJpa;
-import persistence.impl.OrderDaoJpa;
-import persistence.impl.SupplierDaoJpa;
-import persistence.impl.UserDaoJpa;
+import persistence.impl.*;
 import util.FXStageUtil;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
@@ -32,6 +29,7 @@ public class StartUp extends Application {
     SupplierDao supplierDao;
     UserDao userDao;
     ContactPersonSupplierDao contactPersonSupplierDao;
+    TransportServiceDao transportServiceDao;
 
     @Override
     public void start(Stage primaryStage) {
@@ -43,12 +41,12 @@ public class StartUp extends Application {
             supplierDao = new SupplierDaoJpa(entityManager);
             userDao = new UserDaoJpa(entityManager);
             contactPersonSupplierDao = new ContactPersonSupplierDaoJpa(entityManager);
-            TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
+            transportServiceDao = new TransportServiceDaoJpa(entityManager);
 
             LoginScreenController root = new LoginScreenController(
                     new OrderController(orderDao),
                     new UserController(userDao),
-                    new TransportServiceController(transportServiceJPADao),
+                    new TransportServiceController(transportServiceDao),
                     new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
