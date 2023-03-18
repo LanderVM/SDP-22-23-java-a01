@@ -6,7 +6,7 @@ import gui.view.ContactPersonSupplierView;
 import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
 import jakarta.persistence.NoResultException;
-import persistence.ContactPersonSupplierJPADao;
+import persistence.ContactPersonSupplierDao;
 import persistence.OrderDao;
 import persistence.SupplierDao;
 
@@ -14,12 +14,12 @@ public class SupplierController {
 
 	private final SupplierDao supplierDao;
 	private final OrderDao orderDao;
-	private ContactPersonSupplierJPADao contactPersonSupplierJPADao;
+	private final ContactPersonSupplierDao contactPersonSupplierDao;
 
-	public SupplierController(SupplierDao supplierDao, OrderDao orderDao, ContactPersonSupplierJPADao contactPersonSupplierJPADao) {
+	public SupplierController(SupplierDao supplierDao, OrderDao orderDao, ContactPersonSupplierDao contactPersonSupplierDao) {
 		this.supplierDao = supplierDao;
 		this.orderDao = orderDao;
-		this.contactPersonSupplierJPADao = contactPersonSupplierJPADao;
+		this.contactPersonSupplierDao = contactPersonSupplierDao;
 	}
 
 	public Supplier getSupplier(String email) throws NoResultException {
@@ -36,6 +36,6 @@ public class SupplierController {
 	}
 
 	public List<ContactPersonSupplierView> getContactPersonSupplierView(String supplierEmail) {
-		return contactPersonSupplierJPADao.getAllForSupplier(supplierEmail).stream().map(ContactPersonSupplierView::new).toList();
+		return contactPersonSupplierDao.getAllForSupplier(supplierEmail).stream().map(ContactPersonSupplierView::new).toList();
 	}
 }

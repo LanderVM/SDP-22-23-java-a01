@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import domain.*;
 import persistence.*;
+import persistence.impl.ContactPersonSupplierDaoJpa;
 import persistence.impl.OrderDaoJpa;
 import persistence.impl.SupplierDaoJpa;
 import persistence.impl.UserDaoJpa;
@@ -30,6 +31,7 @@ public class StartUp extends Application {
     OrderDao orderDao;
     SupplierDao supplierDao;
     UserDao userDao;
+    ContactPersonSupplierDao contactPersonSupplierDao;
 
     @Override
     public void start(Stage primaryStage) {
@@ -40,14 +42,14 @@ public class StartUp extends Application {
             orderDao = new OrderDaoJpa(entityManager);
             supplierDao = new SupplierDaoJpa(entityManager);
             userDao = new UserDaoJpa(entityManager);
+            contactPersonSupplierDao = new ContactPersonSupplierDaoJpa(entityManager);
             TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
-            ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
 
             LoginScreenController root = new LoginScreenController(
                     new OrderController(orderDao),
                     new UserController(userDao),
                     new TransportServiceController(transportServiceJPADao),
-                    new SupplierController(supplierDao, orderDao, contactPersonSupplierJPADao));
+                    new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);
