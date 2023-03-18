@@ -12,7 +12,6 @@ public class ContactPersonSupplierDaoJpa extends GenericDaoJpa<ContactPersonSupp
         super(ContactPersonSupplier.class, entityManager);
     }
 
-    @Override
     public List<ContactPersonSupplier> getAllForSupplier(String email) {
         return entityManager.createNamedQuery("ContactPersonSupplier.findAllForSupplier", ContactPersonSupplier.class).setParameter(1, email).getResultList();
     }

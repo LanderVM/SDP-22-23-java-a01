@@ -20,7 +20,6 @@ public class TransportServiceDaoJpa extends GenericDaoJpa<TransportService> impl
         entityManager.getTransaction().commit();
     }
 
-    @Override
     public boolean exists(String name) {
         TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findNameExists", TransportService.class);
         return !query.setParameter(1, name).getResultList().isEmpty();
