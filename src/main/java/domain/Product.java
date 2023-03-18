@@ -9,12 +9,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "product")
-@NamedQueries({
-    @NamedQuery(
-    		name="Product.findAllForOrder",
-    		query="SELECT d FROM Product d WHERE (SELECT w FROM Order w WHERE w.orderId = ?1) MEMBER OF d.orders"
-    )
-})
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

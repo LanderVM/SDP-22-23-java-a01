@@ -28,8 +28,8 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		seedDatabase();
 		//ProductJPADao pjpa = new ProductJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
-		OrderJPADao ojpa = new OrderJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
-		List<Product> lijst = ojpa.getProductsForOrder(2);
+		//OrderJPADao ojpa = new OrderJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
+		//List<Product> lijst = ojpa.getProductsForOrder(2);
 		
 		System.out.println(lijst);
 	}
