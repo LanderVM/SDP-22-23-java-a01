@@ -9,6 +9,7 @@ import domain.*;
 import persistence.*;
 import persistence.impl.OrderDaoJpa;
 import persistence.impl.SupplierDaoJpa;
+import persistence.impl.UserDaoJpa;
 import util.FXStageUtil;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
@@ -28,6 +29,7 @@ public class StartUp extends Application {
     EntityManager entityManager;
     OrderDao orderDao;
     SupplierDao supplierDao;
+    UserDao userDao;
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,13 +39,13 @@ public class StartUp extends Application {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
             orderDao = new OrderDaoJpa(entityManager);
             supplierDao = new SupplierDaoJpa(entityManager);
-            UserJPADao userJPADao = new UserJPADao(entityManager);
+            userDao = new UserDaoJpa(entityManager);
             TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
             ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
 
             LoginScreenController root = new LoginScreenController(
-                    new OrderController(orderDao, userJPADao),
-                    new UserController(userJPADao),
+                    new OrderController(orderDao),
+                    new UserController(userDao),
                     new TransportServiceController(transportServiceJPADao),
                     new SupplierController(supplierDao, orderDao, contactPersonSupplierJPADao));
             Scene scene = new Scene(root);
