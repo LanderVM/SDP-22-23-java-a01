@@ -48,6 +48,7 @@ public class StartUp extends Application {
                     new UserController(userDao),
                     new TransportServiceController(transportServiceDao),
                     new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));
+
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);
@@ -95,6 +96,13 @@ public class StartUp extends Application {
         Order order2 = new Order(LocalDate.now().minusDays(2),"Bellelaan 12 Haaltert",List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
         Order order3 = new Order(LocalDate.now().minusDays(1),"Doodskoplaan 73 Gent",List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl, Packaging.SMALL,s1,s2, new BigDecimal("23.80"));
         Order order4 = new Order(LocalDate.now(),"Bekerstraat 66 Bilzen",List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, Packaging.LARGE,s2,s1, new BigDecimal("21.20"));
+        
+        product1.setOrders(List.of(order1,order3,order4));
+        product2.setOrders(List.of(order1,order3,order4));
+        product3.setOrders(List.of(order2,order3,order4));
+        product4.setOrders(List.of(order2,order3,order4));
+        product5.setOrders(List.of(order2,order3,order4));
+        
         order2.generateTrackingCode();
         order3.generateTrackingCode();
 
@@ -126,8 +134,13 @@ public class StartUp extends Application {
         s1.setOrdersAsCustomer(l1);     
         s2.setOrdersAsCustomer(l2);
         
-        s2.setOrdersAsSupplier(l1);     
-        s1.setOrdersAsSupplier(l2);
+        s1.setOrdersAsSupplier(l2);     
+        s2.setOrdersAsSupplier(l1);
+        
+        order1.setSupplier(s2);
+        order2.setSupplier(s1);
+        order3.setSupplier(s2);
+        order4.setSupplier(s1);
         
         order1.setCustomer(s1);
         order2.setCustomer(s2);

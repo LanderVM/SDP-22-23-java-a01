@@ -136,10 +136,8 @@ public class OrdersOverviewController extends GridPane {
         refreshOrderList();
 
         // TransportServices
-        ObservableList<String> transportServiceNames = transportServiceController.getTransportServices()
-                .stream()
-                .map(TransportServiceView::getName)
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<String> transportServiceNames = transportServiceController.getTransportServicesNames();
+        
         if (transportServiceNames.size() == 0)
             alert = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
         choiceBoxTransportServices.setItems(transportServiceNames);
@@ -152,13 +150,13 @@ public class OrdersOverviewController extends GridPane {
                 return;
 
             int id = newOrder.getOrderId();
-            OrderDetailsTable.setItems(FXCollections.observableArrayList(orderController.getOrderByIdView(id)));
+            OrderDetailsTable.setItems(orderController.getOrderByIdView(id));
 
             if (orderController.getOrderById(id).getTransportService() == null)
                 PaneOrderProcess.setVisible(true);
 
             setCustomerInfo(id);
-            ProductsTableView.setItems(FXCollections.observableArrayList(orderController.getProductsList(id)));
+            ProductsTableView.setItems(orderController.getProductsList(id));
         });
     }
 
@@ -176,7 +174,7 @@ public class OrdersOverviewController extends GridPane {
     }
 
     public void refreshOrderList() {
-        TableOrdersView.setItems(FXCollections.observableArrayList(orderController.getOrderList()));
+        TableOrdersView.setItems(orderController.getOrderListForUser(userController.userId()));
     }
 
 
@@ -189,7 +187,7 @@ public class OrdersOverviewController extends GridPane {
         String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
         int id = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
-            orderController.processOrder(id, transportServiceController.getTransportServiceByName(selectionTransportService));
+            orderController.processOrder(id, selectionTransportService);
             alert = new Alert(AlertType.CONFIRMATION,
                     "Succesfully processed the order.", ButtonType.CLOSE);
             alert.show();
@@ -197,7 +195,14 @@ public class OrdersOverviewController extends GridPane {
             e.printStackTrace();
         }
         refreshOrderList();
-        TableOrdersView.getSelectionModel().select(0);
+        int index = 0;
+        for (int i = 0; i < TableOrdersView.getItems().size(); i++) {
+            if (TableOrdersView.getItems().get(i).getOrderId()==id) {
+                index = i;
+                break;
+            }
+        }
+        TableOrdersView.getSelectionModel().select(index);
     }
 
 	@FXML

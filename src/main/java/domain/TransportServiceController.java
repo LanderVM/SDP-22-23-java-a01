@@ -2,7 +2,9 @@ package domain;
 
 import gui.view.TransportServiceView;
 import jakarta.persistence.NoResultException;
-import persistence.TransportServiceDao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import persistence.TransportServiceJPADao;
 
 import java.util.List;
 
@@ -16,6 +18,10 @@ public class TransportServiceController {
 
     public List<TransportServiceView> getTransportServices() {
         return transportServiceDaoJpa.getAll().stream().map(TransportServiceView::new).toList();
+    }
+    
+    public ObservableList<String> getTransportServicesNames () {
+    	return FXCollections.observableArrayList(transportServiceJPADao.getAllNames());
     }
     
     public TransportService getTransportServiceByName(String name) throws NoResultException {

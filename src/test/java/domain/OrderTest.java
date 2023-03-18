@@ -8,6 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import persistence.impl.OrderDaoJpa;
+import persistence.OrderJPADao;
+import persistence.TransportServiceJPADao;
+import persistence.UserJPADao;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,6 +31,9 @@ public class OrderTest {
 
     Supplier supplier;
     Supplier customer;
+    private OrderJPADao orderDao;
+    private UserJPADao userJPADao;
+    private TransportServiceJPADao transportServiceJPADao;
 
     Order order;
     TransportService transportService;
@@ -44,7 +50,7 @@ public class OrderTest {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, Packaging.MEDIUM, supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
-        orderController.processOrder(1, transportService);
+        orderController.processOrder(1, transportService.getName());
         Order orderAfterUpdate = orderDao.get(1);
 
         assertEquals(transportService, orderAfterUpdate.getTransportService());
