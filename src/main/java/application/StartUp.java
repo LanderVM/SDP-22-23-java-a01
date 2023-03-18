@@ -131,8 +131,13 @@ public class StartUp extends Application {
         s1.setOrdersAsCustomer(l1);     
         s2.setOrdersAsCustomer(l2);
         
-        s2.setOrdersAsSupplier(l1);     
-        s1.setOrdersAsSupplier(l2);
+        s1.setOrdersAsSupplier(l2);     
+        s2.setOrdersAsSupplier(l1);
+        
+        order1.setSupplier(s2);
+        order2.setSupplier(s1);
+        order3.setSupplier(s2);
+        order4.setSupplier(s1);
         
         order1.setCustomer(s1);
         order2.setCustomer(s2);

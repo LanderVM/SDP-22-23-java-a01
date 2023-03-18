@@ -1,6 +1,7 @@
 package persistence;
 
 import domain.Order;
+import domain.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -41,6 +42,9 @@ public class OrderJPADao implements JPADao<Order,Integer> {
 
     public List<Order> getAllPostedForSupplier(int id) {
         return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllPostedForSupplier", Order.class).setParameter(1, id).getResultList());
+    }
+    public List<Product> getProductsForOrder (int orderId) {
+    	return entityManager.createNamedQuery("Order.getProductsForOrder").setParameter(1, orderId).getResultList();
     }
 
     @Override

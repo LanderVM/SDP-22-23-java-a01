@@ -27,14 +27,15 @@ public class MainTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		seedDatabase();
-		ProductJPADao pjpa = new ProductJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
-		List<Product> lijst =pjpa.getProductsForOrder(2);
+		//ProductJPADao pjpa = new ProductJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
+		OrderJPADao ojpa = new OrderJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
+		List<Product> lijst = ojpa.getProductsForOrder(2);
 		
 		System.out.println(lijst);
 	}
 
 	public static void seedDatabase() {
-        EntityManager userManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		EntityManager userManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         userManager.getTransaction().begin();
 
      // Aanmaken Objecten
@@ -99,8 +100,13 @@ public class MainTest {
         s1.setOrdersAsCustomer(l1);     
         s2.setOrdersAsCustomer(l2);
         
-        s2.setOrdersAsSupplier(l1);     
-        s1.setOrdersAsSupplier(l2);
+        s1.setOrdersAsSupplier(l2);     
+        s2.setOrdersAsSupplier(l1);
+        
+        order1.setSupplier(s2);
+        order2.setSupplier(s1);
+        order3.setSupplier(s2);
+        order4.setSupplier(s1);
         
         order1.setCustomer(s1);
         order2.setCustomer(s2);
