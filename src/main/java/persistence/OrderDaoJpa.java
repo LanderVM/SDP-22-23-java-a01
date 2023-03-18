@@ -14,7 +14,7 @@ public class OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
     }
 
     public List<Order> getAllForSupplier(int supplierId) {
-        List<Order> result = entityManager.createNamedQuery("Order.findAllForSupplier", Order.class).getResultList();
+        List<Order> result = entityManager.createNamedQuery("Order.findAllForSupplier", Order.class).setParameter(1, supplierId).getResultList();
         return Collections.unmodifiableList(result);
     }
 }
