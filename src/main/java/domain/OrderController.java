@@ -41,6 +41,10 @@ public class OrderController {
     	User user = userJPADao.get(userId);
         return orderJPADao.getAllForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
     }
+    
+    public ObservableList<OrderView> getOrderListForUser (int userId) {
+    	return FXCollections.observableArrayList(orderJPADao.getAllForUser(userId).stream().map(OrderView::new).toList());
+    }
 
     public List<OrderView> getPostedOrdersListForSupplier(int userId) {
     	User user = userJPADao.get(userId);
@@ -59,15 +63,16 @@ public class OrderController {
         return orderJPADao.get(id);
     }
 
-    public List<ProductView> getProductsList(int id) {
+    public ObservableList<ProductView> getProductsList(int id) {
+    	//TODO de juiste producten rechtreeks via een querrie opvragen, zie ProductJPADao
         Order order = orderJPADao.get(id);
-        return order.getProductsList()
+        return FXCollections.observableArrayList(order.getProductsList()
                 .stream()
                 .collect(groupingBy(Function.identity(), counting()))
                 .entrySet()
                 .stream()
                 .map(entry -> new ProductView(entry.getKey(), entry.getValue().intValue()))
-                .toList();
+                .toList());
     }
 
     public void processOrder(int orderId, String transportServiceName) throws EntityNotFoundException, OrderStatusException {

@@ -34,6 +34,10 @@ public class OrderJPADao implements JPADao<Order,Integer> {
     public List<Order> getAllForSupplier(int id) {
         return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForSupplier", Order.class).setParameter(1, id).getResultList());
     }
+    
+    public List<Order> getAllForUser(int id) {
+    	return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUser", Order.class).setParameter(1, id).getResultList());
+    }
 
     public List<Order> getAllPostedForSupplier(int id) {
         return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllPostedForSupplier", Order.class).setParameter(1, id).getResultList());

@@ -156,7 +156,7 @@ public class OrdersOverviewController extends GridPane {
                 PaneOrderProcess.setVisible(true);
 
             setCustomerInfo(id);
-            ProductsTableView.setItems(FXCollections.observableArrayList(orderController.getProductsList(id)));
+            ProductsTableView.setItems(orderController.getProductsList(id));
         });
     }
 
@@ -174,7 +174,7 @@ public class OrdersOverviewController extends GridPane {
     }
 
     public void refreshOrderList() {
-        TableOrdersView.setItems(orderController.getOrderList());
+        TableOrdersView.setItems(orderController.getOrderListForUser(userController.userId()));
     }
 
 

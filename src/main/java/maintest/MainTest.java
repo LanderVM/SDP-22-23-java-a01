@@ -17,6 +17,8 @@ import domain.TransportService;
 import domain.User;
 import domain.VerificationType;
 import jakarta.persistence.EntityManager;
+import persistence.OrderJPADao;
+import persistence.ProductJPADao;
 import persistence.TransportServiceJPADao;
 import util.JPAUtil;
 
@@ -25,10 +27,14 @@ public class MainTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		seedDatabase();
-		TransportServiceJPADao ts = new TransportServiceJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
-		List<String> lijst = ts.getAllNames();
-		//List<TransportService> lijst2 = ts.getAll();
-		System.out.print(lijst);
+		//ProductJPADao pjpa = new ProductJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
+		//List<Product> lijst =pjpa.getProductsForOrder(2);
+		
+		OrderJPADao ojpa = new OrderJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
+		
+		List<Order> lijst = ojpa.getAllForUser(1);
+		
+		System.out.println(lijst);
 	}
 
 	public static void seedDatabase() {
