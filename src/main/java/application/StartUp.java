@@ -7,6 +7,8 @@ import java.util.Objects;
 
 import domain.*;
 import persistence.*;
+import persistence.impl.OrderDaoJpa;
+import persistence.impl.SupplierDaoJpa;
 import util.FXStageUtil;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;

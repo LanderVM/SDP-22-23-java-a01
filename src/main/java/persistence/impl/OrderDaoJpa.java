@@ -1,7 +1,8 @@
-package persistence;
+package persistence.impl;
 
 import domain.Order;
 import jakarta.persistence.EntityManager;
+import persistence.OrderDao;
 
 import java.util.Collections;
 import java.util.List;

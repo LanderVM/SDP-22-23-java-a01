@@ -1,6 +1,7 @@
-package persistence;
+package persistence.impl;
 
 import jakarta.persistence.EntityManager;
+import persistence.GenericDao;
 
 import java.util.Collections;
 import java.util.List;

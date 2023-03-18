@@ -1,7 +1,8 @@
-package persistence;
+package persistence.impl;
 
 import domain.Supplier;
 import jakarta.persistence.EntityManager;
+import persistence.SupplierDao;
 
 public class SupplierDaoJpa extends GenericDaoJpa<Supplier> implements SupplierDao {
 

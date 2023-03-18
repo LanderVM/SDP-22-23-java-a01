@@ -4,8 +4,8 @@ module SDP2_Java_a01 {
     exports application;
     exports exceptions;
     exports util;
-    exports persistence;
     exports gui.view;
+    exports persistence.impl;
 
     requires java.sql;
     requires java.instrument;
@@ -15,7 +15,7 @@ module SDP2_Java_a01 {
     requires javafx.base;
     requires jakarta.persistence;
 	requires java.desktop;
-    
+
 
     opens domain;
     opens application to javafx.fxml, javafx.graphics;
