@@ -9,9 +9,9 @@ import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import persistence.OrderJPADao;
-import persistence.TransportServiceJPADao;
-import persistence.UserJPADao;
+import persistence.OrderDao;
+import persistence.TransportServiceDao;
+import persistence.impl.OrderDaoJpa;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -19,15 +19,12 @@ import static java.util.stream.Collectors.groupingBy;
 public class OrderController {
 
 
-    private final OrderDao orderDao;
+    private final OrderDaoJpa orderDao;
+    private final TransportServiceDao transportServiceDao;
 
-    public OrderController(OrderDao orderDao) {
-        this.orderDao = orderDao;
-    }
-
-    public List<OrderView> getOrderListForSupplier(int userId) {
-    	User user = userJPADao.get(userId);
-        return orderJPADao.getAllForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
+    public OrderController(OrderDao orderDao,TransportServiceDao transportServiceDao) {
+        this.orderDao =  (OrderDaoJpa) orderDao;
+        this.transportServiceDao = transportServiceDao;
     }
     
     public ObservableList<OrderView> getOrderListForUser (int userId) {
@@ -56,7 +53,7 @@ public class OrderController {
 
     public void processOrder(int orderId, String transportServiceName) throws EntityNotFoundException, OrderStatusException {
         Order order = orderDao.get(orderId);
-        TransportService transportService =  transportServiceJPADao.get(transportServiceName);
+        TransportService transportService =  transportServiceDao.get(transportServiceName);
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 

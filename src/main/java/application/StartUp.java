@@ -44,7 +44,7 @@ public class StartUp extends Application {
             transportServiceDao = new TransportServiceDaoJpa(entityManager);
 
             LoginScreenController root = new LoginScreenController(
-                    new OrderController(orderDao),
+                    new OrderController(orderDao,transportServiceDao),
                     new UserController(userDao),
                     new TransportServiceController(transportServiceDao),
                     new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));

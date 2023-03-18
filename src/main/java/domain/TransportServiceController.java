@@ -4,7 +4,8 @@ import gui.view.TransportServiceView;
 import jakarta.persistence.NoResultException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import persistence.TransportServiceJPADao;
+import persistence.TransportServiceDao;
+
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class TransportServiceController {
     private final TransportServiceDao transportServiceDaoJpa;
 
     public TransportServiceController(TransportServiceDao transportServiceDaoJpa) {
-        this.transportServiceDaoJpa = transportServiceDaoJpa;
+        this.transportServiceDaoJpa =  transportServiceDaoJpa;
     }
 
     public List<TransportServiceView> getTransportServices() {
@@ -21,7 +22,7 @@ public class TransportServiceController {
     }
     
     public ObservableList<String> getTransportServicesNames () {
-    	return FXCollections.observableArrayList(transportServiceJPADao.getAllNames());
+    	return FXCollections.observableArrayList(transportServiceDaoJpa.getAllNames());
     }
     
     public TransportService getTransportServiceByName(String name) throws NoResultException {

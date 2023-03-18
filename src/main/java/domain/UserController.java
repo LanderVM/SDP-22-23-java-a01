@@ -22,6 +22,10 @@ public class UserController {
     public boolean userIsAdmin() {
         return user.isAdmin();
     }
+    
+    public int userId () {
+    	return user.getUserId();
+    }
 
     public int supplierIdFromUser () {
     	return user.getSupplier().getSupplierId();

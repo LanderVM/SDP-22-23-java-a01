@@ -1,5 +1,8 @@
 package persistence.impl;
 
+import java.util.Collections;
+import java.util.List;
+
 import domain.TransportService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -29,4 +32,8 @@ public class TransportServiceDaoJpa extends GenericDaoJpa<TransportService> impl
         TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findByName", TransportService.class);
         return query.setParameter(1, name).getSingleResult();
     }
+    
+    public List<String> getAllNames() {
+		return Collections.unmodifiableList(entityManager.createNamedQuery("TransportService.findAllNames",String.class).getResultList());
+	}
 }
