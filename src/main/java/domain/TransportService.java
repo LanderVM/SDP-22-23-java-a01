@@ -28,6 +28,10 @@ import java.util.Objects;
         @NamedQuery(
                 name = "TransportService.findNameExists",
                 query = "SELECT d FROM TransportService d WHERE d.name = ?1"
+        ),
+        @NamedQuery(
+        		name = "TransportService.findAllNames",
+                query = "SELECT d.name FROM TransportService d"
         )
 })
 public class TransportService {

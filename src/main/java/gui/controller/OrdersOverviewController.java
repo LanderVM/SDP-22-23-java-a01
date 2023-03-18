@@ -136,10 +136,8 @@ public class OrdersOverviewController extends GridPane {
         refreshOrderList();
 
         // TransportServices
-        ObservableList<String> transportServiceNames = transportServiceController.getTransportServices()
-                .stream()
-                .map(TransportServiceView::getName)
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<String> transportServiceNames = transportServiceController.getTransportServicesNames();
+        
         if (transportServiceNames.size() == 0)
             alert = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
         choiceBoxTransportServices.setItems(transportServiceNames);
@@ -152,7 +150,7 @@ public class OrdersOverviewController extends GridPane {
                 return;
 
             int id = newOrder.getOrderId();
-            OrderDetailsTable.setItems(FXCollections.observableArrayList(orderController.getOrderByIdView(id)));
+            OrderDetailsTable.setItems(orderController.getOrderByIdView(id));
 
             if (orderController.getOrderById(id).getTransportService() == null)
                 PaneOrderProcess.setVisible(true);

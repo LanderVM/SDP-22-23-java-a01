@@ -47,8 +47,8 @@ public class OrderController {
         return orderJPADao.getAllPostedForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
     }
 
-    public OrderView getOrderByIdView(int id) {
-        return new OrderView(orderJPADao.get(id));
+    public ObservableList<OrderView> getOrderByIdView(int id) {
+        return FXCollections.observableArrayList(new OrderView(orderJPADao.get(id)));
     }
 
     public String getOrderOverview(int orderId) {

@@ -5,6 +5,7 @@ import domain.TransportService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import javafx.collections.ObservableList;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,4 +57,10 @@ public class TransportServiceJPADao implements JPADao<TransportService,Integer> 
         entityManager.merge(transportService);
         entityManager.getTransaction().commit();
     }
+
+
+	public List<String> getAllNames() {
+		// TODO Auto-generated method stub
+		return Collections.unmodifiableList(entityManager.createNamedQuery("TransportService.findAllNames",String.class).getResultList());
+	}
 }
