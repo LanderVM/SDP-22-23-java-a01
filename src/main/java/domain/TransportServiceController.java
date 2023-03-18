@@ -17,8 +17,8 @@ public class TransportServiceController {
         this.transportServiceDaoJpa =  transportServiceDaoJpa;
     }
 
-    public List<TransportServiceView> getTransportServices() {
-        return transportServiceDaoJpa.getAll().stream().map(TransportServiceView::new).toList();
+    public ObservableList<TransportServiceView> getTransportServices() {
+        return FXCollections.observableArrayList(transportServiceDaoJpa.getAll().stream().map(TransportServiceView::new).toList());
     }
     
     public ObservableList<String> getTransportServicesNames () {

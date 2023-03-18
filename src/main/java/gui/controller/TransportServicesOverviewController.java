@@ -90,7 +90,7 @@ public class TransportServicesOverviewController extends GridPane {
 		});
 	}
 	public void refreshCustomersList() {
-		tblTransportServices.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices()));
+		tblTransportServices.setItems(transportServiceController.getTransportServices());
 	}
 	
 	@FXML

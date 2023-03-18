@@ -34,8 +34,12 @@ import logoMapper.LogoMapper;
         		query = "SELECT s FROM Supplier s ORDER BY s.name"
         ),
         @NamedQuery(
-        		name = "Supplier.findAllCustomersForSupplier",
-        		query = "SELECT s FROM Supplier s ORDER BY s.name"
+        		name="Supplier.findAllCustomersForSupplier",
+        		query="SELECT DISTINCT c FROM Supplier s JOIN s.ordersAsSupplier o JOIN o.customer c WHERE s.supplierId = ?1"
+        ),
+        @NamedQuery(
+        		name ="Supplier.getAllOrdersForCustomer",
+        		query ="SELECT c.ordersAsCustomer FROM Supplier c WHERE c.email = ?1"
         )
 })
 public class Supplier {

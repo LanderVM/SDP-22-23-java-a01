@@ -6,6 +6,8 @@ import gui.view.ContactPersonSupplierView;
 import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
 import jakarta.persistence.NoResultException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import persistence.ContactPersonSupplierDao;
 import persistence.OrderDao;
 import persistence.SupplierDao;
@@ -26,16 +28,17 @@ public class SupplierController {
 		return supplierDao.get(email);
 	}
 
-	public List<CustomerView> getSuppliersView(int supplierId) {
-		return orderDao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList();
+	public ObservableList<CustomerView> getSuppliersView(int supplierId) {
+		return FXCollections.observableArrayList(orderDao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList());
 //         TODO hier geen ordersDAO gebruiken, moet het opvragen via OrderController
+		//TODO gebruiken van getCustomersForSupplier uit supplierDao, maar werkt nog niet
 	}
 
-	public List<CustomerOrdersView> getCustomerOrderView(String mail) {
-		return supplierDao.get(mail).getOrdersAsCustomer().stream().map(CustomerOrdersView::new).toList();
+	public ObservableList<CustomerOrdersView> getCustomerOrderView(String mail) {
+		return FXCollections.observableArrayList(supplierDao.getOrdersForCustomer(mail).stream().map(CustomerOrdersView::new).toList());
 	}
 
-	public List<ContactPersonSupplierView> getContactPersonSupplierView(String supplierEmail) {
-		return contactPersonSupplierDao.getAllForSupplier(supplierEmail).stream().map(ContactPersonSupplierView::new).toList();
+	public ObservableList<ContactPersonSupplierView> getContactPersonSupplierView(String supplierEmail) {
+		return FXCollections.observableArrayList(contactPersonSupplierDao.getAllForSupplier(supplierEmail).stream().map(ContactPersonSupplierView::new).toList());
 	}
 }

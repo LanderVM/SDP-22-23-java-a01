@@ -130,13 +130,13 @@ public class CustomersOverviewController extends GridPane {
 
 					ordersOfCustomerOverviewTable.getSortOrder().add(idOrderOfCustomerCol);
 					ordersOfCustomerOverviewTable
-							.setItems(FXCollections.observableArrayList(supplierController.getCustomerOrderView(email)));
+							.setItems(supplierController.getCustomerOrderView(email));
 					
 					nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 					numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());
 
 					contactpesronSupplierOverviewTable
-							.setItems(FXCollections.observableArrayList(supplierController.getContactPersonSupplierView(email)));
+							.setItems(supplierController.getContactPersonSupplierView(email));
 
 					nameContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 					emailContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getEmail());
@@ -162,7 +162,7 @@ public class CustomersOverviewController extends GridPane {
 
 	public void refreshCustomersList() {
 		CustomersOverviewTable
-				.setItems(FXCollections.observableArrayList(supplierController.getSuppliersView(userController.supplierIdFromUser())));
+				.setItems(supplierController.getSuppliersView(userController.supplierIdFromUser()));
 	}
 
 }
