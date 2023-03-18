@@ -22,7 +22,7 @@ import logoMapper.LogoMapper;
                 query = "SELECT s FROM Supplier s WHERE s.name = ?1"
         ),
         @NamedQuery(
-                name = "Supplier.findAll",
+                name = "Supplier.findAll", // TODO merge with OrderedByName
                 query = "SELECT d FROM Supplier d"
         ),
         @NamedQuery(

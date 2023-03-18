@@ -25,6 +25,7 @@ public class StartUp extends Application {
 
     EntityManager entityManager;
     OrderDao orderDao;
+    SupplierDao supplierDao;
 
     @Override
     public void start(Stage primaryStage) {
@@ -33,16 +34,16 @@ public class StartUp extends Application {
 
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
             orderDao = new OrderDaoJpa(entityManager);
+            supplierDao = new SupplierDaoJpa(entityManager);
             UserJPADao userJPADao = new UserJPADao(entityManager);
             TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
-            SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);
             ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
 
             LoginScreenController root = new LoginScreenController(
                     new OrderController(orderDao, userJPADao),
                     new UserController(userJPADao),
                     new TransportServiceController(transportServiceJPADao),
-                    new SupplierController(supplierJPADao, orderDao, contactPersonSupplierJPADao));
+                    new SupplierController(supplierDao, orderDao, contactPersonSupplierJPADao));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);
