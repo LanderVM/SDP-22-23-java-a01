@@ -7,7 +7,7 @@ import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
-import persistence.OrderJPADao;
+import persistence.OrderDaoJpaNew;
 import persistence.UserJPADao;
 
 import static java.util.stream.Collectors.counting;
@@ -16,10 +16,10 @@ import static java.util.stream.Collectors.groupingBy;
 public class OrderController {
 
 
-    private final OrderJPADao orderJPADao;
+    private final OrderDaoJpaNew orderJPADao;
     private final UserJPADao userJPADao;
 
-    public OrderController(OrderJPADao orderJPADao,UserJPADao userJPADao) {
+    public OrderController(OrderDaoJpaNew orderJPADao, UserJPADao userJPADao) {
         this.orderJPADao = orderJPADao;
         this.userJPADao = userJPADao;
     }
@@ -28,26 +28,8 @@ public class OrderController {
         return orderJPADao.getAll().stream().map(OrderView::new).toList();
     }
 
-    public List<OrderView> getPostedOrdersList() {
-        return orderJPADao.getAllPosted().stream().map(OrderView::new).toList();
-    }
-
-    public List<OrderView> getOrderListForSupplier(int userId) {
-    	User user = userJPADao.get(userId);
-        return orderJPADao.getAllForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
-    }
-
-    public List<OrderView> getPostedOrdersListForSupplier(int userId) {
-    	User user = userJPADao.get(userId);
-        return orderJPADao.getAllPostedForSupplier(user.getSupplier().getSupplierId()).stream().map(OrderView::new).toList();
-    }
-
     public OrderView getOrderByIdView(int id) {
         return new OrderView(orderJPADao.get(id));
-    }
-
-    public String getOrderOverview(int orderId) {
-        return orderJPADao.get(orderId).toString();
     }
 
     public Order getOrderById(int id) {

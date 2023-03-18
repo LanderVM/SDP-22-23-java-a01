@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.*;
+import persistence.*;
 import util.FXStageUtil;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
@@ -13,11 +14,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import persistence.ContactPersonSupplierJPADao;
-import persistence.OrderJPADao;
-import persistence.SupplierJPADao;
-import persistence.TransportServiceJPADao;
-import persistence.UserJPADao;
 import util.JPAUtil;
 
 public class StartUp extends Application {
@@ -35,17 +31,17 @@ public class StartUp extends Application {
             FXStageUtil.init(primaryStage);
 
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            OrderJPADao orderJPADao = new OrderJPADao(entityManager);
+            OrderDaoJpaNew newOrderDao = new OrderDaoJpaNew(entityManager);
             UserJPADao userJPADao = new UserJPADao(entityManager);
             TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
             SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);
             ContactPersonSupplierJPADao contactPersonSupplierJPADao = new ContactPersonSupplierJPADao(entityManager);
 
             LoginScreenController root = new LoginScreenController(
-                    new OrderController(orderJPADao, userJPADao),
+                    new OrderController(newOrderDao, userJPADao),
                     new UserController(userJPADao),
                     new TransportServiceController(transportServiceJPADao),
-                    new SupplierController(supplierJPADao, orderJPADao, contactPersonSupplierJPADao));
+                    new SupplierController(supplierJPADao, newOrderDao, contactPersonSupplierJPADao));
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setResizable(true);

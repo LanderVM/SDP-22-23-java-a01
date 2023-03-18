@@ -5,19 +5,18 @@ import java.util.List;
 import gui.view.ContactPersonSupplierView;
 import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
-import gui.view.OrderView;
 import jakarta.persistence.NoResultException;
 import persistence.ContactPersonSupplierJPADao;
-import persistence.OrderJPADao;
+import persistence.OrderDaoJpaNew;
 import persistence.SupplierJPADao;
 
 public class SupplierController {
 	
 	private SupplierJPADao supplierJPADao;
-	private OrderJPADao ordersJPADao;
+	private OrderDaoJpaNew ordersJPADao;
 	private ContactPersonSupplierJPADao contactPersonSupplierJPADao;
 	
-	public SupplierController(SupplierJPADao supplierJPADao,OrderJPADao orderJPADao,ContactPersonSupplierJPADao contactPersonSupplierJPADao) {
+	public SupplierController(SupplierJPADao supplierJPADao, OrderDaoJpaNew orderJPADao, ContactPersonSupplierJPADao contactPersonSupplierJPADao) {
 		this.supplierJPADao = supplierJPADao;
 		this.ordersJPADao = orderJPADao;
 		this.contactPersonSupplierJPADao = contactPersonSupplierJPADao;
@@ -31,12 +30,9 @@ public class SupplierController {
 		return supplierJPADao.get(email);
 	}
 	
-	public Supplier getSupplierByName(String name) throws NoResultException {
-		return supplierJPADao.getByName(name);
-	}
-	
 	public List<CustomerView> getSuppliersView(int supplierId) {
-		return ordersJPADao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList();
+		return ordersJPADao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList(); // TODO dit geeft een probleem? Wie heeft dit geschreven?
+		// TODO hier geen ordersDAO gebruiken, moet het opvragen via OrderController
 	}
 	
 	public List<CustomerOrdersView> getCustomerOrderView(String mail) {
