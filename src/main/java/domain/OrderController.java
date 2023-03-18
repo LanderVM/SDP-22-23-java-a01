@@ -63,9 +63,9 @@ public class OrderController {
         return orderJPADao.get(id);
     }
 
-    public ObservableList<ProductView> getProductsList(int id) {
+    public ObservableList<ProductView> getProductsList(int orderId) {
     	//TODO de juiste producten rechtreeks via een querrie opvragen, zie ProductJPADao
-        Order order = orderJPADao.get(id);
+        Order order = orderJPADao.get(orderId);
         return FXCollections.observableArrayList(order.getProductsList()
                 .stream()
                 .collect(groupingBy(Function.identity(), counting()))

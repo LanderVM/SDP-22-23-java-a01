@@ -27,12 +27,8 @@ public class MainTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		seedDatabase();
-		//ProductJPADao pjpa = new ProductJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
-		//List<Product> lijst =pjpa.getProductsForOrder(2);
-		
-		OrderJPADao ojpa = new OrderJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
-		
-		List<Order> lijst = ojpa.getAllForUser(1);
+		ProductJPADao pjpa = new ProductJPADao(JPAUtil.getEntityManagerFactory().createEntityManager());
+		List<Product> lijst =pjpa.getProductsForOrder(2);
 		
 		System.out.println(lijst);
 	}
@@ -65,6 +61,13 @@ public class MainTest {
         Order order2 = new Order(LocalDate.now().minusDays(2),"Bellelaan 12 Haaltert",List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
         Order order3 = new Order(LocalDate.now().minusDays(1),"Doodskoplaan 73 Gent",List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl, Packaging.SMALL,s1,s2, new BigDecimal("23.80"));
         Order order4 = new Order(LocalDate.now(),"Bekerstraat 66 Bilzen",List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, Packaging.LARGE,s2,s1, new BigDecimal("21.20"));
+        
+        product1.setOrders(List.of(order1,order3,order4));
+        product2.setOrders(List.of(order1,order3,order4));
+        product3.setOrders(List.of(order2,order3,order4));
+        product4.setOrders(List.of(order2,order3,order4));
+        product5.setOrders(List.of(order2,order3,order4));
+        
         order2.generateTrackingCode();
         order3.generateTrackingCode();
 
