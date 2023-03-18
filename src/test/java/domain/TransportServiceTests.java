@@ -1,6 +1,5 @@
 package domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,12 +26,6 @@ public class TransportServiceTests {
 
     @Nested
     class AddTests {
-
-        @BeforeEach
-        public void setupAddTransportationServiceTests() {
-            contactPerson = new ContactPerson("test@mail.com", "0477982037");
-        }
-
         @Test
         public void addTransportService_happyFlow() {
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
@@ -41,6 +34,7 @@ public class TransportServiceTests {
 
         @Test
         public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
+            contactPerson = new ContactPerson("test@mail.com", "0477982037");
             when(transportServiceJPADao.exists("bpost")).thenReturn(true);
             assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true));
         }
@@ -53,6 +47,7 @@ public class TransportServiceTests {
 
         @Test
         public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
+            contactPerson = new ContactPerson("test@mail.com", "0477982037");
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
             assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "invalid_type", true));
         }
@@ -60,13 +55,6 @@ public class TransportServiceTests {
 
     @Nested
     class UpdateTests {
-
-        @BeforeEach
-        public void setupUpdateTests() {
-//            lenient().when(entityManager.createNamedQuery("TransportService.findById", TransportService.class)).thenReturn(query);
-//            lenient().when(query.setParameter(1, 0)).thenReturn(query);
-        }
-
         @Test
         public void updateService_happyFlow() {
             transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
