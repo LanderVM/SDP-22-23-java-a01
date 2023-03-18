@@ -31,7 +31,7 @@ public class StartUp extends Application {
             FXStageUtil.init(primaryStage);
 
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            OrderDaoJpaNew newOrderDao = new OrderDaoJpaNew(entityManager);
+            OrderDaoJpa newOrderDao = new OrderDaoJpa(entityManager);
             UserJPADao userJPADao = new UserJPADao(entityManager);
             TransportServiceJPADao transportServiceJPADao = new TransportServiceJPADao(entityManager);
             SupplierJPADao supplierJPADao = new SupplierJPADao(entityManager);

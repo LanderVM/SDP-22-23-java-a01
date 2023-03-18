@@ -7,7 +7,7 @@ import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
-import persistence.OrderDaoJpaNew;
+import persistence.OrderDaoJpa;
 import persistence.UserJPADao;
 
 import static java.util.stream.Collectors.counting;
@@ -16,10 +16,10 @@ import static java.util.stream.Collectors.groupingBy;
 public class OrderController {
 
 
-    private final OrderDaoJpaNew orderJPADao;
+    private final OrderDaoJpa orderJPADao;
     private final UserJPADao userJPADao;
 
-    public OrderController(OrderDaoJpaNew orderJPADao, UserJPADao userJPADao) {
+    public OrderController(OrderDaoJpa orderJPADao, UserJPADao userJPADao) {
         this.orderJPADao = orderJPADao;
         this.userJPADao = userJPADao;
     }

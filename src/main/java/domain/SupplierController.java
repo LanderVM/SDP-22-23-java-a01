@@ -7,16 +7,16 @@ import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
 import jakarta.persistence.NoResultException;
 import persistence.ContactPersonSupplierJPADao;
-import persistence.OrderDaoJpaNew;
+import persistence.OrderDaoJpa;
 import persistence.SupplierJPADao;
 
 public class SupplierController {
 	
 	private SupplierJPADao supplierJPADao;
-	private OrderDaoJpaNew ordersJPADao;
+	private OrderDaoJpa ordersJPADao;
 	private ContactPersonSupplierJPADao contactPersonSupplierJPADao;
 	
-	public SupplierController(SupplierJPADao supplierJPADao, OrderDaoJpaNew orderJPADao, ContactPersonSupplierJPADao contactPersonSupplierJPADao) {
+	public SupplierController(SupplierJPADao supplierJPADao, OrderDaoJpa orderJPADao, ContactPersonSupplierJPADao contactPersonSupplierJPADao) {
 		this.supplierJPADao = supplierJPADao;
 		this.ordersJPADao = orderJPADao;
 		this.contactPersonSupplierJPADao = contactPersonSupplierJPADao;

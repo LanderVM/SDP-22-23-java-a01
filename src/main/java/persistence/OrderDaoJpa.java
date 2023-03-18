@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class OrderDaoJpaNew extends GenericDaoJpa<Order> implements OrderDao {
+public class OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
 
-    public OrderDaoJpaNew(EntityManager entityManager) {
+    public OrderDaoJpa(EntityManager entityManager) {
         super(Order.class, entityManager);
     }
 
