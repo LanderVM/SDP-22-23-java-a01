@@ -7,18 +7,18 @@ import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
 import jakarta.persistence.NoResultException;
 import persistence.ContactPersonSupplierJPADao;
-import persistence.OrderDaoJpa;
+import persistence.OrderDao;
 import persistence.SupplierJPADao;
 
 public class SupplierController {
 	
 	private SupplierJPADao supplierJPADao;
-	private OrderDaoJpa ordersJPADao;
+	private final OrderDao orderDao;
 	private ContactPersonSupplierJPADao contactPersonSupplierJPADao;
 	
-	public SupplierController(SupplierJPADao supplierJPADao, OrderDaoJpa orderJPADao, ContactPersonSupplierJPADao contactPersonSupplierJPADao) {
+	public SupplierController(SupplierJPADao supplierJPADao, OrderDao orderDao, ContactPersonSupplierJPADao contactPersonSupplierJPADao) {
 		this.supplierJPADao = supplierJPADao;
-		this.ordersJPADao = orderJPADao;
+		this.orderDao = orderDao;
 		this.contactPersonSupplierJPADao = contactPersonSupplierJPADao;
 	}
 
@@ -31,7 +31,7 @@ public class SupplierController {
 	}
 	
 	public List<CustomerView> getSuppliersView(int supplierId) {
-		return ordersJPADao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList(); // TODO dit geeft een probleem? Wie heeft dit geschreven?
+		return orderDao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList(); // TODO dit geeft een probleem? Wie heeft dit geschreven?
 		// TODO hier geen ordersDAO gebruiken, moet het opvragen via OrderController
 	}
 	
