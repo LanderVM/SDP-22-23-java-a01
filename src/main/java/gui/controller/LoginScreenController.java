@@ -36,8 +36,10 @@ public class LoginScreenController extends GridPane {
 	private final TransportServiceController transportServiceController;
 	private final SupplierController supplierController;
 
-	public LoginScreenController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController, SupplierController supplierController) {
+	public LoginScreenController(OrderController orderController,
+								 UserController userController,
+								 TransportServiceController transportServiceController,
+								 SupplierController supplierController) {
 		this.orderController = orderController;
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
@@ -57,15 +59,11 @@ public class LoginScreenController extends GridPane {
 	void SignIn(ActionEvent event) {
 		try {
 			userController.checkUser(txtEmail.getText(), txtPassword.getText());
-			if (userController.userIsAdmin()) {
+			if (userController.userIsAdmin())
 				goToHomeAdmin();
-			}
-			else {
+			else
 				goToHomeWarehouseOperator();
-			}
-		} catch (NoResultException e) {
-			showLoginError();
-		} catch (IncorrectPasswordException e) {
+		} catch (NoResultException | IncorrectPasswordException e) {
 			showLoginError();
 		}
 	}
@@ -84,9 +82,9 @@ public class LoginScreenController extends GridPane {
 	
 	private void showLoginError () {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Login error");
+		alert.setTitle("Login Error");
 		alert.setHeaderText(null);
-		alert.setContentText("Either password or username is incorrect!");
+		alert.setContentText("Provided credentials were incorrect!");
 		alert.showAndWait();
 	}
 	
