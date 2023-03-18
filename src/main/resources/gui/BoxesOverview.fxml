@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="4.0" prefWidth="121.40000915527344" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="9.0" prefWidth="403.1999206542969" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="21.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="16.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="16.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1033.60009765625" minWidth="10.0" percentWidth="21.0" prefWidth="1033.60009765625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="636.800048828125" minWidth="10.0" percentWidth="9.0" prefWidth="117.20004882812509" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="636.800048828125" minWidth="10.0" percentWidth="4.0" prefWidth="75.59995117187509" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="260.7999633789062" minHeight="0.0" percentHeight="14.0" prefHeight="127.60001373291016" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="766.4000061035156" minHeight="10.0" percentHeight="5.0" prefHeight="12.399986267089844" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="505.20002441406245" minHeight="10.0" percentHeight="22.0" prefHeight="118.79998779296875" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="505.20002441406245" minHeight="10.0" percentHeight="10.0" prefHeight="307.2000122070313" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="505.20002441406245" minHeight="10.0" percentHeight="21.0" prefHeight="307.2000122070313" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="366.800048828125" minHeight="10.0" percentHeight="13.0" prefHeight="65.4000244140625" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="366.800048828125" minHeight="0.0" percentHeight="2.0" prefHeight="65.4000244140625" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="366.800048828125" minHeight="10.0" percentHeight="9.0" prefHeight="57.59995117187498" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="85.59992675781257" minHeight="10.0" percentHeight="5.0" prefHeight="79.19990234375007" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <VBox GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="2" GridPane.rowSpan="4">
+         <children>
+            <TableView fx:id="tblBoxes" prefHeight="620.0" prefWidth="1420.0" style="-fx-font-size: 28px;">
+              <columns>
+                <TableColumn fx:id="ColumnName" prefWidth="204.00000303983688" text="Name" />
+                <TableColumn fx:id="ColumnType" prefWidth="218.40003967285156" text="Type" />
+                  <TableColumn fx:id="ColumnMeasurements" prefWidth="575.9999694824219" text="Measurements" />
+                  <TableColumn fx:id="ColumnPrice" prefWidth="199.199951171875" text="Price" />
+                  <TableColumn fx:id="ColumnActive" prefWidth="224.7999267578125" text="Active" />
+              </columns>
+            </TableView>
+            <HBox prefHeight="9.0" prefWidth="1420.0">
+               <children>
+                  <TextArea fx:id="txtName" prefHeight="76.0" prefWidth="209.0">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </TextArea>
+                  <TextArea fx:id="txtType" prefHeight="76.0" prefWidth="213.0">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </TextArea>
+                  <TextArea fx:id="txtMeasurements" prefHeight="0.0" prefWidth="578.0">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </TextArea>
+                  <TextArea fx:id="txtPrice" prefHeight="87.0" prefWidth="199.0">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </TextArea>
+                  <TextArea fx:id="txtActive" prefHeight="87.0" prefWidth="217.0">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="79.0" prefWidth="262.0" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="82.0" prefWidth="256.0" text="Delete" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Button>
+      <GridPane fx:id="HeaderPane" style="-fx-background-color: RED;" GridPane.columnSpan="2147483647">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="523.6000061035156" minWidth="10.0" prefWidth="286.40001220703124" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="558.3999999999999" minWidth="10.0" prefWidth="555.1999877929686" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.7999755859374" minWidth="10.0" prefWidth="436.99992675781255" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.99980468750005" minWidth="10.0" prefWidth="345.60002441406255" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="438.4000488281249" minWidth="10.0" prefWidth="250.4000488281249" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.199951171875" minWidth="10.0" prefWidth="47.999951171874955" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="imgDelaware" fitHeight="121.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@2023-java-a01/src/main/resources/images/LogoDelaware.png" />
+               </image>
+            </ImageView>
+            <Hyperlink fx:id="btnTransportServices" onAction="#showTransportServices" prefHeight="106.0" prefWidth="465.0" style="-fx-font-family: arial;" text="Transport Service" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="btnEmployees" onAction="#showEmployees" prefHeight="126.0" prefWidth="414.0" style="-fx-font-family: arial;" text="Employees" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="btnBoxes" onAction="#showBoxes" prefHeight="133.0" prefWidth="266.0" style="-fx-font-family: arial;" text="Boxes" textFill="WHITE" GridPane.columnIndex="3">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Hyperlink>
+            <Label fx:id="LblUser" prefHeight="69.0" prefWidth="187.0" text="Admin" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</GridPane>
