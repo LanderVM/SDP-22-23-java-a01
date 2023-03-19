@@ -5,6 +5,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class TransportServiceView {
@@ -92,5 +93,10 @@ public class TransportServiceView {
 
     public SimpleBooleanProperty activeProperty() {
         return active;
+    }
+    
+    public static ObservableList<String> getVerficationTypesObservableList () {
+    	return FXCollections.observableList(Arrays.stream(VerificationType.values()).map(VerificationType::name)
+				.collect(Collectors.toList()));
     }
 }

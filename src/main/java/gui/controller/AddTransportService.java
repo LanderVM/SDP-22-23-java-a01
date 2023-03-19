@@ -85,10 +85,10 @@ public class AddTransportService extends GridPane {
 		btnSave.setDisable(true);
 		btnAddContactPerson.setDisable(true);
 
-		List<String> typeList = Arrays.stream(VerificationType.values()).map(VerificationType::name)
-				.collect(Collectors.toList());
-		ObservableList<String> verificationTypes = FXCollections.observableList(typeList);
-		ChoiceBoxExtraVerificationCode.setItems(verificationTypes);
+		//List<String> typeList = Arrays.stream(VerificationType.values()).map(VerificationType::name)
+			//	.collect(Collectors.toList());
+		//ObservableList<String> verificationTypes = FXCollections.observableList(typeList);
+		ChoiceBoxExtraVerificationCode.setItems(TransportServiceView.getVerficationTypesObservableList());
 
 		// Table TransportService
 		tblTransportservicesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -116,14 +116,14 @@ public class AddTransportService extends GridPane {
 					// Table ContactPersonSupplier
 					tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
 					tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-					tblContactPerson.setItems(FXCollections.observableArrayList(newService.getContactPeople()));
+					tblContactPerson.setItems(newService.getContactPeople());
 					}
 				});
 	}
 
 	public void refreshCustomersList() {
 		tblTransportServices
-				.setItems(FXCollections.observableArrayList(transportServiceController.getTransportServices()));
+				.setItems(transportServiceController.getTransportServices());
 	}
 
 	@FXML
