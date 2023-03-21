@@ -14,13 +14,13 @@ public class TestMain {
 		// TODO Auto-generated method stub
 		StartUp.seedDatabase();
 		SupplierDaoJpa sdj = new SupplierDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager());
-		/*
+		
 		List<Supplier> lijst = sdj.getCustomersForSupplier(2);
 		
 		for (Supplier s:lijst) {
 			System.out.println(s.toString());
 			System.out.println("*****");
-		}*/
+		}
 		//List<Order> lijst2 = sdj.getOrdersForCustomer("jan@mail.com");
 		//System.out.println(lijst2);
 	}

@@ -85,9 +85,6 @@ public class AddTransportService extends GridPane {
 		btnSave.setDisable(true);
 		btnAddContactPerson.setDisable(true);
 
-		//List<String> typeList = Arrays.stream(VerificationType.values()).map(VerificationType::name)
-			//	.collect(Collectors.toList());
-		//ObservableList<String> verificationTypes = FXCollections.observableList(typeList);
 		ChoiceBoxExtraVerificationCode.setItems(TransportServiceView.getVerficationTypesObservableList());
 
 		// Table TransportService

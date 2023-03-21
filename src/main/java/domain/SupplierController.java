@@ -29,7 +29,8 @@ public class SupplierController {
 	}
 
 	public ObservableList<CustomerView> getSuppliersView(int supplierId) {
-		return FXCollections.observableArrayList(orderDao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList());
+		//return FXCollections.observableArrayList(orderDao.getAllForSupplier(supplierId).stream().map(Order::getCustomer).distinct().map(CustomerView::new).toList());
+		return FXCollections.observableArrayList(supplierDao.getCustomersForSupplier(supplierId).stream().map(CustomerView::new).toList());
 //         TODO hier geen ordersDAO gebruiken, moet het opvragen via OrderController
 		//TODO gebruiken van getCustomersForSupplier uit supplierDao, maar werkt nog niet
 	}

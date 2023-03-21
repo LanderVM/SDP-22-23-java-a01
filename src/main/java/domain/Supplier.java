@@ -187,4 +187,10 @@ public class Supplier {
     public int hashCode() {
         return Objects.hash(supplierId);
     }
+
+	@Override
+	public String toString() {
+		return "Supplier [supplierId=" + supplierId + ", name=" + name + ", email=" + email +" ]";
+	}
+    
 }

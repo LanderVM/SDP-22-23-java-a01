@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.*;
-import domain.Package;
+
 import persistence.*;
 import persistence.impl.*;
 import util.FXStageUtil;
@@ -148,10 +148,10 @@ public class StartUp extends Application {
         order3.setCustomer(s1);
         order4.setCustomer(s2);
         
-        Package small = new Package("small", Packaging.SMALL, new BigDecimal(1.0), new BigDecimal(5.0), new BigDecimal(1.0), new BigDecimal(5.0));
-        Package medium = new Package("medium", Packaging.MEDIUM, new BigDecimal(5.0), new BigDecimal(10.0), new BigDecimal(2.0), new BigDecimal(10.0));
-        Package large = new Package("large", Packaging.LARGE, new BigDecimal(10.0), new BigDecimal(15.0), new BigDecimal(3.0), new BigDecimal(15.0));
-        Package custom = new Package("custom", Packaging.CUSTOM, new BigDecimal(7.5), new BigDecimal(15.0), new BigDecimal(1.5), new BigDecimal(5.0));
+        //Package small = new Package("small", Packaging.SMALL, new BigDecimal(1.0), new BigDecimal(5.0), new BigDecimal(1.0), new BigDecimal(5.0));
+        //Package medium = new Package("medium", Packaging.MEDIUM, new BigDecimal(5.0), new BigDecimal(10.0), new BigDecimal(2.0), new BigDecimal(10.0));
+        //Package large = new Package("large", Packaging.LARGE, new BigDecimal(10.0), new BigDecimal(15.0), new BigDecimal(3.0), new BigDecimal(15.0));
+        //Package custom = new Package("custom", Packaging.CUSTOM, new BigDecimal(7.5), new BigDecimal(15.0), new BigDecimal(1.5), new BigDecimal(5.0));
         
         // Persisteren Objecten in de db
         // Products
@@ -183,10 +183,10 @@ public class StartUp extends Application {
         userManager.persist(processedNotification);
         userManager.persist(deliveredNotification);
         
-        userManager.persist(small);
-        userManager.persist(medium);
-        userManager.persist(large);
-        userManager.persist(custom);
+//        userManager.persist(small);
+//        userManager.persist(medium);
+//        userManager.persist(large);
+//        userManager.persist(custom);
         
         userManager.persist(admin);
         userManager.persist(warehouseman);
