@@ -51,8 +51,12 @@ public class Order {
 
     @Column(name = "order_date")
     private LocalDate date;
-    @ManyToMany(mappedBy = "orders")
-    private List<Product> productsList;
+    
+    //@ManyToMany(mappedBy = "orders")
+    //private List<Product> productsList;
+    @OneToMany(mappedBy="order")
+    private List<OrderLine> oderLines;
+    
     private Status status;
     private Packaging packaging;
 
@@ -79,19 +83,20 @@ public class Order {
                  TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
         this.date = date;
         this.address = adress;
-        this.productsList = productsList;
+        //this.productsList = productsList;
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
         this.originalAcquisitionPrice = originalAcquisitionPrice;
         this.supplier=supplier;
         this.customer=customer;
+        makeOrderlines(productsList);
     }
-    
-    public Order(LocalDate date, List<Product> productsList, Status status,
+
+	public Order(LocalDate date, List<Product> productsList, Status status,
             TransportService transportService, Packaging packaging) {
     	this.date = date;
-    	this.productsList = productsList;
+    	//this.productsList = productsList;
     	this.status = status;
     	this.transportService = transportService;
     	this.packaging = packaging;
@@ -125,13 +130,13 @@ public class Order {
         this.date = date;
     }
 
-    public List<Product> getProductsList() {
-        return productsList;
-    }
-
-    public void setProductsList(List<Product> productsList) {
-        this.productsList = productsList;
-    }
+//    public List<Product> getProductsList() {
+//        return productsList;
+//    }
+//
+//    public void setProductsList(List<Product> productsList) {
+//        this.productsList = productsList;
+//    }
 
     public Status getStatus() {
         return status;
@@ -210,8 +215,35 @@ public class Order {
             throw new RuntimeException("Notification doesn't belong to this order"); // TODO testing & proper exception
         notifications.add(notification);
     }
+    
+    private void makeOrderlines(List<Product> productsList) {
+		List<List<Product>> list = new ArrayList();
+		for (Product p:productsList) {
+			if (listForProduct(list,p)) {
+				for (List<Product> l:list) {
+					if (l.get(0).equals(p)) {
+						l.add(p);break;
+					}
+				}
+			}else {
+				List<Product> newList = new ArrayList<>();
+				newList.add(p);
+				list.add(newList);
+			}
+		}
+		
+	}
 
-    @Override
+    private boolean listForProduct(List<List<Product>> list, Product p) {
+		for (List<Product> l:list) {
+			if (l.get(0).equals(p)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -235,7 +267,7 @@ public class Order {
                 ", customerEmail='" + customer.getEmail() + '\'' +
                 ", address='" + customer.getAddress() + '\'' +
                 ", date=" + date +
-                ", productsList=" + productsList +
+                //", productsList=" + productsList +
                 ", status=" + status +
                 ", packaging=" + packaging +
                 ", transportService=" + transportService +

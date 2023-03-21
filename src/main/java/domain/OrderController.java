@@ -39,17 +39,17 @@ public class OrderController {
         return orderDao.get(id);
     }
 
-    public ObservableList<ProductView> getProductsList(int orderId) {
-    	//TODO de juiste producten rechtreeks via een querrie opvragen
-        Order order = orderDao.get(orderId);
-        return FXCollections.observableArrayList(order.getProductsList()
-                .stream()
-                .collect(groupingBy(Function.identity(), counting()))
-                .entrySet()
-                .stream()
-                .map(entry -> new ProductView(entry.getKey(), entry.getValue().intValue()))
-                .toList());
-    }
+//    public ObservableList<ProductView> getProductsList(int orderId) {
+//    	//TODO de juiste producten rechtreeks via een querrie opvragen
+//        Order order = orderDao.get(orderId);
+//        return FXCollections.observableArrayList(order.getProductsList()
+//                .stream()
+//                .collect(groupingBy(Function.identity(), counting()))
+//                .entrySet()
+//                .stream()
+//                .map(entry -> new ProductView(entry.getKey(), entry.getValue().intValue()))
+//                .toList());
+//    }
 
     public void processOrder(int orderId, String transportServiceName) throws EntityNotFoundException, OrderStatusException {
         Order order = orderDao.get(orderId);
