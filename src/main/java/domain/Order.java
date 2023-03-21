@@ -54,8 +54,6 @@ public class Order {
     @Column(name = "order_date")
     private LocalDate date;
     
-    //@ManyToMany(mappedBy = "orders")
-    //private List<Product> productsList;
     @OneToMany(mappedBy="order",cascade=CascadeType.PERSIST)
     private List<OrderLine> orderLines;
     
@@ -85,7 +83,6 @@ public class Order {
                  TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
         this.date = date;
         this.address = adress;
-        //this.productsList = productsList;
         this.status = status;
         this.transportService = transportService;
         this.packaging = packaging;
@@ -99,7 +96,6 @@ public class Order {
 	public Order(LocalDate date, List<Product> productsList, Status status,
             TransportService transportService, Packaging packaging) {
     	this.date = date;
-    	//this.productsList = productsList;
     	this.status = status;
     	this.transportService = transportService;
     	this.packaging = packaging;
@@ -133,14 +129,6 @@ public class Order {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-//    public List<Product> getProductsList() {
-//        return productsList;
-//    }
-//
-//    public void setProductsList(List<Product> productsList) {
-//        this.productsList = productsList;
-//    }
 
     public Status getStatus() {
         return status;

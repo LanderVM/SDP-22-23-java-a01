@@ -38,21 +38,8 @@ public class OrderController {
     public Order getOrderById(int id) {
         return orderDao.get(id);
     }
-
-//    public ObservableList<ProductView> getProductsList(int orderId) {
-//    	//TODO de juiste producten rechtreeks via een querrie opvragen
-//        Order order = orderDao.get(orderId);
-//        return FXCollections.observableArrayList(order.getProductsList()
-//                .stream()
-//                .collect(groupingBy(Function.identity(), counting()))
-//                .entrySet()
-//                .stream()
-//                .map(entry -> new ProductView(entry.getKey(), entry.getValue().intValue()))
-//                .toList());
-//    }
     
     public ObservableList<ProductView> getProductsList(int orderId) {
-    	//TODO de juiste producten rechtreeks via een querrie opvragen
     	List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
         return FXCollections.observableArrayList(list.stream().map(el->new ProductView(el.getProduct(),el.getCount())).toList());
     }

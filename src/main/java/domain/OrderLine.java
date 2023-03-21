@@ -5,14 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,16 +35,12 @@ public class OrderLine implements Serializable{
 		this.order = order;
 		this.count = products.size();
 		this.product = products.get(0);
-//		this.orderId = order.getOrderId();
-//		this.productId = product.getProductId();
 	}
 	
 	public OrderLine (Product product, int count, Order order) {
 		this.order = order;
 		this.product = product;
 		this.count = count;
-//		this.orderId = order.getOrderId();
-//		this.productId = product.getProductId();
 	}
 
 	protected OrderLine() {
