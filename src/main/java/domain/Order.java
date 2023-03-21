@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
 
@@ -34,11 +36,11 @@ import jakarta.persistence.*;
         		name="Order.findAllForUser",
         		query = "SELECT d FROM Order d WHERE d.supplier.supplierId = (SELECT w.supplier.supplierId FROM User w WHERE w.userId = ?1)"
         ),
-        @NamedQuery(
-        		name = "Order.getProductsForOrder", 
-        		query = "SELECT d.productsList FROM Order d WHERE d.orderId = ?1"
-        		
-        )
+//        @NamedQuery(
+//        		name = "Order.getProductsForOrder", 
+//        		query = "SELECT d.productsList FROM Order d WHERE d.orderId = ?1"
+//        		
+//        )
 })
 public class Order {
 
@@ -54,8 +56,8 @@ public class Order {
     
     //@ManyToMany(mappedBy = "orders")
     //private List<Product> productsList;
-    @OneToMany(mappedBy="order")
-    private List<OrderLine> oderLines;
+    @OneToMany(mappedBy="order",cascade=CascadeType.PERSIST)
+    private List<OrderLine> orderLines;
     
     private Status status;
     private Packaging packaging;
@@ -90,6 +92,7 @@ public class Order {
         this.originalAcquisitionPrice = originalAcquisitionPrice;
         this.supplier=supplier;
         this.customer=customer;
+        orderLines = new ArrayList<>();
         makeOrderlines(productsList);
     }
 
@@ -100,7 +103,8 @@ public class Order {
     	this.status = status;
     	this.transportService = transportService;
     	this.packaging = packaging;
-   
+    	orderLines = new ArrayList<>();
+    	makeOrderlines(productsList);
     }
 
     protected Order() {
@@ -217,30 +221,15 @@ public class Order {
     }
     
     private void makeOrderlines(List<Product> productsList) {
-		List<List<Product>> list = new ArrayList();
-		for (Product p:productsList) {
-			if (listForProduct(list,p)) {
-				for (List<Product> l:list) {
-					if (l.get(0).equals(p)) {
-						l.add(p);break;
-					}
-				}
-			}else {
-				List<Product> newList = new ArrayList<>();
-				newList.add(p);
-				list.add(newList);
-			}
-		}
+		List<List<Product>> list = new ArrayList<>();
+		Map<Object, List<Product>>map = productsList.stream().collect(Collectors.groupingBy(el->el.getName()));
+        for (Entry<Object, List<Product>> e:map.entrySet()) {
+        	list.add(e.getValue());
+        }
+        for (List<Product> l:list) {
+        	orderLines.add(new OrderLine(l,this));
+        }
 		
-	}
-
-    private boolean listForProduct(List<List<Product>> list, Product p) {
-		for (List<Product> l:list) {
-			if (l.get(0).equals(p)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -267,7 +256,7 @@ public class Order {
                 ", customerEmail='" + customer.getEmail() + '\'' +
                 ", address='" + customer.getAddress() + '\'' +
                 ", date=" + date +
-                //", productsList=" + productsList +
+                ", orderLines=" + orderLines +
                 ", status=" + status +
                 ", packaging=" + packaging +
                 ", transportService=" + transportService +

@@ -149,14 +149,14 @@ public class OrdersOverviewController extends GridPane {
             if (newOrder == null)
                 return;
 
-            int id = newOrder.getOrderId();
-            OrderDetailsTable.setItems(orderController.getOrderByIdView(id));
+            int orderId = newOrder.getOrderId();
+            OrderDetailsTable.setItems(orderController.getOrderByIdView(orderId));
 
-            if (orderController.getOrderById(id).getTransportService() == null)
+            if (orderController.getOrderById(orderId).getTransportService() == null)
                 PaneOrderProcess.setVisible(true);
 
-            setCustomerInfo(id);
-            ProductsTableView.setItems(orderController.getProductsList(id));
+            setCustomerInfo(orderId);
+            //ProductsTableView.setItems(orderController.getProductsList(orderId));
         });
     }
 
