@@ -156,7 +156,7 @@ public class OrdersOverviewController extends GridPane {
                 PaneOrderProcess.setVisible(true);
 
             setCustomerInfo(orderId);
-            //ProductsTableView.setItems(orderController.getProductsList(orderId));
+            ProductsTableView.setItems(orderController.getProductsList(orderId));
         });
     }
 

@@ -97,6 +97,11 @@ public class OrderLine implements Serializable{
 		OrderLine other = (OrderLine) obj;
 		return Objects.equals(order, other.order) && Objects.equals(product, other.product);
 	}
+
+	@Override
+	public String toString() {
+		return "OrderLine [orderId=" + order.getOrderId() + ", productId=" + product.getProductId() + ", count=" + count + "]";
+	}
 	
 	
 	

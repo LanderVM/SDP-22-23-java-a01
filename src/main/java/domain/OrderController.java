@@ -50,6 +50,12 @@ public class OrderController {
 //                .map(entry -> new ProductView(entry.getKey(), entry.getValue().intValue()))
 //                .toList());
 //    }
+    
+    public ObservableList<ProductView> getProductsList(int orderId) {
+    	//TODO de juiste producten rechtreeks via een querrie opvragen
+    	List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
+        return FXCollections.observableArrayList(list.stream().map(el->new ProductView(el.getProduct(),el.getCount())).toList());
+    }
 
     public void processOrder(int orderId, String transportServiceName) throws EntityNotFoundException, OrderStatusException {
         Order order = orderDao.get(orderId);

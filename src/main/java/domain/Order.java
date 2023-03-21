@@ -36,11 +36,11 @@ import jakarta.persistence.*;
         		name="Order.findAllForUser",
         		query = "SELECT d FROM Order d WHERE d.supplier.supplierId = (SELECT w.supplier.supplierId FROM User w WHERE w.userId = ?1)"
         ),
-//        @NamedQuery(
-//        		name = "Order.getProductsForOrder", 
-//        		query = "SELECT d.productsList FROM Order d WHERE d.orderId = ?1"
-//        		
-//        )
+        @NamedQuery(
+        		name = "Order.getOrderLinesForOrder", 
+        		query = "SELECT d.orderLines FROM Order d WHERE d.orderId = ?1"
+        		
+        )
 })
 public class Order {
 
@@ -92,7 +92,7 @@ public class Order {
         this.originalAcquisitionPrice = originalAcquisitionPrice;
         this.supplier=supplier;
         this.customer=customer;
-        orderLines = new ArrayList<>();
+        this.orderLines = new ArrayList<>();
         makeOrderlines(productsList);
     }
 
@@ -103,7 +103,7 @@ public class Order {
     	this.status = status;
     	this.transportService = transportService;
     	this.packaging = packaging;
-    	orderLines = new ArrayList<>();
+    	this.orderLines = new ArrayList<>();
     	makeOrderlines(productsList);
     }
 

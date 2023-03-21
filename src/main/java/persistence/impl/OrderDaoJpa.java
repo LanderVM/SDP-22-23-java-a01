@@ -1,6 +1,7 @@
 package persistence.impl;
 
 import domain.Order;
+import domain.OrderLine;
 import jakarta.persistence.EntityManager;
 import persistence.OrderDao;
 
@@ -20,5 +21,8 @@ public class OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
     }
     public List<Order> getAllForUser(int id) {
     	return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUser", Order.class).setParameter(1, id).getResultList());
+    }
+    public List<OrderLine> getOrderLinesForOrder (int orderId) {
+    	return entityManager.createNamedQuery("Order.getOrderLinesForOrder",OrderLine.class).setParameter(1, orderId).getResultList();
     }
 }
