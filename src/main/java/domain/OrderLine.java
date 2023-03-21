@@ -17,7 +17,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="order_lines")
-@IdClass(OrderLineKey.class)
 public class OrderLine implements Serializable{
 	
 	
@@ -25,16 +24,12 @@ public class OrderLine implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	private int orderId;
 	
 	@Id
-	private int productId;
-	
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Order order;
 	
+	@Id
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Product product;
 	
@@ -45,16 +40,16 @@ public class OrderLine implements Serializable{
 		this.order = order;
 		this.count = products.size();
 		this.product = products.get(0);
-		this.orderId = order.getOrderId();
-		this.productId = product.getProductId();
+//		this.orderId = order.getOrderId();
+//		this.productId = product.getProductId();
 	}
 	
 	public OrderLine (Product product, int count, Order order) {
 		this.order = order;
 		this.product = product;
 		this.count = count;
-		this.orderId = order.getOrderId();
-		this.productId = product.getProductId();
+//		this.orderId = order.getOrderId();
+//		this.productId = product.getProductId();
 	}
 
 	protected OrderLine() {
