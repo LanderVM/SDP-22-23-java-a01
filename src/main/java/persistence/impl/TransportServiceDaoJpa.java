@@ -24,8 +24,7 @@ public class TransportServiceDaoJpa extends GenericDaoJpa<TransportService> impl
     }
 
     public boolean exists(String name) {
-        TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findNameExists", TransportService.class);
-        return !query.setParameter(1, name).getResultList().isEmpty();
+        return !entityManager.createNamedQuery("TransportService.findNameExists").setParameter(1, name).getResultList().isEmpty();
     }
 
     public TransportService get(String name) throws NoResultException {

@@ -22,7 +22,7 @@ import java.util.Objects;
                 query = "SELECT d FROM TransportService d WHERE d.name = ?1"
         ),
         @NamedQuery(
-                name = "TransportService.findNameExists", // TODO better query here
+                name = "TransportService.findNameExists",
                 query = "SELECT d FROM TransportService d WHERE d.name = ?1"
         ),
         @NamedQuery(
@@ -75,10 +75,6 @@ public class TransportService {
 
     public TrackingCodeDetails getTrackingCodeDetails() {
         return trackingCodeDetails;
-    }
-
-    void setTrackingCodeDetails(TrackingCodeDetails trackingCodeDetails) {
-        this.trackingCodeDetails = trackingCodeDetails;
     }
 
     public boolean isActive() {
