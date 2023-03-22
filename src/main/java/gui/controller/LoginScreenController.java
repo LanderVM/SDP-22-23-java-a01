@@ -1,7 +1,5 @@
 package gui.controller;
 
-import java.io.IOException;
-
 import domain.OrderController;
 import domain.SupplierController;
 import domain.TransportServiceController;
@@ -44,15 +42,6 @@ public class LoginScreenController extends GridPane {
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
 		this.supplierController = supplierController;
-		
-		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
-		loader.setController(this);
-		loader.setRoot(this);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@FXML
@@ -71,12 +60,12 @@ public class LoginScreenController extends GridPane {
 	private void goToHomeWarehouseOperator() {
 		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
-		FXStageUtil.change(loader, ordersOverviewController, "Overview");
+		FXStageUtil.change(loader, ordersOverviewController, "Orders Overview");
 	}
 
 	private void goToHomeAdmin() {
-		AddTransportService addTransportService = new AddTransportService(orderController, userController, supplierController, transportServiceController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/AddTransportService.fxml"));
+		TransportServiceOverviewController addTransportService = new TransportServiceOverviewController(orderController, userController, supplierController, transportServiceController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServiceOverview.fxml"));
 		FXStageUtil.change(loader, addTransportService, "Transport Service Overview");
 	}
 	
@@ -92,13 +81,11 @@ public class LoginScreenController extends GridPane {
 	private void tmpSignInWarhouse() {
 		txtEmail.setText("testMagazijnier@mail.com");
 		txtPassword.setText("testMagazijnier");
-		SignIn(null);
 	}	
 	
 	@FXML
 	private void tmpSignInAdmin() {
 		txtEmail.setText("testAdmin@mail.com");
 		txtPassword.setText("testAdmin");
-		SignIn(null);
 	}
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Hyperlink?>
@@ -7,15 +8,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="2.0" prefWidth="121.40000915527344" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="26.0" prefWidth="520.60009765625" />
@@ -67,44 +66,34 @@
             </Button>
          </children>
       </Pane>
-      <GridPane fx:id="HeaderPane" style="-fx-background-color: RED;" GridPane.columnSpan="2147483647">
+      <GridPane fx:id="HeaderPane" style="-fx-background-color: #EC4842;" GridPane.columnSpan="2147483647">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="523.6000061035156" minWidth="10.0" prefWidth="488.39994506835933" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="505.7999267578125" minWidth="10.0" prefWidth="354.00005493164065" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.7999755859374" minWidth="10.0" prefWidth="436.99992675781255" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.99980468750005" minWidth="10.0" prefWidth="345.60002441406255" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="438.4000488281249" minWidth="10.0" prefWidth="250.4000488281249" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.199951171875" minWidth="10.0" prefWidth="47.999951171874955" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="704.0" minWidth="10.0" percentWidth="50.0" prefWidth="481.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" percentWidth="25.0" prefWidth="551.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="653.0" minWidth="10.0" percentWidth="25.0" prefWidth="653.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="imgDelaware" fitHeight="121.0" fitWidth="233.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/LogoDelaware.png" />
-               </image>
-            </ImageView>
-            <Hyperlink fx:id="btnHome" onAction="#showHome" prefHeight="106.0" prefWidth="211.0" style="-fx-font-family: arial;" text="Home" textFill="WHITE" GridPane.columnIndex="1">
+            <Hyperlink onAction="#showCustomers" prefHeight="126.0" prefWidth="414.0" style="-fx-font-family: arial;" text="Customers" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="48.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="btnCustomers" onAction="#showCustomers" prefHeight="126.0" prefWidth="414.0" style="-fx-font-family: arial;" text="Customers" textFill="WHITE" GridPane.columnIndex="2">
-               <font>
-                  <Font name="System Bold" size="48.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="btnOrders" onAction="#showOrders" prefHeight="133.0" prefWidth="266.0" style="-fx-font-family: arial;" text="Orders" textFill="WHITE" GridPane.columnIndex="3">
-               <font>
-                  <Font name="System Bold" size="48.0" />
-               </font>
-            </Hyperlink>
-            <Label fx:id="LblUser" prefHeight="69.0" prefWidth="187.0" text="John Doe" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+            <Label fx:id="lblUser" prefHeight="69.0" prefWidth="496.0" text="John Doe" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
+            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="243.0" style="-fx-font-family: arial;" text="Log Out" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font size="48.0" />
+               </font>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Hyperlink>
          </children>
       </GridPane>
       <TableView fx:id="OrderDetailsTable" prefHeight="188.0" prefWidth="1056.0" style="-fx-font-size: 18px;" GridPane.columnIndex="3" GridPane.columnSpan="5" GridPane.rowIndex="2">

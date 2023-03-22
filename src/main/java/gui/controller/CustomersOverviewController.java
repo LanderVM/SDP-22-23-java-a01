@@ -144,25 +144,22 @@ public class CustomersOverviewController extends GridPane {
 	}
 
 	@FXML
-	void showHome(ActionEvent event) {
-
-	}
-
-	@FXML
-	void showCustomers(ActionEvent event) {
-
-	}
-
-	@FXML
 	void showOrders(ActionEvent event) {
 		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
-		FXStageUtil.change(loader, ordersOverviewController, "Overview");
+		FXStageUtil.change(loader, ordersOverviewController, "Orders Overview");
 	}
 
 	public void refreshCustomersList() {
 		CustomersOverviewTable
 				.setItems(supplierController.getSuppliersView(userController.supplierIdFromUser()));
+	}
+
+	@FXML
+	private void logOut() {
+		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController, transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
+		FXStageUtil.change(loader, loginScreenController, "Log In");
 	}
 
 }

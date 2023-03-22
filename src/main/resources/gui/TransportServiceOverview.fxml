@@ -43,43 +43,35 @@
       <RowConstraints maxHeight="85.59992675781257" minHeight="10.0" percentHeight="10.0" prefHeight="79.19990234375007" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane fx:id="HeaderPane" style="-fx-background-color: RED;" GridPane.columnSpan="2147483647">
+      <GridPane style="-fx-background-color: #EC4842;" GridPane.columnSpan="2147483647">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="569.5999755859375" minWidth="10.0" prefWidth="538.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="629.5999267578123" minWidth="10.0" prefWidth="496.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" prefWidth="388.0" />
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="183.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="491.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="629.5999267578123" minWidth="10.0" prefWidth="404.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" prefWidth="258.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="187.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="295.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="317.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Hyperlink fx:id="btnTransportServices" onAction="#showHome" prefHeight="106.0" prefWidth="454.0" style="-fx-font-family: arial;" text="Transportservice" textFill="WHITE">
+            <Hyperlink onAction="#showEmployees" prefHeight="139.0" prefWidth="321.0" style="-fx-font-family: arial;" text="Employees" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font size="48.0" />
                </font>
                <padding>
                   <Insets left="50.0" />
                </padding>
             </Hyperlink>
-            <Hyperlink fx:id="btnNotifications" onAction="#showNotifications" prefHeight="139.0" prefWidth="321.0" style="-fx-font-family: arial;" text="Employees" textFill="WHITE" GridPane.columnIndex="1">
+            <Hyperlink onAction="#showBoxes" prefHeight="133.0" prefWidth="273.0" style="-fx-font-family: arial;" text="Boxes" textFill="WHITE" GridPane.columnIndex="1">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font size="48.0" />
                </font>
                <padding>
                   <Insets left="50.0" />
                </padding>
             </Hyperlink>
-            <Hyperlink fx:id="btnBoxes" onAction="#showOrders" prefHeight="133.0" prefWidth="266.0" style="-fx-font-family: arial;" text="Boxes" textFill="WHITE" GridPane.columnIndex="2">
-               <font>
-                  <Font name="System Bold" size="48.0" />
-               </font>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Hyperlink>
-            <Label fx:id="lblUser" prefHeight="70.0" prefWidth="445.0" text="Admin" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="LEFT">
+            <Label fx:id="lblUser" prefHeight="70.0" prefWidth="445.0" text="Admin" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="LEFT">
                <font>
                   <Font size="36.0" />
                </font>
@@ -87,11 +79,19 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <ImageView fitHeight="60.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+            <ImageView fitHeight="60.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
                   <Image url="@../images/adminIcon.png" />
                </image>
             </ImageView>
+            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="243.0" style="-fx-font-family: arial;" text="Log Out" textFill="WHITE" GridPane.columnIndex="4">
+               <font>
+                  <Font size="48.0" />
+               </font>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Hyperlink>
          </children>
       </GridPane>
       <VBox GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="4">
@@ -139,7 +139,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <GridPane fx:id="GridPaneAddTSInfo" prefHeight="498.0" prefWidth="813.0" style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="4">
+      <GridPane prefHeight="498.0" prefWidth="813.0" style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="4">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -153,32 +153,32 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lblName" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Name" GridPane.halignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Name" GridPane.halignment="CENTER">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblCharacterAmount" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Character Amount" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Character Amount" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblPrefix" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Prefix" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Prefix" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblExtraVerificationCode" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="299.0" text="Extra Verification Code" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="299.0" text="Extra Verification Code" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Status" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="233.0" text="Status" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblOnlyNumbersAllowed" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="306.0" text="Only Numbers Allowed" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="306.0" text="Only Numbers Allowed" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

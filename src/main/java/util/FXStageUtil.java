@@ -2,6 +2,7 @@ package util;
 
 import java.io.IOException;
 
+import gui.controller.LoginScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,6 +23,9 @@ public class FXStageUtil {
 		if (stage == null)
 			throw new IllegalStateException("Primary stage must be initialized before running this method");
 
+		if (controller instanceof LoginScreenController) {
+			loader.setRoot(controller);
+		}
 		try {
             loader.setController(controller);
             Parent root = loader.load();

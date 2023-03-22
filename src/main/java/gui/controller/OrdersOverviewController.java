@@ -41,7 +41,7 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private Hyperlink btnOrders;
 	@FXML
-	private Label LblUser;
+	private Label lblUser;
 	@FXML
 	private Line LineOrderOverview;
 	@FXML
@@ -108,7 +108,7 @@ public class OrdersOverviewController extends GridPane {
 
 	@FXML
 	private void initialize() {
-		LblUser.setText(userController.toString());
+		lblUser.setText(userController.toString());
 		
 		//Fill list of all orders
 		NumberColumnTable.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
@@ -185,9 +185,11 @@ public class OrdersOverviewController extends GridPane {
         int orderId = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
             orderController.processOrder(orderId, selectionTransportService);
-            alert = new Alert(AlertType.CONFIRMATION,
-                    "Succesfully processed the order.", ButtonType.CLOSE);
-            alert.show();
+            Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Login Error");
+    		alert.setHeaderText(null);
+    		alert.setContentText("Succesfully processed the order!");
+    		alert.showAndWait();
         } catch (EntityNotFoundException | OrderStatusException e) {
             e.printStackTrace();
         }
@@ -211,6 +213,13 @@ public class OrdersOverviewController extends GridPane {
 		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, transportServiceController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
 		FXStageUtil.change(loader, customersOverviewController, "Customers");
+	}
+
+	@FXML
+	private void logOut() {
+		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController, transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
+		FXStageUtil.change(loader, loginScreenController, "Log In");
 	}
 
 }

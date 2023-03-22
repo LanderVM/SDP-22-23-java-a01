@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +14,7 @@ import util.FXStageUtil;
 import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -49,6 +51,15 @@ public class StartUp extends Application {
                     new UserController(userDao),
                     new TransportServiceController(transportServiceDao),
                     new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));
+
+    		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
+    		loader.setController(root);
+    		loader.setRoot(root);
+    		try {
+    			loader.load();
+    		} catch (IOException e) {
+    			throw new RuntimeException(e);
+    		}
 
             Scene scene = new Scene(root);
             // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
