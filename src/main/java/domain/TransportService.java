@@ -28,6 +28,14 @@ import java.util.Objects;
         @NamedQuery(
         		name = "TransportService.findAllNames",
                 query = "SELECT d.name FROM TransportService d"
+        ),
+        @NamedQuery(
+        		name = "TransportService.findAllNamesForSupplier",
+                query = "SELECT d.name FROM TransportService d WHERE d.supplier.supplierId = ?1"
+        ),
+        @NamedQuery(
+        		name = "TransportService.findAllForSupplier",
+                query = "SELECT d FROM TransportService d WHERE d.supplier.supplierId = ?1"
         )
 })
 public class TransportService {
@@ -41,12 +49,17 @@ public class TransportService {
     private List<ContactPerson> contactPersonList;
     @OneToOne
     private TrackingCodeDetails trackingCodeDetails;
+    
+    @ManyToOne
+    private Supplier supplier;
+    
     private boolean active;
 
-    public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, boolean active) {
+    public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails,Supplier supplier ,boolean active) {
         this.name = name;
         this.contactPersonList = contactPersonList;
         this.trackingCodeDetails = trackingCodeDetails;
+        this.supplier = supplier;
         this.active = active;
     }
 
@@ -85,7 +98,15 @@ public class TransportService {
         this.active = active;
     }
 
-    @Override
+    public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

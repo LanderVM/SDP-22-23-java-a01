@@ -72,6 +72,9 @@ public class Supplier {
 
     @OneToMany(mappedBy = "customer")
     private List<Order> ordersAsCustomer;
+    
+    @OneToMany(mappedBy="supplier")
+    private List<TransportService> transportServices;
 
     public Supplier(String name, String email, String address, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
                     List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
@@ -173,6 +176,14 @@ public class Supplier {
 
 	public void setLogo(Logo logo) {
 		this.logo = logo;
+	}
+
+	public List<TransportService> getTransportServices() {
+		return transportServices;
+	}
+
+	public void setTransportServices(List<TransportService> transportServices) {
+		this.transportServices = transportServices;
 	}
 
 	@Override

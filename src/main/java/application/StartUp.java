@@ -95,8 +95,13 @@ public class StartUp extends Application {
         ContactPerson bpostPerson2 = new ContactPerson("twe@bpost.be", "479554433");
         ContactPerson postnlPerson1 = new ContactPerson("postnl@post.nl", "899321480");
 
-        TransportService bpost = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, true);
-        TransportService postnl = new TransportService("postnl", List.of(postnlPerson1), postnlDetails, true);
+        TransportService bpost1 = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails,s1, true);
+        TransportService postnl1 = new TransportService("postnl", List.of(postnlPerson1), postnlDetails,s1, true);
+        TransportService bpost2 = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails,s2, true);
+        TransportService postnl2 = new TransportService("postnl", List.of(postnlPerson1), postnlDetails,s2, true);
+        
+        s2.setTransportServices(List.of(bpost1,postnl1));
+        s2.setTransportServices(List.of(bpost2,postnl2));
         
         Product product1 = new Product("test_product een", new BigDecimal("1.00"));
         Product product2 = new Product("test_product twee", new BigDecimal("2.00"));
