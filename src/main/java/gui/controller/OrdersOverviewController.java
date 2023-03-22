@@ -2,10 +2,9 @@ package gui.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.stream.Collectors;
 
 import domain.OrderController;
-import domain.Packaging;
+import domain.PackagingType;
 import domain.Status;
 import domain.SupplierController;
 import domain.TransportServiceController;
@@ -13,9 +12,7 @@ import domain.UserController;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import gui.view.ProductView;
-import gui.view.TransportServiceView;
 import jakarta.persistence.EntityNotFoundException;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,7 +64,7 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private TableColumn<OrderView, Status> StatusColumnOrderTable;
 	@FXML
-	private TableColumn<OrderView, Packaging> PackagingColumnOrderTable;
+	private TableColumn<OrderView, PackagingType> PackagingColumnOrderTable;
 	@FXML
 	private TableColumn<OrderView, String> TransportServiceColumnOrderTable;
 	@FXML

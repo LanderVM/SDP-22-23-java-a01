@@ -41,7 +41,7 @@ public class OrderTest {
 
     @Test
     public void processOrder_happyFlow() throws OrderStatusException {
-        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, Packaging.MEDIUM, supplier, customer, new BigDecimal("7.70"));
+        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, PackagingType.MEDIUM, supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
         orderController.processOrder(1, transportService.getName());
@@ -55,7 +55,7 @@ public class OrderTest {
 
     @Test
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
-        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, Packaging.MEDIUM, supplier, customer, new BigDecimal("7.70"));
+        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, PackagingType.MEDIUM, supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
         assertThrows(OrderStatusException.class, () -> orderController.processOrder(1,transportService.getName()));

@@ -10,50 +10,44 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "packages")
 public class Package implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "package_id")
     private int packageId;
 	
-    @Column(unique=true)
+    @Column
 	private String name;
     
-	private Packaging type;
-	private BigDecimal height;
-	private BigDecimal width;
-	private BigDecimal lenght;
+	private PackagingType type;
+	private double height;
+	private double width;
+	private double length;
 	private BigDecimal price;
 	private boolean active;
 	
-	public Package(String name, Packaging type, BigDecimal height, BigDecimal width, BigDecimal lenght,
-			BigDecimal price, boolean active) {
+	public Package(String name, PackagingType type, double height, double width, double length,
+				   BigDecimal price, boolean active) {
 		this.name = name;
 		this.type = type;
 		this.height = height;
 		this.width = width;
-		this.lenght = lenght;
+		this.length = length;
 		this.price = price;
 		this.active = active;
 	}
 	
-	public Package(String name, Packaging type, BigDecimal height, BigDecimal width, BigDecimal lenght,
-			BigDecimal price) {
+	public Package(String name, PackagingType type, double height, double width, double length,
+				   BigDecimal price) {
 		this.name = name;
 		this.type = type;
 		this.height = height;
 		this.width = width;
-		this.lenght = lenght;
+		this.length = length;
 		this.price = price;
 		this.active = true;
 	}
@@ -69,36 +63,36 @@ public class Package implements Serializable {
 		this.name = name;
 	}
 
-	public Packaging getType() {
+	public PackagingType getType() {
 		return type;
 	}
 
-	public void setType(Packaging type) {
+	public void setType(PackagingType type) {
 		this.type = type;
 	}
 
-	public BigDecimal getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public void setHeight(BigDecimal height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 
-	public BigDecimal getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
-	public void setWidth(BigDecimal width) {
+	public void setWidth(double width) {
 		this.width = width;
 	}
 
-	public BigDecimal getLenght() {
-		return lenght;
+	public double getLength() {
+		return length;
 	}
 
-	public void setLenght(BigDecimal lenght) {
-		this.lenght = lenght;
+	public void setLength(double length) {
+		this.length = length;
 	}
 
 	public BigDecimal getPrice() {
@@ -118,7 +112,7 @@ public class Package implements Serializable {
 	}
 
 	public String getDimensions() {
-		return String.format("%d x %d x %d", height, lenght, width);
+		return String.format("%f x %f x %f", height, length, width);
 	}
 	
 	@Override
@@ -141,7 +135,7 @@ public class Package implements Serializable {
 	@Override
 	public String toString() {
 		return "Package [packageId=" + packageId + ", name=" + name + ", type=" + type + ", height=" + height
-				+ ", width=" + width + ", lenght=" + lenght + ", price=" + price + ", active=" + active + "]";
+				+ ", width=" + width + ", lenght=" + length + ", price=" + price + ", active=" + active + "]";
 	}
 	
 }

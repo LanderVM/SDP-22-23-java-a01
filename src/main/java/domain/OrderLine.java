@@ -4,27 +4,20 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="order_lines")
 public class OrderLine implements Serializable{
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "order_line_id")
+	private int orderLineId;
+
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Order order;
 	
-	@Id
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Product product;
 	
@@ -36,17 +29,9 @@ public class OrderLine implements Serializable{
 		this.count = products.size();
 		this.product = products.get(0);
 	}
-	
-	public OrderLine (Product product, int count, Order order) {
-		this.order = order;
-		this.product = product;
-		this.count = count;
-	}
 
 	protected OrderLine() {
 	}
-	
-	
 
 	public Order getOrder() {
 		return order;
@@ -73,20 +58,16 @@ public class OrderLine implements Serializable{
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(order, product);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		OrderLine orderLine = (OrderLine) o;
+		return orderLineId == orderLine.orderLineId;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OrderLine other = (OrderLine) obj;
-		return Objects.equals(order, other.order) && Objects.equals(product, other.product);
+	public int hashCode() {
+		return Objects.hash(orderLineId);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package domain;
 
-public enum Packaging {
+public enum PackagingType {
     SMALL,
     MEDIUM,
     LARGE,

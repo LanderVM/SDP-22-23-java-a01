@@ -93,10 +93,10 @@ public class StartUp extends Application {
         Product product4 = new Product("test_product vier", new BigDecimal("8.90"));
         Product product5 = new Product("test_product vijf", new BigDecimal("11.30"));
         
-        Order order1 = new Order(LocalDate.now().minusDays(3),"Honkstraat 33 Lokeren",List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, Packaging.MEDIUM, s1,s2,new BigDecimal("3.00"));
-        Order order2 = new Order(LocalDate.now().minusDays(2),"Bellelaan 12 Haaltert",List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, Packaging.CUSTOM,s2,s1, new BigDecimal("24.70"));
-        Order order3 = new Order(LocalDate.now().minusDays(1),"Doodskoplaan 73 Gent",List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl, Packaging.SMALL,s1,s2, new BigDecimal("23.80"));
-        Order order4 = new Order(LocalDate.now(),"Bekerstraat 66 Bilzen",List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, Packaging.LARGE,s2,s1, new BigDecimal("21.20"));
+        Order order1 = new Order(LocalDate.now().minusDays(3),"Honkstraat 33 Lokeren",List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, PackagingType.MEDIUM, s1,s2,new BigDecimal("3.00"));
+        Order order2 = new Order(LocalDate.now().minusDays(2),"Bellelaan 12 Haaltert",List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost, PackagingType.CUSTOM,s2,s1, new BigDecimal("24.70"));
+        Order order3 = new Order(LocalDate.now().minusDays(1),"Doodskoplaan 73 Gent",List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl, PackagingType.SMALL,s1,s2, new BigDecimal("23.80"));
+        Order order4 = new Order(LocalDate.now(),"Bekerstraat 66 Bilzen",List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, PackagingType.LARGE,s2,s1, new BigDecimal("21.20"));
         
         
         order2.generateTrackingCode();

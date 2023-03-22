@@ -22,11 +22,7 @@ import java.util.Objects;
                 query = "SELECT d FROM TransportService d WHERE d.name = ?1"
         ),
         @NamedQuery(
-                name = "TransportService.findAllActive",
-                query = "SELECT d FROM TransportService d WHERE d.active = true"
-        ),
-        @NamedQuery(
-                name = "TransportService.findNameExists",
+                name = "TransportService.findNameExists", // TODO better query here
                 query = "SELECT d FROM TransportService d WHERE d.name = ?1"
         ),
         @NamedQuery(

@@ -21,14 +21,6 @@ import jakarta.persistence.*;
                 query = "SELECT d FROM Order d"
         ),
         @NamedQuery(
-                name = "Order.findAllPosted",
-                query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED"
-        ),
-        @NamedQuery(
-        		name = "Order.findAllPostedForSupplier",
-                query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = ?1"
-        ),
-        @NamedQuery(
         		name = "Order.findAllForSupplier",
                 query = "SELECT d FROM Order d WHERE d.supplier.supplierId = ?1"
         ),
@@ -62,7 +54,7 @@ public class Order {
     private List<OrderLine> orderLines;
     
     private Status status;
-    private Packaging packaging;
+    private PackagingType packagingType;
 
     @ManyToOne
     private TransportService transportService;
@@ -84,12 +76,12 @@ public class Order {
 
 
     public Order(LocalDate date, String adress, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
+                 TransportService transportService, PackagingType packagingType, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
         this.date = date;
         this.address = adress;
         this.status = status;
         this.transportService = transportService;
-        this.packaging = packaging;
+        this.packagingType = packagingType;
         this.originalAcquisitionPrice = originalAcquisitionPrice;
         this.supplier=supplier;
         this.customer=customer;
@@ -98,11 +90,11 @@ public class Order {
     }
 
 	public Order(LocalDate date, List<Product> productsList, Status status,
-            TransportService transportService, Packaging packaging) {
+            TransportService transportService, PackagingType packagingType) {
     	this.date = date;
     	this.status = status;
     	this.transportService = transportService;
-    	this.packaging = packaging;
+    	this.packagingType = packagingType;
     	this.orderLines = new ArrayList<>();
     	makeOrderlines(productsList);
     }
@@ -142,12 +134,12 @@ public class Order {
         this.status = status;
     }
 
-    public Packaging getPackaging() {
-        return packaging;
+    public PackagingType getPackaging() {
+        return packagingType;
     }
 
-    public void setPackaging(Packaging packaging) {
-        this.packaging = packaging;
+    public void setPackaging(PackagingType packagingType) {
+        this.packagingType = packagingType;
     }
 
     public TransportService getTransportService() {
@@ -250,7 +242,7 @@ public class Order {
                 ", date=" + date +
                 ", orderLines=" + orderLines +
                 ", status=" + status +
-                ", packaging=" + packaging +
+                ", packaging=" + packagingType +
                 ", transportService=" + transportService +
                 ", trackingCode=" + trackingCode +
                 ", originalAcquisitionPrice=" + originalAcquisitionPrice +
