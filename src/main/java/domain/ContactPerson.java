@@ -2,6 +2,7 @@ package domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,9 @@ public class ContactPerson {
 
     private String email;
     private String phoneNumber;
+    
+    @ManyToMany
+    private List<TransportService> transportServices;
 
     public ContactPerson(String email, String phoneNumber) {
         this.email = email;
@@ -41,9 +45,17 @@ public class ContactPerson {
 
     void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
+    } 
 
-    @Override
+    public List<TransportService> getTransportServices() {
+		return transportServices;
+	}
+
+	public void setTransportServices(List<TransportService> transportServices) {
+		this.transportServices = transportServices;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

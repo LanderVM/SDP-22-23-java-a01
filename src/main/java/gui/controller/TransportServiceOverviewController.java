@@ -107,7 +107,7 @@ public class TransportServiceOverviewController extends GridPane {
 					chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
 					ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
 
-					// Table ContactPersonSupplier
+					// Table ContactPerson TransportService
 					tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
 					tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
 					tblContactPerson.setItems(newService.getContactPeople());
@@ -117,12 +117,12 @@ public class TransportServiceOverviewController extends GridPane {
 
 	public void refreshCustomersList() {
 		tblTransportServices
-				.setItems(transportServiceController.getTransportServices());
+				.setItems(transportServiceController.getTransportServices(userController.supplierIdFromUser()));
 	}
 
 	@FXML
 	private void saveTransportServices() {
-		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByName(name)
+		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser())
 				.getContactPersonList();
 		transportServiceController.updateTransportService(id, txtName.getText(), contactPersonList,
 				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
@@ -151,7 +151,7 @@ public class TransportServiceOverviewController extends GridPane {
 			alert.setContentText("Contact person needs an email address and phonenumber");
 			alert.showAndWait();
 		}
-		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByName(name).getContactPersonList();
+		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser()).getContactPersonList();
 		contactPersonList.add(new ContactPerson(txtAddEmail.getText(), txtAddPhoneNumber.getText()));
 
 		transportServiceController.updateTransportService(id, txtName.getText(), contactPersonList,

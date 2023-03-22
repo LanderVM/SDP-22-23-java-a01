@@ -36,6 +36,14 @@ import java.util.Objects;
         @NamedQuery(
         		name = "TransportService.findAllForSupplier",
                 query = "SELECT d FROM TransportService d WHERE d.supplier.supplierId = ?1"
+        ),
+        @NamedQuery(
+        		name = "TransportService.findNameExistsForSupplier", 
+        		query = "SELECT d FROM TransportService d WHERE d.supplier.supplierId = :supplierId  AND d.name = :name"
+        ),
+        @NamedQuery(
+                name = "TransportService.findByNameForSupplier",
+                query = "SELECT d FROM TransportService d WHERE d.supplier.supplierId = :supplierId AND d.name = :name"
         )
 })
 public class TransportService {
@@ -45,7 +53,7 @@ public class TransportService {
     @Column(name = "transport_service_id")
     private int transportServiceId;
     private String name;
-    @OneToMany
+    @ManyToMany(mappedBy="transportServices")
     private List<ContactPerson> contactPersonList;
     @OneToOne
     private TrackingCodeDetails trackingCodeDetails;

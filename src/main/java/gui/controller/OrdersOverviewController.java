@@ -133,7 +133,7 @@ public class OrdersOverviewController extends GridPane {
         refreshOrderList();
 
         // TransportServices
-        ObservableList<String> transportServiceNames = transportServiceController.getTransportServicesNames();
+        ObservableList<String> transportServiceNames = transportServiceController.getTransportServicesNames(userController.supplierIdFromUser());
         
         if (transportServiceNames.size() == 0)
             alert = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
@@ -184,7 +184,9 @@ public class OrdersOverviewController extends GridPane {
         String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
         int orderId = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
-            orderController.processOrder(orderId, selectionTransportService);
+            
+            
+            orderController.processOrder(orderId, selectionTransportService,userController.supplierIdFromUser());
             Alert alert = new Alert(AlertType.INFORMATION);
     		alert.setTitle("Login Error");
     		alert.setHeaderText(null);

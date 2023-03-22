@@ -12,9 +12,12 @@ import domain.Order;
 import domain.OrderLine;
 import domain.Product;
 import domain.Supplier;
+import domain.TransportService;
 import persistence.OrderDao;
+import persistence.TransportServiceDao;
 import persistence.impl.OrderDaoJpa;
 import persistence.impl.SupplierDaoJpa;
+import persistence.impl.TransportServiceDaoJpa;
 import util.JPAUtil;
 
 public class TestMain {
@@ -23,10 +26,10 @@ public class TestMain {
 		// TODO Auto-generated method stub
 		StartUp.seedDatabase();
 		
-		OrderDao od = new OrderDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager());
+		TransportServiceDao tsd = new TransportServiceDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager());
+		List<TransportService> lijst = tsd.getAllForSupplier(2);
 		
-		Supplier c = od.getCustomerForOrder(2);
-		System.out.println(c);
+		System.out.println(lijst);
 	}
 
 }

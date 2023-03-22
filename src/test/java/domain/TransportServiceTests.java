@@ -21,6 +21,7 @@ public class TransportServiceTests {
     @InjectMocks
     private TransportServiceController transportServiceController;
 
+    private Supplier supplier;
     private ContactPerson contactPerson;
     TransportService transportService;
 
@@ -29,27 +30,27 @@ public class TransportServiceTests {
         @Test
         public void addTransportService_happyFlow() {
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true);
+            transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true,supplier.getSupplierId());
         }
 
         @Test
         public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
             contactPerson = new ContactPerson("test@mail.com", "0477982037");
-            when(transportServiceJPADao.exists("bpost")).thenReturn(true);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true));
+            when(transportServiceJPADao.existsForSupplier("bpost", supplier.getSupplierId())).thenReturn(true);
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true,supplier.getSupplierId()));
         }
 
         @Test
         public void addTransportService_contactPersonListEmpty_throwsIllegalArgumentException() {
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(), 10, false, "test", "POST_CODE", true));
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(), 10, false, "test", "POST_CODE", true,supplier.getSupplierId()));
         }
 
         @Test
         public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
             contactPerson = new ContactPerson("test@mail.com", "0477982037");
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "invalid_type", true));
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "invalid_type", true,supplier.getSupplierId()));
         }
     }
 
@@ -57,7 +58,7 @@ public class TransportServiceTests {
     class UpdateTests {
         @Test
         public void updateService_happyFlow() {
-            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE),supplier ,true);
             contactPerson = new ContactPerson("email@email.com", "4994233050");
 
             when(transportServiceJPADao.get(0)).thenReturn(transportService);
@@ -85,7 +86,7 @@ public class TransportServiceTests {
 
         @Test
         public void updateService_emptyContactPersonList_throwsIllegalArgumentException() {
-            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE),supplier ,true);
 
             final String name = "new name";
             final List<ContactPerson> contactPersonList = List.of();

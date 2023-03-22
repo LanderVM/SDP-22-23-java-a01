@@ -26,13 +26,32 @@ public class TransportServiceDaoJpa extends GenericDaoJpa<TransportService> impl
     public boolean exists(String name) {
         return !entityManager.createNamedQuery("TransportService.findNameExists").setParameter(1, name).getResultList().isEmpty();
     }
+    
+    public boolean existsForSupplier (String name, int supplierId) {
+    	TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findNameExistsForSupplier", TransportService.class);
+    	return !query.setParameter("supplierId", supplierId).setParameter("name", name).getResultList().isEmpty();
+    }
 
     public TransportService get(String name) throws NoResultException {
         TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findByName", TransportService.class);
         return query.setParameter(1, name).getSingleResult();
     }
     
+    public TransportService getForSupplier(String name,int supplierId) throws NoResultException {
+        TypedQuery<TransportService> query = entityManager.createNamedQuery("TransportService.findByNameForSupplier", TransportService.class);
+        return query.setParameter("supplierId", supplierId).setParameter("name", name).getSingleResult();
+    }
+    
     public List<String> getAllNames() {
 		return Collections.unmodifiableList(entityManager.createNamedQuery("TransportService.findAllNames",String.class).getResultList());
 	}
+    
+    public List<String> getAllNamesForSupplier(int supplierId) {
+    	return Collections.unmodifiableList(entityManager.createNamedQuery("TransportService.findAllNamesForSupplier",String.class).setParameter(1, supplierId).getResultList());
+    }
+    
+    public List<TransportService> getAllForSupplier (int supplierId) {
+    	return entityManager.createNamedQuery("TransportService.findAllForSupplier", TransportService.class).setParameter(1, supplierId).getResultList();
+    }
+    
 }

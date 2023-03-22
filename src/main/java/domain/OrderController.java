@@ -49,9 +49,9 @@ public class OrderController {
         return FXCollections.observableArrayList(list.stream().map(el->new ProductView(el.getProduct(),el.getCount())).toList());
     }
 
-    public void processOrder(int orderId, String transportServiceName) throws EntityNotFoundException, OrderStatusException {
+    public void processOrder(int orderId, String transportServiceName,int supplierId) throws EntityNotFoundException, OrderStatusException {
         Order order = orderDao.get(orderId);
-        TransportService transportService =  transportServiceDao.get(transportServiceName);
+        TransportService transportService =  transportServiceDao.getForSupplier(transportServiceName, supplierId);
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 

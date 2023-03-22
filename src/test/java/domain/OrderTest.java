@@ -36,7 +36,7 @@ public class OrderTest {
     public void setup() {
         supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
         customer = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
-        transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), true);
+        transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE),supplier, true);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class OrderTest {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, PackagingType.STANDARD, supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
-        orderController.processOrder(1, transportService.getName());
+        orderController.processOrder(1, transportService.getName(),supplier.getSupplierId());
         Order orderAfterUpdate = orderDao.get(1);
 
         assertEquals(transportService, orderAfterUpdate.getTransportService());
@@ -58,7 +58,7 @@ public class OrderTest {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, PackagingType.STANDARD, supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
-        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1,transportService.getName()));
+        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1,transportService.getName(),supplier.getSupplierId()));
         verify(orderDao).get(1);
     }
 }
