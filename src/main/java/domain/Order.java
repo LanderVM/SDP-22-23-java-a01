@@ -40,6 +40,10 @@ import jakarta.persistence.*;
         		name = "Order.getOrderLinesForOrder", 
         		query = "SELECT d.orderLines FROM Order d WHERE d.orderId = ?1"
         		
+        ),
+        @NamedQuery(
+        		name = "Order.getCustomerForOrder", 
+        		query = "SELECT d.customer FROM Order d WHERE d.orderId = ?1"
         )
 })
 public class Order {

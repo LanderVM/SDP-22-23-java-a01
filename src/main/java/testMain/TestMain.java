@@ -25,8 +25,8 @@ public class TestMain {
 		
 		OrderDao od = new OrderDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager());
 		
-		List<OrderLine> lijst = od.getOrderLinesForOrder(1);
-		System.out.println(lijst);
+		Supplier c = od.getCustomerForOrder(2);
+		System.out.println(c);
 	}
 
 }

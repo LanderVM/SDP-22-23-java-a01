@@ -6,6 +6,7 @@ import java.util.function.Function;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import gui.view.ProductView;
+import gui.view.TransportServiceView;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,9 +36,13 @@ public class OrderController {
         return FXCollections.observableArrayList(new OrderView(orderDao.get(id)));
     }
 
-    public Order getOrderById(int id) {
-        return orderDao.get(id);
+    public Order getOrderById(int orderId) {
+        return orderDao.get(orderId);
     }
+    
+    public Supplier getCustomerForOrder(int orderId) {
+		return orderDao.getCustomerForOrder(orderId);
+	}
     
     public ObservableList<ProductView> getProductsList(int orderId) {
     	List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
@@ -57,4 +62,5 @@ public class OrderController {
 
         orderDao.update(order);
     }
+
 }

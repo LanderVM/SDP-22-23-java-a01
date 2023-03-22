@@ -160,13 +160,13 @@ public class OrdersOverviewController extends GridPane {
         });
     }
 
-	private void setCustomerInfo(int id) {
+	private void setCustomerInfo(int orderId) {
 		CustomerDetailsList.getItems().clear();	
-		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getCustomer().getName());
-		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getCustomer().getEmail());
-		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getCustomer().getAddress());
-		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getCustomer().getPhoneNumber());
-		CustomerDetailsList.getItems().add(orderController.getOrderById(id).getDate().toString());	
+		CustomerDetailsList.getItems().add(orderController.getCustomerForOrder(orderId).getName());
+		CustomerDetailsList.getItems().add(orderController.getCustomerForOrder(orderId).getEmail());
+		CustomerDetailsList.getItems().add(orderController.getCustomerForOrder(orderId).getAddress());
+		CustomerDetailsList.getItems().add(orderController.getCustomerForOrder(orderId).getPhoneNumber());
+		CustomerDetailsList.getItems().add(orderController.getOrderById(orderId).getDate().toString());	
 	}
 
     @FXML
@@ -185,9 +185,9 @@ public class OrdersOverviewController extends GridPane {
     @FXML
     private void ProcessOrder(ActionEvent event) {
         String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
-        int id = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
+        int orderId = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
-            orderController.processOrder(id, selectionTransportService);
+            orderController.processOrder(orderId, selectionTransportService);
             alert = new Alert(AlertType.CONFIRMATION,
                     "Succesfully processed the order.", ButtonType.CLOSE);
             alert.show();
@@ -195,9 +195,13 @@ public class OrdersOverviewController extends GridPane {
             e.printStackTrace();
         }
         refreshOrderList();
-        int index = 0;
+        reselectProcessedOrder(orderId);
+    }
+    
+    private void reselectProcessedOrder (int orderId) {
+    	int index = 0;
         for (int i = 0; i < TableOrdersView.getItems().size(); i++) {
-            if (TableOrdersView.getItems().get(i).getOrderId()==id) {
+            if (TableOrdersView.getItems().get(i).getOrderId()==orderId) {
                 index = i;
                 break;
             }
