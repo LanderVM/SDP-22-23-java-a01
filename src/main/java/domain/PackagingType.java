@@ -1,8 +1,6 @@
 package domain;
 
 public enum PackagingType {
-    SMALL,
-    MEDIUM,
-    LARGE,
+    STANDARD,
     CUSTOM
 }

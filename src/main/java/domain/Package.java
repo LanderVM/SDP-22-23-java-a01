@@ -19,17 +19,17 @@ public class Package implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "package_id")
     private int packageId;
-	
-    @Column
+
+    @Column(unique = true)
 	private String name;
-    
+
 	private PackagingType type;
 	private double height;
 	private double width;
 	private double length;
 	private BigDecimal price;
 	private boolean active;
-	
+
 	public Package(String name, PackagingType type, double height, double width, double length,
 				   BigDecimal price, boolean active) {
 		this.name = name;
@@ -40,7 +40,7 @@ public class Package implements Serializable {
 		this.price = price;
 		this.active = active;
 	}
-	
+
 	public Package(String name, PackagingType type, double height, double width, double length,
 				   BigDecimal price) {
 		this.name = name;
@@ -63,58 +63,6 @@ public class Package implements Serializable {
 		this.name = name;
 	}
 
-	public PackagingType getType() {
-		return type;
-	}
-
-	public void setType(PackagingType type) {
-		this.type = type;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public void setHeight(double height) {
-		this.height = height;
-	}
-
-	public double getWidth() {
-		return width;
-	}
-
-	public void setWidth(double width) {
-		this.width = width;
-	}
-
-	public double getLength() {
-		return length;
-	}
-
-	public void setLength(double length) {
-		this.length = length;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public String getDimensions() {
-		return String.format("%f x %f x %f", height, length, width);
-	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(packageId);
@@ -137,5 +85,5 @@ public class Package implements Serializable {
 		return "Package [packageId=" + packageId + ", name=" + name + ", type=" + type + ", height=" + height
 				+ ", width=" + width + ", lenght=" + length + ", price=" + price + ", active=" + active + "]";
 	}
-	
+
 }
