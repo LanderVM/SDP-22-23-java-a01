@@ -6,6 +6,7 @@ import domain.TransportServiceController;
 import domain.UserController;
 import gui.view.ContactPersonView;
 import gui.view.TransportServiceView;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ public class TransportServicesOverviewController extends GridPane {
 	@FXML
 	private TableColumn<TransportServiceView, String> tblTransportservicesClmName;
 	@FXML
-	private TableColumn<TransportServiceView, Boolean> tblTransportservicesClmStatus;
+	private TableColumn<TransportServiceView, String> tblTransportservicesClmStatus;
 	@FXML
 	private TableView<TransportServiceView> tblTransportServicesInfo;
 	@FXML
@@ -66,7 +67,7 @@ public class TransportServicesOverviewController extends GridPane {
 		
 		//Table TransportService
 		tblTransportservicesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-		tblTransportservicesClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
+		tblTransportservicesClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty().get()==true?new SimpleStringProperty( "active"):new SimpleStringProperty("not active"));
 		
 		refreshCustomersList();
 		
