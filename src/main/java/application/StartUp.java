@@ -62,7 +62,7 @@ public class StartUp extends Application {
     		}
 
             Scene scene = new Scene(root);
-            // scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            //scene.getStylesheets().add(getClass().getResource("/gui/application.css").toExternalForm());
             primaryStage.setResizable(true);
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
             primaryStage.setTitle("Log In");

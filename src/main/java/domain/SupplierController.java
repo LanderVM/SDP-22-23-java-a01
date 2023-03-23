@@ -30,7 +30,6 @@ public class SupplierController {
 
 	public ObservableList<CustomerView> getSuppliersView(int supplierId) {
 		return FXCollections.observableArrayList(supplierDao.getCustomersForSupplier(supplierId).stream().map(CustomerView::new).toList());
-         
 	}
 
 	public ObservableList<CustomerOrdersView> getCustomerOrderView(String mail) {

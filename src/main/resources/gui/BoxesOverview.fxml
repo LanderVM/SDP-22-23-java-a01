@@ -43,11 +43,11 @@
          <children>
             <TableView fx:id="tblBoxes" prefHeight="620.0" prefWidth="1420.0" style="-fx-font-size: 28px;">
               <columns>
-                <TableColumn fx:id="ColumnName" prefWidth="204.00000303983688" text="Name" />
-                <TableColumn fx:id="ColumnType" prefWidth="218.40003967285156" text="Type" />
-                  <TableColumn fx:id="ColumnMeasurements" prefWidth="575.9999694824219" text="Measurements" />
-                  <TableColumn fx:id="ColumnPrice" prefWidth="199.199951171875" text="Price" />
-                  <TableColumn fx:id="ColumnActive" prefWidth="224.7999267578125" text="Active" />
+                <TableColumn fx:id="tblBoxesClmName" prefWidth="204.00000303983688" text="Name" />
+                <TableColumn fx:id="tblBoxesClmType" prefWidth="218.40003967285156" text="Type" />
+                  <TableColumn fx:id="tblBoxesClmMeasurements" prefWidth="575.9999694824219" text="Measurements" />
+                  <TableColumn fx:id="tblBoxesClmPrice" prefWidth="199.199951171875" text="Price" />
+                  <TableColumn fx:id="tblBoxesClmActive" prefWidth="224.7999267578125" text="Active" />
               </columns>
             </TableView>
             <HBox prefHeight="9.0" prefWidth="1420.0">
@@ -81,29 +81,28 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="79.0" prefWidth="262.0" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+      <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addBox" prefHeight="79.0" prefWidth="262.0" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="82.0" prefWidth="256.0" text="Delete" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+      <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteBox" prefHeight="82.0" prefWidth="256.0" text="Delete" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <GridPane fx:id="HeaderPane" style="-fx-background-color: #EC4842;" GridPane.columnSpan="8">
+      <GridPane style="-fx-background-color: #EC4842;" GridPane.columnSpan="8">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="629.5999267578123" minWidth="10.0" prefWidth="404.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" prefWidth="526.0" />
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="103.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="295.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="10.0" prefWidth="317.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="629.5999267578123" minWidth="10.0" prefWidth="386.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" prefWidth="474.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="726.0" minWidth="10.0" prefWidth="543.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="555.0" minWidth="10.0" prefWidth="517.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Hyperlink onAction="#showEmployees" prefHeight="139.0" prefWidth="321.0" style="-fx-font-family: arial;" text="Employees" textFill="WHITE">
+            <Hyperlink onAction="#showEmployees" prefHeight="139.0" prefWidth="321.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Employees" textFill="WHITE">
                <font>
                   <Font size="48.0" />
                </font>
@@ -111,7 +110,12 @@
                   <Insets left="50.0" />
                </padding>
             </Hyperlink>
-            <Hyperlink onAction="#showTransportServices" prefHeight="122.0" prefWidth="560.0" style="-fx-font-family: arial;" text="TransportServices" textFill="WHITE" GridPane.columnIndex="1">
+            <Hyperlink onAction="#showTransportservices" prefHeight="122.0" prefWidth="476.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Transportservices" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="243.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Log Out" textFill="WHITE" GridPane.columnIndex="3">
                <font>
                   <Font size="48.0" />
                </font>
@@ -119,27 +123,23 @@
                   <Insets left="50.0" />
                </padding>
             </Hyperlink>
-            <Label fx:id="lblUser" prefHeight="70.0" prefWidth="445.0" text="Admin" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="LEFT">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </Label>
-            <ImageView fitHeight="60.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-               <image>
-                  <Image url="@../images/adminIcon.png" />
-               </image>
-            </ImageView>
-            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="243.0" style="-fx-font-family: arial;" text="Log Out" textFill="WHITE" GridPane.columnIndex="4">
-               <font>
-                  <Font size="48.0" />
-               </font>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-            </Hyperlink>
+            <HBox alignment="CENTER" prefHeight="123.0" prefWidth="650.0" GridPane.columnIndex="2">
+               <children>
+                  <Label fx:id="lblUser" alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="484.0" text="Admin" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ImageView fitHeight="60.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/adminIcon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>

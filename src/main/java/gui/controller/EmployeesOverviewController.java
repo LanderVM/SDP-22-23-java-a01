@@ -7,40 +7,28 @@ import domain.UserController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import util.FXStageUtil;
 
-public class BoxesOverviewController {
+public class EmployeesOverviewController {
 	@FXML
-	private Label lblUser;
-	@FXML
-	private TableView<BoxesOverviewController> tblBoxes;
+	private Label lblUser;	
 
 	private OrderController orderController;
 	private UserController userController;
 	private SupplierController supplierController;
 	private TransportServiceController transportServiceController;
-
-	public BoxesOverviewController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController, SupplierController supplierController) {
+	
+	public EmployeesOverviewController(OrderController orderController, UserController userController,
+			SupplierController supplierController, TransportServiceController transportServiceController) {
 
 		this.orderController = orderController;
 		this.userController = userController;
 		this.supplierController = supplierController;
 		this.transportServiceController = transportServiceController;
 	}
-
 	@FXML
 	private void initialize() {
 		lblUser.setText(userController.toString());
-	}
-
-	@FXML
-	private void showEmployees() {
-		EmployeesOverviewController employeesOverviewController = new EmployeesOverviewController(
-				orderController, userController, supplierController, transportServiceController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/EmployeesOverview.fxml"));
-		FXStageUtil.change(loader, employeesOverviewController, "Employees Overview");		
 	}
 
 	@FXML
@@ -50,13 +38,14 @@ public class BoxesOverviewController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServiceOverview.fxml"));
 		FXStageUtil.change(loader, transportServiceOverviewController, "Transport Service Overview");
 	}
+	
 
 	@FXML
-	private void addBox() {
-	}
-
-	@FXML
-	private void deleteBox() {
+	private void showBoxes() {
+		BoxesOverviewController boxesOverviewController = new BoxesOverviewController(orderController, userController,
+				transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/BoxesOverview.fxml"));
+		FXStageUtil.change(loader, boxesOverviewController, "Boxes Overview");
 	}
 
 	@FXML
@@ -66,5 +55,4 @@ public class BoxesOverviewController {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
 		FXStageUtil.change(loader, loginScreenController, "Log In");
 	}
-
 }

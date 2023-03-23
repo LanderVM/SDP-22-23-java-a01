@@ -8,6 +8,7 @@ import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
 import gui.view.ContactPersonView;
+import gui.view.CustomerView;
 import gui.view.TransportServiceView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -41,6 +42,10 @@ public class TransportServiceOverviewController extends GridPane {
 	@FXML
 	private TableColumn<ContactPersonView, String> tblContactPersonClmEmail;
 	@FXML
+	private TableView<CustomerView> tblCustomersOverview;
+	@FXML
+	private TableColumn<CustomerView, String> nameCustomerCol;
+	@FXML
 	private CheckBox chkboxIsActive;
 	@FXML
 	private CheckBox chkboxOnlyNumbers;
@@ -65,7 +70,8 @@ public class TransportServiceOverviewController extends GridPane {
 	private UserController userController;
 	private SupplierController supplierController;
 	private TransportServiceController transportServiceController;
-	private int id = -1;
+	private int transportserviceId = -1;
+	private int supplierId = -1;
 	private String name;
 
 	public TransportServiceOverviewController(OrderController orderController, UserController userController,
@@ -88,8 +94,16 @@ public class TransportServiceOverviewController extends GridPane {
 		tblTransportservicesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		tblTransportservicesClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty().get()==true?new SimpleStringProperty("active"):new SimpleStringProperty("not active"));
 
+		
 		refreshCustomersList();
-
+		
+		tblCustomersOverview.getSelectionModel().selectedItemProperty()
+		.addListener((observableValue, oldService, newService) -> {
+			if (newService != null) {
+				String supplierName = newService.getEmail().get();
+				supplierId = supplierController.getSupplier(supplierName).getSupplierId();
+			}
+			});
 		tblTransportServices.getSelectionModel().selectedItemProperty()
 				.addListener((observableValue, oldService, newService) -> {
 					if (newService != null) {
@@ -97,7 +111,12 @@ public class TransportServiceOverviewController extends GridPane {
 					btnSave.setDisable(false);
 					btnAddContactPerson.setDisable(false);
 					name = newService.getName();
-					id = newService.getTransportServiceId();
+					transportserviceId = newService.getTransportServiceId();
+					;
+
+					// Table Supplier
+					tblCustomersOverview.setItems(supplierController.getSuppliersView(transportserviceId)); //td  getSuppliersForTransportService(transportserviceId)
+					nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 
 					// Table info TransportService
 					txtName.setText(newService.getName());
@@ -122,9 +141,9 @@ public class TransportServiceOverviewController extends GridPane {
 
 	@FXML
 	private void saveTransportServices() {
-		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser())
-				.getContactPersonList();
-		transportServiceController.updateTransportService(id, txtName.getText(), contactPersonList,
+		List<ContactPerson> contactPersonList = transportServiceController
+				.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser()).getContactPersonList();
+		transportServiceController.updateTransportService(transportserviceId, txtName.getText(), contactPersonList,
 				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
 				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
 		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
@@ -134,12 +153,18 @@ public class TransportServiceOverviewController extends GridPane {
 
 	@FXML
 	private void showEmployees() {
-
+		EmployeesOverviewController employeesOverviewController = new EmployeesOverviewController(
+				orderController, userController, supplierController, transportServiceController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/EmployeesOverview.fxml"));
+		FXStageUtil.change(loader, employeesOverviewController, "Employees Overview");
 	}
 
 	@FXML
 	private void showBoxes() {
-
+		BoxesOverviewController boxesOverviewController = new BoxesOverviewController(orderController, userController,
+				transportServiceController, supplierController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/BoxesOverview.fxml"));
+		FXStageUtil.change(loader, boxesOverviewController, "Boxes Overview");
 	}
 
 	@FXML
@@ -151,20 +176,34 @@ public class TransportServiceOverviewController extends GridPane {
 			alert.setContentText("Contact person needs an email address and phonenumber");
 			alert.showAndWait();
 		}
-		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser()).getContactPersonList();
+		List<ContactPerson> contactPersonList = transportServiceController
+				.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser()).getContactPersonList();
 		contactPersonList.add(new ContactPerson(txtAddEmail.getText(), txtAddPhoneNumber.getText()));
 
-		transportServiceController.updateTransportService(id, txtName.getText(), contactPersonList,
+		transportServiceController.updateTransportService(transportserviceId, txtName.getText(), contactPersonList,
 				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
 				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
 		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
 		refreshCustomersList();
 		tblTransportServices.getSelectionModel().select(index);
 	}
-	
+
+	@FXML
+	private void createService(){
+		List<ContactPerson> contactPersonList = transportServiceController.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser())
+				.getContactPersonList();
+		transportServiceController.addTransportService(txtName.getText(), contactPersonList,
+				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
+				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(), supplierId); //td
+		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
+		refreshCustomersList();
+		tblTransportServices.getSelectionModel().select(index);
+	}
+
 	@FXML
 	private void logOut() {
-		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController, transportServiceController, supplierController);
+		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController,
+				transportServiceController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
 		FXStageUtil.change(loader, loginScreenController, "Log In");
 	}

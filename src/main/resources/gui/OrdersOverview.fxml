@@ -66,33 +66,42 @@
             </Button>
          </children>
       </Pane>
-      <GridPane fx:id="HeaderPane" style="-fx-background-color: #EC4842;" GridPane.columnSpan="2147483647">
+      <GridPane style="-fx-background-color: #EC4842;" GridPane.columnSpan="2147483647">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="704.0" minWidth="10.0" percentWidth="50.0" prefWidth="481.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" percentWidth="25.0" prefWidth="551.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="653.0" minWidth="10.0" percentWidth="25.0" prefWidth="653.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="40.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="35.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Hyperlink onAction="#showCustomers" prefHeight="126.0" prefWidth="414.0" style="-fx-font-family: arial;" text="Customers" textFill="WHITE">
+            <Hyperlink onAction="#showCustomers" prefHeight="126.0" prefWidth="414.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Customers" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font size="48.0" />
                </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
             </Hyperlink>
-            <Label fx:id="lblUser" prefHeight="69.0" prefWidth="496.0" text="John Doe" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Label fx:id="lblUser" alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="621.0" text="John Doe" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="243.0" style="-fx-font-family: arial;" text="Log Out" textFill="WHITE" GridPane.columnIndex="2">
+            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="240.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Log Out" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="LEFT">
                <font>
                   <Font size="48.0" />
                </font>
                <padding>
                   <Insets left="50.0" />
                </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </Hyperlink>
          </children>
       </GridPane>
