@@ -14,11 +14,6 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private int productId;
-
-    //@ManyToMany
-    //private List<Order> orders;
-    //@OneToMany
-    //private List<OrderLine> orderLines;
     
     private String name;
     private BigDecimal price;
@@ -50,14 +45,6 @@ public class Product implements Serializable {
     public BigDecimal getPrice() {
         return this.price;
     }
-    
-//    public List<Order> getOrders() {
-//		return orders;
-//	}
-//
-//	public void setOrders(List<Order> orders) {
-//		this.orders = orders;
-//	}
 
 	@Override
     public boolean equals(Object o) {

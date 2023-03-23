@@ -15,9 +15,6 @@ public class ContactPerson {
 
     private String email;
     private String phoneNumber;
-    
-//    @ManyToOne
-//    private TransportService transportService;
 
     public ContactPerson(String email, String phoneNumber) {
         this.email = email;
@@ -46,14 +43,6 @@ public class ContactPerson {
     void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     } 
-
-//    public TransportService getTransportService() {
-//		return transportService;
-//	}
-//
-//	public void setTransportServices(TransportService transportService) {
-//		this.transportService = transportService;
-//	}
 
 	@Override
     public boolean equals(Object o) {
