@@ -49,14 +49,14 @@ public class Supplier {
     @Column(name = "supplier_id")
     private int supplierId;
 
-    private String name;
+    private String name = "";
 
-    private String email;
+    private String email = "";
 
-    private String address;
+    private String address = "";
 
     @Column(name = "phone_number")
-    private String phoneNumber;
+    private String phoneNumber = "";
     
     @OneToOne(mappedBy="supplier", cascade = CascadeType.PERSIST)
     private Logo logo;
@@ -78,15 +78,11 @@ public class Supplier {
 
     public Supplier(String name, String email, String address, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
                     List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.logo = LogoMapper.makeLogo(logoLocation, this);
-        this.ordersAsSupplier = ordersAsSupplier;
-        this.ordersAsCustomer = ordersAsCustomer;
-        this.contactPersons = contactPersons;
-        this.users = users;
+        this(name,email,address,phoneNumber,logoLocation);
+        this.setOrdersAsSupplier(ordersAsSupplier);
+        this.setOrdersAsCustomer(ordersAsCustomer);
+        this.setContactPersons(contactPersons);
+        this.setUsers(users);
     }
 
     public Supplier(String name, String email, String address, String phoneNumber, String logoLocation) {
@@ -145,6 +141,8 @@ public class Supplier {
     }
 
     public void setOrdersAsSupplier(List<Order> ordersAsSupplier) {
+    	if(ordersAsSupplier == null)
+    		throw new IllegalArgumentException("ordersAsSupplier may not be null!");
         this.ordersAsSupplier = ordersAsSupplier;
     }
 
@@ -153,6 +151,8 @@ public class Supplier {
     }
     
     public void setOrdersAsCustomer(List<Order> ordersAsCustomer) {
+    	if(ordersAsCustomer==null)
+    		throw new IllegalArgumentException("ordersAsCustomer may not be null!");
         this.ordersAsCustomer = ordersAsCustomer;
     }
     
@@ -163,6 +163,8 @@ public class Supplier {
 	}
 
 	public void setContactPersons(List<ContactPersonSupplier> contactPersons) {
+		if (contactPersons==null)
+			throw new IllegalArgumentException("contactPersons may not be null!");
 		this.contactPersons = contactPersons;
 	}
 
@@ -171,6 +173,8 @@ public class Supplier {
 	}
 
 	public void setUsers(List<User> users) {
+		if(users==null)
+			throw new IllegalArgumentException("users may not be null!");
 		this.users = users;
 	}
 

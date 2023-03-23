@@ -1,6 +1,9 @@
 package domain;
 
+import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
+import jakarta.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
@@ -41,11 +44,22 @@ public class OrderTest {
     }
 
     @Test
-    public void processOrder_happyFlow() throws OrderStatusException {
+    public void processOrder_happyFlow()  {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, PackagingType.STANDARD, supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
-        orderController.processOrder(1, transportService.getName(),supplier.getSupplierId());
+        try {
+			orderController.processOrder(1, transportService.getName(),supplier.getSupplierId());
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OrderStatusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EntityDoesntExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         Order orderAfterUpdate = orderDao.get(1);
 
         assertEquals(transportService, orderAfterUpdate.getTransportService());

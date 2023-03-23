@@ -10,6 +10,8 @@ import persistence.TransportServiceDao;
 
 import java.util.List;
 
+import exceptions.EntityDoesntExistException;
+
 public class TransportServiceController {
 
     private final TransportServiceDao transportServiceDaoJpa;
@@ -47,10 +49,12 @@ public class TransportServiceController {
         );
     }
 
-    public void updateTransportService(int id, String name, List<ContactPerson> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) {
+    public void updateTransportService(int id, String name, List<ContactPerson> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) throws EntityDoesntExistException {
         if (contactPersonList.isEmpty())
             throw new IllegalArgumentException("You must add at least one contact person for this Transport Service!");
         TransportService transportService = transportServiceDaoJpa.get(id);
+        if(transportService==null)
+        	throw new EntityDoesntExistException("there is no transportService for given transportServiceId");
         transportService.setName(name);
         transportService.setContactPersonList(contactPersonList);
         transportService.getTrackingCodeDetails().setCharacterCount(characterCount);

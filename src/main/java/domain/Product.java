@@ -15,11 +15,11 @@ public class Product implements Serializable {
     @Column(name = "product_id")
     private int productId;
     
-    private String name;
+    private String name = "";
     private BigDecimal price;
 
     public Product(String name, BigDecimal price) {
-        setName(name);
+        this.name = name;
         setPrice(price);
     }
 
@@ -39,6 +39,10 @@ public class Product implements Serializable {
     }
 
     public void setPrice(BigDecimal price) {
+    	if (price==null)
+    		throw new IllegalArgumentException("price may not be null!");
+    	if(price.compareTo(BigDecimal.ZERO)<0)
+    		throw new IllegalArgumentException("price may not be negative!");
         this.price = price;
     }
 

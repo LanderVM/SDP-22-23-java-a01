@@ -7,6 +7,7 @@ import domain.OrderController;
 import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
+import exceptions.EntityDoesntExistException;
 import gui.view.ContactPersonView;
 import gui.view.CustomerView;
 import gui.view.TransportServiceView;
@@ -141,11 +142,18 @@ public class TransportServiceOverviewController extends GridPane {
 
 	@FXML
 	private void saveTransportServices() {
+		//TODO beter geen domein objecten in de ui laag!
 		List<ContactPerson> contactPersonList = transportServiceController
 				.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser()).getContactPersonList();
-		transportServiceController.updateTransportService(transportserviceId, txtName.getText(), contactPersonList,
-				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
-				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
+		try {
+			transportServiceController.updateTransportService(transportserviceId, txtName.getText(), contactPersonList,
+					Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
+					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (EntityDoesntExistException e) {
+			e.printStackTrace();
+		}
 		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
 		refreshCustomersList();
 		tblTransportServices.getSelectionModel().select(index);
@@ -180,9 +188,15 @@ public class TransportServiceOverviewController extends GridPane {
 				.getTransportServiceByNameForSupplier(name, userController.supplierIdFromUser()).getContactPersonList();
 		contactPersonList.add(new ContactPerson(txtAddEmail.getText(), txtAddPhoneNumber.getText()));
 
-		transportServiceController.updateTransportService(transportserviceId, txtName.getText(), contactPersonList,
-				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
-				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
+		try {
+			transportServiceController.updateTransportService(transportserviceId, txtName.getText(), contactPersonList,
+					Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
+					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (EntityDoesntExistException e) {
+			e.printStackTrace();
+		}
 		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
 		refreshCustomersList();
 		tblTransportServices.getSelectionModel().select(index);

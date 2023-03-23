@@ -52,7 +52,7 @@ public class TransportService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transport_service_id")
     private int transportServiceId;
-    private String name;
+    private String name = "";
     @OneToMany
     private List<ContactPerson> contactPersonList;
     @OneToOne
@@ -61,13 +61,13 @@ public class TransportService {
     @ManyToOne
     private Supplier supplier;
     
-    private boolean active;
+    private boolean active = true;
 
     public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails,Supplier supplier ,boolean active) {
         this.name = name;
-        this.contactPersonList = contactPersonList;
-        this.trackingCodeDetails = trackingCodeDetails;
-        this.supplier = supplier;
+        this.setContactPersonList(contactPersonList);
+        this.setTrackingCodeDetails(trackingCodeDetails);
+        this.setSupplier(supplier);
         this.active = active;
     }
 
@@ -91,6 +91,8 @@ public class TransportService {
     }
 
     void setContactPersonList(List<ContactPerson> contactPersonList) {
+    	if(contactPersonList==null)
+    		throw new IllegalArgumentException("contactPersonList may not be null!");
         this.contactPersonList = contactPersonList;
     }
 
@@ -98,7 +100,13 @@ public class TransportService {
         return trackingCodeDetails;
     }
 
-    public boolean isActive() {
+    public void setTrackingCodeDetails(TrackingCodeDetails trackingCodeDetails) {
+    	if(trackingCodeDetails==null)
+    		throw new IllegalArgumentException("trackingCodeDetails may not be null!");
+		this.trackingCodeDetails = trackingCodeDetails;
+	}
+
+	public boolean isActive() {
         return active;
     }
 
@@ -111,6 +119,8 @@ public class TransportService {
 	}
 
 	public void setSupplier(Supplier supplier) {
+		if(supplier==null)
+			throw new IllegalArgumentException("supplier may not be null!");
 		this.supplier = supplier;
 	}
 

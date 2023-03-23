@@ -25,7 +25,11 @@ public class OrderLine implements Serializable{
 	
 	
 	public OrderLine (List<Product> products, Order order) {
-		this.order = order;
+		if (products==null)
+			throw new IllegalArgumentException("products may not be null!");
+		if(products.isEmpty())
+			throw new IllegalArgumentException("products may not be empty!");
+		this.setOrder(order);
 		this.count = products.size();
 		this.product = products.get(0);
 	}
@@ -38,6 +42,8 @@ public class OrderLine implements Serializable{
 	}
 
 	public void setOrder(Order order) {
+		if(order==null)
+			throw new IllegalArgumentException("order may not be null!");
 		this.order = order;
 	}
 

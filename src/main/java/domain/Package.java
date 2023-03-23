@@ -24,20 +24,16 @@ public class Package implements Serializable {
 	private String name;
 
 	private PackagingType type;
-	private double height;
-	private double width;
-	private double length;
+	private double height = 0;
+	private double width = 0;
+	private double length = 0;
 	private BigDecimal price;
-	private boolean active;
+	private boolean active = false;
 
 	public Package(String name, PackagingType type, double height, double width, double length,
 				   BigDecimal price, boolean active) {
-		this.name = name;
-		this.type = type;
-		this.height = height;
-		this.width = width;
-		this.length = length;
-		this.price = price;
+		
+		this( name, type,  height,  width,  length, price);
 		this.active = active;
 	}
 
@@ -48,7 +44,7 @@ public class Package implements Serializable {
 		this.height = height;
 		this.width = width;
 		this.length = length;
-		this.price = price;
+		this.setPrice(price);
 		this.active = true;
 	}
 
@@ -61,6 +57,14 @@ public class Package implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setPrice(BigDecimal price) {
+		if (price == null)
+			throw new IllegalArgumentException("price may not be null!");
+		if(price.compareTo(BigDecimal.ZERO)<0)
+			throw new IllegalArgumentException("price may not be negative!");
+		this.price = price;
 	}
 
 	@Override

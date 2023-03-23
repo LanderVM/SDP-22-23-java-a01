@@ -23,14 +23,14 @@ public class Logo {
 	private int id;
 
 	@Lob
-    private byte[] logo;
+    private byte[] logo = new byte[0];
 	
 	@OneToOne
 	private Supplier supplier;
 
 	public Logo(byte[] logo, Supplier supplier) {
 		super();
-		this.setLogo(logo);
+		this.logo = logo;
 		this.setSupplier(supplier);
 	}
 
@@ -51,8 +51,6 @@ public class Logo {
 	}
 
 	public void setLogo(byte[] logo) {
-		if (logo==null)
-			throw new IllegalArgumentException("logo may not be null!");
 		this.logo = logo;
 	}
 

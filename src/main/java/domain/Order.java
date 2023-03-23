@@ -45,7 +45,7 @@ public class Order {
     @Column(name = "order_id")
     private int orderId;
 
-    private String address;
+    private String address = "";
 
     @Column(name = "order_date")
     private LocalDate date;
@@ -84,13 +84,13 @@ public class Order {
         this.setCustomer(customer);
     }
 
-	public Order(LocalDate date,String adress, List<Product> productsList, Status status,
+	public Order(LocalDate date,String address, List<Product> productsList, Status status,
             TransportService transportService, PackagingType packagingType) {
-		this.setAddress(adress);
-    	this.date = date;
-    	this.status = status;
-    	this.transportService = transportService;
-    	this.packagingType = packagingType;
+		this.address = address;
+    	this.setDate(date);
+    	this.setStatus(status);
+    	this.setTransportService(transportService);
+    	this.setPackaging(packagingType);
     	this.orderLines = new ArrayList<>();
     	makeOrderlines(productsList);
     }
@@ -121,6 +121,8 @@ public class Order {
     }
 
     public void setDate(LocalDate date) {
+    	if(date==null)
+    		throw new IllegalArgumentException("date may not be null!");
         this.date = date;
     }
 
@@ -129,6 +131,8 @@ public class Order {
     }
 
     public void setStatus(Status status) {
+    	if(status==null)
+    		throw new IllegalArgumentException("status may not be null!");
         this.status = status;
     }
 
@@ -137,6 +141,8 @@ public class Order {
     }
 
     public void setPackaging(PackagingType packagingType) {
+    	if(packagingType==null)
+    		throw new IllegalArgumentException("packagingType may not be null!");
         this.packagingType = packagingType;
     }
 
@@ -174,6 +180,8 @@ public class Order {
     }
 
     public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
+    	if (originalAcquisitionPrice==null)
+    		throw new IllegalArgumentException("originalAcquisitionPrice may not be null!");
     	if (originalAcquisitionPrice.compareTo(BigDecimal.ZERO)<0)
     		throw new IllegalArgumentException("originalAcquisitionPrice may not be negative!");
         this.originalAcquisitionPrice = originalAcquisitionPrice;
@@ -215,7 +223,7 @@ public class Order {
         	list.add(e.getValue());
         }
         for (List<Product> l:list) {
-        	orderLines.add(new OrderLine(l,this));
+				orderLines.add(new OrderLine(l,this));
         }
 		
 	}

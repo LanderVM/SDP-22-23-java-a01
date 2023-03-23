@@ -4,7 +4,9 @@ import domain.OrderController;
 import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
+import exceptions.EntityDoesntExistException;
 import exceptions.IncorrectPasswordException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,7 +54,7 @@ public class LoginScreenController extends GridPane {
 				goToHomeAdmin();
 			else
 				goToHomeWarehouseOperator();
-		} catch (NoResultException | IncorrectPasswordException e) {
+		} catch (NoResultException | IncorrectPasswordException | EntityNotFoundException | EntityDoesntExistException e) {
 			showLoginError();
 		}
 	}

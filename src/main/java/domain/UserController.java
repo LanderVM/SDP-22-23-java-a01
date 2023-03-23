@@ -1,5 +1,6 @@
 package domain;
 
+import exceptions.EntityDoesntExistException;
 import exceptions.IncorrectPasswordException;
 import jakarta.persistence.EntityNotFoundException;
 import persistence.UserDao;
@@ -13,8 +14,10 @@ public class UserController {
         this.userDao = userDao;
     }
 
-    public void checkUser(String accountName, String password) throws EntityNotFoundException, IncorrectPasswordException {
+    public void checkUser(String accountName, String password) throws EntityNotFoundException, IncorrectPasswordException, EntityDoesntExistException {
         user = userDao.get(accountName);
+        if(user==null)
+        	throw new EntityDoesntExistException("there is no user for given accountName");
         if (!user.getPassword().equals(password))
             throw new IncorrectPasswordException();
     }

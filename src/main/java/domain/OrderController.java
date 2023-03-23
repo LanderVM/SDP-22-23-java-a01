@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 import java.util.function.Function;
 
+import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import gui.view.ProductView;
@@ -49,9 +50,13 @@ public class OrderController {
         return FXCollections.observableArrayList(list.stream().map(el->new ProductView(el.getProduct(),el.getCount())).toList());
     }
 
-    public void processOrder(int orderId, String transportServiceName,int supplierId) throws EntityNotFoundException, OrderStatusException {
+    public void processOrder(int orderId, String transportServiceName,int supplierId) throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException {
         Order order = orderDao.get(orderId);
+        if (order==null)
+        	throw new EntityDoesntExistException("There is no order for given orderId!");
         TransportService transportService =  transportServiceDao.getForSupplier(transportServiceName, supplierId);
+        if (transportService==null)
+        	throw new EntityDoesntExistException("There is no transport service for given transportServiceName and supplierId!");
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 

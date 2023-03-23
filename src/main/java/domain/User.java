@@ -26,11 +26,11 @@ public class User {
     private int userId;
 
     @Column(name = "email")
-    private String accountName;
-    private String surname;
-    private String name;
-    private String password;
-    private boolean isAdmin;
+    private String accountName = "";
+    private String surname = "";
+    private String name = "";
+    private String password = "";
+    private boolean isAdmin = false;
     
     @ManyToOne
     private Supplier supplier;
@@ -41,7 +41,7 @@ public class User {
         setAdmin(isAdmin);
         setSurname(surname);
         setName(name);
-        this.supplier = supplier;
+        setSupplier(supplier);
     }
 
 
@@ -99,6 +99,8 @@ public class User {
 
 
 	public void setSupplier(Supplier supplier) {
+		if(supplier==null)
+			throw new IllegalArgumentException("supplier may not be null!");
 		this.supplier = supplier;
 	}
 

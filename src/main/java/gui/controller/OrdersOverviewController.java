@@ -9,6 +9,7 @@ import domain.Status;
 import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
+import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import gui.view.ProductView;
@@ -192,7 +193,7 @@ public class OrdersOverviewController extends GridPane {
     		alert.setHeaderText(null);
     		alert.setContentText("Succesfully processed the order!");
     		alert.showAndWait();
-        } catch (EntityNotFoundException | OrderStatusException e) {
+        } catch (EntityNotFoundException | OrderStatusException | EntityDoesntExistException e) {
             e.printStackTrace();
         }
         refreshOrderList();

@@ -19,15 +19,15 @@ import jakarta.persistence.Table;
 })
 public class ContactPersonSupplier {
 	
-	private String name;
+	private String name = "";
 	@Id
-	private String email;
+	private String email = "";
 	@ManyToOne
 	private Supplier supplier;
 	
 	public ContactPersonSupplier(String name, String email, Supplier supplier) {
-		this.setName(name);
-		this.setEmail(email);
+		this.name = name;
+		this.email = email;
 		this.setSupplier(supplier);
 	}
 

@@ -12,16 +12,16 @@ public class TrackingCodeDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tracking_code_details_id")
     private int trackingCodeDetailsId;
-    private int characterCount;
-    private boolean integersOnly;
-    private String prefix;
+    private int characterCount = 0;
+    private boolean integersOnly = false;
+    private String prefix = "";
     private VerificationType verificationType;
 
     public TrackingCodeDetails(int characterCount, boolean integersOnly, String prefix, VerificationType verificationType) {
         this.characterCount = characterCount;
         this.integersOnly = integersOnly;
         this.prefix = prefix;
-        this.verificationType = verificationType;
+        this.setVerificationType(verificationType);
     }
 
     protected TrackingCodeDetails() {
@@ -60,6 +60,8 @@ public class TrackingCodeDetails {
     }
 
     public void setVerificationType(VerificationType verificationType) {
+    	if(verificationType==null)
+    		throw new IllegalArgumentException("verificationType may not be null!");
         this.verificationType = verificationType;
     }
 

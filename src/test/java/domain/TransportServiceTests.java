@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import exceptions.EntityDoesntExistException;
 import persistence.TransportServiceDao;
 
 import java.util.List;
@@ -78,7 +80,12 @@ public class TransportServiceTests {
             final String verificationTypeValue = "POST_CODE";
             final boolean isActive = false;
 
-            transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive);
+            try {
+				transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive);
+			} catch (EntityDoesntExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
             TransportService updatedTransportService = transportServiceJPADao.get(0);
             TrackingCodeDetails updatedTrackingCodeDetails = updatedTransportService.getTrackingCodeDetails();
