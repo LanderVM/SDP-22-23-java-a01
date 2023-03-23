@@ -92,17 +92,20 @@ public class StartUp extends Application {
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
 
         ContactPerson bpostPerson1 = new ContactPerson("een@bpost.be", "499334455");
-        ContactPerson bpostPerson2 = new ContactPerson("twe@bpost.be", "479554433");
-        ContactPerson postnlPerson1 = new ContactPerson("postnl@post.nl", "899321480");
+        ContactPerson bpostPerson2 = new ContactPerson("twee@bpost.be", "479554433");
+        ContactPerson bpostPerson3 = new ContactPerson("drie@bpost.be", "499334455");
+        ContactPerson bpostPerson4 = new ContactPerson("vier@bpost.be", "479554433");
+        ContactPerson postnlPerson1 = new ContactPerson("een@post.nl", "899321480");
+        ContactPerson postnlPerson2 = new ContactPerson("twee@post.nl", "899321480");
 
         TransportService bpost1 = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails,s1, true);
         TransportService postnl1 = new TransportService("postnl", List.of(postnlPerson1), postnlDetails,s1, true);
-        TransportService bpost2 = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails,s2, true);
-        TransportService postnl2 = new TransportService("postnl", List.of(postnlPerson1), postnlDetails,s2, true);
+        TransportService bpost2 = new TransportService("bpost", List.of(bpostPerson3, bpostPerson4), bpostDetails,s2, true);
+        TransportService postnl2 = new TransportService("postnl", List.of(postnlPerson2), postnlDetails,s2, true);
         
-        bpostPerson1.setTransportServices(List.of(bpost1,bpost2));
-        bpostPerson2.setTransportServices(List.of(bpost1,bpost2));
-        postnlPerson1.setTransportServices(List.of(postnl1,postnl2));
+//        bpostPerson1.setTransportServices(List.of(bpost1,bpost2));
+//        bpostPerson2.setTransportServices(List.of(bpost1,bpost2));
+//        postnlPerson1.setTransportServices(List.of(postnl1,postnl2));
         
         s1.setTransportServices(List.of(bpost1,postnl1));
         s2.setTransportServices(List.of(bpost2,postnl2));
@@ -179,7 +182,10 @@ public class StartUp extends Application {
         // TrackingService
         userManager.persist(bpostPerson1);
         userManager.persist(bpostPerson2);
+        userManager.persist(bpostPerson3);
+        userManager.persist(bpostPerson4);
         userManager.persist(postnlPerson1);
+        userManager.persist(postnlPerson2);
         userManager.persist(bpostDetails);
         userManager.persist(postnlDetails);
         

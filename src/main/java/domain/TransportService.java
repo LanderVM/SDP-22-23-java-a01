@@ -53,7 +53,7 @@ public class TransportService {
     @Column(name = "transport_service_id")
     private int transportServiceId;
     private String name;
-    @ManyToMany(mappedBy="transportServices")
+    @OneToMany
     private List<ContactPerson> contactPersonList;
     @OneToOne
     private TrackingCodeDetails trackingCodeDetails;

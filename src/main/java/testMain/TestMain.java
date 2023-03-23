@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import application.StartUp;
+import domain.ContactPerson;
 import domain.Order;
 import domain.OrderLine;
 import domain.Product;
@@ -27,9 +28,11 @@ public class TestMain {
 		StartUp.seedDatabase();
 		
 		TransportServiceDao tsd = new TransportServiceDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager());
-		List<TransportService> lijst = tsd.getAllForSupplier(2);
-		
-		System.out.println(lijst);
+		TransportService t = tsd.get(2);
+		List<ContactPerson> l = t.getContactPersonList();
+		for (ContactPerson c:l) {
+			System.out.println(c);
+		}
 	}
 
 }

@@ -16,8 +16,8 @@ public class ContactPerson {
     private String email;
     private String phoneNumber;
     
-    @ManyToMany
-    private List<TransportService> transportServices;
+//    @ManyToOne
+//    private TransportService transportService;
 
     public ContactPerson(String email, String phoneNumber) {
         this.email = email;
@@ -47,13 +47,13 @@ public class ContactPerson {
         this.phoneNumber = phoneNumber;
     } 
 
-    public List<TransportService> getTransportServices() {
-		return transportServices;
-	}
-
-	public void setTransportServices(List<TransportService> transportServices) {
-		this.transportServices = transportServices;
-	}
+//    public TransportService getTransportService() {
+//		return transportService;
+//	}
+//
+//	public void setTransportServices(TransportService transportService) {
+//		this.transportService = transportService;
+//	}
 
 	@Override
     public boolean equals(Object o) {
