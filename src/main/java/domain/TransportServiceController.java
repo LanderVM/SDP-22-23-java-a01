@@ -33,7 +33,7 @@ public class TransportServiceController {
 	}
 
     public void addTransportService(String name, List<ContactPerson> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive,int supplierId) {
-    	Supplier supplier = supplierDaoJpa.get(supplierId);
+    	Supplier supplier = supplierDaoJpa.get(supplierId); // TODO dit uit andere controller halen, niet zomaar een dao opvragen. Testen zijn hierdoor ook kapot omdat SupplierDAO niet gemockt wordt
         if (transportServiceDaoJpa.existsForSupplier(name,supplierId))
             throw new IllegalArgumentException("A TransportService with the name " + name + " already exists!");
         if (contactPersonList.isEmpty())

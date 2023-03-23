@@ -1,12 +1,13 @@
 package domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import persistence.impl.TransportServiceDaoJpa;
+import persistence.TransportServiceDao;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.*;
 public class TransportServiceTests {
 
     @Mock
-    private TransportServiceDaoJpa transportServiceJPADao;
+    private TransportServiceDao transportServiceJPADao;
     @InjectMocks
     private TransportServiceController transportServiceController;
 
@@ -27,30 +28,36 @@ public class TransportServiceTests {
 
     @Nested
     class AddTests {
+
+        @BeforeEach
+        public void setupAddTests() {
+            supplier = new Supplier("SupplIT", "contact@supplit.com", "Belgische Silicon Valley", "0499273659", "/images/testImg.jpg", List.of(), List.of(), List.of(), List.of());
+        }
+
         @Test
         public void addTransportService_happyFlow() {
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true,supplier.getSupplierId());
+            transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true, supplier.getSupplierId());
         }
 
         @Test
         public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
             contactPerson = new ContactPerson("test@mail.com", "0477982037");
             when(transportServiceJPADao.existsForSupplier("bpost", supplier.getSupplierId())).thenReturn(true);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true,supplier.getSupplierId()));
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true, supplier.getSupplierId()));
         }
 
         @Test
         public void addTransportService_contactPersonListEmpty_throwsIllegalArgumentException() {
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(), 10, false, "test", "POST_CODE", true,supplier.getSupplierId()));
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(), 10, false, "test", "POST_CODE", true, supplier.getSupplierId()));
         }
 
         @Test
         public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
             contactPerson = new ContactPerson("test@mail.com", "0477982037");
             when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "invalid_type", true,supplier.getSupplierId()));
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "invalid_type", true, supplier.getSupplierId()));
         }
     }
 
@@ -58,7 +65,7 @@ public class TransportServiceTests {
     class UpdateTests {
         @Test
         public void updateService_happyFlow() {
-            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE),supplier ,true);
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
             contactPerson = new ContactPerson("email@email.com", "4994233050");
 
             when(transportServiceJPADao.get(0)).thenReturn(transportService);
@@ -86,7 +93,7 @@ public class TransportServiceTests {
 
         @Test
         public void updateService_emptyContactPersonList_throwsIllegalArgumentException() {
-            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE),supplier ,true);
+            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
 
             final String name = "new name";
             final List<ContactPerson> contactPersonList = List.of();
