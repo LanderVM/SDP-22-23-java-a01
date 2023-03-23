@@ -30,8 +30,8 @@ public class Logo {
 
 	public Logo(byte[] logo, Supplier supplier) {
 		super();
-		this.logo = logo;
-		this.supplier = supplier;
+		this.setLogo(logo);
+		this.setSupplier(supplier);
 	}
 
 	protected Logo() {
@@ -51,6 +51,8 @@ public class Logo {
 	}
 
 	public void setLogo(byte[] logo) {
+		if (logo==null)
+			throw new IllegalArgumentException("logo may not be null!");
 		this.logo = logo;
 	}
 
@@ -59,6 +61,8 @@ public class Logo {
 	}
 
 	public void setSupplier(Supplier supplier) {
+		if(supplier==null)
+			throw new IllegalArgumentException("supplier may not be null!");
 		this.supplier = supplier;
 	}
 

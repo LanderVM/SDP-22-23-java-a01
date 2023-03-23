@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import application.StartUp;
 import domain.ContactPerson;
+import domain.ContactPersonSupplier;
 import domain.Order;
 import domain.OrderLine;
 import domain.Product;
@@ -25,14 +26,16 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		StartUp.seedDatabase();
-		
-		TransportServiceDao tsd = new TransportServiceDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager());
-		TransportService t = tsd.get(2);
-		List<ContactPerson> l = t.getContactPersonList();
-		for (ContactPerson c:l) {
-			System.out.println(c);
-		}
+//		StartUp.seedDatabase();
+//		
+//		TransportServiceDao tsd = new TransportServiceDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager());
+//		TransportService t = tsd.get(2);
+//		List<ContactPerson> l = t.getContactPersonList();
+//		for (ContactPerson c:l) {
+//			System.out.println(c);
+//		}
+		ContactPersonSupplier cps = new ContactPersonSupplier("ddd","eee",null);
+		System.out.println(cps);
 	}
 
 }

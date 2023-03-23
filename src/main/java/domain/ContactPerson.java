@@ -17,8 +17,8 @@ public class ContactPerson {
     private String phoneNumber;
 
     public ContactPerson(String email, String phoneNumber) {
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.setEmail(email);
+        this.setPhoneNumber(phoneNumber);
     }
 
     protected ContactPerson() {
@@ -33,6 +33,8 @@ public class ContactPerson {
     }
 
     void setEmail(String email) {
+    	if (email.isEmpty()||email==null)
+    		throw new IllegalArgumentException("email needs to be filled in!");
         this.email = email;
     }
 
@@ -41,6 +43,8 @@ public class ContactPerson {
     }
 
     void setPhoneNumber(String phoneNumber) {
+    	if (phoneNumber.isEmpty()||phoneNumber==null)
+    		throw new IllegalArgumentException("phone number needs to be filled in!");
         this.phoneNumber = phoneNumber;
     } 
 

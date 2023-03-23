@@ -26,9 +26,9 @@ public class ContactPersonSupplier {
 	private Supplier supplier;
 	
 	public ContactPersonSupplier(String name, String email, Supplier supplier) {
-		this.name = name;
-		this.email = email;
-		this.supplier = supplier;
+		this.setName(name);
+		this.setEmail(email);
+		this.setSupplier(supplier);
 	}
 
 	public Supplier getSupplier() {
@@ -36,6 +36,8 @@ public class ContactPersonSupplier {
 	}
 
 	public void setSupplier(Supplier supplier) {
+		if (supplier==null)
+			throw new IllegalArgumentException("supplier may not be null!");
 		this.supplier = supplier;
 	}
 

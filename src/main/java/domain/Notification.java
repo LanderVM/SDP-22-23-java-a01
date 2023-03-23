@@ -19,20 +19,12 @@ public class Notification {
 
     private LocalDate date;
 
-    public Supplier getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Supplier customer) {
-        this.customer = customer;
-    }
-
     protected Notification() {
     }
 
     public Notification(Order order, LocalDate date) {
-        this.order = order;
-        this.date = date;
+        this.setOrder(order);
+        this.setDate(date);
         this.customer = order.getCustomer();
     }
 
@@ -45,12 +37,34 @@ public class Notification {
         return notificationId;
     }
 
+    public Supplier getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Supplier customer) {
+        this.customer = customer;
+    }
+    
     public Order getOrder() {
         return order;
     }
+    
 
-    public LocalDate getDate() {
+    public void setOrder(Order order) {
+    	if(order==null)
+    		throw new IllegalArgumentException("order may not be null!");
+		this.order = order;
+	}
+
+	public LocalDate getDate() {
         return date;
     }
+
+	public void setDate(LocalDate date) {
+		if (date==null)
+			throw new IllegalArgumentException("date may not be null!");
+		this.date = date;
+	}
+	
 
 }

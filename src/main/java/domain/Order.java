@@ -77,20 +77,16 @@ public class Order {
 
     public Order(LocalDate date, String adress, List<Product> productsList, Status status,
                  TransportService transportService, PackagingType packagingType, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
-        this.date = date;
-        this.address = adress;
-        this.status = status;
-        this.transportService = transportService;
-        this.packagingType = packagingType;
-        this.originalAcquisitionPrice = originalAcquisitionPrice;
-        this.supplier=supplier;
-        this.customer=customer;
-        this.orderLines = new ArrayList<>();
-        makeOrderlines(productsList);
+    	
+        this(date,adress,productsList,status,transportService,packagingType);
+        this.setOriginalAcquisitionPrice(originalAcquisitionPrice);
+        this.setSupplier(supplier);
+        this.setCustomer(customer);
     }
 
-	public Order(LocalDate date, List<Product> productsList, Status status,
+	public Order(LocalDate date,String adress, List<Product> productsList, Status status,
             TransportService transportService, PackagingType packagingType) {
+		this.setAddress(adress);
     	this.date = date;
     	this.status = status;
     	this.transportService = transportService;
@@ -115,6 +111,8 @@ public class Order {
     }
 
     public void setAddress(String address) {
+    	if (address.isEmpty()||address==null)
+    		throw new IllegalArgumentException("Adress needs to be filled in!");
         this.address = address;
     }
 
@@ -176,6 +174,8 @@ public class Order {
     }
 
     public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
+    	if (originalAcquisitionPrice.compareTo(BigDecimal.ZERO)<0)
+    		throw new IllegalArgumentException("originalAcquisitionPrice may not be negative!");
         this.originalAcquisitionPrice = originalAcquisitionPrice;
     }
     public Supplier getSupplier() {
@@ -205,6 +205,10 @@ public class Order {
     }
     
     private void makeOrderlines(List<Product> productsList) {
+    	if (productsList==null)
+    		throw new IllegalArgumentException("productsList may not be null!");
+    	if (productsList.isEmpty()) 
+    		throw new IllegalArgumentException("productsList may not be empty!");
 		List<List<Product>> list = new ArrayList<>();
 		Map<Object, List<Product>>map = productsList.stream().collect(Collectors.groupingBy(el->el.getName()));
         for (Entry<Object, List<Product>> e:map.entrySet()) {
