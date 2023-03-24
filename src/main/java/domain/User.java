@@ -30,6 +30,9 @@ public class User {
     private String surname = "";
     private String name = "";
     private String password = "";
+    private String phoneNumber = ""; // TODO these in constructor & seedDatabase()
+    private String emailAddress = "";
+    private String address = "";
     private boolean isAdmin = false;
     
     @ManyToOne
@@ -97,8 +100,19 @@ public class User {
 		return supplier;
 	}
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setSupplier(Supplier supplier) {
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setSupplier(Supplier supplier) {
 		if(supplier==null)
 			throw new IllegalArgumentException("supplier may not be null!");
 		this.supplier = supplier;

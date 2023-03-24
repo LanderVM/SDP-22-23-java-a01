@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "packages")
-public class Package implements Serializable {
+public class Packaging implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +30,15 @@ public class Package implements Serializable {
 	private BigDecimal price;
 	private boolean active = false;
 
-	public Package(String name, PackagingType type, double height, double width, double length,
-				   BigDecimal price, boolean active) {
+	public Packaging(String name, PackagingType type, double height, double width, double length,
+					 BigDecimal price, boolean active) {
 		
 		this( name, type,  height,  width,  length, price);
 		this.active = active;
 	}
 
-	public Package(String name, PackagingType type, double height, double width, double length,
-				   BigDecimal price) {
+	public Packaging(String name, PackagingType type, double height, double width, double length,
+					 BigDecimal price) {
 		this.name = name;
 		this.type = type;
 		this.height = height;
@@ -48,7 +48,7 @@ public class Package implements Serializable {
 		this.active = true;
 	}
 
-	protected Package() {
+	protected Packaging() {
 	}
 
 	public String getName() {
@@ -57,6 +57,34 @@ public class Package implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getPackageId() {
+		return packageId;
+	}
+
+	public PackagingType getType() {
+		return type;
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public double getWidth() {
+		return width;
+	}
+
+	public double getLength() {
+		return length;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public boolean isActive() {
+		return active;
 	}
 
 	public void setPrice(BigDecimal price) {
@@ -80,7 +108,7 @@ public class Package implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Package other = (Package) obj;
+		Packaging other = (Packaging) obj;
 		return packageId == other.packageId;
 	}
 
