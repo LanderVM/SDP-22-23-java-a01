@@ -50,6 +50,7 @@ public class PackagingTest {
             "Klein, 2.0, 3.5, -4.0, 6.00, STANDARD, true",
             "Klein, 2.0, 3.5, 4.0, -1, STANDARD, true", // invalid price
             "Klein, 2.0, 3.5, 4.0, 0, STANDARD, true",
+            "Klein, 2.0, 3.5, 4.0, 0, invalid, true", // invalid PackagingType
     })
     public void addPackaging_invalidArguments_throwsIllegalArgumentException(String name, double width, double height, double length, double price, String packagingType, boolean active) {
         Assertions.assertThrows(IllegalArgumentException.class, () -> packagingController.addPackaging(name, width, height, length, price, packagingType, active));
