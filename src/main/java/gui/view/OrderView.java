@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import domain.Order;
-import domain.PackagingType;
 import domain.Status;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,9 +16,9 @@ public class OrderView {
     private final SimpleObjectProperty<LocalDate> date;
     private final SimpleObjectProperty<BigDecimal> totalPrice;
     private final SimpleObjectProperty<Status> status;
-    private final SimpleObjectProperty<PackagingType> packagingProperty;
-    private final SimpleStringProperty transportServiceProperty;
-    private final SimpleStringProperty trackingCodeProperty;
+    private final SimpleStringProperty packaging;
+    private final SimpleStringProperty transportService;
+    private final SimpleStringProperty trackingCode;
 
     public OrderView(Order order) {
         orderId = new SimpleIntegerProperty(order.getOrderId());
@@ -27,9 +26,9 @@ public class OrderView {
         date = new SimpleObjectProperty<>(order.getDate());
         totalPrice = new SimpleObjectProperty<>(order.getOriginalAcquisitionPrice());
         status = new SimpleObjectProperty<>(order.getStatus());
-        packagingProperty = new SimpleObjectProperty<>(order.getPackaging());
-        transportServiceProperty = new SimpleStringProperty(order.getTransportService() == null ?  "None" : order.getTransportService().getName());
-        trackingCodeProperty = new SimpleStringProperty(order.getTrackingCode());
+        packaging = new SimpleStringProperty(order.getPackaging().getName());
+        transportService = new SimpleStringProperty(order.getTransportService() == null ?  "None" : order.getTransportService().getName());
+        trackingCode = new SimpleStringProperty(order.getTrackingCode());
     }
 
     public int getOrderId() {
@@ -72,15 +71,15 @@ public class OrderView {
         return status;
     }
     
-    public SimpleObjectProperty<PackagingType> packagingProperty() {
-    	return packagingProperty;
+    public SimpleStringProperty packagingProperty() {
+    	return packaging;
     }
     
     public SimpleStringProperty transportServiceProperty() {
-    	return transportServiceProperty;
+    	return transportService;
     }
     
     public SimpleStringProperty trackingCodeProperty() {
-    	return trackingCodeProperty;
+    	return trackingCode;
     }
 }

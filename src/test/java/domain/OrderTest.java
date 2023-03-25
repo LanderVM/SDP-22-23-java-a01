@@ -45,7 +45,7 @@ public class OrderTest {
 
     @Test
     public void processOrder_happyFlow()  {
-        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, PackagingType.STANDARD, supplier, customer, new BigDecimal("7.70"));
+        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
         try {
@@ -70,7 +70,7 @@ public class OrderTest {
 
     @Test
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
-        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, PackagingType.STANDARD, supplier, customer, new BigDecimal("7.70"));
+        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
 
         assertThrows(OrderStatusException.class, () -> orderController.processOrder(1,transportService.getName(),supplier.getSupplierId()));

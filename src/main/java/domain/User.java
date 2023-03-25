@@ -48,8 +48,8 @@ public class User {
         setAddress(address);
     }
 
-
     protected User() {
+        this.supplier = new Supplier("UNKNOWN");
     }
 
     public int getUserId() {

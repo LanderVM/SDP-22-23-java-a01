@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import domain.OrderController;
-import domain.PackagingType;
 import domain.Status;
 import domain.SupplierController;
 import domain.TransportServiceController;
@@ -65,7 +64,7 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private TableColumn<OrderView, Status> StatusColumnOrderTable;
 	@FXML
-	private TableColumn<OrderView, PackagingType> PackagingColumnOrderTable;
+	private TableColumn<OrderView, String> PackagingColumnOrderTable;
 	@FXML
 	private TableColumn<OrderView, String> TransportServiceColumnOrderTable;
 	@FXML

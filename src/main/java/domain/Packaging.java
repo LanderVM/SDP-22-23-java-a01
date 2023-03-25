@@ -4,49 +4,73 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "packages")
+@Table(name = "packaging")
+@NamedQueries({
+		@NamedQuery(
+				name = "Packaging.findById",
+				query = "SELECT p FROM Packaging p WHERE p.packagingId = ?1"
+		),
+		@NamedQuery(
+				name = "Packaging.findByName",
+				query = "SELECT p FROM Packaging p WHERE p.name = ?1 AND p.supplier.supplierId = ?2"
+		),
+		@NamedQuery(
+				name = "Packaging.findAll",
+				query = "SELECT p FROM Packaging p WHERE p.supplier.supplierId = ?1"
+		),
+		@NamedQuery(
+		        name = "Packaging.findExists",
+		        query = "SELECT p FROM Packaging p WHERE p.packagingId = ?1"
+        ),
+		@NamedQuery(
+				name = "Packaging.findNameExists",
+				query = "SELECT p FROM Packaging p WHERE p.name = ?1 AND p.supplier.supplierId = ?2"
+		),
+})
 public class Packaging implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "packaging_id")
-    private int packagingId;
+    private int packagingId = -1;
 
-    @Column(unique = true)
-	private String name;
+    @Column(name = "name")
+	private String name = "";
 
+	@Column(name = "packaging_type")
 	private PackagingType type = PackagingType.STANDARD;
+
+	@Column(name = "height")
 	private double height = 0;
+
+	@Column(name = "width")
 	private double width = 0;
+
+	@Column(name = "length")
 	private double length = 0;
+
+	@Column(name = "price")
 	private BigDecimal price;
+
+	@Column(name = "is_active")
 	private boolean active = true;
 
-	public Packaging(String name, PackagingType type, double height, double width, double length,
-					 BigDecimal price, boolean active) {
+	@ManyToOne
+	private Supplier supplier = new Supplier("UNKNOWN");
 
-		this( name, type,  height,  width,  length, price);
-		this.active = active;
-	}
-
-	public Packaging(String name, PackagingType type, double height, double width, double length,
-					 BigDecimal price) {
-		this.name = name;
-		this.type = type;
-		this.height = height;
-		this.width = width;
-		this.length = length;
-		this.setPrice(price);
-		this.active = true;
-	}
+	public Packaging(String name, double width, double height, double length, double price, PackagingType type, boolean active, Supplier supplier) {
+		setName(name);
+        setWidth(width);
+        setHeight(height);
+        setLength(length);
+		setPrice(price);
+        setType(type);
+		setActive(active);
+        setSupplier(supplier);
+    }
 
 	protected Packaging() {
 	}
@@ -56,6 +80,8 @@ public class Packaging implements Serializable {
 	}
 
 	public void setName(String name) {
+		if (name == null || name.isEmpty() || name.isBlank())
+			throw new IllegalArgumentException("Packaging name must not be empty!");
 		this.name = name;
 	}
 
@@ -87,12 +113,46 @@ public class Packaging implements Serializable {
 		return active;
 	}
 
-	public void setPrice(BigDecimal price) {
-		if (price == null)
-			throw new IllegalArgumentException("price may not be null!");
-		if(price.compareTo(BigDecimal.ZERO)<0)
-			throw new IllegalArgumentException("price may not be negative!");
-		this.price = price;
+	public void setPrice(double price) {
+		if (price <= 0)
+			throw new IllegalArgumentException("Packaging price must not be be 0 or negative");
+		this.price = new BigDecimal(price);
+	}
+
+	public void setType(PackagingType type) {
+		this.type = type;
+	}
+
+	public void setHeight(double height) {
+		if (height < 0)
+			throw new IllegalArgumentException("Packaging width must not be negative!");
+		this.height = height;
+	}
+
+	public void setWidth(double width) {
+		if (width < 0)
+			throw new IllegalArgumentException("Packaging width must not be negative!");
+		this.width = width;
+	}
+
+	public void setLength(double length) {
+		if (length < 0)
+			throw new IllegalArgumentException("Packaging width must not be negative!");
+		this.length = length;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		if (supplier == null)
+			throw new IllegalArgumentException("Packaging supplier must not be null!");
+		this.supplier = supplier;
 	}
 
 	@Override

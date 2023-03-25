@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ import logoMapper.LogoMapper;
         ),
         @NamedQuery(
                 name = "Supplier.findAll",
-                query = "SELECT d FROM Supplier d"
+                query = "SELECT d FROM Supplier d" // TODO weg
         ),
         @NamedQuery(
         		name="Supplier.findAllCustomersForSupplier",
@@ -39,7 +40,7 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "supplier_id")
-    private int supplierId;
+    private int supplierId = -1;
 
     private String name = "";
 
@@ -51,22 +52,22 @@ public class Supplier {
     private String phoneNumber = "";
     
     @OneToOne(mappedBy="supplier", cascade = CascadeType.PERSIST)
-    private Logo logo;
+    private Logo logo = LogoMapper.makeLogo("/images/testImg.jpg", this);
     
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST)
-    private List<ContactPersonSupplier> contactPersons;
+    private List<ContactPersonSupplier> contactPersons = Collections.emptyList();
     
     @OneToMany(mappedBy="supplier")
-    private List<User> users;
+    private List<User> users = Collections.emptyList();
 
     @OneToMany(mappedBy = "supplier")
-    private List<Order> ordersAsSupplier;
+    private List<Order> ordersAsSupplier = Collections.emptyList();
 
     @OneToMany(mappedBy = "customer")
-    private List<Order> ordersAsCustomer;
+    private List<Order> ordersAsCustomer = Collections.emptyList();
     
     @OneToMany(mappedBy="supplier")
-    private List<TransportService> transportServices;
+    private List<TransportService> transportServices = Collections.emptyList();
 
     public Supplier(String name, String email, String address, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
                     List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
@@ -86,6 +87,10 @@ public class Supplier {
     }
 
     protected Supplier() {
+    }
+
+    Supplier(String name) {
+        setName(name);
     }
 
     public int getSupplierId() {

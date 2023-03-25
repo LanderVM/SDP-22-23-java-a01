@@ -47,19 +47,19 @@ public class StartUp extends Application {
             transportServiceDao = new TransportServiceDaoJpa(entityManager);
 
             LoginScreenController root = new LoginScreenController(
-                    new OrderController(orderDao,transportServiceDao),
+                    new OrderController(orderDao, transportServiceDao),
                     new UserController(userDao),
-                    new TransportServiceController(transportServiceDao,supplierDao),
+                    new TransportServiceController(transportServiceDao, supplierDao),
                     new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));
 
-    		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
-    		loader.setController(root);
-    		loader.setRoot(root);
-    		try {
-    			loader.load();
-    		} catch (IOException e) {
-    			throw new RuntimeException(e);
-    		}
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
+            loader.setController(root);
+            loader.setRoot(root);
+            try {
+                loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             Scene scene = new Scene(root);
             //scene.getStylesheets().add(getClass().getResource("/gui/application.css").toExternalForm());
@@ -84,9 +84,15 @@ public class StartUp extends Application {
         EntityManager userManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         userManager.getTransaction().begin();
 
-     // Aanmaken Objecten
-        Supplier s1 = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-        Supplier s2 = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
+        /*
+         *
+         * Creating objects
+         *
+         */
+
+        // Suppliers with TrackingService and User
+        Supplier timCo = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
+        Supplier janInc = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
 
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE);
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", VerificationType.ORDER_ID);
@@ -98,88 +104,93 @@ public class StartUp extends Application {
         ContactPerson postnlPerson1 = new ContactPerson("een@post.nl", "899321480");
         ContactPerson postnlPerson2 = new ContactPerson("twee@post.nl", "899321480");
 
-        TransportService bpost1 = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails,s1, true);
-        TransportService postnl1 = new TransportService("postnl", List.of(postnlPerson1), postnlDetails,s1, true);
-        TransportService bpost2 = new TransportService("bpost", List.of(bpostPerson3, bpostPerson4), bpostDetails,s2, true);
-        TransportService postnl2 = new TransportService("postnl", List.of(postnlPerson2), postnlDetails,s2, true);
-        
-//        bpostPerson1.setTransportServices(List.of(bpost1,bpost2));
-//        bpostPerson2.setTransportServices(List.of(bpost1,bpost2));
-//        postnlPerson1.setTransportServices(List.of(postnl1,postnl2));
-        
-        s1.setTransportServices(List.of(bpost1,postnl1));
-        s2.setTransportServices(List.of(bpost2,postnl2));
-        
+        TransportService bpost1 = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, timCo, true);
+        TransportService postnl1 = new TransportService("postnl", List.of(postnlPerson1), postnlDetails, timCo, true);
+        TransportService bpost2 = new TransportService("bpost", List.of(bpostPerson3, bpostPerson4), bpostDetails, janInc, true);
+        TransportService postnl2 = new TransportService("postnl", List.of(postnlPerson2), postnlDetails, janInc, true);
+
+        timCo.setTransportServices(List.of(bpost1, postnl1));
+        janInc.setTransportServices(List.of(bpost2, postnl2));
+
+        ContactPersonSupplier contactPersonSupplier1 = new ContactPersonSupplier("Jan Jaap", "jan.jaap@gmail.com", timCo);
+        ContactPersonSupplier contactPersonSupplier2 = new ContactPersonSupplier("Bert Bratwurst", "bert.bratwurst@gmail.com", timCo);
+        ContactPersonSupplier contactPersonSupplier3 = new ContactPersonSupplier("Erik Tanner", "erik.tanner@gmail.com", janInc);
+        ContactPersonSupplier contactPersonSupplier4 = new ContactPersonSupplier("Elke Daems", "elke.daems@gmail.com", janInc);
+
+        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", timCo, "0479008653", "Delaware HQ");
+        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", janInc, "04799234616", "Delaware Warehouse");
+
+        List<ContactPersonSupplier> listContactPersonSupplier1 = List.of(contactPersonSupplier1, contactPersonSupplier2);
+        List<ContactPersonSupplier> listContactPersonSupplier2 = List.of(contactPersonSupplier3, contactPersonSupplier4);
+
+        timCo.setContactPersons(listContactPersonSupplier1);
+        janInc.setContactPersons(listContactPersonSupplier2);
+
+        // Orders with Products, Packaging and Notifications
         Product product1 = new Product("test_product een", new BigDecimal("1.00"));
         Product product2 = new Product("test_product twee", new BigDecimal("2.00"));
         Product product3 = new Product("test_product drie", new BigDecimal("4.50"));
         Product product4 = new Product("test_product vier", new BigDecimal("8.90"));
         Product product5 = new Product("test_product vijf", new BigDecimal("11.30"));
-        
-        Order order1 = new Order(LocalDate.now().minusDays(3),"Honkstraat 33 Lokeren",List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, PackagingType.STANDARD, s1,s2,new BigDecimal("3.00"));
-        Order order2 = new Order(LocalDate.now().minusDays(2),"Bellelaan 12 Haaltert",List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost2, PackagingType.CUSTOM,s2,s1, new BigDecimal("24.70"));
-        Order order3 = new Order(LocalDate.now().minusDays(1),"Doodskoplaan 73 Gent",List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl1, PackagingType.CUSTOM,s1,s2, new BigDecimal("23.80"));
-        Order order4 = new Order(LocalDate.now(),"Bekerstraat 66 Bilzen",List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, PackagingType.STANDARD,s2,s1, new BigDecimal("21.20"));
-        
-        
+
+        Packaging timCoSmallStandard = new Packaging("Small", 2.0, 3.0, 2.0, 15.00, PackagingType.STANDARD, false, timCo);
+        Packaging timCoBigCustom = new Packaging("Medium", 3.0, 4.5, 4.5, 30.00, PackagingType.CUSTOM, true, timCo);
+        Packaging janIncMediumCustom = new Packaging("Medium", 4.0, 5.5, 6.6, 10.00, PackagingType.CUSTOM, true, janInc);
+        Packaging janIncMediumCustomOld = new Packaging("MediumOld", 5.0, 4.5, 6.6, 13.50, PackagingType.STANDARD, false, janInc);
+
+        Order order1 = new Order(LocalDate.now().minusDays(3), "Honkstraat 33 Lokeren", List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, timCoBigCustom, timCo, janInc, new BigDecimal("3.00"));
+        Order order2 = new Order(LocalDate.now().minusDays(2), "Bellelaan 12 Haaltert", List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost2, janIncMediumCustomOld, janInc, timCo, new BigDecimal("24.70"));
         order2.generateTrackingCode();
+        Order order3 = new Order(LocalDate.now().minusDays(1), "Doodskoplaan 73 Gent", List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl1, timCoSmallStandard, timCo, janInc, new BigDecimal("23.80"));
         order3.generateTrackingCode();
+        Order order4 = new Order(LocalDate.now(), "Bekerstraat 66 Bilzen", List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, janIncMediumCustom, janInc, timCo, new BigDecimal("21.20"));
 
         Notification postedNotification = new Notification(order1);
         Notification processedNotification = new Notification(order2, LocalDate.of(2023, 3, 12));
         Notification deliveredNotification = new Notification(order2, LocalDate.of(2023, 3, 14));
 
+
+
         order1.addNotification(postedNotification);
-        order1.addNotification(processedNotification);
+        order2.addNotification(processedNotification);
         order2.addNotification(deliveredNotification);
 
-        ContactPersonSupplier contactPersonSupplier1 = new ContactPersonSupplier("Jan Jaap","jan.jaap@gmail.com",s1);
-        ContactPersonSupplier contactPersonSupplier2 = new ContactPersonSupplier("Bert Bratwurst","bert.bratwurst@gmail.com",s1);
-        ContactPersonSupplier contactPersonSupplier3 = new ContactPersonSupplier("Erik Tanner","erik.tanner@gmail.com",s2);
-        ContactPersonSupplier contactPersonSupplier4 = new ContactPersonSupplier("Elke Daems","elke.daems@gmail.com",s2);
-        
-        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", s1, "0479008653", "Delaware HQ");
-        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", s2, "04799234616", "Delaware Warehouse");
-        
-        List<ContactPersonSupplier> listContactPersonSupplier1 = List.of(contactPersonSupplier1,contactPersonSupplier2);
-        List<ContactPersonSupplier> listContactPersonSupplier2 = List.of(contactPersonSupplier3,contactPersonSupplier4);
-        
-        s1.setContactPersons(listContactPersonSupplier1);
-        s2.setContactPersons(listContactPersonSupplier2);
-        
         List<Order> l1 = List.of(order1, order3);
         List<Order> l2 = List.of(order2, order4);
-        
-        s1.setOrdersAsCustomer(l1);     
-        s2.setOrdersAsCustomer(l2);
-        
-        s1.setOrdersAsSupplier(l2);     
-        s2.setOrdersAsSupplier(l1);
-        
-        order1.setSupplier(s2);
-        order2.setSupplier(s1);
-        order3.setSupplier(s2);
-        order4.setSupplier(s1);
-        
-        order1.setCustomer(s1);
-        order2.setCustomer(s2);
-        order3.setCustomer(s1);
-        order4.setCustomer(s2);
 
-        //Package small = new Package("small", Packaging.SMALL, new BigDecimal(1.0), new BigDecimal(5.0), new BigDecimal(1.0), new BigDecimal(5.0));
-        //Package medium = new Package("medium", Packaging.MEDIUM, new BigDecimal(5.0), new BigDecimal(10.0), new BigDecimal(2.0), new BigDecimal(10.0));
-        //Package large = new Package("large", Packaging.LARGE, new BigDecimal(10.0), new BigDecimal(15.0), new BigDecimal(3.0), new BigDecimal(15.0));
-        //Package custom = new Package("custom", Packaging.CUSTOM, new BigDecimal(7.5), new BigDecimal(15.0), new BigDecimal(1.5), new BigDecimal(5.0));
-        
-        // Persisteren Objecten in de db
-        // Products
-        userManager.persist(product1);
-        userManager.persist(product2);
-        userManager.persist(product3);
-        userManager.persist(product4);
-        userManager.persist(product5);
+        timCo.setOrdersAsCustomer(l1);
+        janInc.setOrdersAsCustomer(l2);
+
+        timCo.setOrdersAsSupplier(l2);
+        janInc.setOrdersAsSupplier(l1);
+
+        order1.setSupplier(janInc);
+        order2.setSupplier(timCo);
+        order3.setSupplier(janInc);
+        order4.setSupplier(timCo);
+
+        order1.setCustomer(timCo);
+        order2.setCustomer(janInc);
+        order3.setCustomer(timCo);
+        order4.setCustomer(janInc);
+
+        /*
+         *
+         * Adding objects to database
+         *
+         */
+
+        // Supplier
+        userManager.persist(timCo);
+        userManager.persist(janInc);
 
         // TrackingService
+        userManager.persist(bpost1);
+        userManager.persist(postnl1);
+        userManager.persist(bpost2);
+        userManager.persist(postnl2);
+
+        // TrackingService ContactPerson
         userManager.persist(bpostPerson1);
         userManager.persist(bpostPerson2);
         userManager.persist(bpostPerson3);
@@ -188,29 +199,32 @@ public class StartUp extends Application {
         userManager.persist(postnlPerson2);
         userManager.persist(bpostDetails);
         userManager.persist(postnlDetails);
-        
-        userManager.persist(bpost1);
-        userManager.persist(postnl1);
-        userManager.persist(bpost2);
-        userManager.persist(postnl2);
-        
+
+        // Products
+        userManager.persist(product1);
+        userManager.persist(product2);
+        userManager.persist(product3);
+        userManager.persist(product4);
+        userManager.persist(product5);
+
+        // Order
         userManager.persist(order1);
         userManager.persist(order2);
         userManager.persist(order3);
         userManager.persist(order4);
-        
-        userManager.persist(s1);
-        userManager.persist(s2);
 
+        // Order Notification
         userManager.persist(postedNotification);
         userManager.persist(processedNotification);
         userManager.persist(deliveredNotification);
-        
-//        userManager.persist(small);
-//        userManager.persist(medium);
-//        userManager.persist(large);
-//        userManager.persist(custom);
-        
+
+        // Packaging
+        userManager.persist(timCoSmallStandard);
+        userManager.persist(timCoBigCustom);
+        userManager.persist(janIncMediumCustom);
+        userManager.persist(janIncMediumCustomOld);
+
+        // Users
         userManager.persist(admin);
         userManager.persist(warehouseman);
 

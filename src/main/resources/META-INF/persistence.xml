@@ -16,6 +16,7 @@
         <class>domain.Logo</class>
         <class>domain.Notification</class>
         <class>domain.OrderLine</class>
+        <class>domain.Packaging</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:mysql://localhost:3306/lokale_db_sdp2?serverTimezone=UTC"/>
