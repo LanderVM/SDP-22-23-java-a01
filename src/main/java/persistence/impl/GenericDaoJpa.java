@@ -7,12 +7,12 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
 
     final EntityManager entityManager;
     private final Class<T> type;
-    private final int supplierId;
+    final int supplierId;
 
     public GenericDaoJpa(Class<T> type, EntityManager entityManager) {
         this.entityManager = entityManager;
         this.type = type;
-        this.supplierId = 1; // TODO
+        this.supplierId = 1; // TODO alles refactoren zodat deze constructor niet meer gebruikt wordt
     }
 
     public GenericDaoJpa(Class<T> type, EntityManager entityManager, int supplierId) {

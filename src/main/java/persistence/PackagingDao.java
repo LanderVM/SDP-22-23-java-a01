@@ -8,11 +8,11 @@ public interface PackagingDao extends GenericDao<Packaging> {
 
     void delete(int packagingId);
 
-    List<Packaging> getAll(int supplierId);
+    List<Packaging> getAll();
 
     void add(Packaging packaging);
 
-    boolean exists(String name, int supplierId);
+    boolean exists(String name);
 
-    Packaging get(String name, int supplierId);
+    Packaging get(String name);
 }

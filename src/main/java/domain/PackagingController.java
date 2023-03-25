@@ -13,7 +13,7 @@ public class PackagingController {
     public PackagingController(PackagingDao packagingDao, Supplier supplier) {
         this.packagingDao = packagingDao;
         this.supplier = supplier;
-        this.packagingList = FXCollections.observableList(packagingDao.getAll(supplier.getSupplierId()));
+        this.packagingList = FXCollections.observableList(packagingDao.getAll());
     }
 
     public ObservableList<Packaging> getPackagingList() {
@@ -29,7 +29,7 @@ public class PackagingController {
 
     public void addPackaging(String name, double width, double height, double length, double price, String packagingType, boolean active) {
         validatePackagingType(packagingType);
-        if (packagingDao.exists(name, supplier.getSupplierId()))
+        if (packagingDao.exists(name))
             throw new IllegalArgumentException("Packaging type with this name already exists!");
 
         Packaging packaging = new Packaging(name, width, height, length, price, PackagingType.valueOf(packagingType), active, supplier);
@@ -43,7 +43,7 @@ public class PackagingController {
         validatePackagingType(packagingType);
 
         Packaging packaging = packagingDao.get(packagingId);
-        Packaging existingNamePackaging = packagingDao.get(name, supplier.getSupplierId());
+        Packaging existingNamePackaging = packagingDao.get(name);
         if (existingNamePackaging != null && !existingNamePackaging.equals(packaging))
             throw new IllegalArgumentException("Packaging type with this name already exists!");
 

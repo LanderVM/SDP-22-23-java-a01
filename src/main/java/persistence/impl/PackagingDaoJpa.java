@@ -20,7 +20,7 @@ public class PackagingDaoJpa extends GenericDaoJpa<Packaging> implements Packagi
         entityManager.getTransaction().commit();
     }
 
-    public List<Packaging> getAll(int supplierId) {
+    public List<Packaging> getAll() {
         List<Packaging> result = entityManager.createNamedQuery("Packaging.findAll", Packaging.class).setParameter(1, supplierId).getResultList();
         return Collections.unmodifiableList(result);
     }
@@ -31,11 +31,11 @@ public class PackagingDaoJpa extends GenericDaoJpa<Packaging> implements Packagi
         entityManager.getTransaction().commit();
     }
 
-    public boolean exists(String name, int supplierId) {
+    public boolean exists(String name) {
         return !entityManager.createNamedQuery("Packaging.findNameExists").setParameter(1, name).setParameter(2, supplierId).getResultList().isEmpty();
     }
 
-    public Packaging get(String name, int supplierId) {
+    public Packaging get(String name) {
         return entityManager.createNamedQuery("Packaging.findByName", Packaging.class).setParameter(1, name).setParameter(2, supplierId).getSingleResult();
     }
 }
