@@ -29,14 +29,25 @@ public class Packaging implements Serializable {
     @Column(name = "packaging_id")
     private int packagingId;
 
-    @Column(unique = true)
+    @Column(name = "name", unique = true)
 	private String name;
 
+	@Column(name = "packaging_type")
 	private PackagingType type = PackagingType.STANDARD;
+
+	@Column(name = "height")
 	private double height = 0;
+
+	@Column(name = "width")
 	private double width = 0;
+
+	@Column(name = "length")
 	private double length = 0;
+
+	@Column(name = "price")
 	private BigDecimal price;
+
+	@Column(name = "is_active")
 	private boolean active = true;
 
 	@ManyToOne
