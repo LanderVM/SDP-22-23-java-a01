@@ -30,4 +30,8 @@ public class PackagingDaoJpa extends GenericDaoJpa<Packaging> implements Packagi
         entityManager.persist(packaging);
         entityManager.getTransaction().commit();
     }
+
+    public boolean exists(String name, int supplierId) {
+        return !entityManager.createNamedQuery("Packaging.findNameExists").setParameter(1, name).setParameter(2, supplierId).getResultList().isEmpty();
+    }
 }

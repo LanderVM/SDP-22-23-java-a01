@@ -21,6 +21,10 @@ import jakarta.persistence.*;
 				name = "Packaging.findAll",
 				query = "SELECT p FROM Packaging p WHERE p.supplier.supplierId = ?1"
 		),
+		@NamedQuery(
+				name = "Packaging.findNameExists",
+				query = "SELECT p FROM Packaging p WHERE p.name = ?1 AND p.supplier.supplierId = ?2"
+		),
 })
 public class Packaging implements Serializable {
 

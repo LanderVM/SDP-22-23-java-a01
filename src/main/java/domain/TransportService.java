@@ -23,7 +23,7 @@ import java.util.Objects;
         ),
         @NamedQuery(
                 name = "TransportService.findNameExists",
-                query = "SELECT d FROM TransportService d WHERE d.name = ?1"
+                query = "SELECT d FROM TransportService d WHERE d.name = ?1" // TODO where supplier id = supplier id
         ),
         @NamedQuery(
         		name = "TransportService.findAllNames",

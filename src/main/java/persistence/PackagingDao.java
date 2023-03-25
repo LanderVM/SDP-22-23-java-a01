@@ -11,4 +11,6 @@ public interface PackagingDao extends GenericDao<Packaging> {
     List<Packaging> getAll(int supplierId);
 
     void add(Packaging packaging);
+
+    boolean exists(String name, int supplierId);
 }
