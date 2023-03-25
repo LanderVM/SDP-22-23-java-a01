@@ -15,7 +15,6 @@
         <class>domain.ContactPersonSupplier</class>
         <class>domain.Logo</class>
         <class>domain.Notification</class>
-        <class>domain.Package</class>
         <class>domain.OrderLine</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"

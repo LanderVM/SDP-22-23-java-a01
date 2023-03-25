@@ -18,11 +18,11 @@ import jakarta.persistence.*;
         ),
         @NamedQuery(
                 name = "Order.findAll",
-                query = "SELECT d FROM Order d"
+                query = "SELECT d FROM Order d WHERE d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
         		name = "Order.findAllForSupplier",
-                query = "SELECT d FROM Order d WHERE d.supplier.supplierId = ?1"
+                query = "SELECT d FROM Order d WHERE d.supplier.supplierId = ?1" // TODO
         ),
         @NamedQuery(
         		name="Order.findAllForUser",

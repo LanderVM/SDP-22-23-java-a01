@@ -4,15 +4,26 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import persistence.impl.SupplierDaoJpa;
+import util.JPAUtil;
 
 @Entity
 @Table(name = "packages")
+@NamedQueries({
+		@NamedQuery(
+				name = "Supplier.findById",
+				query = "SELECT p FROM Packaging p WHERE p.packagingId = ?1"
+		),
+		@NamedQuery(
+				name = "Supplier.findByName",
+				query = "SELECT p FROM Packaging p WHERE p.name = ?1"
+		),
+		@NamedQuery(
+				name = "Supplier.findAll",
+				query = "SELECT p FROM Packaging p WHERE p.supplier.supplierId = ?1"
+		),
+})
 public class Packaging implements Serializable {
 
     @Id
@@ -29,6 +40,9 @@ public class Packaging implements Serializable {
 	private double length = 0;
 	private BigDecimal price;
 	private boolean active = true;
+
+	@ManyToOne
+	private final Supplier supplier  = new SupplierDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager()).get(1); // TODO
 
 	public Packaging(String name, PackagingType type, double height, double width, double length,
 					 BigDecimal price, boolean active) {

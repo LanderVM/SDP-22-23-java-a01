@@ -23,7 +23,7 @@ import logoMapper.LogoMapper;
         ),
         @NamedQuery(
                 name = "Supplier.findAll",
-                query = "SELECT d FROM Supplier d"
+                query = "SELECT d FROM Supplier d" // TODO weg
         ),
         @NamedQuery(
         		name="Supplier.findAllCustomersForSupplier",
