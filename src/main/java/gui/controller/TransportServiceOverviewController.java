@@ -253,9 +253,7 @@ public class TransportServiceOverviewController extends GridPane {
 		transportServiceController.addTransportService(txtName.getText(),listForAllContactPersons,
 				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
 				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(), userController.supplierIdFromUser()); 
-//		int index = tblTransportServices.getSelectionModel().getFocusedIndex();
-//		refreshTransportServiceTable();
-//		tblTransportServices.getSelectionModel().select(index);
+		initializeSaveTransportService();
 	}
 	@FXML
     void switchActionToCreate(ActionEvent event) {
@@ -309,12 +307,15 @@ public class TransportServiceOverviewController extends GridPane {
 		tblTransportServices.getSelectionModel().clearSelection();
 		listForAddedContactPersons.clear();
 		listForAllContactPersons.clear();
+		btnAddContactPerson.setDisable(false);
 		tblTransportServices.setVisible(false);
 		currentActionCreate = true;
 		btnCurrentActionCreate.setDisable(true);
 		btnCurrentActionSave.setDisable(false);
 		btnCreateService.setVisible(true);
 		btnSave.setVisible(false);
+		tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+		tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
 		tblContactPerson.setItems(listForAllContactPersons);
 		tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue, oldContactPerson, newContactPerson) -> {
 			btnRemoveContactPerson.setDisable(false);
@@ -329,6 +330,7 @@ public class TransportServiceOverviewController extends GridPane {
 		listForAddedContactPersons.clear();
 		listForAllContactPersons.clear();
 		tblTransportServices.setVisible(true);
+		btnAddContactPerson.setDisable(true);
 		currentActionCreate = false;
 		btnCurrentActionCreate.setDisable(false);
 		btnCurrentActionSave.setDisable(true);
