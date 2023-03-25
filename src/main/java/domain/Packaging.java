@@ -7,18 +7,18 @@ import java.util.Objects;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "packages")
+@Table(name = "packaging")
 @NamedQueries({
 		@NamedQuery(
-				name = "Supplier.findById",
+				name = "Packaging.findById",
 				query = "SELECT p FROM Packaging p WHERE p.packagingId = ?1"
 		),
 		@NamedQuery(
-				name = "Supplier.findByName",
+				name = "Packaging.findByName",
 				query = "SELECT p FROM Packaging p WHERE p.name = ?1"
 		),
 		@NamedQuery(
-				name = "Supplier.findAll",
+				name = "Packaging.findAll",
 				query = "SELECT p FROM Packaging p WHERE p.supplier.supplierId = ?1"
 		),
 })
