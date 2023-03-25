@@ -54,7 +54,9 @@ public class Order {
     private List<OrderLine> orderLines;
     
     private Status status;
-    private PackagingType packagingType;
+
+    @ManyToOne
+    private Packaging packaging;
 
     @ManyToOne
     private TransportService transportService;
@@ -76,21 +78,20 @@ public class Order {
 
 
     public Order(LocalDate date, String adress, List<Product> productsList, Status status,
-                 TransportService transportService, PackagingType packagingType, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
-    	
-        this(date,adress,productsList,status,transportService,packagingType);
+                 TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
+        this(date,adress,productsList,status,transportService, packaging);
         this.setOriginalAcquisitionPrice(originalAcquisitionPrice);
         this.setSupplier(supplier);
         this.setCustomer(customer);
     }
 
 	public Order(LocalDate date,String address, List<Product> productsList, Status status,
-            TransportService transportService, PackagingType packagingType) {
+            TransportService transportService, Packaging packaging) {
 		this.address = address;
     	this.setDate(date);
     	this.setStatus(status);
     	this.setTransportService(transportService);
-    	this.setPackaging(packagingType);
+    	this.setPackaging(packaging);
     	this.orderLines = new ArrayList<>();
     	makeOrderlines(productsList);
     }
@@ -136,14 +137,14 @@ public class Order {
         this.status = status;
     }
 
-    public PackagingType getPackaging() {
-        return packagingType;
+    public Packaging getPackaging() {
+        return packaging;
     }
 
-    public void setPackaging(PackagingType packagingType) {
-    	if(packagingType==null)
-    		throw new IllegalArgumentException("packagingType may not be null!");
-        this.packagingType = packagingType;
+    public void setPackaging(Packaging packagingType) {
+    	if (packagingType == null)
+    		throw new IllegalArgumentException("Packaging must not be null!");
+        this.packaging = packagingType;
     }
 
     public TransportService getTransportService() {
@@ -254,7 +255,7 @@ public class Order {
                 ", date=" + date +
                 ", orderLines=" + orderLines +
                 ", status=" + status +
-                ", packaging=" + packagingType +
+                ", packaging=" + packaging +
                 ", transportService=" + transportService +
                 ", trackingCode=" + trackingCode +
                 ", originalAcquisitionPrice=" + originalAcquisitionPrice +
