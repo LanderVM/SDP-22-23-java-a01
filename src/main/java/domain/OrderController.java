@@ -1,22 +1,17 @@
 package domain;
 
 import java.util.List;
-import java.util.function.Function;
 
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
 import gui.view.ProductView;
-import gui.view.TransportServiceView;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.OrderDao;
 import persistence.TransportServiceDao;
 import persistence.impl.OrderDaoJpa;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class OrderController {
 
