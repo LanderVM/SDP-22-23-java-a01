@@ -40,7 +40,7 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "supplier_id")
-    private int supplierId;
+    private int supplierId = -1;
 
     private String name = "";
 

@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.PackagingDao;
 
+import java.math.BigDecimal;
+
 public class PackagingController {
 
     private final PackagingDao packagingDao;
@@ -14,6 +16,19 @@ public class PackagingController {
         this.packagingDao = packagingDao;
         this.user = user;
         this.packagingList = FXCollections.observableList(packagingDao.getAll(user.getSupplier().getSupplierId()));
+    }
+
+    public ObservableList<Packaging> getPackagingList() {
+        return this.packagingList;
+    }
+
+    public void addPackaging(String name, double width, double height, double length, BigDecimal price, String packagingType, boolean active) {
+        if (packagingType.isBlank() || packagingType.isEmpty())
+            throw new IllegalArgumentException("Packaging type must not be empty!");
+        if (!PackagingType.exists(packagingType))
+            throw new IllegalArgumentException("Packaging type does not exist!");
+        Packaging packaging = new Packaging(name, width, height, length, price, PackagingType.valueOf(packagingType), active, user.getSupplier());
+        packagingDao.add(packaging);
     }
 
 }

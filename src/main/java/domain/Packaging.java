@@ -53,23 +53,16 @@ public class Packaging implements Serializable {
 	@ManyToOne
 	private Supplier supplier = new Supplier("UNKNOWN");
 
-	public Packaging(String name, PackagingType type, double height, double width, double length,
-					 BigDecimal price, Supplier supplier, boolean active) {
-		this(name, type, height, width, length, price, supplier);
-		setActive(active);
-	}
-
-	public Packaging(String name, PackagingType type, double height, double width, double length,
-					 BigDecimal price, Supplier supplier) {
+	public Packaging(String name, double width, double height, double length, BigDecimal price, PackagingType type, boolean active, Supplier supplier) {
 		setName(name);
-		setType(type);
-		setWidth(width);
-		setHeight(height);
-		setLength(length);
+        setWidth(width);
+        setHeight(height);
+        setLength(length);
 		setPrice(price);
-		setSupplier(supplier);
-		setActive(true);
-	}
+        setType(type);
+		setActive(active);
+        setSupplier(supplier);
+    }
 
 	protected Packaging() {
 	}
