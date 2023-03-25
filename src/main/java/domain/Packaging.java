@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import jakarta.persistence.*;
-import persistence.impl.SupplierDaoJpa;
-import util.JPAUtil;
 
 @Entity
 @Table(name = "packages")
@@ -47,19 +45,19 @@ public class Packaging implements Serializable {
 	public Packaging(String name, PackagingType type, double height, double width, double length,
 					 BigDecimal price, Supplier supplier, boolean active) {
 		this(name, type, height, width, length, price, supplier);
-		this.active = active;
+		setActive(active);
 	}
 
 	public Packaging(String name, PackagingType type, double height, double width, double length,
 					 BigDecimal price, Supplier supplier) {
-		this.name = name;
-		this.type = type;
-		this.height = height;
-		this.width = width;
-		this.length = length;
-		this.setPrice(price);
-        this.supplier = supplier;
-		this.active = true;
+		setName(name);
+		setType(type);
+		setWidth(width);
+		setHeight(height);
+		setLength(length);
+		setPrice(price);
+		setSupplier(supplier);
+		setActive(true);
 	}
 
 	protected Packaging() {
@@ -70,6 +68,8 @@ public class Packaging implements Serializable {
 	}
 
 	public void setName(String name) {
+		if (name.isEmpty() || name.isBlank())
+			throw new IllegalArgumentException("Packaging name must not be empty!");
 		this.name = name;
 	}
 
@@ -103,10 +103,46 @@ public class Packaging implements Serializable {
 
 	public void setPrice(BigDecimal price) {
 		if (price == null)
-			throw new IllegalArgumentException("price may not be null!");
-		if(price.compareTo(BigDecimal.ZERO)<0)
-			throw new IllegalArgumentException("price may not be negative!");
+			throw new IllegalArgumentException("Packaging price must not be null!");
+		if(price.compareTo(BigDecimal.ZERO) < 0)
+			throw new IllegalArgumentException("Packaging price must not be negative!");
 		this.price = price;
+	}
+
+	public void setType(PackagingType type) {
+		this.type = type;
+	}
+
+	public void setHeight(double height) {
+		if (width < 0)
+			throw new IllegalArgumentException("Packaging width must not be negative!");
+		this.height = height;
+	}
+
+	public void setWidth(double width) {
+		if (width < 0)
+			throw new IllegalArgumentException("Packaging width must not be negative!");
+		this.width = width;
+	}
+
+	public void setLength(double length) {
+		if (width < 0)
+			throw new IllegalArgumentException("Packaging width must not be negative!");
+		this.length = length;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		if (supplier == null)
+			throw new IllegalArgumentException("Packaging supplier must not be null!");
+		this.supplier = supplier;
 	}
 
 	@Override
