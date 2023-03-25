@@ -15,7 +15,7 @@ import jakarta.persistence.*;
 		),
 		@NamedQuery(
 				name = "Packaging.findByName",
-				query = "SELECT p FROM Packaging p WHERE p.name = ?1"
+				query = "SELECT p FROM Packaging p WHERE p.name = ?1 AND p.supplier.supplierId = ?2"
 		),
 		@NamedQuery(
 				name = "Packaging.findAll",
@@ -31,10 +31,10 @@ public class Packaging implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "packaging_id")
-    private int packagingId;
+    private int packagingId = -1;
 
-    @Column(name = "name", unique = true)
-	private String name;
+    @Column(name = "name")
+	private String name = "";
 
 	@Column(name = "packaging_type")
 	private PackagingType type = PackagingType.STANDARD;
