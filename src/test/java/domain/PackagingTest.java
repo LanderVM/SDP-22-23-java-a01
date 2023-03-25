@@ -1,13 +1,16 @@
 package domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import persistence.PackagingDao;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class PackagingTest {
@@ -50,9 +53,17 @@ public class PackagingTest {
             "Klein, 2.0, 3.5, -4.0, 6.00, STANDARD, true",
             "Klein, 2.0, 3.5, 4.0, -1, STANDARD, true", // invalid price
             "Klein, 2.0, 3.5, 4.0, 0, STANDARD, true",
-            "Klein, 2.0, 3.5, 4.0, 0, invalid, true", // invalid PackagingType
+            "Klein, 2.0, 3.5, 4.0, 0,, true", // invalid PackagingType
+            "Klein, 2.0, 3.5, 4.0, 0, , true",
+            "Klein, 2.0, 3.5, 4.0, 0, invalid, true",
     })
     public void addPackaging_invalidArguments_throwsIllegalArgumentException(String name, double width, double height, double length, double price, String packagingType, boolean active) {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> packagingController.addPackaging(name, width, height, length, price, packagingType, active));
+        assertThrows(IllegalArgumentException.class, () -> packagingController.addPackaging(name, width, height, length, price, packagingType, active));
+    }
+
+    @Test
+    public void addPackaging_nameAlreadyExists_throwsIllegalArgumentException() {
+        when(packagingDao.exists("Klein", supplier.getSupplierId())).thenReturn(true);
+        assertThrows(IllegalArgumentException.class, () -> packagingController.addPackaging("Klein", 2.0, 3.5, 4.0, 6.00, "STANDARD", true));
     }
 }
