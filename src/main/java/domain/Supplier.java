@@ -22,16 +22,8 @@ import logoMapper.LogoMapper;
                 query = "SELECT s FROM Supplier s WHERE s.name = ?1"
         ),
         @NamedQuery(
-                name = "Supplier.findAll", // TODO merge with OrderedByName
+                name = "Supplier.findAll",
                 query = "SELECT d FROM Supplier d"
-        ),
-        @NamedQuery(
-                name = "Supplier.findAllWithOrdersAsCustomer",
-                query = "SELECT d FROM Supplier d WHERE d.ordersAsCustomer IS NOT EMPTY"
-        ),
-        @NamedQuery(
-        		name = "Supplier.findAllCustomersOrderedByName",
-        		query = "SELECT s FROM Supplier s ORDER BY s.name"
         ),
         @NamedQuery(
         		name="Supplier.findAllCustomersForSupplier",

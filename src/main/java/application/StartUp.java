@@ -133,13 +133,13 @@ public class StartUp extends Application {
         order1.addNotification(processedNotification);
         order2.addNotification(deliveredNotification);
 
-        ContactPersonSupplier contactPersonSupplier1 =new ContactPersonSupplier("Jan Jaap","jan.jaap@gmail.com",s1);
-        ContactPersonSupplier contactPersonSupplier2 =new ContactPersonSupplier("Bert Bratwurst","bert.bratwurst@gmail.com",s1);
-        ContactPersonSupplier contactPersonSupplier3 =new ContactPersonSupplier("Erik Tanner","erik.tanner@gmail.com",s2);
-        ContactPersonSupplier contactPersonSupplier4 =new ContactPersonSupplier("Elke Daems","elke.daems@gmail.com",s2);
+        ContactPersonSupplier contactPersonSupplier1 = new ContactPersonSupplier("Jan Jaap","jan.jaap@gmail.com",s1);
+        ContactPersonSupplier contactPersonSupplier2 = new ContactPersonSupplier("Bert Bratwurst","bert.bratwurst@gmail.com",s1);
+        ContactPersonSupplier contactPersonSupplier3 = new ContactPersonSupplier("Erik Tanner","erik.tanner@gmail.com",s2);
+        ContactPersonSupplier contactPersonSupplier4 = new ContactPersonSupplier("Elke Daems","elke.daems@gmail.com",s2);
         
-        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", s1);
-        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", s2);
+        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", s1, "0479008653", "Delaware HQ");
+        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", s2, "04799234616", "Delaware Warehouse");
         
         List<ContactPersonSupplier> listContactPersonSupplier1 = List.of(contactPersonSupplier1,contactPersonSupplier2);
         List<ContactPersonSupplier> listContactPersonSupplier2 = List.of(contactPersonSupplier3,contactPersonSupplier4);
@@ -165,7 +165,7 @@ public class StartUp extends Application {
         order2.setCustomer(s2);
         order3.setCustomer(s1);
         order4.setCustomer(s2);
-        
+
         //Package small = new Package("small", Packaging.SMALL, new BigDecimal(1.0), new BigDecimal(5.0), new BigDecimal(1.0), new BigDecimal(5.0));
         //Package medium = new Package("medium", Packaging.MEDIUM, new BigDecimal(5.0), new BigDecimal(10.0), new BigDecimal(2.0), new BigDecimal(10.0));
         //Package large = new Package("large", Packaging.LARGE, new BigDecimal(10.0), new BigDecimal(15.0), new BigDecimal(3.0), new BigDecimal(15.0));

@@ -17,22 +17,22 @@ public class Packaging implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "package_id")
-    private int packageId;
+    @Column(name = "packaging_id")
+    private int packagingId;
 
     @Column(unique = true)
 	private String name;
 
-	private PackagingType type;
+	private PackagingType type = PackagingType.STANDARD;
 	private double height = 0;
 	private double width = 0;
 	private double length = 0;
 	private BigDecimal price;
-	private boolean active = false;
+	private boolean active = true;
 
 	public Packaging(String name, PackagingType type, double height, double width, double length,
 					 BigDecimal price, boolean active) {
-		
+
 		this( name, type,  height,  width,  length, price);
 		this.active = active;
 	}
@@ -59,8 +59,8 @@ public class Packaging implements Serializable {
 		this.name = name;
 	}
 
-	public int getPackageId() {
-		return packageId;
+	public int getPackagingId() {
+		return packagingId;
 	}
 
 	public PackagingType getType() {
@@ -97,7 +97,7 @@ public class Packaging implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(packageId);
+		return Objects.hash(packagingId);
 	}
 
 	@Override
@@ -109,12 +109,12 @@ public class Packaging implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Packaging other = (Packaging) obj;
-		return packageId == other.packageId;
+		return packagingId == other.packagingId;
 	}
 
 	@Override
 	public String toString() {
-		return "Package [packageId=" + packageId + ", name=" + name + ", type=" + type + ", height=" + height
+		return "Package [packageId=" + packagingId + ", name=" + name + ", type=" + type + ", height=" + height
 				+ ", width=" + width + ", lenght=" + length + ", price=" + price + ", active=" + active + "]";
 	}
 

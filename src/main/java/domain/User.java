@@ -11,7 +11,7 @@ import jakarta.persistence.*;
         ),
         @NamedQuery(
                 name = "User.findByEmail",
-                query = "SELECT u FROM User u WHERE u.accountName = ?1"
+                query = "SELECT u FROM User u WHERE u.emailAddress = ?1"
         ),
         @NamedQuery(
                 name = "User.findById",
@@ -26,25 +26,26 @@ public class User {
     private int userId;
 
     @Column(name = "email")
-    private String accountName = "";
+    private String emailAddress = "";
     private String surname = "";
     private String name = "";
     private String password = "";
-    private String phoneNumber = ""; // TODO these in constructor & seedDatabase()
-    private String emailAddress = "";
+    private String phoneNumber = "";
     private String address = "";
     private boolean isAdmin = false;
     
     @ManyToOne
     private Supplier supplier;
 
-    public User(String accountName, String password, boolean isAdmin, String surname, String name,Supplier supplier) {
-        setAccountName(accountName);
+    public User(String accountName, String password, boolean isAdmin, String surname, String name,Supplier supplier, String phoneNumber, String address) {
+        setEmailAddress(accountName);
         setPassword(password);
         setAdmin(isAdmin);
         setSurname(surname);
         setName(name);
         setSupplier(supplier);
+        setPhoneNumber(phoneNumber);
+        setAddress(address);
     }
 
 
@@ -56,12 +57,12 @@ public class User {
 	}
 
 
-	public String getAccountName() {
-        return accountName;
+	public String getEmailAddress() {
+        return emailAddress;
     }
 
-    void setAccountName(String accountName) {
-        this.accountName = accountName;
+    void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getPassword() {
@@ -104,10 +105,6 @@ public class User {
         return phoneNumber;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -118,27 +115,34 @@ public class User {
 		this.supplier = supplier;
 	}
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	@Override
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
 
-        return accountName.equals(user.accountName);
+        return emailAddress.equals(user.emailAddress);
     }
 
     @Override
     public int hashCode() {
-        return accountName.hashCode();
+        return emailAddress.hashCode();
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", accountName='" + accountName + '\'' +
+                ", accountName='" + emailAddress + '\'' +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
