@@ -24,7 +24,6 @@ public class PackagingTest {
     PackagingController packagingController;
 
     Supplier supplier;
-    User user;
     Packaging packaging;
 
     @Nested
@@ -32,9 +31,7 @@ public class PackagingTest {
         @BeforeEach
         public void setup() {
             supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-            user = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", supplier, "0479008653", "Delaware HQ");
-
-            packagingController = new PackagingController(packagingDao, user);
+            packagingController = new PackagingController(packagingDao, supplier);
         }
 
         @ParameterizedTest
@@ -79,11 +76,10 @@ public class PackagingTest {
         @BeforeEach
         public void setup() {
             supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-            user = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", supplier, "0479008653", "Delaware HQ");
             packaging = new Packaging("name", 2.0, 3.0, 4.0, 2.0, PackagingType.STANDARD, true, supplier);
             when(packagingDao.getAll(supplier.getSupplierId())).thenReturn(
                     List.of(new Packaging("bestaande", 2.0, 5.0, 7.0, 4.0, PackagingType.CUSTOM, false, supplier)));
-            packagingController = new PackagingController(packagingDao, user);
+            packagingController = new PackagingController(packagingDao, supplier);
         }
 
         @ParameterizedTest
@@ -149,8 +145,7 @@ public class PackagingTest {
         @BeforeEach
         public void setup() {
             supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-            user = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", supplier, "0479008653", "Delaware HQ");
-            packagingController = new PackagingController(packagingDao, user);
+            packagingController = new PackagingController(packagingDao, supplier);
         }
 
         @Test
