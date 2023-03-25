@@ -67,10 +67,10 @@ public class TransportServiceOverviewController extends GridPane {
 	@FXML
 	private Button btnAddContactPerson;
 
-	private OrderController orderController;
-	private UserController userController;
-	private SupplierController supplierController;
-	private TransportServiceController transportServiceController;
+	private final OrderController orderController;
+	private final UserController userController;
+	private final SupplierController supplierController;
+	private final TransportServiceController transportServiceController;
 	private int transportserviceId = -1;
 	private int supplierId = -1;
 	private String name;
@@ -169,10 +169,10 @@ public class TransportServiceOverviewController extends GridPane {
 
 	@FXML
 	private void showBoxes() {
-		BoxesOverviewController boxesOverviewController = new BoxesOverviewController(orderController, userController,
+		PackagingOverviewController packagingOverviewController = new PackagingOverviewController(orderController, userController,
 				transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/BoxesOverview.fxml"));
-		FXStageUtil.change(loader, boxesOverviewController, "Boxes Overview");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/PackagingOverview.fxml"));
+		FXStageUtil.change(loader, packagingOverviewController, "Boxes Overview");
 	}
 
 	@FXML

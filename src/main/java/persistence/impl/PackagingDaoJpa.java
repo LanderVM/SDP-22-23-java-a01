@@ -13,6 +13,10 @@ public class PackagingDaoJpa extends GenericDaoJpa<Packaging> implements Packagi
         super(Packaging.class, entityManager, supplierId);
     }
 
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
     public void delete(int packagingId) {
         entityManager.getTransaction().begin();
         Packaging packaging = get(packagingId);

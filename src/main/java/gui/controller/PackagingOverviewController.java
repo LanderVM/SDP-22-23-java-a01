@@ -10,19 +10,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import util.FXStageUtil;
 
-public class BoxesOverviewController {
+public class PackagingOverviewController {
 	@FXML
 	private Label lblUser;
 	@FXML
-	private TableView<BoxesOverviewController> tblBoxes;
+	private TableView<PackagingOverviewController> tblBoxes;
 
-	private OrderController orderController;
-	private UserController userController;
-	private SupplierController supplierController;
-	private TransportServiceController transportServiceController;
+	private final OrderController orderController;
+	private final UserController userController;
+	private final SupplierController supplierController;
+	private final TransportServiceController transportServiceController;
 
-	public BoxesOverviewController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController, SupplierController supplierController) {
+	public PackagingOverviewController(OrderController orderController, UserController userController,
+									   TransportServiceController transportServiceController, SupplierController supplierController) {
 
 		this.orderController = orderController;
 		this.userController = userController;

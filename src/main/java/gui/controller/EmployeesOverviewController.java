@@ -13,11 +13,11 @@ public class EmployeesOverviewController {
 	@FXML
 	private Label lblUser;	
 
-	private OrderController orderController;
-	private UserController userController;
-	private SupplierController supplierController;
-	private TransportServiceController transportServiceController;
-	
+	private final OrderController orderController;
+	private final UserController userController;
+	private final SupplierController supplierController;
+	private final TransportServiceController transportServiceController;
+
 	public EmployeesOverviewController(OrderController orderController, UserController userController,
 			SupplierController supplierController, TransportServiceController transportServiceController) {
 
@@ -42,10 +42,10 @@ public class EmployeesOverviewController {
 
 	@FXML
 	private void showBoxes() {
-		BoxesOverviewController boxesOverviewController = new BoxesOverviewController(orderController, userController,
+		PackagingOverviewController packagingOverviewController = new PackagingOverviewController(orderController, userController,
 				transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/BoxesOverview.fxml"));
-		FXStageUtil.change(loader, boxesOverviewController, "Boxes Overview");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/PackagingOverview.fxml"));
+		FXStageUtil.change(loader, packagingOverviewController, "Packaging Overview");
 	}
 
 	@FXML
