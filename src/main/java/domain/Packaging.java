@@ -42,23 +42,23 @@ public class Packaging implements Serializable {
 	private boolean active = true;
 
 	@ManyToOne
-	private final Supplier supplier  = new SupplierDaoJpa(JPAUtil.getEntityManagerFactory().createEntityManager()).get(1); // TODO
+	private Supplier supplier = new Supplier("UNKNOWN");
 
 	public Packaging(String name, PackagingType type, double height, double width, double length,
-					 BigDecimal price, boolean active) {
-
-		this( name, type,  height,  width,  length, price);
+					 BigDecimal price, Supplier supplier, boolean active) {
+		this(name, type, height, width, length, price, supplier);
 		this.active = active;
 	}
 
 	public Packaging(String name, PackagingType type, double height, double width, double length,
-					 BigDecimal price) {
+					 BigDecimal price, Supplier supplier) {
 		this.name = name;
 		this.type = type;
 		this.height = height;
 		this.width = width;
 		this.length = length;
 		this.setPrice(price);
+        this.supplier = supplier;
 		this.active = true;
 	}
 
