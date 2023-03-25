@@ -223,7 +223,7 @@
       </Button>
       <Label fx:id="lblCurrentAction" prefHeight="74.0" prefWidth="437.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
-            <Font size="24.0" />
+            <Font size="18.0" />
          </font>
          <GridPane.margin>
             <Insets left="10.0" />
