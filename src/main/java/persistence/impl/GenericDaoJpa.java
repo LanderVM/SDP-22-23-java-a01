@@ -37,4 +37,8 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
         entityManager.getTransaction().commit();
     }
 
+    public boolean exists(int id) {
+        return !entityManager.createNamedQuery(type.getSimpleName() + ".findExists", type).setParameter(1, id).getResultList().isEmpty();
+    }
+
 }

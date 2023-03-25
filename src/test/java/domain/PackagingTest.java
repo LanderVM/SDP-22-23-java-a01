@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import persistence.PackagingDao;
@@ -140,6 +141,35 @@ public class PackagingTest {
             when(packagingDao.get("Klein", -1)).thenReturn(testPackaging);
             when(packagingDao.get(1)).thenReturn(packaging);
             assertThrows(IllegalArgumentException.class, () -> packagingController.updatePackaging(1, "Klein", 2.0, 3.5, 4.0, 6.00, "STANDARD", true));
+        }
+    }
+
+    @Nested
+    public class DeletePackagingTests {
+        @BeforeEach
+        public void setup() {
+            supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
+            user = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", supplier, "0479008653", "Delaware HQ");
+            packaging = new Packaging("name", 2.0, 3.0, 4.0, 2.0, PackagingType.STANDARD, true, supplier);
+            packagingController = new PackagingController(packagingDao, user);
+        }
+
+        @Test
+        public void deletePackaging_happyFlow() {
+            when(packagingDao.exists(1)).thenReturn(true);
+            packagingController.deletePackaging(1);
+        }
+
+        @Test
+        public void deletePackaging_doesntExist_throwsIllegalArgumentException() {
+            when(packagingDao.exists(1)).thenReturn(false);
+            assertThrows(IllegalArgumentException.class, () -> packagingController.deletePackaging(1));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {-1, 0, -99})
+        public void deletePackaging_invalidID_throwsIllegalArgumentException(int id) {
+            assertThrows(IllegalArgumentException.class, () -> packagingController.deletePackaging(id));
         }
     }
 }

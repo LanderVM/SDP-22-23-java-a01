@@ -9,4 +9,6 @@ public interface GenericDao<T> {
 
     void insert(T entity);
 
+    boolean exists(int id);
+
 }

@@ -56,6 +56,13 @@ public class PackagingController {
         packaging.setActive(active);
 
         packagingDao.update(packaging);
-//        packagingList.set(index, packaging);
+    }
+
+    public void deletePackaging(int packagingId) {
+        if (packagingId <= 0)
+            throw new IllegalArgumentException("Packaging ID must not be 0 or negative!");
+        if (!packagingDao.exists(packagingId))
+            throw new IllegalArgumentException("Packaging with provided ID does not exist!");
+        packagingDao.delete(packagingId);
     }
 }
