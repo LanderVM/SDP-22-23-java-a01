@@ -57,7 +57,7 @@ public class Packaging implements Serializable {
 	@ManyToOne
 	private Supplier supplier = new Supplier("UNKNOWN");
 
-	public Packaging(String name, double width, double height, double length, BigDecimal price, PackagingType type, boolean active, Supplier supplier) {
+	public Packaging(String name, double width, double height, double length, double price, PackagingType type, boolean active, Supplier supplier) {
 		setName(name);
         setWidth(width);
         setHeight(height);
@@ -76,7 +76,7 @@ public class Packaging implements Serializable {
 	}
 
 	public void setName(String name) {
-		if (name.isEmpty() || name.isBlank())
+		if (name == null || name.isEmpty() || name.isBlank())
 			throw new IllegalArgumentException("Packaging name must not be empty!");
 		this.name = name;
 	}
@@ -109,12 +109,10 @@ public class Packaging implements Serializable {
 		return active;
 	}
 
-	public void setPrice(BigDecimal price) {
-		if (price == null)
-			throw new IllegalArgumentException("Packaging price must not be null!");
-		if(price.compareTo(BigDecimal.ZERO) < 0)
-			throw new IllegalArgumentException("Packaging price must not be negative!");
-		this.price = price;
+	public void setPrice(double price) {
+		if (price <= 0)
+			throw new IllegalArgumentException("Packaging price must not be be 0 or negative");
+		this.price = new BigDecimal(price);
 	}
 
 	public void setType(PackagingType type) {
@@ -122,7 +120,7 @@ public class Packaging implements Serializable {
 	}
 
 	public void setHeight(double height) {
-		if (width < 0)
+		if (height < 0)
 			throw new IllegalArgumentException("Packaging width must not be negative!");
 		this.height = height;
 	}
@@ -134,7 +132,7 @@ public class Packaging implements Serializable {
 	}
 
 	public void setLength(double length) {
-		if (width < 0)
+		if (length < 0)
 			throw new IllegalArgumentException("Packaging width must not be negative!");
 		this.length = length;
 	}
