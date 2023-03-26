@@ -38,7 +38,7 @@ public class PackagingOverviewController {
 	@FXML
 	private void showEmployees() {
 		EmployeesOverviewController employeesOverviewController = new EmployeesOverviewController(
-				orderController, userController, supplierController, transportServiceController);
+				orderController, userController, transportServiceController, supplierController);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/EmployeesOverview.fxml"));
 		FXStageUtil.change(loader, employeesOverviewController, "Employees Overview");		
 	}

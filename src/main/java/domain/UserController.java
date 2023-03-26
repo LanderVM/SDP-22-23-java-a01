@@ -2,7 +2,12 @@ package domain;
 
 import exceptions.EntityDoesntExistException;
 import exceptions.IncorrectPasswordException;
+import exceptions.InvalidNameException;
+import exceptions.UserAlreadyExistsExeption;
+import gui.view.UserDTO;
 import jakarta.persistence.EntityNotFoundException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import persistence.UserDao;
 
 public class UserController {
@@ -14,6 +19,10 @@ public class UserController {
         this.userDao = userDao;
     }
 
+    public ObservableList<UserDTO> getEmployees() {
+        return FXCollections.observableArrayList(userDao.getAllForSupplier(user.getSupplier().getSupplierId()).stream().map(UserDTO::new).toList());
+    }
+    
     public void checkUser(String accountName, String password) throws EntityNotFoundException, IncorrectPasswordException, EntityDoesntExistException {
         user = userDao.get(accountName);
         if(user==null)
@@ -26,6 +35,10 @@ public class UserController {
         return user.isAdmin();
     }
     
+    public Supplier getSupplier() {
+    	return user.getSupplier();
+    }
+    
     public int userId () {
     	return user.getUserId();
     }
@@ -34,6 +47,40 @@ public class UserController {
     	return user.getSupplier().getSupplierId();
     }
 
+    public void addUser(String email, String surName, String name, String tp, String mp, String funcion, String street, int number,
+    		String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsExeption, InvalidNameException {
+    	    	
+    	if(userDao.exists(email)) throw new UserAlreadyExistsExeption();
+    	
+    	userDao.insert(new User(
+            email, "test", funcion == "admin" ? true : false, surName, name, tp, mp, street, number, box, city, pc, counrty, supplier
+    	));      
+    	
+    }
+    
+    public void updateUser(String email, String surName, String name, String tp, String mp, String funcion, String street, int number,
+    		String box, String city, String pc, String counrty) throws EntityNotFoundException, NumberFormatException {
+    	 	
+    	if(email.isBlank() || email.isEmpty()) throw new IllegalArgumentException("Email mag niet leeg zijn");
+    	
+    	User user = userDao.get(email);
+    	
+    	user.setSurname(surName);
+    	user.setName(name);
+    	user.setTelephone(tp);
+    	user.setMobilePhone(mp);
+    	user.setAdmin(funcion == "admin" ? true : false);
+    	user.setAddress(street);
+    	user.setHouseNumber(number);
+    	user.setBox(box);
+    	user.setCity(city);
+    	user.setPostalCode(pc);
+    	user.setCountry(counrty);
+    	
+    	userDao.update(user);
+    	
+    }
+    
     public String toString() {
     	return String.format("%s %s",user.getSurname(), user.getName());
     }
