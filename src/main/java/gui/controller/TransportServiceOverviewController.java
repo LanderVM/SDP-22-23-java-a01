@@ -200,16 +200,13 @@ public class TransportServiceOverviewController extends GridPane {
 				alert.showAndWait();
 			}		
 			
-			//checkIfContactPersonIsAlreadyAdded(txtAddEmail.getText(), txtAddPhoneNumber.getText());
+			
 			
 			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),txtAddPhoneNumber.getText());
 			listForAllContactPersons.add(contactPersonView);
 		}
 	}
-	private void checkIfContactPersonIsAlreadyAdded(String email, String name) {
-		
-	}
-
+	
 	@FXML
     void removeContactPerson(ActionEvent event) {
 		if (!currentActionCreate) {

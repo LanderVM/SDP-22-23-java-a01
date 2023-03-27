@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import persistence.impl.OrderDaoJpa;
+import persistence.impl.TransportServiceDaoJpa;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.math.BigDecimal;
@@ -26,6 +28,8 @@ public class OrderTest {
 
     @Mock
     OrderDaoJpa orderDao;
+    @Mock
+    TransportServiceDaoJpa transportServiceDao;
     @InjectMocks
     OrderController orderController;
 
@@ -47,17 +51,15 @@ public class OrderTest {
     public void processOrder_happyFlow()  {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
+        when(transportServiceDao.getForSupplier("test", 0)).thenReturn(transportService);
 
         try {
-			orderController.processOrder(1, transportService.getName(),supplier.getSupplierId());
+			orderController.processOrder(1, transportService.getName(),0);
 		} catch (EntityNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OrderStatusException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (EntityDoesntExistException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         Order orderAfterUpdate = orderDao.get(1);
@@ -67,13 +69,33 @@ public class OrderTest {
         assertEquals(1, orderAfterUpdate.getNotifications().size());
         verify(orderDao, times(2)).get(1);
     }
+    
+    @Test
+    public void processOrder_orderDoesntExist_throwsEntityDoesntExistException () {
+    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+        when(orderDao.get(1)).thenReturn(null);
+        
+        assertThrows(EntityDoesntExistException.class, () -> orderController.processOrder(1,transportService.getName(),0));
+        verify(orderDao).get(1);
+    }
+    
+    public void processOrder_transportServiceDoesntExist_throwsEntityDoesntExistException () {
+    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+        when(orderDao.get(1)).thenReturn(order);
+        when(transportServiceDao.getForSupplier("test", 0)).thenReturn(null);
+        assertThrows(EntityDoesntExistException.class, () -> orderController.processOrder(1,transportService.getName(),0));
+        verify(orderDao).get(1);
+        verify(transportServiceDao).getForSupplier("test",0);
+    }
 
     @Test
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
+        when(transportServiceDao.getForSupplier("test", 0)).thenReturn(transportService);
 
-        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1,transportService.getName(),supplier.getSupplierId()));
+        assertThrows(OrderStatusException.class, () -> orderController.processOrder(1,transportService.getName(),0));
         verify(orderDao).get(1);
+        verify(transportServiceDao).getForSupplier("test",0);
     }
 }
