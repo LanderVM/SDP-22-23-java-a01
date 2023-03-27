@@ -24,8 +24,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class OrderTest {
 
-    // TODO andere dao's worden niet gemockt waardoor testen niet werken, moet opgelost worden
-
     @Mock
     OrderDaoJpa orderDao;
     @Mock
@@ -98,4 +96,5 @@ public class OrderTest {
         verify(orderDao).get(1);
         verify(transportServiceDao).getForSupplier("test",0);
     }
+    
 }
