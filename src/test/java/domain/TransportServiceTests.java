@@ -9,6 +9,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import exceptions.EntityDoesntExistException;
+import gui.view.ContactPersonView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import persistence.SupplierDao;
 import persistence.TransportServiceDao;
 
 import java.util.List;
@@ -21,11 +25,13 @@ public class TransportServiceTests {
 
     @Mock
     private TransportServiceDao transportServiceJPADao;
+    @Mock
+    private SupplierDao supplierDaoJpa;
     @InjectMocks
     private TransportServiceController transportServiceController;
 
     private Supplier supplier;
-    private ContactPerson contactPerson;
+    private ContactPersonView contactPersonView;
     TransportService transportService;
 
     @Nested
@@ -38,52 +44,64 @@ public class TransportServiceTests {
 
         @Test
         public void addTransportService_happyFlow() {
-            when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true, supplier.getSupplierId());
+        	contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
+            when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(false);
+            when(supplierDaoJpa.get(0)).thenReturn(supplier);
+            transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0);
         }
 
         @Test
         public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
-            contactPerson = new ContactPerson("test@mail.com", "0477982037");
-            when(transportServiceJPADao.existsForSupplier("bpost", supplier.getSupplierId())).thenReturn(true);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "POST_CODE", true, supplier.getSupplierId()));
+            contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
+            when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(true);
+            when(supplierDaoJpa.get(0)).thenReturn(supplier);
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0));
         }
 
         @Test
         public void addTransportService_contactPersonListEmpty_throwsIllegalArgumentException() {
-            when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(), 10, false, "test", "POST_CODE", true, supplier.getSupplierId()));
+            when(transportServiceJPADao.existsForSupplier("bpost",0)).thenReturn(false);
+            when(supplierDaoJpa.get(0)).thenReturn(supplier);
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(), 10, false, "test", "POST_CODE", true, 0));
         }
 
         @Test
         public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
-            contactPerson = new ContactPerson("test@mail.com", "0477982037");
-            when(transportServiceJPADao.exists("bpost")).thenReturn(false);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", List.of(contactPerson), 10, false, "test", "invalid_type", true, supplier.getSupplierId()));
+            contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
+            when(transportServiceJPADao.existsForSupplier("bpost",0)).thenReturn(false);
+            when(supplierDaoJpa.get(0)).thenReturn(supplier);
+            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "invalid_type", true, 0));
         }
     }
 
     @Nested
     class UpdateTests {
+    	
+    	@BeforeEach
+        public void setupAddTests() {
+            supplier = new Supplier("SupplIT", "contact@supplit.com", "Belgische Silicon Valley", "0499273659", "/images/testImg.jpg", List.of(), List.of(), List.of(), List.of());
+        }
+    	
         @Test
         public void updateService_happyFlow() {
             transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
-            contactPerson = new ContactPerson("email@email.com", "4994233050");
+            contactPersonView = new ContactPersonView("email@email.com", "4994233050");
 
             when(transportServiceJPADao.get(0)).thenReturn(transportService);
 
             final String name = "new name";
-            final List<ContactPerson> contactPersonList = List.of(contactPerson);
+            final ObservableList<ContactPersonView> contactPersonObservableList = FXCollections.observableArrayList(contactPersonView);
             final int characterCount = 14;
             final boolean integersOnly = true;
             final String prefix = "new";
             final String verificationTypeValue = "POST_CODE";
             final boolean isActive = false;
+            
+            final List<ContactPerson> contactPersonList = List.of(new ContactPerson("email@email.com", "4994233050"));
 
             try {
-				transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive);
+				transportServiceController.updateTransportService(0, name, contactPersonObservableList, characterCount, integersOnly, prefix, verificationTypeValue, isActive);
 			} catch (EntityDoesntExistException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -103,7 +121,7 @@ public class TransportServiceTests {
             transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
 
             final String name = "new name";
-            final List<ContactPerson> contactPersonList = List.of();
+            final ObservableList<ContactPersonView> contactPersonList = FXCollections.observableArrayList();
             final int characterCount = 14;
             final boolean integersOnly = true;
             final String prefix = "new";
@@ -111,6 +129,25 @@ public class TransportServiceTests {
             final boolean isActive = false;
 
             assertThrows(IllegalArgumentException.class, () -> transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
+        }
+        
+        @Test
+        public void updateService_transportServiceIsNull_throwsEntityDoesntExistException() {
+        	
+        	contactPersonView = new ContactPersonView("email@email.com", "4994233050");
+        	transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
+        	
+        	final String name = "new name";
+            final ObservableList<ContactPersonView> contactPersonList = FXCollections.observableArrayList(contactPersonView);
+            final int characterCount = 14;
+            final boolean integersOnly = true;
+            final String prefix = "new";
+            final String verificationTypeValue = "POST_CODE";
+            final boolean isActive = false;
+            
+            when(transportServiceJPADao.get(0)).thenReturn(null);
+            
+            assertThrows(EntityDoesntExistException.class, () -> transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
         }
     }
 }
