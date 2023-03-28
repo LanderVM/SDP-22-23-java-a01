@@ -9,6 +9,7 @@ import gui.view.PackagingDTO;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import util.FXStageUtil;
 
 public class PackagingOverviewController {
@@ -72,11 +73,27 @@ public class PackagingOverviewController {
 
 		choiceBoxType.setItems(PackagingController.getPackagingTypesObservableList());
 
-		tblBoxes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldBox, newBox) -> {
-			if (newBox == null)
+		tblBoxes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldPackaging, newPackaging) -> {
+			if (newPackaging == null)
 				return;
-			this.packagingId = newBox.getPackagingId();
-		});
+			this.packagingId = newPackaging.getPackagingId();
+			if(newPackaging != null) {
+				txtName.setText(newPackaging.getName());
+				choiceBoxType.setValue(newPackaging.getPackagingType().toString());
+				txtWidth.setText(newPackaging.getWidth().toString());
+				txtHeight.setText(newPackaging.getHeight().toString());
+				txtLength.setText(newPackaging.getLength().toString());
+				txtPrice.setText(newPackaging.getPrice().toString());
+				chkIsActive.setSelected(newPackaging.isActive());
+				
+			}
+			
+		
+		}
+		
+		);
+		
+		
 	}
 
 	@FXML
@@ -92,17 +109,24 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void addPackaging() {
+        String message = ""; 
         try {
             packagingController.addPackaging(txtName.getText(), Double.parseDouble(txtWidth.getText()),
                     Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),
                     Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(),
                     chkIsActive.isSelected());
+		            alert = new Alert(AlertType.CONFIRMATION);
+		    		alert.setTitle("Success");
+		    		alert.setHeaderText(null);
+		    		message= "Succesfully added a packaging.";
+		    		
+    		
 			// TODO alert wanneer successvol
         } catch (IllegalArgumentException illegalArgumentException) {
             alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Unsuccessful");
             alert.setHeaderText(null);
-            String message;
+           
             if (illegalArgumentException.getMessage().startsWith("For input string")) {
                 message = "Invalid input: " + illegalArgumentException.getMessage().substring(17);
             } else if (illegalArgumentException.getMessage().startsWith("empty String")) {
@@ -110,9 +134,10 @@ public class PackagingOverviewController {
             } else {
                 message = illegalArgumentException.getMessage();
             }
-            alert.setContentText(message);
-            alert.showAndWait();
+            
         } // TODO extract deze catch naar aparte methode voor zowel addPackaging als updatePackaging
+        	alert.setContentText(message);
+            alert.showAndWait();
 	}
 
 	@FXML

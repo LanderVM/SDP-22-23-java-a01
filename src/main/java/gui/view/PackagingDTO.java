@@ -3,6 +3,7 @@ package gui.view;
 import domain.Packaging;
 import domain.PackagingType;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,14 +18,21 @@ public class PackagingDTO {
     private final SimpleStringProperty dimensions;
     private final SimpleObjectProperty<BigDecimal> price;
     private final SimpleBooleanProperty active;
+    private final SimpleDoubleProperty width;
+    private final SimpleDoubleProperty length;
+    private final SimpleDoubleProperty height;
 
     public PackagingDTO(Packaging packaging) {
     	this.id = new SimpleIntegerProperty(packaging.getPackagingId());
         this.name = new SimpleStringProperty(packaging.getName());
         this.packagingType = new SimpleObjectProperty<>(packaging.getType());
-        this.dimensions = new SimpleStringProperty(String.format("%f x %f x %f", packaging.getWidth(), packaging.getHeight(), packaging.getLength()));
+        this.dimensions = new SimpleStringProperty(String.format("%.1f x %.1f x %.1f", packaging.getWidth(), packaging.getHeight(), packaging.getLength()));
         this.price = new SimpleObjectProperty<>(packaging.getPrice());
         this.active = new SimpleBooleanProperty(packaging.isActive());
+        this.width = new SimpleDoubleProperty(packaging.getWidth());
+        this.length = new SimpleDoubleProperty(packaging.getLength());
+        this.height = new SimpleDoubleProperty(packaging.getHeight());
+        
     }
 
     public int getPackagingId() {
@@ -40,7 +48,9 @@ public class PackagingDTO {
 
     public SimpleStringProperty nameProperty() {
         return name;
+        //test
     }
+    
 
     public PackagingType getPackagingType() {
         return packagingType.get();
@@ -56,6 +66,16 @@ public class PackagingDTO {
 
     public SimpleStringProperty dimensionsProperty() {
         return dimensions;
+    }
+    
+    public Double getWidth() {
+    	return width.get();
+    }
+    public Double getLength() {
+    	return length.get();
+    }
+    public Double getHeight() {
+    	return height.get();
     }
 
     public BigDecimal getPrice() {
