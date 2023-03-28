@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import gui.view.PackagingDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import persistence.PackagingDao;
 
 public class PackagingController {
@@ -20,6 +19,12 @@ public class PackagingController {
     public PackagingController(PackagingDao packagingDao, UserController userController) {
         this.packagingDao = packagingDao;
         this.userController = userController;
+    }
+
+    public PackagingController(PackagingDao packagingDao, UserController userController, List<PackagingDTO> packagingList) { // used in Tests
+        this.packagingDao = packagingDao;
+        this.userController = userController;
+        this.packagingList = FXCollections.observableList(packagingList);
     }
 
     public ObservableList<PackagingDTO> getPackagingList() {
@@ -53,8 +58,8 @@ public class PackagingController {
         validatePackagingType(packagingType);
 
         Packaging packaging = packagingDao.get(packagingId);
-        Packaging existingNamePackaging = packagingDao.get(name, userController.supplierIdFromUser());
-        if (existingNamePackaging != null && !existingNamePackaging.equals(packaging))
+        List<Packaging> existingNamePackaging = packagingDao.get(name, userController.supplierIdFromUser());
+        if (!existingNamePackaging.isEmpty() && existingNamePackaging.stream().map(Packaging::getPackagingId).noneMatch(potentialMatchingIds -> potentialMatchingIds == packaging.getPackagingId()))
             throw new IllegalArgumentException("Packaging type with this name already exists!");
 
         packaging.setName(name);
@@ -78,14 +83,6 @@ public class PackagingController {
         return packagingList.indexOf(correspondingDTOs.get(0));
     }
 
-    public void deletePackaging(int packagingId) {
-        if (packagingId <= 0)
-            throw new IllegalArgumentException("Packaging ID must not be 0 or negative!");
-        if (!packagingDao.exists(packagingId))
-            throw new IllegalArgumentException("Packaging with provided ID does not exist!");
-        packagingDao.delete(packagingId);
-        packagingList.remove(getIndex(packagingId));
-    }
 
     public static ObservableList<String> getPackagingTypesObservableList () {
     	return FXCollections.observableList(Arrays.stream(PackagingType.values()).map(PackagingType::name)

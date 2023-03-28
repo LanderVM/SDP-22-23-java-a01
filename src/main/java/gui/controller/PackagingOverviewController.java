@@ -6,18 +6,15 @@ import domain.PackagingController;
 import domain.PackagingType;
 import domain.UserController;
 import gui.view.PackagingDTO;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import util.FXStageUtil;
 
 public class PackagingOverviewController {
 	@FXML
 	private Label lblUser;
+    private Alert alert;
 	@FXML
 	private TableView<PackagingDTO> tblBoxes;
 	@FXML
@@ -44,6 +41,10 @@ public class PackagingOverviewController {
 	private CheckBox chkIsActive;
 	@FXML
 	private ChoiceBox<String> choiceBoxType;
+	@FXML
+	private Button btnUpdate;
+	@FXML
+	private Button btnAdd;
 
 	private final UserController userController;
 	private final PackagingController packagingController;
@@ -66,11 +67,16 @@ public class PackagingOverviewController {
 		tblBoxesClmPrice.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
 		tblBoxesClmActive.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
 
-		tblBoxes.setItems(packagingController.getPackagingList());
+		ObservableList<PackagingDTO> packagingList = packagingController.getPackagingList();
+		tblBoxes.setItems(packagingList);
 
 		choiceBoxType.setItems(PackagingController.getPackagingTypesObservableList());
 
-		tblBoxes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldBox, newBox) -> packagingId = newBox.getPackagingId());
+		tblBoxes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldBox, newBox) -> {
+			if (newBox == null)
+				return;
+			this.packagingId = newBox.getPackagingId();
+		});
 	}
 
 	@FXML
@@ -79,22 +85,59 @@ public class PackagingOverviewController {
 	}
 
 	@FXML
-	private void showTransportservices() {
+	private void showTransportServices() {
 		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"),
 				"Transport Services");
 	}
 
 	@FXML
-	private void addBox() {
-		packagingController.addPackaging(txtName.getText(), Double.parseDouble(txtWidth.getText()),
-				Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),
-				Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(),
-				chkIsActive.isSelected());
+	private void addPackaging() {
+        try {
+            packagingController.addPackaging(txtName.getText(), Double.parseDouble(txtWidth.getText()),
+                    Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),
+                    Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(),
+                    chkIsActive.isSelected());
+			// TODO alert wanneer successvol
+        } catch (IllegalArgumentException illegalArgumentException) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Unsuccessful");
+            alert.setHeaderText(null);
+            String message;
+            if (illegalArgumentException.getMessage().startsWith("For input string")) {
+                message = "Invalid input: " + illegalArgumentException.getMessage().substring(17);
+            } else if (illegalArgumentException.getMessage().startsWith("empty String")) {
+                message = "Dimensions and price are required!";
+            } else {
+                message = illegalArgumentException.getMessage();
+            }
+            alert.setContentText(message);
+            alert.showAndWait();
+        } // TODO extract deze catch naar aparte methode voor zowel addPackaging als updatePackaging
 	}
 
 	@FXML
-	private void deleteBox() {
-		packagingController.deletePackaging(packagingId);
+	private void updatePackaging() {
+		try {
+			packagingController.updatePackaging(tblBoxes.getSelectionModel().getSelectedItem().getPackagingId(), txtName.getText(), Double.parseDouble(txtWidth.getText()),
+					Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),
+					Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(),
+					chkIsActive.isSelected());
+			// TODO alert wanneer successvol
+		} catch (IllegalArgumentException illegalArgumentException) {
+			alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Unsuccessful");
+			alert.setHeaderText(null);
+			String message;
+			if (illegalArgumentException.getMessage().startsWith("For input string")) {
+				message = "Invalid input: " + illegalArgumentException.getMessage().substring(17);
+			} else if (illegalArgumentException.getMessage().startsWith("empty String")) {
+				message = "Dimensions and price are required!";
+			} else {
+				message = illegalArgumentException.getMessage();
+			}
+			alert.setContentText(message);
+			alert.showAndWait();
+		}
 	}
 
 	@FXML
