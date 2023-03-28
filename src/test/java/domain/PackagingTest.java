@@ -21,6 +21,8 @@ public class PackagingTest {
 
     @Mock
     PackagingDao packagingDao;
+    @Mock
+    UserController userController;
     PackagingController packagingController;
 
     Supplier supplier;
@@ -31,7 +33,7 @@ public class PackagingTest {
         @BeforeEach
         public void setup() {
             supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-            packagingController = new PackagingController(packagingDao, supplier);
+            packagingController = new PackagingController(packagingDao, userController);
         }
 
         @ParameterizedTest
@@ -44,6 +46,7 @@ public class PackagingTest {
                 "OudCustom, 2.0, 3.5, 4.0, 12, CUSTOM, false"
         })
         public void addPackaging_happyFlow(String name, double width, double height, double length, double price, String packagingType, boolean active) {
+            when(userController.getSupplier()).thenReturn(supplier);
             packagingController.addPackaging(name, width, height, length, price, packagingType, active);
         }
 
@@ -66,7 +69,7 @@ public class PackagingTest {
 
         @Test
         public void addPackaging_nameAlreadyExists_throwsIllegalArgumentException() {
-            when(packagingDao.exists("Klein")).thenReturn(true);
+            when(packagingDao.exists("Klein", userController.supplierIdFromUser())).thenReturn(true);
             assertThrows(IllegalArgumentException.class, () -> packagingController.addPackaging("Klein", 2.0, 3.5, 4.0, 6.00, "STANDARD", true));
         }
     }
@@ -77,9 +80,9 @@ public class PackagingTest {
         public void setup() {
             supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
             packaging = new Packaging("name", 2.0, 3.0, 4.0, 2.0, PackagingType.STANDARD, true, supplier);
-            when(packagingDao.getAll()).thenReturn(
+            when(packagingDao.getAll(userController.supplierIdFromUser())).thenReturn(
                     List.of(new Packaging("bestaande", 2.0, 5.0, 7.0, 4.0, PackagingType.CUSTOM, false, supplier)));
-            packagingController = new PackagingController(packagingDao, supplier);
+            packagingController = new PackagingController(packagingDao, userController);
         }
 
         @ParameterizedTest
@@ -124,7 +127,7 @@ public class PackagingTest {
 
         @Test
         public void updatePackaging_sameNameSameObject_happyFlow() {
-            when(packagingDao.get("Klein")).thenReturn(packaging);
+            when(packagingDao.get("Klein", userController.supplierIdFromUser())).thenReturn(packaging);
             when(packagingDao.get(1)).thenReturn(packaging);
             packagingController.updatePackaging(1, "Klein", 2.0, 3.5, 4.0, 6.00, "STANDARD", true);
         }
@@ -134,7 +137,7 @@ public class PackagingTest {
 
         @Test
         public void updatePackaging_sameNameDifferentObject_throwsIllegalArgumentException() {
-            when(packagingDao.get("Klein")).thenReturn(testPackaging);
+            when(packagingDao.get("Klein", userController.supplierIdFromUser())).thenReturn(testPackaging);
             when(packagingDao.get(1)).thenReturn(packaging);
             assertThrows(IllegalArgumentException.class, () -> packagingController.updatePackaging(1, "Klein", 2.0, 3.5, 4.0, 6.00, "STANDARD", true));
         }
@@ -145,7 +148,7 @@ public class PackagingTest {
         @BeforeEach
         public void setup() {
             supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-            packagingController = new PackagingController(packagingDao, supplier);
+            packagingController = new PackagingController(packagingDao, userController);
         }
 
         @Test

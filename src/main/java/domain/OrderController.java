@@ -24,7 +24,7 @@ public class OrderController {
         this.transportServiceDao = transportServiceDao;
     }
     
-    public ObservableList<OrderView> getOrderListForUser (int userId) {
+    public ObservableList<OrderView> getOrderListForUser(int userId) {
     	return FXCollections.observableArrayList(orderDao.getAllForUser(userId).stream().map(OrderView::new).toList());
     }
 

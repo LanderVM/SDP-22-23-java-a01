@@ -7,13 +7,13 @@ import persistence.PackagingDao;
 public class PackagingController {
 
     private final PackagingDao packagingDao;
-    private final Supplier supplier;
+    private final UserController userController;
     private final ObservableList<Packaging> packagingList;
 
-    public PackagingController(PackagingDao packagingDao, Supplier supplier) {
+    public PackagingController(PackagingDao packagingDao, UserController userController) {
         this.packagingDao = packagingDao;
-        this.supplier = supplier;
-        this.packagingList = FXCollections.observableList(packagingDao.getAll());
+        this.userController = userController;
+        this.packagingList = FXCollections.observableList(packagingDao.getAll(userController.supplierIdFromUser()));
     }
 
     public ObservableList<Packaging> getPackagingList() {
@@ -29,10 +29,10 @@ public class PackagingController {
 
     public void addPackaging(String name, double width, double height, double length, double price, String packagingType, boolean active) {
         validatePackagingType(packagingType);
-        if (packagingDao.exists(name))
+        if (packagingDao.exists(name, userController.supplierIdFromUser()))
             throw new IllegalArgumentException("Packaging type with this name already exists!");
 
-        Packaging packaging = new Packaging(name, width, height, length, price, PackagingType.valueOf(packagingType), active, supplier);
+        Packaging packaging = new Packaging(name, width, height, length, price, PackagingType.valueOf(packagingType), active, userController.getSupplier());
         packagingDao.add(packaging);
         packagingList.add(packaging);
     }
@@ -43,7 +43,7 @@ public class PackagingController {
         validatePackagingType(packagingType);
 
         Packaging packaging = packagingDao.get(packagingId);
-        Packaging existingNamePackaging = packagingDao.get(name);
+        Packaging existingNamePackaging = packagingDao.get(name, userController.supplierIdFromUser());
         if (existingNamePackaging != null && !existingNamePackaging.equals(packaging))
             throw new IllegalArgumentException("Packaging type with this name already exists!");
 
