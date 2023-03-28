@@ -12,7 +12,7 @@ import persistence.PackagingDao;
 public class PackagingController {
 
     private final PackagingDao packagingDao;
-    private final UserController userController;
+    private final UserController userController; // TODO
     private ObservableList<PackagingDTO> packagingList = FXCollections.emptyObservableList();
     private int supplierId = -1;
 

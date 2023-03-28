@@ -3,16 +3,13 @@ package persistence.impl;
 import domain.Order;
 import domain.OrderLine;
 import domain.Supplier;
-import gui.view.OrderView;
 import jakarta.persistence.EntityManager;
 import persistence.OrderDao;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-
-public class    OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
+public class OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
 
     public OrderDaoJpa(EntityManager entityManager) {
         super(Order.class, entityManager);
@@ -33,14 +30,11 @@ public class    OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
 		return entityManager.createNamedQuery("Order.getCustomerForOrder",Supplier.class).setParameter(1,orderId).getSingleResult();
 	}
 	
-	public List<Order> getAllForUserPosted(int id) {
-    	return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserPosted", Order.class).setParameter(1, id).getResultList());
+	public List<Order> getAllForUserPosted(int userId) {
+    	return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserPosted", Order.class).setParameter(1, userId).getResultList());
     }
 
-	public List<Order> getAllForUserOpen(int id) {
-		return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserOpen", Order.class).setParameter(1, id).getResultList());
-		  
-		
-		
+	public List<Order> getAllForUserOpen(int userId) {
+		return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserOpen", Order.class).setParameter(1, userId).getResultList());
 	}
 }

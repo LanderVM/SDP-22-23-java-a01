@@ -13,6 +13,10 @@ public interface OrderDao extends GenericDao<Order> {
     List<OrderLine> getOrderLinesForOrder (int orderId);
     
     Supplier getCustomerForOrder(int orderId);
-    
-    
+
+    List<Order> getAllForUser(int supplierId);
+
+    List<Order> getAllForUserPosted(int userId);
+
+    List<Order> getAllForUserOpen(int userId);
 }

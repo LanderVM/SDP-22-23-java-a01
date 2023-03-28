@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 import gui.view.ContactPersonSupplierView;
 import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
@@ -29,7 +27,7 @@ public class SupplierController {
 	}
 
 	public ObservableList<CustomerView> getSuppliersView(int supplierId) {
-		return FXCollections.observableArrayList(supplierDao.getCustomersForSupplier(supplierId).stream().map(CustomerView::new).toList());
+		return FXCollections.observableArrayList(supplierDao.getCustomersForSupplier(supplierId).stream().map(supplier -> new CustomerView(supplier, orderDao.getAllForUserOpen(supplier.getSupplierId()).size())).toList());
 	}
 
 	public ObservableList<CustomerOrdersView> getCustomerOrderView(String mail) {
