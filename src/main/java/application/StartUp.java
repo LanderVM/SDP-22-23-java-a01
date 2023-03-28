@@ -1,22 +1,14 @@
 package application;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 import domain.*;
 
-import persistence.*;
-import persistence.impl.*;
 import util.FXStageUtil;
-import gui.controller.LoginScreenController;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.JPAUtil;
 
@@ -27,56 +19,14 @@ public class StartUp extends Application {
         launch(args);
     }
 
-    EntityManager entityManager;
-    OrderDao orderDao;
-    SupplierDao supplierDao;
-    UserDao userDao;
-    ContactPersonSupplierDao contactPersonSupplierDao;
-    TransportServiceDao transportServiceDao;
-
     @Override
     public void start(Stage primaryStage) {
-        try {
-            FXStageUtil.init(primaryStage);
-
-            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            orderDao = new OrderDaoJpa(entityManager);
-            supplierDao = new SupplierDaoJpa(entityManager);
-            userDao = new UserDaoJpa(entityManager);
-            contactPersonSupplierDao = new ContactPersonSupplierDaoJpa(entityManager);
-            transportServiceDao = new TransportServiceDaoJpa(entityManager);
-
-            LoginScreenController root = new LoginScreenController(
-                    new OrderController(orderDao, transportServiceDao),
-                    new UserController(userDao),
-                    new TransportServiceController(transportServiceDao, supplierDao),
-                    new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));
-
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gui/LoginScreen.fxml"));
-            loader.setController(root);
-            loader.setRoot(root);
-            try {
-                loader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            Scene scene = new Scene(root);
-            //scene.getStylesheets().add(getClass().getResource("/gui/application.css").toExternalForm());
-            primaryStage.setResizable(true);
-            primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
-            primaryStage.setTitle("Log In");
-            primaryStage.setMaximized(true);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        FXStageUtil.newStage(primaryStage, StartUp.class.getResource("/gui/LoginScreen.fxml"));
     }
 
     @Override
     public void stop() {
-        entityManager.close();
+        FXStageUtil.entityManager.close();
         JPAUtil.getEntityManagerFactory().close();
     }
 
@@ -119,7 +69,7 @@ public class StartUp extends Application {
 
         User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", "02 70 25 25", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", timCo);
         User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", "02 70 25 25", "0470 25 12 34", "gentStreet", 23, "A1", "Gent", "9000", "Belgium", janInc);
-        
+
         List<ContactPersonSupplier> listContactPersonSupplier1 = List.of(contactPersonSupplier1, contactPersonSupplier2);
         List<ContactPersonSupplier> listContactPersonSupplier2 = List.of(contactPersonSupplier3, contactPersonSupplier4);
 
@@ -148,7 +98,6 @@ public class StartUp extends Application {
         Notification postedNotification = new Notification(order1);
         Notification processedNotification = new Notification(order2, LocalDate.of(2023, 3, 12));
         Notification deliveredNotification = new Notification(order2, LocalDate.of(2023, 3, 14));
-
 
 
         order1.addNotification(postedNotification);

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="GridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EC4842;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:controller="gui.controller.LoginScreenController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #EC4842;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="628.7999267578125" minWidth="10.0" percentWidth="10.0" prefWidth="454.3999938964844" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="833.6000061035156" minWidth="10.0" percentWidth="80.0" prefWidth="825.6000061035156" />
@@ -78,4 +78,4 @@
          </children>
       </GridPane>
    </children>
-</fx:root>
+</GridPane>
