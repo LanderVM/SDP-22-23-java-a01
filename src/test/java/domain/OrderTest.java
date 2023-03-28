@@ -14,6 +14,7 @@ import persistence.impl.OrderDaoJpa;
 import persistence.impl.TransportServiceDaoJpa;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
 
@@ -100,16 +101,38 @@ public class OrderTest {
         order.generateTrackingCode();
         String trackingCode = order.getTrackingCode();
 
-        // Check that the tracking code has the correct length
         assertEquals(order.getTransportService().getTrackingCodeDetails().getCharacterCount() + order.getTransportService().getTrackingCodeDetails().getPrefix().length(), trackingCode.length());
-        
-        // Check that the tracking code starts with the correct prefix
+       
         assertTrue(trackingCode.startsWith(order.getTransportService().getTrackingCodeDetails().getPrefix()));
-        
-        // Check that the tracking code only contains digits and/or uppercase letters
+
         assertTrue(trackingCode.matches("[0-9A-Z]+"));
        
     }
+    
+    @Test
+    public void testAddNotification() {
+        
+        Order order = new Order();
+
+        Notification notification = new Notification();
+        notification.setOrder(order);
+
+        order.addNotification(notification);
+
+        assertTrue(order.getNotifications().contains(notification));
+
+        Notification invalidNotification = new Notification();
+
+        assertThrows(RuntimeException.class, () -> {
+            order.addNotification(invalidNotification);
+        });
+    }
+    
+    
+    
+
+
+
     
     
     
