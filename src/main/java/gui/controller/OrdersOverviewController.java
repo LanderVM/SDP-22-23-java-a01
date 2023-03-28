@@ -19,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -80,6 +81,9 @@ public class OrdersOverviewController extends GridPane {
 	private Label lblSelectTransportService;
 	@FXML
 	private Button btnProcessOrder;
+	
+	@FXML
+	private CheckBox OnlyPostedOrdersCheckBox;
 
 	private Alert alert;
 
@@ -155,7 +159,13 @@ public class OrdersOverviewController extends GridPane {
 	}
 
     public void refreshOrderList() { // TODO rework
-        TableOrdersView.setItems(orderController.getOrderListForUser(userController.userId()));
+    	if(OnlyPostedOrdersCheckBox.isSelected()) {
+    		 TableOrdersView.setItems(orderController.getOrderListForUserPosted(userController.userId()));
+    	}
+    	else {
+    		 TableOrdersView.setItems(orderController.getOrderListForUser(userController.userId()));
+    	}
+      
     }
 
     @FXML
@@ -187,6 +197,10 @@ public class OrdersOverviewController extends GridPane {
         TableOrdersView.getSelectionModel().select(index);
     }
 
+    @FXML
+    public void showPostedOrders() {
+    	refreshOrderList();
+    }
 	@FXML
 	public void showCustomers(ActionEvent event) {
 		FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/CustomersOverview.fxml"), "Customers");
