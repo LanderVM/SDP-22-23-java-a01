@@ -48,6 +48,7 @@ public class PackagingDTO {
 
     public SimpleStringProperty nameProperty() {
         return name;
+        //test
     }
     
 
