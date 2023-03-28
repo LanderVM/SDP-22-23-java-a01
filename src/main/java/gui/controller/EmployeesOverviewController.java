@@ -130,7 +130,7 @@ public class EmployeesOverviewController extends GridPane{
 	}
 	
 	@FXML 
-	private void showTransportServices() {		
+	private void showCarrier() {		
 		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"), "Transport Service");
 	}
 	

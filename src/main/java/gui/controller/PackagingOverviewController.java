@@ -104,7 +104,7 @@ public class PackagingOverviewController {
 	}
 
 	@FXML
-	private void showTransportServices() {
+	private void showCarrier() {
 		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"),
 				"Transport Services");
 	}
