@@ -39,11 +39,11 @@ import jakarta.persistence.*;
         ),
         @NamedQuery(
         		name="Order.findAllForUserPosted",
-        		query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = (SELECT w.supplier.supplierId FROM User w WHERE w.userId = ?1)"
+        		query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
         		name="Order.findAllForUserOpen",
-        		query = "SELECT d FROM Order d WHERE d.status != domain.Status.DISPATCHED AND d.customer.supplierId = (SELECT w.supplier.supplierId FROM User w WHERE w.userId = ?1)"
+        		query = "SELECT d FROM Order d WHERE d.status != domain.Status.DELIVERED AND d.customer.supplierId = ?1"
         )
         
 })
@@ -121,7 +121,7 @@ public class Order {
     }
 
     public void setAddress(String address) {
-    	if (address.isEmpty()||address==null)
+    	if (address.isEmpty())
     		throw new IllegalArgumentException("Adress needs to be filled in!");
         this.address = address;
     }
@@ -228,7 +228,7 @@ public class Order {
     	if (productsList.isEmpty()) 
     		throw new IllegalArgumentException("productsList may not be empty!");
 		List<List<Product>> list = new ArrayList<>();
-		Map<Object, List<Product>>map = productsList.stream().collect(Collectors.groupingBy(el->el.getName()));
+		Map<Object, List<Product>>map = productsList.stream().collect(Collectors.groupingBy(Product::getName));
         for (Entry<Object, List<Product>> e:map.entrySet()) {
         	list.add(e.getValue());
         }

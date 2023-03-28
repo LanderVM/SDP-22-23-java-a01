@@ -11,16 +11,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.OrderDao;
 import persistence.TransportServiceDao;
-import persistence.impl.OrderDaoJpa;
 
 public class OrderController {
 
 
-    private final OrderDaoJpa orderDao;
+    private final OrderDao orderDao;
     private final TransportServiceDao transportServiceDao;
 
     public OrderController(OrderDao orderDao,TransportServiceDao transportServiceDao) {
-        this.orderDao =  (OrderDaoJpa) orderDao;
+        this.orderDao = orderDao;
         this.transportServiceDao = transportServiceDao;
     }
     
@@ -30,10 +29,6 @@ public class OrderController {
     
     public ObservableList<OrderView> getOrderListForUserPosted(int userId) {
     	return FXCollections.observableArrayList(orderDao.getAllForUserPosted(userId).stream().map(OrderView::new).toList());
-    }
-    
-    public ObservableList<OrderView> getOrderListForUserOpen(int userId) {
-    	return FXCollections.observableArrayList(orderDao.getAllForUserOpen(userId).stream().map(OrderView::new).toList());
     }
 
     public ObservableList<OrderView> getOrderByIdView(int id) {
