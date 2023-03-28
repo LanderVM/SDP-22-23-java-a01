@@ -79,7 +79,7 @@ public class CustomersOverviewController extends GridPane {
 		nameContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 		emailContactpersonSupplierCol.setCellValueFactory(cellData -> cellData.getValue().getEmail());
 
-		refreshCustomersList();
+		CustomersOverviewTable.setItems(supplierController.getSuppliersView(userController.supplierIdFromUser()));
 
 		CustomersOverviewTable.getSelectionModel().selectedItemProperty()
 				.addListener((observableValue, oldCostumer, newCustomer) -> {
@@ -111,11 +111,6 @@ public class CustomersOverviewController extends GridPane {
 	@FXML
 	void showOrders() {
 		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/OrdersOverview.fxml"), "Orders");
-	}
-
-	public void refreshCustomersList() {
-		CustomersOverviewTable
-				.setItems(supplierController.getSuppliersView(userController.supplierIdFromUser()));
 	}
 
 	@FXML

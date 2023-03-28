@@ -2,7 +2,6 @@ package domain;
 
 import gui.view.ContactPersonView;
 import gui.view.TransportServiceView;
-import jakarta.persistence.NoResultException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.SupplierDao;
@@ -10,6 +9,7 @@ import persistence.TransportServiceDao;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import exceptions.EntityDoesntExistException;
 
@@ -17,6 +17,8 @@ public class TransportServiceController {
 
     private final TransportServiceDao transportServiceDaoJpa;
     private final SupplierDao supplierDaoJpa;
+    private ObservableList<TransportServiceView> transportServiceList = FXCollections.emptyObservableList();
+    private int supplierId;
 
     public TransportServiceController(TransportServiceDao transportServiceDaoJpa,SupplierDao supplierDaoJpa) {
         this.transportServiceDaoJpa =  transportServiceDaoJpa;
@@ -24,16 +26,16 @@ public class TransportServiceController {
     }
 
     public ObservableList<TransportServiceView> getTransportServices(int supplierId) {
-        return FXCollections.observableArrayList(transportServiceDaoJpa.getAllForSupplier(supplierId).stream().map(TransportServiceView::new).toList());
+        if (transportServiceList.isEmpty() || this.supplierId != supplierId) {
+            this.supplierId = supplierId;
+            this.transportServiceList = FXCollections.observableList(transportServiceDaoJpa.getAllForSupplier(supplierId).stream().map(TransportServiceView::new).collect(Collectors.toList()));
+        }
+        return transportServiceList;
     }
     
-    public ObservableList<String> getTransportServicesNames (int supplierId) {
+    public ObservableList<String> getTransportServicesNames(int supplierId) {
     	return FXCollections.observableArrayList(transportServiceDaoJpa.getAllNamesForSupplier(supplierId));
     }
-    
-    public TransportService getTransportServiceByNameForSupplier(String name,int supplierId) throws NoResultException {
-		return transportServiceDaoJpa.getForSupplier(name, supplierId);
-	}
 
     public void addTransportService(String name, ObservableList<ContactPersonView> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive,int supplierId) {
     	Supplier supplier = supplierDaoJpa.get(supplierId); 
@@ -42,13 +44,10 @@ public class TransportServiceController {
         if (contactPersonList.isEmpty())
             throw new IllegalArgumentException("You must add at least one contact person for this Transport Service!");
         List<ContactPerson> list = contactPersonList.stream().map(el-> new ContactPerson(el.getEmail(),el.getPhoneNumber())).toList();
-        transportServiceDaoJpa.insert(
-                new TransportService(
-                        name,
-                        list,
-                        new TrackingCodeDetails(characterCount, isIntegersOnly, prefix, VerificationType.valueOf(verificationTypeValue)),supplier,
-                        isActive)
-        );
+        TrackingCodeDetails trackingCodeDetails = new TrackingCodeDetails(characterCount, isIntegersOnly, prefix, VerificationType.valueOf(verificationTypeValue));
+        TransportService transportService = new TransportService(name, list, trackingCodeDetails, supplier, isActive);
+        transportServiceDaoJpa.insert(transportService);
+        transportServiceList.add(new TransportServiceView(transportService));
     }
 
     public void updateTransportService(int id, String name, ObservableList<ContactPersonView> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) throws EntityDoesntExistException {
@@ -69,12 +68,16 @@ public class TransportServiceController {
         transportService.setActive(isActive);
 
         transportServiceDaoJpa.update(transportService);
+        transportServiceList.set(getIndex(transportService.getTransportServiceId()), new TransportServiceView(transportService));
     }
 
-    public void setActive(int transportServiceId, boolean active) throws NoResultException {
-        TransportService transportService = transportServiceDaoJpa.get(transportServiceId);
-        transportService.setActive(active);
-        transportServiceDaoJpa.update(transportService);
+    private int getIndex(int transportServiceId) {
+        List<TransportServiceView> correspondingDTOs = transportServiceList.stream().filter(dto -> dto.getTransportServiceId() == transportServiceId).toList();
+        if (correspondingDTOs.isEmpty())
+            throw new IllegalArgumentException("There is no PackagingDTO matching this packagingId!");
+        if (correspondingDTOs.size() > 1)
+            throw new RuntimeException("There were multiple PackagingDTOs found matching this packagingId!");
+        return transportServiceList.indexOf(correspondingDTOs.get(0));
     }
 
 }
