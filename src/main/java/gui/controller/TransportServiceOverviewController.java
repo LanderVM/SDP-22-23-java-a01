@@ -1,22 +1,15 @@
 package gui.controller;
 
-import java.util.List;
-
-import domain.ContactPerson;
-import domain.OrderController;
-import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.EntityDoesntExistException;
 import gui.view.ContactPersonView;
-import gui.view.CustomerView;
 import gui.view.TransportServiceView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -76,22 +69,17 @@ public class TransportServiceOverviewController extends GridPane {
     @FXML
     private Button btnCurrentActionSave;
 
-	private OrderController orderController;
-	private UserController userController;
-	private SupplierController supplierController;
-	private TransportServiceController transportServiceController;
-	private int transportServiceId = -1;
+	private final UserController userController;
+	private final TransportServiceController transportServiceController;
+	private int transportServiceId = -1; // TODO
 	private String transportServiceName;
 	private boolean currentActionCreate;
 	private ObservableList<ContactPersonView> listForAddedContactPersons;
 	private ObservableList<ContactPersonView> listForAllContactPersons;
 	private String selectedContactPersonEmail;
 
-	public TransportServiceOverviewController(OrderController orderController, UserController userController,
-			SupplierController supplierController, TransportServiceController transportServiceController) {
-		this.orderController = orderController;
+	public TransportServiceOverviewController(UserController userController, TransportServiceController transportServiceController) {
 		this.userController = userController;
-		this.supplierController = supplierController;
 		this.transportServiceController = transportServiceController;
 	}
 
@@ -105,7 +93,7 @@ public class TransportServiceOverviewController extends GridPane {
 		btnSave.setDisable(true);
 		btnAddContactPerson.setDisable(true);
 		btnRemoveContactPerson.setDisable(true);
-		
+
 		listForAllContactPersons = FXCollections.observableArrayList();
 		listForAddedContactPersons = FXCollections.observableArrayList();
 
@@ -115,13 +103,13 @@ public class TransportServiceOverviewController extends GridPane {
 		tblTransportservicesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		tblTransportservicesClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty().get()==true?new SimpleStringProperty("active"):new SimpleStringProperty("not active"));
 
-		
+
 		refreshTransportServiceTable();
-		
+
 		tblTransportServices.getSelectionModel().selectedItemProperty()
 				.addListener((observableValue, oldService, newService) -> {
 					if (newService != null) {
-						
+
 						listForAddedContactPersons.clear();
 						listForAllContactPersons.clear();
 
@@ -145,7 +133,7 @@ public class TransportServiceOverviewController extends GridPane {
 					tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
 					listForAllContactPersons.addAll(newService.getContactPeople());
 					tblContactPerson.setItems(listForAllContactPersons);
-					
+
 					tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue2, oldContactPerson, newContactPerson) -> {
 						btnRemoveContactPerson.setDisable(false);
 						selectedContactPersonEmail = newContactPerson.getEmail();
@@ -161,7 +149,7 @@ public class TransportServiceOverviewController extends GridPane {
 
 	@FXML
 	private void saveTransportServices() {
-		
+
 		try {
 			transportServiceController.updateTransportService(transportServiceId, txtName.getText(), listForAllContactPersons,
 					Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
@@ -184,10 +172,10 @@ public class TransportServiceOverviewController extends GridPane {
 				alert.setHeaderText(null);
 				alert.setContentText("Contact person needs an email address and phonenumber");
 				alert.showAndWait();
-			}		
-			
+			}
+
 			//checkIfContactPersonIsAlreadyAdded(txtAddEmail.getText(), txtAddPhoneNumber.getText());
-			
+
 			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),txtAddPhoneNumber.getText());
 			listForAllContactPersons.add(contactPersonView);
 			listForAddedContactPersons.add(contactPersonView);
@@ -198,15 +186,15 @@ public class TransportServiceOverviewController extends GridPane {
 				alert.setHeaderText(null);
 				alert.setContentText("Contact person needs an email address and phonenumber");
 				alert.showAndWait();
-			}		
-			
-			
-			
+			}
+
+
+
 			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),txtAddPhoneNumber.getText());
 			listForAllContactPersons.add(contactPersonView);
 		}
 	}
-	
+
 	@FXML
     void removeContactPerson(ActionEvent event) {
 		if (!currentActionCreate) {
@@ -249,7 +237,7 @@ public class TransportServiceOverviewController extends GridPane {
 	private void createService(){
 		transportServiceController.addTransportService(txtName.getText(),listForAllContactPersons,
 				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
-				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(), userController.supplierIdFromUser()); 
+				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(), userController.supplierIdFromUser());
 		initializeSaveTransportService();
 	}
 	@FXML
@@ -261,7 +249,7 @@ public class TransportServiceOverviewController extends GridPane {
     void switchActionToSave(ActionEvent event) {
 		initializeSaveTransportService();
     }
-    
+
 
 	private void reselectTransportService (int tsId) {
     	int index = 0;
@@ -273,31 +261,23 @@ public class TransportServiceOverviewController extends GridPane {
         }
         tblTransportServices.getSelectionModel().select(index);
     }
-	
-	
+
+
 	@FXML
 	private void showEmployees() {
-		EmployeesOverviewController employeesOverviewController = new EmployeesOverviewController(
-				orderController, userController, transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/EmployeesOverview.fxml"));
-		FXStageUtil.change(loader, employeesOverviewController, "Employees Overview");
+		FXStageUtil.setScene(TransportServiceController.class.getResource("/gui/EmployeesOverview.fxml"), "Employees");
 	}
 
 	@FXML
 	private void showBoxes() {
-		PackagingOverviewController packagingOverviewController = new PackagingOverviewController(orderController, userController,
-				transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/PackagingOverview.fxml"));
-		FXStageUtil.change(loader, packagingOverviewController, "Boxes Overview");
+		FXStageUtil.setScene(TransportServiceController.class.getResource("/gui/PackagingOverview.fxml"), "Packaging");
 	}
 
 	@FXML
 	private void logOut() {
-		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController,
-				transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
-		FXStageUtil.change(loader, loginScreenController, "Log In");
+		FXStageUtil.setScene(TransportServiceController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
 	}
+
 	private void initializeCreateTransportService() {
 		lblCurrentAction.setText("Current action: creating a service");
 		tblContactPerson.getSelectionModel().clearSelection();
@@ -318,7 +298,7 @@ public class TransportServiceOverviewController extends GridPane {
 			btnRemoveContactPerson.setDisable(false);
 			selectedContactPersonEmail = newContactPerson.getEmail();
 		});
-		
+
 	}
 	private void initializeSaveTransportService() {
 		lblCurrentAction.setText("Current action: updating a service");
@@ -337,7 +317,7 @@ public class TransportServiceOverviewController extends GridPane {
 		tblTransportServices.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, oldService, newService) -> {
 			if (newService != null) {
-				
+
 				listForAddedContactPersons.clear();
 				listForAllContactPersons.clear();
 
@@ -361,7 +341,7 @@ public class TransportServiceOverviewController extends GridPane {
 			tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
 			listForAllContactPersons.addAll(newService.getContactPeople());
 			tblContactPerson.setItems(listForAllContactPersons);
-			
+
 			tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue2, oldContactPerson, newContactPerson) -> {
 				btnRemoveContactPerson.setDisable(false);
 				selectedContactPersonEmail = newContactPerson.getEmail();

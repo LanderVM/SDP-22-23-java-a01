@@ -9,12 +9,9 @@ import domain.OrderController;
 import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
-import gui.controller.CustomersOverviewController;
-import gui.controller.LoginScreenController;
-import gui.controller.OrdersOverviewController;
+import gui.controller.*;
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -23,8 +20,6 @@ import persistence.impl.*;
 
 public class FXStageUtil {
     private static Stage stage;
-    private static int width;
-    private static int height;
     private static Scene scene;
 
     private static final EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -45,11 +40,17 @@ public class FXStageUtil {
         loader = new FXMLLoader();
         loader.setControllerFactory(controller -> {
             if (controller == LoginScreenController.class)
-                return new LoginScreenController(orderController, userController, transportServiceController, supplierController);
+                return new LoginScreenController(userController);
             if (controller == OrdersOverviewController.class)
                 return new OrdersOverviewController(orderController, userController, transportServiceController);
             if (controller == CustomersOverviewController.class)
                 return new CustomersOverviewController(userController, supplierController);
+            if (controller == TransportServiceOverviewController.class)
+                return new TransportServiceOverviewController(userController, transportServiceController);
+            if (controller == EmployeesOverviewController.class)
+                return new EmployeesOverviewController(userController);
+            if (controller == PackagingOverviewController.class)
+                return new PackagingOverviewController(userController);
             else {
                 try {
                     return controller.getConstructor().newInstance();
@@ -69,15 +70,12 @@ public class FXStageUtil {
             stage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
             stage.setMaximized(true);
             scene = new Scene(loader.load());
-            width = (int) stage.getWidth();
-            height = (int) stage.getHeight();
             stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public static void setScene(URL location, String title) {
@@ -86,23 +84,6 @@ public class FXStageUtil {
         try {
             setLoader(Objects.requireNonNull(location));
             scene.setRoot(loader.load());
-            stage.setTitle(title);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void change(FXMLLoader loader, Object controller, String title) {
-        if (stage == null)
-            throw new IllegalStateException("Primary stage must be initialized before running this method");
-        try {
-            loader.setController(controller);
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setWidth(width);
-            stage.setHeight(height);
             stage.setTitle(title);
             stage.setScene(scene);
             stage.show();

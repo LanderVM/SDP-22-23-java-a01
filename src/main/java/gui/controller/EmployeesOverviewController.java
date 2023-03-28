@@ -1,21 +1,12 @@
 package gui.controller;
 
-import java.util.List;
-
-import domain.OrderController;
-import domain.SupplierController;
-import domain.TransportServiceController;
-import domain.User;
 import domain.UserController;
 import exceptions.InvalidNameException;
 import exceptions.InvalidUserEmailException;
 import exceptions.UserAlreadyExistsExeption;
 import gui.view.UserDTO;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -24,14 +15,17 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import util.FXStageUtil;
 
 public class EmployeesOverviewController extends GridPane{
-	
+
+	@FXML
+	public GridPane GridPanePersonalInfo;
+	@FXML
+	public Label lblName;
 	@FXML
 	private ImageView imgDelaware;
 	@FXML
@@ -77,35 +71,28 @@ public class EmployeesOverviewController extends GridPane{
 	@FXML
 	private Button btnClear;
 	
-	private final OrderController orderController;
     private final UserController userController;
-    private final TransportServiceController transportServiceController;
-    private final SupplierController supplierController;
-    private int id = -1;
+    private int id = -1; // TODO check out
     private String email;
 
-	public EmployeesOverviewController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController, SupplierController supplierController) {
-		this.orderController = orderController;
+	public EmployeesOverviewController(UserController userController) {
 		this.userController = userController;
-		this.transportServiceController = transportServiceController;
-		this.supplierController = supplierController;
 	}
-	
+
 	@FXML
 	private void initialize() {
 		btnSave.setDisable(true);
-		
+
 		tblEmployeesColumnName.setCellValueFactory(cellData -> cellData.getValue().getAccountNameProperty());
 		tblEmployeesColumnFunction.setCellValueFactory(cellData -> cellData.getValue().getFunctionProperty());
-		
+
 		choiceBoxFunction.setItems(UserDTO.getRollesObservableList());
-			
+
 		refreshEmployeesList();
-		
+
 		tblEmployees.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, oldEmployee, newEmployee) -> {
-			
+
 			if (newEmployee != null) {
 
 				btnSave.setDisable(false);
@@ -115,12 +102,12 @@ public class EmployeesOverviewController extends GridPane{
 
 				// Table info TransportService
 				txtName.setText(newEmployee.getName());
-				txtFirstName.setText(newEmployee.getSurname());			
+				txtFirstName.setText(newEmployee.getSurname());
 				txtTelephone.setText(newEmployee.getTelephone());
 				txtMobilePhone.setText(newEmployee.getMobilePhone());
 				txtEmail.setText(newEmployee.getAccountName());
 				choiceBoxFunction.setValue(newEmployee.getFunction());
-				
+
 				txtStreet.setText(newEmployee.getStreet());
 				txtNumber.setText(newEmployee.getHouseNumber());
 				txtBox.setText(newEmployee.getBox());
@@ -128,10 +115,10 @@ public class EmployeesOverviewController extends GridPane{
 				txtPostalCode.setText(newEmployee.getPostalCode());
 				txtCountry.setText(newEmployee.getCountry());
 			}
-			
+
 		});
 	}
-	
+
 
 
 	private void refreshEmployeesList() {
@@ -140,24 +127,17 @@ public class EmployeesOverviewController extends GridPane{
 	
 	@FXML 
 	private void showTransportServices() {		
-		TransportServiceOverviewController transportServicesOverviewController = new TransportServiceOverviewController(orderController, userController, supplierController, transportServiceController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServiceOverview.fxml"));
-		FXStageUtil.change(loader, transportServicesOverviewController, "Transport service");
+		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"), "Transport Service");
 	}
 	
 	@FXML 
-	private void logOut() {	
-		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController,
-				transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
-		FXStageUtil.change(loader, loginScreenController, "Log In");
+	private void logOut() {
+		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
 	}
 	
 	@FXML 
 	private void showBoxes() {	
-		PackagingOverviewController packagingOverviewController = new PackagingOverviewController(orderController, userController, transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/PackagingOverview.fxml"));
-		FXStageUtil.change(loader, packagingOverviewController, "Packaging");
+		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/PackagingOverview.fxml"), "Packaging");
 	}
 	
 	@FXML 

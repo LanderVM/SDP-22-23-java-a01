@@ -1,8 +1,5 @@
 package gui.controller;
 
-import domain.OrderController;
-import domain.SupplierController;
-import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.EntityDoesntExistException;
 import exceptions.IncorrectPasswordException;
@@ -10,7 +7,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
@@ -30,19 +26,10 @@ public class LoginScreenController extends GridPane {
 	@FXML
 	private TextField txtEmail;
 
-	private final OrderController orderController;
 	private final UserController userController;
-	private final TransportServiceController transportServiceController;
-	private final SupplierController supplierController;
 
-	public LoginScreenController(OrderController orderController,
-								 UserController userController,
-								 TransportServiceController transportServiceController,
-								 SupplierController supplierController) {
-		this.orderController = orderController;
+	public LoginScreenController(UserController userController) {
 		this.userController = userController;
-		this.transportServiceController = transportServiceController;
-		this.supplierController = supplierController;
 	}
 
 	@FXML
@@ -63,9 +50,7 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeAdmin() {
-		TransportServiceOverviewController transportServiceOverviewController = new TransportServiceOverviewController(orderController, userController, supplierController, transportServiceController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TransportServiceOverview.fxml"));
-		FXStageUtil.change(loader, transportServiceOverviewController, "Transport Service Overview");
+		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/TransportServiceOverview.fxml"), "Transport Services");
 	}
 	
 	private void showLoginError () {
