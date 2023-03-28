@@ -11,15 +11,14 @@ import jakarta.persistence.NoResultException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import util.FXStageUtil;
 
 public class LoginScreenController extends GridPane {
+	@FXML
+	public Label lblLogin;
 	@FXML
 	private Button btnSignIn;
 	@FXML
@@ -60,7 +59,7 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/OrdersOverview.fxml"), "Orders Overview");
+		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/OrdersOverview.fxml"), "Overview");
 	}
 
 	private void goToHomeAdmin() {

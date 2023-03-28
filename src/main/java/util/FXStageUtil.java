@@ -44,20 +44,14 @@ public class FXStageUtil {
     private static void setLoader(URL location) {
         loader = new FXMLLoader();
         loader.setControllerFactory(controller -> {
-            if (controller == LoginScreenController.class) {
-                System.out.println("c");
+            if (controller == LoginScreenController.class)
                 return new LoginScreenController(orderController, userController, transportServiceController, supplierController);
-            }
-            if (controller == OrdersOverviewController.class) {
-                System.out.println("b");
-                return new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
-            }
-            if (controller == CustomersOverviewController.class) {
-                System.out.println("a");
+            if (controller == OrdersOverviewController.class)
+                return new OrdersOverviewController(orderController, userController, transportServiceController);
+            if (controller == CustomersOverviewController.class)
                 return new CustomersOverviewController(userController, supplierController);
-            } else {
+            else {
                 try {
-                    System.out.println("reeeeeeeeeee");
                     return controller.getConstructor().newInstance();
                 } catch (Exception exception) {
                     throw new RuntimeException(exception);

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 import domain.OrderController;
 import domain.Status;
-import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.EntityDoesntExistException;
@@ -16,34 +15,23 @@ import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import util.FXStageUtil;
 
 public class OrdersOverviewController extends GridPane {
-	
-	@FXML 
-	private Hyperlink btnCustomers;
-	@FXML
-	private Hyperlink btnHome;
-	@FXML
-	private Hyperlink btnOrders;
+
 	@FXML
 	private Label lblUser;
-	@FXML
-	private Line LineOrderOverview;
 	@FXML
 	private TableView<OrderView> TableOrdersView;
 	@FXML
@@ -89,21 +77,21 @@ public class OrdersOverviewController extends GridPane {
 	@FXML
 	private Pane PaneOrderProcess;
 	@FXML
+	private Label lblSelectTransportService;
+	@FXML
 	private Button btnProcessOrder;
-	
+
 	private Alert alert;
 
     private final OrderController orderController;
     private final UserController userController;
     private final TransportServiceController transportServiceController;
-    private final SupplierController supplierController;
 
 	public OrdersOverviewController(OrderController orderController, UserController userController,
-			TransportServiceController transportServiceController, SupplierController supplierController) {
+			TransportServiceController transportServiceController) {
 		this.orderController = orderController;
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
-		this.supplierController = supplierController;
 	}
 
 	@FXML
@@ -166,17 +154,8 @@ public class OrdersOverviewController extends GridPane {
 		CustomerDetailsList.getItems().add(orderController.getOrderById(orderId).getDate().toString());	
 	}
 
-    @FXML
-    public void showOrders(ActionEvent event) {
-    }
-
-    public void refreshOrderList() {
+    public void refreshOrderList() { // TODO rework
         TableOrdersView.setItems(orderController.getOrderListForUser(userController.userId()));
-    }
-
-
-    @FXML
-    public void showHome(ActionEvent event) {
     }
 
     @FXML
@@ -184,13 +163,11 @@ public class OrdersOverviewController extends GridPane {
         String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
         int orderId = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
-            
-            
             orderController.processOrder(orderId, selectionTransportService,userController.supplierIdFromUser());
-            Alert alert = new Alert(AlertType.INFORMATION);
-    		alert.setTitle("Login Error");
+            alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Success");
     		alert.setHeaderText(null);
-    		alert.setContentText("Succesfully processed the order!");
+    		alert.setContentText("Successfully processed the order!");
     		alert.showAndWait();
         } catch (EntityNotFoundException | OrderStatusException | EntityDoesntExistException e) {
             e.printStackTrace();

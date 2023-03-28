@@ -3,18 +3,14 @@ package gui.controller;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 
-import domain.OrderController;
 import domain.Status;
 import domain.SupplierController;
-import domain.TransportServiceController;
 import domain.UserController;
 import gui.view.ContactPersonSupplierView;
 import gui.view.CustomerOrdersView;
 import gui.view.CustomerView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,62 +22,39 @@ import util.FXStageUtil;
 public class CustomersOverviewController extends GridPane {
 
 	@FXML
-	private ImageView imgDelaware;
-
+	public Label lblName;
+	@FXML
+	public Label lblAdress;
+	@FXML
+	public Label lblPhone;
 	@FXML
 	private Label lblUser;
-	
-	@FXML
-	private GridPane GridPaneCustomerInfo;
-
-	@FXML
-	private Hyperlink btnHome;
-
-	@FXML
-	private Hyperlink btnOrders;
-
-	@FXML
-	private Hyperlink btnCustomers;
-
 	@FXML
 	private Label lblCustomerAdress;
-
 	@FXML
 	private Label lblCustomerName;
-
 	@FXML
 	private Label lblCustomerPhoneNumber;
-
 	@FXML
 	private ImageView logoImgView;
-
 	@FXML
 	private TableView<CustomerView> CustomersOverviewTable;
-
 	@FXML
 	private TableColumn<CustomerView, String> nameCustomerCol;
-
 	@FXML
 	private TableColumn<CustomerView, Number> numberOfOrdersCol;
-
 	@FXML
 	private TableView<CustomerOrdersView> ordersOfCustomerOverviewTable;
-
 	@FXML
 	private TableColumn<CustomerOrdersView, Number> idOrderOfCustomerCol;
-
 	@FXML
 	private TableColumn<CustomerOrdersView, LocalDate> dateOrderOfCustomerCol;
-
 	@FXML
 	private TableColumn<CustomerOrdersView, Status> statusOrderOfCustomerCol;
-
 	@FXML
 	private TableView<ContactPersonSupplierView> contactpesronSupplierOverviewTable;
-
 	@FXML
 	private TableColumn<ContactPersonSupplierView, String> nameContactpersonSupplierCol;
-
 	@FXML
 	private TableColumn<ContactPersonSupplierView, String> emailContactpersonSupplierCol;
 
@@ -137,8 +110,8 @@ public class CustomersOverviewController extends GridPane {
 	}
 
 	@FXML
-	void showOrders(ActionEvent event) {
-		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/OrdersOverview.fxml"), "Orders Overview");
+	void showOrders() {
+		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/OrdersOverview.fxml"), "Orders");
 	}
 
 	public void refreshCustomersList() {

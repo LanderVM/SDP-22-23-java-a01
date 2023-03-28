@@ -54,7 +54,7 @@ public class UserController {
     	
     	userDao.insert(new User(
             email, "test", funcion == "admin" ? true : false, surName, name, tp, mp, street, number, box, city, pc, counrty, supplier
-    	));      
+    	));      // TODO
     	
     }
     
