@@ -2,7 +2,6 @@ package gui.controller;
 
 import java.math.BigDecimal;
 
-import domain.Packaging;
 import domain.PackagingController;
 import domain.PackagingType;
 import domain.UserController;
@@ -14,14 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import util.FXStageUtil;
 
 public class PackagingOverviewController {
 	@FXML
 	private Label lblUser;
 	@FXML
-	private TableView<Packaging> tblBoxes;
+	private TableView<PackagingDTO> tblBoxes;
 	@FXML
 	private TableColumn<PackagingDTO, String> tblBoxesClmName;
 	@FXML
@@ -39,16 +37,16 @@ public class PackagingOverviewController {
 	@FXML
 	private TextArea txtLength;
 	@FXML
-	private TextArea txtHeigth;
+	private TextArea txtHeight;
 	@FXML
 	private TextArea txtPrice;	
 	@FXML
-	private CheckBox chkboxIsActive;
+	private CheckBox chkIsActive;
 	@FXML
 	private ChoiceBox<String> choiceBoxType;
 
 	private final UserController userController;
-	private PackagingController packagingController;
+	private final PackagingController packagingController;
 	private int packagingId = -1;
 
 	public PackagingOverviewController(UserController userController, PackagingController packagingController) {
@@ -68,14 +66,14 @@ public class PackagingOverviewController {
 		tblBoxesClmPrice.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
 		tblBoxesClmActive.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
 
-		//refreshPackagingTable();
+		refreshPackagingTable();
 		
 		choiceBoxType.setItems(PackagingController.getPackagingTypesObservableList());
 		
 		tblBoxes.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, oldBox, newBox) -> {
 			packagingId = newBox.getPackagingId();
-		});
+		}); // TODO
 	}
 	public void refreshPackagingTable() {
 		tblBoxes.setItems(packagingController.getPackagingList());
@@ -95,9 +93,9 @@ public class PackagingOverviewController {
 	@FXML
 	private void addBox() {
 		packagingController.addPackaging(txtName.getText(), Double.parseDouble(txtWidth.getText()),
-				Double.parseDouble(txtHeigth.getText()), Double.parseDouble(txtLength.getText()),
+				Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),
 				Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(),
-				chkboxIsActive.isSelected());
+				chkIsActive.isSelected());
 	}
 
 	@FXML

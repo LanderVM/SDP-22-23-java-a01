@@ -16,7 +16,6 @@ import gui.controller.LoginScreenController;
 import gui.controller.OrdersOverviewController;
 import gui.controller.PackagingOverviewController;
 import gui.controller.TransportServiceOverviewController;
-import gui.view.PackagingDTO;
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -51,7 +50,7 @@ public class FXStageUtil {
     private static final UserController userController = new UserController(userDao);
     private static final TransportServiceController transportServiceController = new TransportServiceController(transportServiceDao, supplierDao);
     private static final SupplierController supplierController = new SupplierController(supplierDao, orderDao, contactPersonSupplierDao);
-    //private static final PackagingController packagingController = new PackagingController(packagingDao, userController);
+    private static final PackagingController packagingController = new PackagingController(packagingDao, userController);
 
     private static FXMLLoader loader;
 
@@ -69,7 +68,7 @@ public class FXStageUtil {
             if (controller == EmployeesOverviewController.class)
                 return new EmployeesOverviewController(userController);
             if (controller == PackagingOverviewController.class)
-                return new PackagingOverviewController(userController,  null); //packagingController
+                return new PackagingOverviewController(userController,  packagingController);
             else {
                 try {
                     return controller.getConstructor().newInstance();

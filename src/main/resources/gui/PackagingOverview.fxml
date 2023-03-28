@@ -65,7 +65,7 @@
                         <Font size="28.0" />
                      </font>
                   </TextArea>
-                  <TextArea fx:id="txtWidth" prefHeight="0.0" prefWidth="190.0" promptText="Heigth">
+                  <TextArea fx:id="txtHeight" prefHeight="0.0" prefWidth="190.0" promptText="Height">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -80,7 +80,7 @@
                         <Font size="28.0" />
                      </font>
                   </TextArea>
-                  <CheckBox fx:id="chkIsActive" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Is active">
+                  <CheckBox fx:id="chkIsActive" mnemonicParsing="false" prefHeight="43.0" prefWidth="106.0" text="Active">
                      <font>
                         <Font size="18.0" />
                      </font>

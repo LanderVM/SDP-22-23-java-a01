@@ -10,6 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.UserDao;
 
+import java.util.Objects;
+
 public class UserController {
 
     private final UserDao userDao;
@@ -24,11 +26,12 @@ public class UserController {
     }
     
     public void checkUser(String accountName, String password) throws EntityNotFoundException, IncorrectPasswordException, EntityDoesntExistException {
-        user = userDao.get(accountName);
-        if(user==null)
+        User fromDatabase = userDao.get(accountName);
+        if(fromDatabase==null)
         	throw new EntityDoesntExistException("there is no user for given accountName");
-        if (!user.getPassword().equals(password))
+        if (!fromDatabase.getPassword().equals(password))
             throw new IncorrectPasswordException();
+        user = fromDatabase;
     }
 
     public boolean userIsAdmin() {
@@ -53,8 +56,8 @@ public class UserController {
     	if(userDao.exists(email)) throw new UserAlreadyExistsExeption();
     	
     	userDao.insert(new User(
-            email, "test", funcion == "admin" ? true : false, surName, name, tp, mp, street, number, box, city, pc, counrty, supplier
-    	));      // TODO
+            email, "test", Objects.equals(funcion, "admin"), surName, name, tp, mp, street, number, box, city, pc, counrty, supplier
+    	));
     	
     }
     
@@ -69,7 +72,7 @@ public class UserController {
     	user.setName(name);
     	user.setTelephone(tp);
     	user.setMobilePhone(mp);
-    	user.setAdmin(funcion == "admin" ? true : false);
+    	user.setAdmin(Objects.equals(funcion, "admin"));
     	user.setAddress(street);
     	user.setHouseNumber(number);
     	user.setBox(box);
