@@ -46,7 +46,7 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/OrdersOverview.fxml"), "Overview");
+		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/OrdersOverview.fxml"), "Orders Overview");
 	}
 
 	private void goToHomeAdmin() {
