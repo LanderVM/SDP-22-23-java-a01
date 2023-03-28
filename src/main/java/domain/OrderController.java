@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
-import gui.view.PackagingDTO;
 import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
@@ -19,8 +18,6 @@ public class OrderController {
 
     private final OrderDao orderDao;
     private final TransportServiceDao transportServiceDao;
-    private int userId;
-    private boolean postedOnly = false;
     private ObservableList<OrderView> orderList = FXCollections.emptyObservableList();
 
     public OrderController(OrderDao orderDao,TransportServiceDao transportServiceDao) {
@@ -28,22 +25,12 @@ public class OrderController {
         this.transportServiceDao = transportServiceDao;
     }
 
-    public ObservableList<OrderView> getOrderListForUser(int userId) {
-        if (userId != this.userId || postedOnly) {
-            this.userId = userId;
-            this.postedOnly = false;
-            this.orderList = FXCollections.observableList(orderDao.getAllForUser(userId).stream().map(OrderView::new).collect(Collectors.toList()));
-        }
-    	return orderList;
-    }
-
-    public ObservableList<OrderView> getOrderListForUserPosted(int userId) {
-        if (userId != this.userId || !postedOnly) {
-            this.userId = userId;
-            this.postedOnly = true;
+    public ObservableList<OrderView> getOrderList(int userId, boolean postedOnly) {
+        if (postedOnly)
             this.orderList = FXCollections.observableList(orderDao.getAllForUserPosted(userId).stream().map(OrderView::new).collect(Collectors.toList()));
-        }
-        return orderList;
+        else
+            this.orderList = FXCollections.observableList(orderDao.getAllForUser(userId).stream().map(OrderView::new).collect(Collectors.toList()));
+        return this.orderList;
     }
 
     public ObservableList<OrderView> getOrderByIdView(int id) {

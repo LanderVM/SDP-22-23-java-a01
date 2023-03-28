@@ -10,13 +10,9 @@ import domain.UserController;
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
-import gui.view.PackagingDTO;
 import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -127,24 +123,22 @@ public class OrdersOverviewController extends GridPane {
         AmountColumnTable.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
         TotalPriceColumnTable.setCellValueFactory(cellData -> cellData.getValue().totalPriceProperty());
 
-        OnlyPostedOrdersCheckBox.selectedProperty().addListener(((observableValue, active, t1) -> {
-            System.out.println(observableValue);
-            if (active)
-                orderList = orderController.getOrderListForUserPosted(userController.userId());
-            else
-                orderList = orderController.getOrderListForUser(userController.userId());
+        OnlyPostedOrdersCheckBox.selectedProperty().addListener(((observableValue, inactive, t1) -> {
+            orderList = orderController.getOrderList(userController.userId(), !inactive);
             TableOrdersView.setItems(orderList);
         }
         ));
 
-        orderList = orderController.getOrderListForUser(userController.userId());
+        orderList = orderController.getOrderList(userController.userId(), false);
         TableOrdersView.setItems(orderList);
 
         // TransportServices
         ObservableList<String> transportServiceNames = transportServiceController.getTransportServicesNames(userController.supplierIdFromUser());
 
-        if (transportServiceNames.size() == 0)
+        if (transportServiceNames.size() == 0) {
             alert = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
+            alert.showAndWait();
+        }
         choiceBoxTransportServices.setItems(transportServiceNames);
         choiceBoxTransportServices.setValue(transportServiceNames.get(0));
 
@@ -155,28 +149,14 @@ public class OrdersOverviewController extends GridPane {
                 return;
 
             int orderId = newOrder.getOrderId();
-//            OrderDetailsTable.setItems(orderController.getOrderByIdView(orderId));
+            OrderDetailsTable.setItems(orderController.getOrderByIdView(orderId));
 
             if (orderController.getOrderById(orderId).getTransportService() == null)
                 PaneOrderProcess.setVisible(true);
 
             setCustomerInfo(orderId);
-//            ProductsTableView.setItems(orderController.getProductsList(orderId));
+            ProductsTableView.setItems(orderController.getProductsList(orderId));
         });
-
-//        OnlyPostedOrdersCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-//                if (OnlyPostedOrdersCheckBox.isSelected()) {
-//                    System.out.println("mlem");
-//                    orderList = orderController.getOrderListForUserPosted(userController.userId());
-//                } else {
-//                    System.out.println("blep");
-//                    orderList = orderController.getOrderListForUser(userController.userId());
-//                }
-////                TableOrdersView.setItems(orderList);
-//            }
-//        });
     }
 
     private void setCustomerInfo(int orderId) {
@@ -189,7 +169,7 @@ public class OrdersOverviewController extends GridPane {
     }
 
     @FXML
-    private void ProcessOrder(ActionEvent event) {
+    private void ProcessOrder() {
         String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
         int orderId = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
@@ -217,21 +197,9 @@ public class OrdersOverviewController extends GridPane {
     }
 
     @FXML
-    public void showCustomers(ActionEvent event) {
+    public void showCustomers() {
         FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/CustomersOverview.fxml"), "Customers");
     }
-
-//    @FXML
-//    public void showPostedOrders() {
-//        if (OnlyPostedOrdersCheckBox.isSelected()) {
-//            System.out.println("mlem");
-//            orderList = orderController.getOrderListForUserPosted(userController.userId());
-//        } else {
-//            System.out.println("blep");
-//            orderList = orderController.getOrderListForUser(userController.userId());
-//        }
-//        TableOrdersView.setItems(orderList);
-//    }
 
     @FXML
     private void logOut() {
