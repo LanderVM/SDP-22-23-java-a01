@@ -49,14 +49,14 @@ public class PackagingOverviewController {
 
 	private final UserController userController;
 	private final PackagingController packagingController;
-	private int packagingId = -1;
+	private ObservableList<PackagingDTO> packagingList;
+	private int packagingId = -1; // TODO check out
 
 	public PackagingOverviewController(UserController userController, PackagingController packagingController) {
 		this.userController = userController;
 		this.packagingController = packagingController;
 	}
 
-	ObservableList<PackagingDTO> packagingList;
 
 	@FXML
 	private void initialize() {
@@ -79,19 +79,14 @@ public class PackagingOverviewController {
 			if (newPackaging == null)
 				return;
 			this.packagingId = newPackaging.getPackagingId();
-			if(newPackaging != null) {
-				txtName.setText(newPackaging.getName());
-				choiceBoxType.setValue(newPackaging.getPackagingType().toString());
-				txtWidth.setText(newPackaging.getWidth().toString());
-				txtHeight.setText(newPackaging.getHeight().toString());
-				txtLength.setText(newPackaging.getLength().toString());
-				txtPrice.setText(newPackaging.getPrice().toString());
-				chkIsActive.setSelected(newPackaging.isActive());
-				
-			}
-			
-		
-		}
+					txtName.setText(newPackaging.getName());
+					choiceBoxType.setValue(newPackaging.getPackagingType().toString());
+					txtWidth.setText(newPackaging.getWidth().toString());
+					txtHeight.setText(newPackaging.getHeight().toString());
+					txtLength.setText(newPackaging.getLength().toString());
+					txtPrice.setText(newPackaging.getPrice().toString());
+					chkIsActive.setSelected(newPackaging.isActive());
+				}
 		
 		);
 		
@@ -111,7 +106,7 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void addPackaging() {
-        String message = ""; 
+        String message;
         try {
             packagingController.addPackaging(txtName.getText(), Double.parseDouble(txtWidth.getText()),
                     Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),

@@ -6,6 +6,7 @@ import exceptions.InvalidUserEmailException;
 import exceptions.UserAlreadyExistsExeption;
 import gui.view.UserDTO;
 import jakarta.persistence.NoResultException;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -74,8 +75,9 @@ public class EmployeesOverviewController extends GridPane{
 	private Button btnClear;
 	
     private final UserController userController;
-    private int id = -1; // TODO check out
     private String email;
+	private int id = -1;
+	private ObservableList<UserDTO> userList;
 
 	public EmployeesOverviewController(UserController userController) {
 		this.userController = userController;
@@ -92,7 +94,7 @@ public class EmployeesOverviewController extends GridPane{
 
 		choiceBoxFunction.setItems(UserDTO.getRollesObservableList());
 
-		refreshEmployeesList();
+		tblEmployees.setItems(userController.getEmployees());
 
 		tblEmployees.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, oldEmployee, newEmployee) -> {
@@ -121,12 +123,6 @@ public class EmployeesOverviewController extends GridPane{
 			}
 
 		});
-	}
-
-
-
-	private void refreshEmployeesList() {
-		tblEmployees.setItems(userController.getEmployees());		
 	}
 	
 	@FXML 
@@ -166,7 +162,6 @@ public class EmployeesOverviewController extends GridPane{
 			showError("Error", "Something went wrong while trying to update a employee");
 			System.out.println(e);
 		}
-		refreshEmployeesList();	
 	}
 	
 	@FXML 
@@ -184,9 +179,8 @@ public class EmployeesOverviewController extends GridPane{
 			showError("Empty field error", e.getMessage());
 		} catch (Exception e) {
 			showError("Error", "Something went wrong while trying to create a new employee");
-			System.out.println(e);
+			System.out.println(e); // TODO
 		}
-		refreshEmployeesList();
 	}
 	
 	@FXML
