@@ -56,6 +56,8 @@ public class PackagingOverviewController {
 		this.packagingController = packagingController;
 	}
 
+	ObservableList<PackagingDTO> packagingList;
+
 	@FXML
 	private void initialize() {
 		lblUser.setText(userController.toString());
@@ -68,7 +70,7 @@ public class PackagingOverviewController {
 		tblBoxesClmPrice.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
 		tblBoxesClmActive.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
 
-		ObservableList<PackagingDTO> packagingList = packagingController.getPackagingList();
+		packagingList = packagingController.getPackagingList();
 		tblBoxes.setItems(packagingList);
 
 		choiceBoxType.setItems(PackagingController.getPackagingTypesObservableList());

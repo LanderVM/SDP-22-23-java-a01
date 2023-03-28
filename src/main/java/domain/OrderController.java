@@ -1,10 +1,12 @@
 package domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
 import gui.view.OrderView;
+import gui.view.PackagingDTO;
 import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
@@ -17,18 +19,31 @@ public class OrderController {
 
     private final OrderDao orderDao;
     private final TransportServiceDao transportServiceDao;
+    private int userId;
+    private boolean postedOnly = false;
+    private ObservableList<OrderView> orderList = FXCollections.emptyObservableList();
 
     public OrderController(OrderDao orderDao,TransportServiceDao transportServiceDao) {
         this.orderDao = orderDao;
         this.transportServiceDao = transportServiceDao;
     }
-    
+
     public ObservableList<OrderView> getOrderListForUser(int userId) {
-    	return FXCollections.observableArrayList(orderDao.getAllForUser(userId).stream().map(OrderView::new).toList());
+        if (userId != this.userId || postedOnly) {
+            this.userId = userId;
+            this.postedOnly = false;
+            this.orderList = FXCollections.observableList(orderDao.getAllForUser(userId).stream().map(OrderView::new).collect(Collectors.toList()));
+        }
+    	return orderList;
     }
-    
+
     public ObservableList<OrderView> getOrderListForUserPosted(int userId) {
-    	return FXCollections.observableArrayList(orderDao.getAllForUserPosted(userId).stream().map(OrderView::new).toList());
+        if (userId != this.userId || !postedOnly) {
+            this.userId = userId;
+            this.postedOnly = true;
+            this.orderList = FXCollections.observableList(orderDao.getAllForUserPosted(userId).stream().map(OrderView::new).collect(Collectors.toList()));
+        }
+        return orderList;
     }
 
     public ObservableList<OrderView> getOrderByIdView(int id) {
@@ -38,11 +53,11 @@ public class OrderController {
     public Order getOrderById(int orderId) {
         return orderDao.get(orderId);
     }
-    
+
     public Supplier getCustomerForOrder(int orderId) {
 		return orderDao.getCustomerForOrder(orderId);
 	}
-    
+
     public ObservableList<ProductView> getProductsList(int orderId) {
     	List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
         return FXCollections.observableArrayList(list.stream().map(el->new ProductView(el.getProduct(),el.getCount())).toList());
@@ -64,6 +79,16 @@ public class OrderController {
         order.generateTrackingCode();
 
         orderDao.update(order);
+        orderList.set(getIndex(order.getOrderId()), new OrderView(order));
+    }
+
+    private int getIndex(int orderId) {
+        List<OrderView> correspondingDTOs = orderList.stream().filter(dto -> dto.getOrderId() == orderId).toList();
+        if (correspondingDTOs.isEmpty())
+            throw new IllegalArgumentException("There is no OrderDTO matching this orderId!");
+        if (correspondingDTOs.size() > 1)
+            throw new RuntimeException("There were multiple OrderDTO found matching this orderId!");
+        return orderList.indexOf(correspondingDTOs.get(0));
     }
 
 }

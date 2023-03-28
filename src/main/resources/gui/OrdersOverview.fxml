@@ -142,7 +142,7 @@
       </columnResizePolicy>
    </TableView>
    <ListView fx:id="CustomerDetailsList" prefHeight="569.0" prefWidth="291.0" style="-fx-font-size: 20px;" GridPane.columnIndex="7" GridPane.rowIndex="3" GridPane.rowSpan="2" />
-   <CheckBox fx:id="OnlyPostedOrdersCheckBox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showPostedOrders" prefHeight="37.0" prefWidth="279.0" text="Only posted orders" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+   <CheckBox fx:id="OnlyPostedOrdersCheckBox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="37.0" prefWidth="279.0" text="Only posted orders" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
       <font>
          <Font size="24.0" />
       </font>
