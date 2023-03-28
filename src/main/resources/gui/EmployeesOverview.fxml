@@ -12,12 +12,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:controller="gui.controller.EmployeesOverviewController" maxHeight="-Infinity" maxWidth="-Infinity"
-          minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0"
-          xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.EmployeesOverviewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="4.0" prefWidth="121.40000915527344" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="19.0" prefWidth="403.1999206542969" />
@@ -133,58 +132,6 @@
             </TextField>
          </children>
       </GridPane>
-      <GridPane fx:id="HeaderPane" style="-fx-background-color: #EC4842;" GridPane.columnSpan="2147483647">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="546.0" minWidth="10.0" prefWidth="136.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="810.0" minWidth="10.0" prefWidth="529.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="558.3999999999999" minWidth="10.0" prefWidth="405.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.7999755859374" minWidth="10.0" prefWidth="436.99992675781255" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="438.4000488281249" minWidth="10.0" prefWidth="146.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="438.4000488281249" minWidth="10.0" prefWidth="146.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.0" minWidth="10.0" prefWidth="285.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <ImageView fx:id="imgDelaware" fitHeight="121.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-               <image>
-                  <Image url="@../images/LogoDelaware.png" />
-               </image>
-            </ImageView>
-            <Hyperlink fx:id="btnTransportServices" onAction="#showTransportServices" prefHeight="106.0" prefWidth="546.0" text="Transport Service" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
-               <font>
-                  <Font name="Arial Bold" size="48.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink fx:id="btnBoxes" onAction="#showBoxes" prefHeight="133.0" prefWidth="266.0" text="Boxes" textFill="WHITE" GridPane.columnIndex="2">
-               <font>
-                  <Font name="Arial Bold" size="48.0" />
-               </font>
-            </Hyperlink>
-            <Label fx:id="LblUser" prefHeight="69.0" prefWidth="187.0" text="Admin" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="240.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Log Out" textFill="WHITE" GridPane.columnIndex="6">
-               <font>
-                  <Font size="48.0" />
-               </font>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Hyperlink>
-            <ImageView fitHeight="60.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
-               <image>
-                  <Image url="@../images/adminIcon.png" />
-               </image>
-            </ImageView>
-         </children>
-      </GridPane>
       <GridPane fx:id="GridPaneAdressInfo" prefHeight="498.0" prefWidth="792.0" style="-fx-background-color: white;" GridPane.columnIndex="9" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="4">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
@@ -271,5 +218,56 @@
             <Font size="36.0" />
          </font>
       </Button>
+      <GridPane style="-fx-background-color: #EC4842;" GridPane.columnSpan="12">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="629.5999267578123" minWidth="10.0" prefWidth="502.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" prefWidth="358.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="726.0" minWidth="10.0" prefWidth="543.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="555.0" minWidth="10.0" prefWidth="517.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Hyperlink onAction="#showTransportServices" prefHeight="123.0" prefWidth="483.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Transportservices" textFill="WHITE">
+               <font>
+                  <Font size="48.0" />
+               </font>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Hyperlink>
+            <Hyperlink onAction="#showBoxes" prefHeight="133.0" prefWidth="273.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Packaging" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="243.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Log Out" textFill="WHITE" GridPane.columnIndex="3">
+               <font>
+                  <Font size="48.0" />
+               </font>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Hyperlink>
+            <HBox alignment="CENTER" prefHeight="123.0" prefWidth="650.0" GridPane.columnIndex="2">
+               <children>
+                  <Label fx:id="lblUser" alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="484.0" text="Admin" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ImageView fitHeight="60.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/adminIcon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
    </children>
 </GridPane>

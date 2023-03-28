@@ -23,6 +23,8 @@ import util.FXStageUtil;
 public class EmployeesOverviewController extends GridPane{
 
 	@FXML
+	public Label lblUser;
+	@FXML
 	public GridPane GridPanePersonalInfo;
 	@FXML
 	public Label lblName;
@@ -81,6 +83,8 @@ public class EmployeesOverviewController extends GridPane{
 
 	@FXML
 	private void initialize() {
+
+		lblUser.setText(userController.toString());
 		btnSave.setDisable(true);
 
 		tblEmployeesColumnName.setCellValueFactory(cellData -> cellData.getValue().getAccountNameProperty());
