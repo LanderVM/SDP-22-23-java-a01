@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -91,5 +92,25 @@ public class OrderTest {
         verify(orderDao).get(1);
         verify(transportServiceDao).getForSupplier("test",0);
     }
+    
+    @Test
+    public void testGenerateTrackingCode() {
+    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, new TransportService("bpost", List.of(new ContactPerson("contact1", "contact1@gmail.com")), new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE),supplier, true), new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+        
+        order.generateTrackingCode();
+        String trackingCode = order.getTrackingCode();
+
+        // Check that the tracking code has the correct length
+        assertEquals(order.getTransportService().getTrackingCodeDetails().getCharacterCount() + order.getTransportService().getTrackingCodeDetails().getPrefix().length(), trackingCode.length());
+        
+        // Check that the tracking code starts with the correct prefix
+        assertTrue(trackingCode.startsWith(order.getTransportService().getTrackingCodeDetails().getPrefix()));
+        
+        // Check that the tracking code only contains digits and/or uppercase letters
+        assertTrue(trackingCode.matches("[0-9A-Z]+"));
+       
+    }
+    
+    
     
 }
