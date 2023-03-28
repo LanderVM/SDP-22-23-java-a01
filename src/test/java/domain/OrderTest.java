@@ -2,10 +2,14 @@ package domain;
 
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
+import gui.view.ProductView;
 import jakarta.persistence.EntityNotFoundException;
+import javafx.collections.FXCollections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -36,7 +40,6 @@ public class OrderTest {
     Supplier supplier;
     Supplier customer;
     
-
     Order order;
     TransportService transportService;
 
@@ -46,14 +49,13 @@ public class OrderTest {
         customer = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
         transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE),supplier, true);
     }
-
+    
     @Test
     public void processOrder_happyFlow() throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException  {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
         when(transportServiceDao.getForSupplier("test", 0)).thenReturn(transportService);
 
-       
 		orderController.processOrder(1, transportService.getName(),0);
 		
         Order orderAfterUpdate = orderDao.get(1);
@@ -110,24 +112,36 @@ public class OrderTest {
     }
     
     @Test
-    public void testAddNotification() {
-        
+    public void addNotificationToOrder_happyFlow() {
         Order order = new Order();
-
         Notification notification = new Notification();
+        
         notification.setOrder(order);
-
         order.addNotification(notification);
 
         assertTrue(order.getNotifications().contains(notification));
 
-        Notification invalidNotification = new Notification();
-
+    }
+    
+    @Test
+    public void addNotificationToOrder_throwsException() {
+    	Order order = new Order();
+        Notification notification = new Notification();
+        Notification InvalidNotification = new Notification();
+        
+        notification.setOrder(order);
+        order.addNotification(notification);
+        
         assertThrows(RuntimeException.class, () -> {
-            order.addNotification(invalidNotification);
+            order.addNotification(InvalidNotification);
         });
     }
     
+    @Test
+    public void makeProductLine_badInput_throwsIllegalArgumentException() {
+    	assertThrows(IllegalArgumentException.class, () -> new OrderLine(List.of(), new Order()));
+    	assertThrows(IllegalArgumentException.class, () -> new OrderLine(List.of(new Product()), null));
+    }
     
     
 

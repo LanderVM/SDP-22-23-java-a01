@@ -3,6 +3,8 @@ package domain;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -54,9 +56,11 @@ public class UserTests {
             assertThrows(UserAlreadyExistsExeption.class, () -> userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
         }
 
+       
         @Test
-        public void addUser_BlankName_throwsIllegalArgumentException() {
+        public void addUser_BlankName_throwsIllegalArgumentException(String mail, String surName, String name, String pn, String mp, String password, String sn, int hn, String box, String city, String pc, String country) {
             when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(false);
+
             assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
             assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
             assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "", "", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));

@@ -30,9 +30,9 @@ public class User {
     private int userId;
 
     @Column(name = "email")
-    private String accountName;
-    private String surname;
-    private String name;
+    private String accountName = "";
+    private String surname = "";
+    private String name= "";
     private String password = ""; 
     private String country = "";   
     private String city = "";
@@ -40,7 +40,7 @@ public class User {
     private String postalCode = "";
     private String address = "";   
     @Column(name = "home_address")
-    private int houseNumber;  
+    private int houseNumber = 0;  
     private String box = "";
     private String telephone = "";
     @Column(name = "mobile_phone")
@@ -106,7 +106,7 @@ public class User {
     }
 
     void setSurname(String surname) {
-    	if(surname.isEmpty() || surname == "" || surname.isBlank()) throw new IllegalArgumentException("First name can't be empty");
+    	if(surname.isEmpty() || surname == null || surname.isBlank()) throw new IllegalArgumentException("First name can't be empty");
         this.surname = surname;
     }
 
@@ -115,7 +115,7 @@ public class User {
     }
 
      void setName(String name) {
-    	 if(name.isEmpty() || name == "" || surname.isBlank()) throw new IllegalArgumentException("Name can't be empty");
+    	 if(name.isEmpty() || surname.isBlank() || name == null) throw new IllegalArgumentException("Name can't be empty");
         this.name = name;
     }
  

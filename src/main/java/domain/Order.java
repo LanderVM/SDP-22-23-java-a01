@@ -222,7 +222,7 @@ public class Order {
         notifications.add(notification);
     }
     
-    private void makeOrderlines(List<Product> productsList) {
+    public void makeOrderlines(List<Product> productsList) {
     	if (productsList==null)
     		throw new IllegalArgumentException("productsList may not be null!");
     	if (productsList.isEmpty()) 

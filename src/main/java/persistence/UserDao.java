@@ -13,4 +13,5 @@ public interface UserDao extends GenericDao<User> {
     boolean exists(String email);
     
     void insert(User user);
+       
 }
