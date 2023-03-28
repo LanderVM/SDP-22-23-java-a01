@@ -21,13 +21,12 @@ public class StartUp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXStageUtil.newStage(primaryStage, StartUp.class.getResource("/gui/LoginScreen.fxml"));
+        FXStageUtil.setStage(primaryStage, StartUp.class.getResource("/gui/LoginScreen.fxml"), "Log In");
     }
 
     @Override
     public void stop() {
-        FXStageUtil.entityManager.close();
-        JPAUtil.getEntityManagerFactory().close();
+        FXStageUtil.close();
     }
 
     public static void seedDatabase() {

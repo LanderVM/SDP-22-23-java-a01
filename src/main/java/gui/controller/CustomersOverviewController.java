@@ -87,15 +87,10 @@ public class CustomersOverviewController extends GridPane {
 
 	private final SupplierController supplierController;
 	private final UserController userController;
-	private final OrderController orderController;
-	private final TransportServiceController transportServiceController;
 
-	public CustomersOverviewController(OrderController orderController, UserController userController,TransportServiceController transportServiceController,
-			SupplierController supplierController) {
+	public CustomersOverviewController(UserController userController, SupplierController supplierController) {
 		this.userController = userController;
-		this.orderController = orderController;
 		this.supplierController = supplierController;
-		this.transportServiceController = transportServiceController;
 	}
 
 	@FXML
@@ -129,7 +124,7 @@ public class CustomersOverviewController extends GridPane {
 					ordersOfCustomerOverviewTable.getSortOrder().add(idOrderOfCustomerCol);
 					ordersOfCustomerOverviewTable
 							.setItems(supplierController.getCustomerOrderView(email));
-					
+
 					nameCustomerCol.setCellValueFactory(cellData -> cellData.getValue().getName());
 					numberOfOrdersCol.setCellValueFactory(cellData -> cellData.getValue().getNumberOfOrders());
 
@@ -143,9 +138,7 @@ public class CustomersOverviewController extends GridPane {
 
 	@FXML
 	void showOrders(ActionEvent event) {
-		OrdersOverviewController ordersOverviewController = new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/OrdersOverview.fxml"));
-		FXStageUtil.change(loader, ordersOverviewController, "Orders Overview");
+		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/OrdersOverview.fxml"), "Orders Overview");
 	}
 
 	public void refreshCustomersList() {
@@ -155,9 +148,7 @@ public class CustomersOverviewController extends GridPane {
 
 	@FXML
 	private void logOut() {
-		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController, transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
-		FXStageUtil.change(loader, loginScreenController, "Log In");
+		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
 	}
 
 }

@@ -212,16 +212,12 @@ public class OrdersOverviewController extends GridPane {
 
 	@FXML
 	public void showCustomers(ActionEvent event) {
-		CustomersOverviewController customersOverviewController = new CustomersOverviewController(orderController, userController, transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CustomersOverview.fxml"));
-		FXStageUtil.change(loader, customersOverviewController, "Customers");
+		FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/CustomersOverview.fxml"), "Customers");
 	}
 
 	@FXML
 	private void logOut() {
-		LoginScreenController loginScreenController = new LoginScreenController(orderController, userController, transportServiceController, supplierController);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/LoginScreen.fxml"));
-		FXStageUtil.change(loader, loginScreenController, "Log In");
+		FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
 	}
 
 }

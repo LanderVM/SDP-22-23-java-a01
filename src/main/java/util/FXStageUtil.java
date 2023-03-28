@@ -9,7 +9,9 @@ import domain.OrderController;
 import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
+import gui.controller.CustomersOverviewController;
 import gui.controller.LoginScreenController;
+import gui.controller.OrdersOverviewController;
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,87 +25,100 @@ public class FXStageUtil {
     private static Stage stage;
     private static int width;
     private static int height;
+    private static Scene scene;
 
-	public static EntityManager entityManager;
-	private static OrderDao orderDao;
-	private static SupplierDao supplierDao;
-	private static UserDao userDao;
-	private static ContactPersonSupplierDao contactPersonSupplierDao;
-	private static TransportServiceDao transportServiceDao;
-	private static FXMLLoader loader;
+    private static final EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+    private static final OrderDao orderDao = new OrderDaoJpa(entityManager);
+    private static final SupplierDao supplierDao = new SupplierDaoJpa(entityManager);
+    private static final UserDao userDao = new UserDaoJpa(entityManager);
+    private static final ContactPersonSupplierDao contactPersonSupplierDao = new ContactPersonSupplierDaoJpa(entityManager);
+    private static final TransportServiceDao transportServiceDao = new TransportServiceDaoJpa(entityManager);
 
-    public static void init(Stage stage) {
-        FXStageUtil.stage = stage;
-        width = (int) stage.getWidth();
-        height = (int) stage.getHeight();
+    private static final OrderController orderController = new OrderController(orderDao, transportServiceDao);
+    private static final UserController userController = new UserController(userDao);
+    private static final TransportServiceController transportServiceController = new TransportServiceController(transportServiceDao, supplierDao);
+    private static final SupplierController supplierController = new SupplierController(supplierDao, orderDao, contactPersonSupplierDao);
+
+    private static FXMLLoader loader;
+
+    private static void setLoader(URL location) {
+        loader = new FXMLLoader();
+        loader.setControllerFactory(controller -> {
+            if (controller == LoginScreenController.class) {
+                System.out.println("c");
+                return new LoginScreenController(orderController, userController, transportServiceController, supplierController);
+            }
+            if (controller == OrdersOverviewController.class) {
+                System.out.println("b");
+                return new OrdersOverviewController(orderController, userController, transportServiceController, supplierController);
+            }
+            if (controller == CustomersOverviewController.class) {
+                System.out.println("a");
+                return new CustomersOverviewController(userController, supplierController);
+            } else {
+                try {
+                    System.out.println("reeeeeeeeeee");
+                    return controller.getConstructor().newInstance();
+                } catch (Exception exception) {
+                    throw new RuntimeException(exception);
+                }
+            }
+        });
+        loader.setLocation(location);
     }
 
-	private static void setLoader() {
-		loader = new FXMLLoader();
-		loader.setControllerFactory(controller -> {
-			if (controller == LoginScreenController.class) {
-				return new LoginScreenController(
-						new OrderController(orderDao, transportServiceDao),
-						new UserController(userDao),
-						new TransportServiceController(transportServiceDao, supplierDao),
-						new SupplierController(supplierDao, orderDao, contactPersonSupplierDao));
-			} else {
-				try {
-					return controller.getConstructor().newInstance();
-				} catch (Exception exc) {
-					throw new RuntimeException(exc);
-				}
-			}
-		});
-	}
+    public static void setStage(Stage primaryStage, URL location, String title) {
+        try {
+            setLoader(location);
+            FXStageUtil.stage = primaryStage;
+            stage.setResizable(true);
+            stage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
+            stage.setMaximized(true);
+            scene = new Scene(loader.load());
+            width = (int) stage.getWidth();
+            height = (int) stage.getHeight();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	public static void newStage(Stage primaryStage, URL location) {
-		FXStageUtil.init(primaryStage);
+    }
 
-		entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-		orderDao = new OrderDaoJpa(entityManager);
-		supplierDao = new SupplierDaoJpa(entityManager);
-		userDao = new UserDaoJpa(entityManager);
-		contactPersonSupplierDao = new ContactPersonSupplierDaoJpa(entityManager);
-		transportServiceDao = new TransportServiceDaoJpa(entityManager);
+    public static void setScene(URL location, String title) {
+        if (stage == null || scene == null)
+            throw new IllegalStateException("Primary stage must be initialized before running this method");
+        try {
+            setLoader(Objects.requireNonNull(location));
+            scene.setRoot(loader.load());
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-
-		if (loader == null)
-			setLoader();
-
-		try {
-			loader.setLocation(location);
-			primaryStage.setResizable(true);
-			primaryStage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
-			primaryStage.setTitle("Log In");
-			primaryStage.setMaximized(true);
-			primaryStage.setScene(new Scene(loader.load()));
-			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void change(FXMLLoader loader, Object controller, String title) {
-		if (stage == null)
-			throw new IllegalStateException("Primary stage must be initialized before running this method");
-
-		if (controller instanceof LoginScreenController) {
-			loader.setRoot(controller);
-		}
-		try {
+    public static void change(FXMLLoader loader, Object controller, String title) {
+        if (stage == null)
+            throw new IllegalStateException("Primary stage must be initialized before running this method");
+        try {
             loader.setController(controller);
             Parent root = loader.load();
-			Scene scene = new Scene(root);
-			stage.setWidth(width);
-			stage.setHeight(height);
-			stage.setTitle(title);
-			stage.setScene(scene);
-			stage.show();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+            Scene scene = new Scene(root);
+            stage.setWidth(width);
+            stage.setHeight(height);
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public static void close() {
+        entityManager.close();
+        JPAUtil.getEntityManagerFactory().close();
+    }
 }
