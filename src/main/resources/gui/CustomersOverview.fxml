@@ -134,7 +134,7 @@
                <Insets />
             </opaqueInsets>
          </Hyperlink>
-         <Label prefHeight="135.0" prefWidth="397.0" style="-fx-background-color: grey;" text="Customers" textFill="WHITE" GridPane.columnIndex="1">
+         <Label prefHeight="135.0" prefWidth="397.0" style="-fx-background-color: grey; -fx-font-family: arial;" text="Customers" textFill="WHITE" GridPane.columnIndex="1">
             <font>
                <Font size="48.0" />
             </font>

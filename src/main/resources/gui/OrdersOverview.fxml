@@ -102,7 +102,7 @@
             <Insets left="50.0" />
          </padding>
       </Hyperlink>
-      <Label prefHeight="130.0" prefWidth="398.0" style="-fx-background-color: grey;" text="Orders" textFill="WHITE">
+      <Label prefHeight="130.0" prefWidth="398.0" style="-fx-background-color: grey; -fx-font-family: arial;" text="Orders" textFill="WHITE">
          <font>
             <Font size="48.0" />
          </font>
