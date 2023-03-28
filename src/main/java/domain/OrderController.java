@@ -27,6 +27,14 @@ public class OrderController {
     public ObservableList<OrderView> getOrderListForUser(int userId) {
     	return FXCollections.observableArrayList(orderDao.getAllForUser(userId).stream().map(OrderView::new).toList());
     }
+    
+    public ObservableList<OrderView> getOrderListForUserPosted(int userId) {
+    	return FXCollections.observableArrayList(orderDao.getAllForUserPosted(userId).stream().map(OrderView::new).toList());
+    }
+    
+    public ObservableList<OrderView> getOrderListForUserOpen(int userId) {
+    	return FXCollections.observableArrayList(orderDao.getAllForUserOpen(userId).stream().map(OrderView::new).toList());
+    }
 
     public ObservableList<OrderView> getOrderByIdView(int id) {
         return FXCollections.observableArrayList(new OrderView(orderDao.get(id)));
