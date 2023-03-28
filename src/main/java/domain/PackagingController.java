@@ -1,11 +1,13 @@
 package domain;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import gui.view.PackagingDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import persistence.PackagingDao;
 
 public class PackagingController {
@@ -64,8 +66,16 @@ public class PackagingController {
         packaging.setActive(active);
 
         packagingDao.update(packaging);
-        int index = packagingList.indexOf(packagingList.stream().filter(dto -> dto.getPackagingId() == packaging.getPackagingId()).toList().get(0));
-        packagingList.set(index, new PackagingDTO(packaging)); // TODO
+        packagingList.set(getIndex(packaging.getPackagingId()), new PackagingDTO(packaging));
+    }
+
+    private int getIndex(int packagingId) {
+        List<PackagingDTO> correspondingDTOs = packagingList.stream().filter(dto -> dto.getPackagingId() == packagingId).toList();
+        if (correspondingDTOs.isEmpty())
+            throw new IllegalArgumentException("There is no PackagingDTO matching this packagingId!");
+        if (correspondingDTOs.size() > 1)
+            throw new RuntimeException("There were multiple PackagingDTOs found matching this packagingId!");
+        return packagingList.indexOf(correspondingDTOs.get(0));
     }
 
     public void deletePackaging(int packagingId) {
@@ -74,7 +84,9 @@ public class PackagingController {
         if (!packagingDao.exists(packagingId))
             throw new IllegalArgumentException("Packaging with provided ID does not exist!");
         packagingDao.delete(packagingId);
+        packagingList.remove(getIndex(packagingId));
     }
+
     public static ObservableList<String> getPackagingTypesObservableList () {
     	return FXCollections.observableList(Arrays.stream(PackagingType.values()).map(PackagingType::name)
 				.collect(Collectors.toList()));
