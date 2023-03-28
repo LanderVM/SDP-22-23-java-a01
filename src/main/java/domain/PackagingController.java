@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.PackagingDao;
@@ -64,5 +67,9 @@ public class PackagingController {
         if (!packagingDao.exists(packagingId))
             throw new IllegalArgumentException("Packaging with provided ID does not exist!");
         packagingDao.delete(packagingId);
+    }
+    public static ObservableList<String> getPackagingTypesObservableList () {
+    	return FXCollections.observableList(Arrays.stream(PackagingType.values()).map(PackagingType::name)
+				.collect(Collectors.toList()));
     }
 }

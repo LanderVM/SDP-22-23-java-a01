@@ -6,17 +6,34 @@ import java.util.Objects;
 
 import application.StartUp;
 import domain.OrderController;
+import domain.PackagingController;
 import domain.SupplierController;
 import domain.TransportServiceController;
 import domain.UserController;
-import gui.controller.*;
+import gui.controller.CustomersOverviewController;
+import gui.controller.EmployeesOverviewController;
+import gui.controller.LoginScreenController;
+import gui.controller.OrdersOverviewController;
+import gui.controller.PackagingOverviewController;
+import gui.controller.TransportServiceOverviewController;
+import gui.view.PackagingDTO;
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import persistence.*;
-import persistence.impl.*;
+import persistence.ContactPersonSupplierDao;
+import persistence.OrderDao;
+import persistence.PackagingDao;
+import persistence.SupplierDao;
+import persistence.TransportServiceDao;
+import persistence.UserDao;
+import persistence.impl.ContactPersonSupplierDaoJpa;
+import persistence.impl.OrderDaoJpa;
+import persistence.impl.PackagingDaoJpa;
+import persistence.impl.SupplierDaoJpa;
+import persistence.impl.TransportServiceDaoJpa;
+import persistence.impl.UserDaoJpa;
 
 public class FXStageUtil {
     private static Stage stage;
@@ -28,11 +45,13 @@ public class FXStageUtil {
     private static final UserDao userDao = new UserDaoJpa(entityManager);
     private static final ContactPersonSupplierDao contactPersonSupplierDao = new ContactPersonSupplierDaoJpa(entityManager);
     private static final TransportServiceDao transportServiceDao = new TransportServiceDaoJpa(entityManager);
+    private static final PackagingDao packagingDao = new PackagingDaoJpa(entityManager);
 
     private static final OrderController orderController = new OrderController(orderDao, transportServiceDao);
     private static final UserController userController = new UserController(userDao);
     private static final TransportServiceController transportServiceController = new TransportServiceController(transportServiceDao, supplierDao);
     private static final SupplierController supplierController = new SupplierController(supplierDao, orderDao, contactPersonSupplierDao);
+    //private static final PackagingController packagingController = new PackagingController(packagingDao, userController);
 
     private static FXMLLoader loader;
 
@@ -50,7 +69,7 @@ public class FXStageUtil {
             if (controller == EmployeesOverviewController.class)
                 return new EmployeesOverviewController(userController);
             if (controller == PackagingOverviewController.class)
-                return new PackagingOverviewController(userController);
+                return new PackagingOverviewController(userController,  null); //packagingController
             else {
                 try {
                     return controller.getConstructor().newInstance();
