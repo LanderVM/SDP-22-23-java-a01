@@ -46,20 +46,14 @@ public class OrderTest {
     }
 
     @Test
-    public void processOrder_happyFlow()  {
+    public void processOrder_happyFlow() throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException  {
         order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, transportService, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
         when(transportServiceDao.getForSupplier("test", 0)).thenReturn(transportService);
 
-        try {
-			orderController.processOrder(1, transportService.getName(),0);
-		} catch (EntityNotFoundException e) {
-			e.printStackTrace();
-		} catch (OrderStatusException e) {
-			e.printStackTrace();
-		} catch (EntityDoesntExistException e) {
-			e.printStackTrace();
-		}
+       
+		orderController.processOrder(1, transportService.getName(),0);
+		
         Order orderAfterUpdate = orderDao.get(1);
 
         assertEquals(transportService, orderAfterUpdate.getTransportService());
@@ -77,6 +71,7 @@ public class OrderTest {
         verify(orderDao).get(1);
     }
     
+    @Test
     public void processOrder_transportServiceDoesntExist_throwsEntityDoesntExistException () {
     	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
