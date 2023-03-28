@@ -8,13 +8,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.PackagingDao;
 
-import static java.util.stream.Collectors.toCollection;
-
 public class PackagingController {
 
     private final PackagingDao packagingDao;
     private final UserController userController;
-    private ObservableList<Packaging> packagingList = FXCollections.emptyObservableList();
+    private ObservableList<PackagingDTO> packagingList = FXCollections.emptyObservableList();
     private int supplierId = -1;
 
     public PackagingController(PackagingDao packagingDao, UserController userController) {
@@ -25,9 +23,9 @@ public class PackagingController {
     public ObservableList<PackagingDTO> getPackagingList() {
         if (packagingList.isEmpty() || supplierId != userController.supplierIdFromUser()) {
             supplierId = userController.supplierIdFromUser();
-            this.packagingList = FXCollections.observableList(packagingDao.getAll(userController.supplierIdFromUser()));
+            this.packagingList = FXCollections.observableList(packagingDao.getAll(userController.supplierIdFromUser()).stream().map(PackagingDTO::new).collect(Collectors.toList()));
         }
-        return packagingList.stream().map(PackagingDTO::new).collect(toCollection(FXCollections::observableArrayList));
+        return packagingList;
     }
 
     private void validatePackagingType(String packagingType) {
@@ -44,7 +42,7 @@ public class PackagingController {
 
         Packaging packaging = new Packaging(name, width, height, length, price, PackagingType.valueOf(packagingType), active, userController.getSupplier());
         packagingDao.add(packaging);
-        packagingList.add(packaging);
+        packagingList.add(new PackagingDTO(packaging));
     }
 
     public void updatePackaging(int packagingId, String name, double width, double height, double length, double price, String packagingType, boolean active) {
@@ -66,6 +64,8 @@ public class PackagingController {
         packaging.setActive(active);
 
         packagingDao.update(packaging);
+        int index = packagingList.indexOf(packagingList.stream().filter(dto -> dto.getPackagingId() == packaging.getPackagingId()).toList().get(0));
+        packagingList.set(index, new PackagingDTO(packaging)); // TODO
     }
 
     public void deletePackaging(int packagingId) {

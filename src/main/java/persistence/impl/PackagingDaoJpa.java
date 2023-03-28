@@ -22,8 +22,7 @@ public class PackagingDaoJpa extends GenericDaoJpa<Packaging> implements Packagi
 
     public List<Packaging> getAll(int supplierId) {
         List<Packaging> result = entityManager.createNamedQuery("Packaging.findAll", Packaging.class).setParameter(1, supplierId).getResultList();
-//        return Collections.unmodifiableList(result);
-        return result; // TODO
+        return Collections.unmodifiableList(result);
     }
 
     public void add(Packaging packaging) {

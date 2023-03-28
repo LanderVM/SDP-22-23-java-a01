@@ -39,7 +39,7 @@ public class PackagingOverviewController {
 	@FXML
 	private TextArea txtHeight;
 	@FXML
-	private TextArea txtPrice;	
+	private TextArea txtPrice;
 	@FXML
 	private CheckBox chkIsActive;
 	@FXML
@@ -59,24 +59,18 @@ public class PackagingOverviewController {
 		lblUser.setText(userController.toString());
 
 		// Table Boxes
-		
+
 		tblBoxesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		tblBoxesClmType.setCellValueFactory(cellData -> cellData.getValue().packagingTypeProperty());
 		tblBoxesClmMeasurements.setCellValueFactory(cellData -> cellData.getValue().dimensionsProperty());
 		tblBoxesClmPrice.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
 		tblBoxesClmActive.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
 
-		refreshPackagingTable();
-		
-		choiceBoxType.setItems(PackagingController.getPackagingTypesObservableList());
-		
-		tblBoxes.getSelectionModel().selectedItemProperty()
-		.addListener((observableValue, oldBox, newBox) -> {
-			packagingId = newBox.getPackagingId();
-		}); // TODO
-	}
-	public void refreshPackagingTable() {
 		tblBoxes.setItems(packagingController.getPackagingList());
+
+		choiceBoxType.setItems(PackagingController.getPackagingTypesObservableList());
+
+		tblBoxes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldBox, newBox) -> packagingId = newBox.getPackagingId());
 	}
 
 	@FXML
