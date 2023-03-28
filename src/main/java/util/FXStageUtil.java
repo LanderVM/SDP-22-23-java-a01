@@ -86,7 +86,9 @@ public class FXStageUtil {
             FXStageUtil.stage = primaryStage;
             stage.setResizable(true);
             stage.getIcons().add(new Image(Objects.requireNonNull(StartUp.class.getResourceAsStream("/Images/LogoDelaware.png"))));
-            stage.setFullScreen(true);
+            stage.setHeight(900);
+            stage.setWidth(1600);
+            stage.setMaximized(true);
             scene = new Scene(loader.load());
             stage.setTitle(title);
             stage.setScene(scene);
