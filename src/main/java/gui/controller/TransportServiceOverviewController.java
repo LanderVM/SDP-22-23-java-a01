@@ -27,7 +27,7 @@ public class TransportServiceOverviewController extends GridPane {
 	@FXML
 	private Label lblUser;
 	@FXML
-    private Label lblCurrentAction;
+	private Label lblCurrentAction;
 	@FXML
 	private TableView<TransportServiceView> tblTransportServices;
 	@FXML
@@ -59,15 +59,15 @@ public class TransportServiceOverviewController extends GridPane {
 	@FXML
 	private Button btnSave;
 	@FXML
-    private Button btnCreateService;
+	private Button btnCreateService;
 	@FXML
 	private Button btnAddContactPerson;
 	@FXML
-    private Button btnRemoveContactPerson;
+	private Button btnRemoveContactPerson;
 	@FXML
-    private Button btnCurrentActionCreate;
-    @FXML
-    private Button btnCurrentActionSave;
+	private Button btnCurrentActionCreate;
+	@FXML
+	private Button btnCurrentActionSave;
 
 	private final UserController userController;
 	private final TransportServiceController transportServiceController;
@@ -78,7 +78,8 @@ public class TransportServiceOverviewController extends GridPane {
 	private ObservableList<ContactPersonView> listForAllContactPersons;
 	private String selectedContactPersonEmail;
 
-	public TransportServiceOverviewController(UserController userController, TransportServiceController transportServiceController) {
+	public TransportServiceOverviewController(UserController userController,
+			TransportServiceController transportServiceController) {
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
 	}
@@ -101,8 +102,9 @@ public class TransportServiceOverviewController extends GridPane {
 
 		// Table TransportService
 		tblTransportservicesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-		tblTransportservicesClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty().get()==true?new SimpleStringProperty("active"):new SimpleStringProperty("not active"));
-
+		tblTransportservicesClmStatus.setCellValueFactory(
+				cellData -> cellData.getValue().activeProperty().get() == true ? new SimpleStringProperty("active")
+						: new SimpleStringProperty("not active"));
 
 		refreshTransportServiceTable();
 
@@ -113,31 +115,33 @@ public class TransportServiceOverviewController extends GridPane {
 						listForAddedContactPersons.clear();
 						listForAllContactPersons.clear();
 
-					btnSave.setDisable(false);
-					btnAddContactPerson.setDisable(false);
-					btnRemoveContactPerson.setDisable(true);
-					transportServiceName = newService.getName();
-					transportServiceId = newService.getTransportServiceId();
-					;
+						btnSave.setDisable(false);
+						btnAddContactPerson.setDisable(false);
+						btnRemoveContactPerson.setDisable(true);
+						transportServiceName = newService.getName();
+						transportServiceId = newService.getTransportServiceId();
+						;
 
-					// Table info TransportService
-					txtName.setText(newService.getName());
-					txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
-					txtPrefix.setText(newService.getPrefix());
-					chkboxIsActive.setSelected(newService.isActive());
-					chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
-					ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
+						// Table info TransportService
+						txtName.setText(newService.getName());
+						txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
+						txtPrefix.setText(newService.getPrefix());
+						chkboxIsActive.setSelected(newService.isActive());
+						chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
+						ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
 
-					// Table ContactPerson TransportService
-					tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-					tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-					listForAllContactPersons.addAll(newService.getContactPeople());
-					tblContactPerson.setItems(listForAllContactPersons);
+						// Table ContactPerson TransportService
+						tblContactPersonClmPhone
+								.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+						tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+						listForAllContactPersons.addAll(newService.getContactPeople());
+						tblContactPerson.setItems(listForAllContactPersons);
 
-					tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue2, oldContactPerson, newContactPerson) -> {
-						btnRemoveContactPerson.setDisable(false);
-						selectedContactPersonEmail = newContactPerson.getEmail();
-					});
+						tblContactPerson.getSelectionModel().selectedItemProperty()
+								.addListener((observableValue2, oldContactPerson, newContactPerson) -> {
+									btnRemoveContactPerson.setDisable(false);
+									selectedContactPersonEmail = newContactPerson.getEmail();
+								});
 					}
 				});
 	}
@@ -151,8 +155,9 @@ public class TransportServiceOverviewController extends GridPane {
 	private void saveTransportServices() {
 
 		try {
-			transportServiceController.updateTransportService(transportServiceId, txtName.getText(), listForAllContactPersons,
-					Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
+			transportServiceController.updateTransportService(transportServiceId, txtName.getText(),
+					listForAllContactPersons, Integer.parseInt(txtCharacterAmount.getText()),
+					chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
 					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -174,12 +179,14 @@ public class TransportServiceOverviewController extends GridPane {
 				alert.showAndWait();
 			}
 
-			//checkIfContactPersonIsAlreadyAdded(txtAddEmail.getText(), txtAddPhoneNumber.getText());
+			// checkIfContactPersonIsAlreadyAdded(txtAddEmail.getText(),
+			// txtAddPhoneNumber.getText());
 
-			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),txtAddPhoneNumber.getText());
+			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),
+					txtAddPhoneNumber.getText());
 			listForAllContactPersons.add(contactPersonView);
 			listForAddedContactPersons.add(contactPersonView);
-		}else {
+		} else {
 			if (txtAddEmail.getText().isBlank() || txtAddPhoneNumber.getText().isBlank()) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Incorrect data");
@@ -188,36 +195,35 @@ public class TransportServiceOverviewController extends GridPane {
 				alert.showAndWait();
 			}
 
-
-
-			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),txtAddPhoneNumber.getText());
+			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),
+					txtAddPhoneNumber.getText());
 			listForAllContactPersons.add(contactPersonView);
 		}
 	}
 
 	@FXML
-    void removeContactPerson(ActionEvent event) {
+	void removeContactPerson(ActionEvent event) {
 		if (!currentActionCreate) {
 			boolean isAddedContactPerson = false;
-			for (ContactPersonView cpv:listForAddedContactPersons) {
+			for (ContactPersonView cpv : listForAddedContactPersons) {
 				if (cpv.getEmail().equals(selectedContactPersonEmail))
 					isAddedContactPerson = true;
 			}
 			if (isAddedContactPerson) {
 				int indexCvp = 0;
-				for (int i = 0; i<listForAddedContactPersons.size();i++) {
+				for (int i = 0; i < listForAddedContactPersons.size(); i++) {
 					if (listForAddedContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
 						indexCvp = i;
 				}
 				listForAddedContactPersons.remove(indexCvp);
-				for (int i = 0; i<listForAllContactPersons.size();i++) {
+				for (int i = 0; i < listForAllContactPersons.size(); i++) {
 					if (listForAllContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
 						indexCvp = i;
 				}
 				listForAllContactPersons.remove(indexCvp);
 			} else {
 				int indexCvp = 0;
-				for (int i = 0; i<listForAllContactPersons.size();i++) {
+				for (int i = 0; i < listForAllContactPersons.size(); i++) {
 					if (listForAllContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
 						indexCvp = i;
 				}
@@ -225,43 +231,57 @@ public class TransportServiceOverviewController extends GridPane {
 			}
 		} else {
 			int indexCvp = 0;
-			for (int i = 0; i<listForAllContactPersons.size();i++) {
+			for (int i = 0; i < listForAllContactPersons.size(); i++) {
 				if (listForAllContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
 					indexCvp = i;
 			}
 			listForAllContactPersons.remove(indexCvp);
 		}
-    }
+	}
 
 	@FXML
-	private void createService(){
-		transportServiceController.addTransportService(txtName.getText(),listForAllContactPersons,
-				Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
-				ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(), userController.supplierIdFromUser());
+	private void createService() {
+		try {
+			transportServiceController.addTransportService(txtName.getText(), listForAllContactPersons,
+					Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
+					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(),
+					userController.supplierIdFromUser());
+			initializeSaveTransportService();
+		} catch (NumberFormatException ex) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Incorrect data");
+			alert.setHeaderText(null);
+			alert.setContentText("Please fill in all the fields");
+			alert.showAndWait();
+		} catch (IllegalArgumentException ex) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Incorrect data");
+			alert.setHeaderText(null);
+			alert.setContentText(ex.getMessage());
+			alert.showAndWait();
+		}
+	}
+
+	@FXML
+	void switchActionToCreate(ActionEvent event) {
+		initializeCreateTransportService();
+	}
+
+	@FXML
+	void switchActionToSave(ActionEvent event) {
 		initializeSaveTransportService();
 	}
-	@FXML
-    void switchActionToCreate(ActionEvent event) {
-		initializeCreateTransportService();
-    }
 
-	@FXML
-    void switchActionToSave(ActionEvent event) {
-		initializeSaveTransportService();
-    }
-
-
-	private void reselectTransportService (int tsId) {
-    	int index = 0;
-        for (int i = 0; i < tblTransportServices.getItems().size(); i++) {
-            if (tblTransportServices.getItems().get(i).getTransportServiceId()==tsId) {
-                index = i;
-                break;
-            }
-        }
-        tblTransportServices.getSelectionModel().select(index);
-    }
-
+	private void reselectTransportService(int tsId) {
+		int index = 0;
+		for (int i = 0; i < tblTransportServices.getItems().size(); i++) {
+			if (tblTransportServices.getItems().get(i).getTransportServiceId() == tsId) {
+				index = i;
+				break;
+			}
+		}
+		tblTransportServices.getSelectionModel().select(index);
+	}
 
 	@FXML
 	private void showEmployees() {
@@ -294,12 +314,14 @@ public class TransportServiceOverviewController extends GridPane {
 		tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
 		tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
 		tblContactPerson.setItems(listForAllContactPersons);
-		tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue, oldContactPerson, newContactPerson) -> {
-			btnRemoveContactPerson.setDisable(false);
-			selectedContactPersonEmail = newContactPerson.getEmail();
-		});
+		tblContactPerson.getSelectionModel().selectedItemProperty()
+				.addListener((observableValue, oldContactPerson, newContactPerson) -> {
+					btnRemoveContactPerson.setDisable(false);
+					selectedContactPersonEmail = newContactPerson.getEmail();
+				});
 
 	}
+
 	private void initializeSaveTransportService() {
 		lblCurrentAction.setText("Current action: updating a service");
 		tblContactPerson.getSelectionModel().clearSelection();
@@ -315,39 +337,41 @@ public class TransportServiceOverviewController extends GridPane {
 		btnSave.setVisible(true);
 		refreshTransportServiceTable();
 		tblTransportServices.getSelectionModel().selectedItemProperty()
-		.addListener((observableValue, oldService, newService) -> {
-			if (newService != null) {
+				.addListener((observableValue, oldService, newService) -> {
+					if (newService != null) {
 
-				listForAddedContactPersons.clear();
-				listForAllContactPersons.clear();
+						listForAddedContactPersons.clear();
+						listForAllContactPersons.clear();
 
-			btnSave.setDisable(false);
-			btnAddContactPerson.setDisable(false);
-			btnRemoveContactPerson.setDisable(true);
-			transportServiceName = newService.getName();
-			transportServiceId = newService.getTransportServiceId();
-			;
+						btnSave.setDisable(false);
+						btnAddContactPerson.setDisable(false);
+						btnRemoveContactPerson.setDisable(true);
+						transportServiceName = newService.getName();
+						transportServiceId = newService.getTransportServiceId();
+						;
 
-			// Table info TransportService
-			txtName.setText(newService.getName());
-			txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
-			txtPrefix.setText(newService.getPrefix());
-			chkboxIsActive.setSelected(newService.isActive());
-			chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
-			ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
+						// Table info TransportService
+						txtName.setText(newService.getName());
+						txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
+						txtPrefix.setText(newService.getPrefix());
+						chkboxIsActive.setSelected(newService.isActive());
+						chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
+						ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
 
-			// Table ContactPerson TransportService
-			tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-			tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-			listForAllContactPersons.addAll(newService.getContactPeople());
-			tblContactPerson.setItems(listForAllContactPersons);
+						// Table ContactPerson TransportService
+						tblContactPersonClmPhone
+								.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+						tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+						listForAllContactPersons.addAll(newService.getContactPeople());
+						tblContactPerson.setItems(listForAllContactPersons);
 
-			tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue2, oldContactPerson, newContactPerson) -> {
-				btnRemoveContactPerson.setDisable(false);
-				selectedContactPersonEmail = newContactPerson.getEmail();
-			});
-			}
-		});
+						tblContactPerson.getSelectionModel().selectedItemProperty()
+								.addListener((observableValue2, oldContactPerson, newContactPerson) -> {
+									btnRemoveContactPerson.setDisable(false);
+									selectedContactPersonEmail = newContactPerson.getEmail();
+								});
+					}
+				});
 	}
 
 }
