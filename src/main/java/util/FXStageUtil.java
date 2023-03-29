@@ -8,14 +8,14 @@ import application.StartUp;
 import domain.OrderController;
 import domain.PackagingController;
 import domain.SupplierController;
-import domain.TransportServiceController;
+import domain.CarrierController;
 import domain.UserController;
 import gui.controller.CustomersOverviewController;
 import gui.controller.EmployeesOverviewController;
 import gui.controller.LoginScreenController;
 import gui.controller.OrdersOverviewController;
 import gui.controller.PackagingOverviewController;
-import gui.controller.TransportServiceOverviewController;
+import gui.controller.CarrierViewController;
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,32 +25,32 @@ import persistence.ContactPersonSupplierDao;
 import persistence.OrderDao;
 import persistence.PackagingDao;
 import persistence.SupplierDao;
-import persistence.TransportServiceDao;
+import persistence.CarrierDao;
 import persistence.UserDao;
 import persistence.impl.ContactPersonSupplierDaoJpa;
 import persistence.impl.OrderDaoJpa;
 import persistence.impl.PackagingDaoJpa;
 import persistence.impl.SupplierDaoJpa;
-import persistence.impl.TransportServiceDaoJpa;
+import persistence.impl.CarrierDaoJpa;
 import persistence.impl.UserDaoJpa;
 
 public class FXStageUtil {
     private static Stage stage;
     private static Scene scene;
 
-    private static final EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    private static final OrderDao orderDao = new OrderDaoJpa(entityManager);
-    private static final SupplierDao supplierDao = new SupplierDaoJpa(entityManager);
-    private static final UserDao userDao = new UserDaoJpa(entityManager);
-    private static final ContactPersonSupplierDao contactPersonSupplierDao = new ContactPersonSupplierDaoJpa(entityManager);
-    private static final TransportServiceDao transportServiceDao = new TransportServiceDaoJpa(entityManager);
-    private static final PackagingDao packagingDao = new PackagingDaoJpa(entityManager);
+    private static final EntityManager ENTITY_MANAGER = JPAUtil.getEntityManagerFactory().createEntityManager();
+    private static final OrderDao ORDER_DAO_JPA = new OrderDaoJpa(ENTITY_MANAGER);
+    private static final SupplierDao SUPPLIER_DAO_JPA = new SupplierDaoJpa(ENTITY_MANAGER);
+    private static final UserDao USER_DAO_JPA = new UserDaoJpa(ENTITY_MANAGER);
+    private static final ContactPersonSupplierDao CONTACT_PERSON_SUPPLIER_DAO_JPA = new ContactPersonSupplierDaoJpa(ENTITY_MANAGER);
+    private static final CarrierDao CARRIER_DAO = new CarrierDaoJpa(ENTITY_MANAGER);
+    private static final PackagingDao PACKAGING_DAO_JPA = new PackagingDaoJpa(ENTITY_MANAGER);
 
-    private static final OrderController orderController = new OrderController(orderDao, transportServiceDao);
-    private static final UserController userController = new UserController(userDao);
-    private static final TransportServiceController transportServiceController = new TransportServiceController(transportServiceDao, supplierDao);
-    private static final SupplierController supplierController = new SupplierController(supplierDao, orderDao, contactPersonSupplierDao);
-    private static final PackagingController packagingController = new PackagingController(packagingDao, userController);
+    private static final OrderController ORDER_CONTROLLER = new OrderController(ORDER_DAO_JPA, CARRIER_DAO);
+    private static final UserController USER_CONTROLLER = new UserController(USER_DAO_JPA);
+    private static final CarrierController CARRIER_CONTROLLER = new CarrierController(CARRIER_DAO, SUPPLIER_DAO_JPA);
+    private static final SupplierController SUPPLIER_CONTROLLER = new SupplierController(SUPPLIER_DAO_JPA, ORDER_DAO_JPA, CONTACT_PERSON_SUPPLIER_DAO_JPA);
+    private static final PackagingController PACKAGING_CONTROLLER = new PackagingController(PACKAGING_DAO_JPA, USER_CONTROLLER);
 
     private static FXMLLoader loader;
 
@@ -58,17 +58,17 @@ public class FXStageUtil {
         loader = new FXMLLoader();
         loader.setControllerFactory(controller -> {
             if (controller == LoginScreenController.class)
-                return new LoginScreenController(userController);
+                return new LoginScreenController(USER_CONTROLLER);
             if (controller == OrdersOverviewController.class)
-                return new OrdersOverviewController(orderController, userController, transportServiceController);
+                return new OrdersOverviewController(ORDER_CONTROLLER, USER_CONTROLLER, CARRIER_CONTROLLER);
             if (controller == CustomersOverviewController.class)
-                return new CustomersOverviewController(userController, supplierController);
-            if (controller == TransportServiceOverviewController.class)
-                return new TransportServiceOverviewController(userController, transportServiceController);
+                return new CustomersOverviewController(USER_CONTROLLER, SUPPLIER_CONTROLLER);
+            if (controller == CarrierViewController.class)
+                return new CarrierViewController(USER_CONTROLLER, CARRIER_CONTROLLER);
             if (controller == EmployeesOverviewController.class)
-                return new EmployeesOverviewController(userController);
+                return new EmployeesOverviewController(USER_CONTROLLER);
             if (controller == PackagingOverviewController.class)
-                return new PackagingOverviewController(userController,  packagingController);
+                return new PackagingOverviewController(USER_CONTROLLER, PACKAGING_CONTROLLER);
             else {
                 try {
                     return controller.getConstructor().newInstance();
@@ -113,7 +113,7 @@ public class FXStageUtil {
     }
 
     public static void close() {
-        entityManager.close();
+        ENTITY_MANAGER.close();
         JPAUtil.getEntityManagerFactory().close();
     }
 }

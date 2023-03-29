@@ -13,7 +13,7 @@ import gui.view.ContactPersonView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.SupplierDao;
-import persistence.TransportServiceDao;
+import persistence.CarrierDao;
 
 import java.util.List;
 
@@ -21,18 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class TransportServiceTests {
+public class CarrierTests {
 
     @Mock
-    private TransportServiceDao transportServiceJPADao;
+    private CarrierDao transportServiceJPADao;
     @Mock
     private SupplierDao supplierDaoJpa;
     @InjectMocks
-    private TransportServiceController transportServiceController;
+    private CarrierController carrierController;
 
     private Supplier supplier;
     private ContactPersonView contactPersonView;
-    TransportService transportService;
+    Carrier carrier;
 
     @Nested
     class AddTests {
@@ -47,7 +47,7 @@ public class TransportServiceTests {
         	contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
             when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
-            transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0);
+            carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0);
         }
 
         @Test
@@ -55,14 +55,14 @@ public class TransportServiceTests {
             contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
             when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(true);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0));
+            assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0));
         }
 
         @Test
         public void addTransportService_contactPersonListEmpty_throwsIllegalArgumentException() {
             when(transportServiceJPADao.existsForSupplier("bpost",0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(), 10, false, "test", "POST_CODE", true, 0));
+            assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(), 10, false, "test", "POST_CODE", true, 0));
         }
 
         @Test
@@ -70,7 +70,7 @@ public class TransportServiceTests {
             contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
             when(transportServiceJPADao.existsForSupplier("bpost",0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.addTransportService("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "invalid_type", true, 0));
+            assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "invalid_type", true, 0));
         }
     }
 
@@ -84,10 +84,10 @@ public class TransportServiceTests {
     	
         @Test
         public void updateService_happyFlow() {
-            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
+            carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
             contactPersonView = new ContactPersonView("email@email.com", "4994233050");
 
-            when(transportServiceJPADao.get(0)).thenReturn(transportService);
+            when(transportServiceJPADao.get(0)).thenReturn(carrier);
 
             final String name = "new name";
             final ObservableList<ContactPersonView> contactPersonObservableList = FXCollections.observableArrayList(contactPersonView);
@@ -100,25 +100,25 @@ public class TransportServiceTests {
             final List<ContactPerson> contactPersonList = List.of(new ContactPerson("email@email.com", "4994233050"));
 
             try {
-				transportServiceController.updateTransportService(0, name, contactPersonObservableList, characterCount, integersOnly, prefix, verificationTypeValue, isActive);
+				carrierController.updateCarrier(0, name, contactPersonObservableList, characterCount, integersOnly, prefix, verificationTypeValue, isActive);
 			} catch (EntityDoesntExistException e) {
 				e.printStackTrace();
 			}
 
-            TransportService updatedTransportService = transportServiceJPADao.get(0);
-            TrackingCodeDetails updatedTrackingCodeDetails = updatedTransportService.getTrackingCodeDetails();
-            assertEquals(updatedTransportService.getName(), name);
-            assertEquals(updatedTransportService.getContactPersonList(), contactPersonList);
+            Carrier updatedCarrier = transportServiceJPADao.get(0);
+            TrackingCodeDetails updatedTrackingCodeDetails = updatedCarrier.getTrackingCodeDetails();
+            assertEquals(updatedCarrier.getName(), name);
+            assertEquals(updatedCarrier.getContactPersonList(), contactPersonList);
             assertEquals(updatedTrackingCodeDetails.getCharacterCount(), characterCount);
             assertEquals(updatedTrackingCodeDetails.isIntegersOnly(), integersOnly);
             assertEquals(updatedTrackingCodeDetails.getPrefix(), prefix);
             assertEquals(updatedTrackingCodeDetails.getVerificationType(), VerificationType.valueOf(verificationTypeValue));
-            assertEquals(transportService.isActive(), isActive);
+            assertEquals(carrier.isActive(), isActive);
         }
 
         @Test
         public void updateService_emptyContactPersonList_throwsIllegalArgumentException() {
-            transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
+            carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
 
             final String name = "new name";
             final ObservableList<ContactPersonView> contactPersonList = FXCollections.observableArrayList();
@@ -128,14 +128,14 @@ public class TransportServiceTests {
             final String verificationTypeValue = "POST_CODE";
             final boolean isActive = false;
 
-            assertThrows(IllegalArgumentException.class, () -> transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
+            assertThrows(IllegalArgumentException.class, () -> carrierController.updateCarrier(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
         }
         
         @Test
         public void updateService_transportServiceIsNull_throwsEntityDoesntExistException() {
         	
         	contactPersonView = new ContactPersonView("email@email.com", "4994233050");
-        	transportService = new TransportService("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
+        	carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
         	
         	final String name = "new name";
             final ObservableList<ContactPersonView> contactPersonList = FXCollections.observableArrayList(contactPersonView);
@@ -147,7 +147,7 @@ public class TransportServiceTests {
             
             when(transportServiceJPADao.get(0)).thenReturn(null);
             
-            assertThrows(EntityDoesntExistException.class, () -> transportServiceController.updateTransportService(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
+            assertThrows(EntityDoesntExistException.class, () -> carrierController.updateCarrier(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
         }
     }
 }

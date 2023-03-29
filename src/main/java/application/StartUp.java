@@ -53,13 +53,13 @@ public class StartUp extends Application {
         ContactPerson postnlPerson1 = new ContactPerson("een@post.nl", "899321480");
         ContactPerson postnlPerson2 = new ContactPerson("twee@post.nl", "899321480");
 
-        TransportService bpost1 = new TransportService("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, timCo, true);
-        TransportService postnl1 = new TransportService("postnl", List.of(postnlPerson1), postnlDetails, timCo, true);
-        TransportService bpost2 = new TransportService("bpost", List.of(bpostPerson3, bpostPerson4), bpostDetails, janInc, true);
-        TransportService postnl2 = new TransportService("postnl", List.of(postnlPerson2), postnlDetails, janInc, true);
+        Carrier bpost1 = new Carrier("bpost", List.of(bpostPerson1, bpostPerson2), bpostDetails, timCo, true);
+        Carrier postnl1 = new Carrier("postnl", List.of(postnlPerson1), postnlDetails, timCo, true);
+        Carrier bpost2 = new Carrier("bpost", List.of(bpostPerson3, bpostPerson4), bpostDetails, janInc, true);
+        Carrier postnl2 = new Carrier("postnl", List.of(postnlPerson2), postnlDetails, janInc, true);
 
-        timCo.setTransportServices(List.of(bpost1, postnl1));
-        janInc.setTransportServices(List.of(bpost2, postnl2));
+        timCo.setCarriers(List.of(bpost1, postnl1));
+        janInc.setCarriers(List.of(bpost2, postnl2));
 
         ContactPersonSupplier contactPersonSupplier1 = new ContactPersonSupplier("Jan Jaap", "jan.jaap@gmail.com", timCo);
         ContactPersonSupplier contactPersonSupplier2 = new ContactPersonSupplier("Bert Bratwurst", "bert.bratwurst@gmail.com", timCo);

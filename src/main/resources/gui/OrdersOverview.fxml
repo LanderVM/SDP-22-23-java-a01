@@ -43,12 +43,12 @@
       </columnResizePolicy>
    </TableView>
    <Pane fx:id="PaneOrderProcess" visible="false" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.rowSpan="2">
-      <Label fx:id="lblSelectTransportService" alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="773.0" text="Select a transport service for this order:" textAlignment="CENTER">
+      <Label fx:id="lblSelectCarriers" alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="773.0" text="Select a transport service for this order:" textAlignment="CENTER">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="choiceBoxTransportServices" layoutX="144.0" layoutY="84.79998779296875" prefHeight="42.0" prefWidth="240.0" style="-fx-font-size: 20px;" />
+      <ChoiceBox fx:id="choiceBoxCarriers" layoutX="144.0" layoutY="84.79998779296875" prefHeight="42.0" prefWidth="240.0" style="-fx-font-size: 20px;" />
       <Button fx:id="btnProcessOrder" layoutX="403.20001220703125" layoutY="84.79998779296875" mnemonicParsing="false" onAction="#ProcessOrder" prefHeight="43.0" prefWidth="176.0" text="Process Order">
          <font>
             <Font size="20.0" />
@@ -112,7 +112,7 @@
          <TableColumn fx:id="IdColumnOrderTable" prefWidth="100.0" text="Id" />
          <TableColumn fx:id="StatusColumnOrderTable" prefWidth="227.199951171875" text="Status" />
          <TableColumn fx:id="PackagingColumnOrderTable" prefWidth="216.800048828125" text="Packaging" />
-         <TableColumn fx:id="TransportServiceColumnOrderTable" prefWidth="307.2000732421875" text="Carrier" />
+         <TableColumn fx:id="carrierColumnOrderTable" prefWidth="307.2000732421875" text="Carrier" />
          <TableColumn fx:id="TrackingColumnOrderTable" prefWidth="250.4000244140625" text="Tracking Code" />
          <TableColumn fx:id="TotalPriceColumnOrderTable" prefWidth="207.9998779296875" text="Total Price" />
       </columns>

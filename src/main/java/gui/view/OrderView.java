@@ -17,7 +17,7 @@ public class OrderView {
     private final SimpleObjectProperty<BigDecimal> totalPrice;
     private final SimpleObjectProperty<Status> status;
     private final SimpleStringProperty packaging;
-    private final SimpleStringProperty transportService;
+    private final SimpleStringProperty carrier;
     private final SimpleStringProperty trackingCode;
 
     public OrderView(Order order) {
@@ -27,7 +27,7 @@ public class OrderView {
         totalPrice = new SimpleObjectProperty<>(order.getOriginalAcquisitionPrice());
         status = new SimpleObjectProperty<>(order.getStatus());
         packaging = new SimpleStringProperty(order.getPackaging().getName());
-        transportService = new SimpleStringProperty(order.getTransportService() == null ?  "None" : order.getTransportService().getName());
+        carrier = new SimpleStringProperty(order.getCarrier() == null ?  "None" : order.getCarrier().getName());
         trackingCode = new SimpleStringProperty(order.getTrackingCode());
     }
 
@@ -75,8 +75,8 @@ public class OrderView {
     	return packaging;
     }
     
-    public SimpleStringProperty transportServiceProperty() {
-    	return transportService;
+    public SimpleStringProperty carrierProperty() {
+    	return carrier;
     }
     
     public SimpleStringProperty trackingCodeProperty() {

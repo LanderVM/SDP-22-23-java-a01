@@ -24,7 +24,7 @@ import logoMapper.LogoMapper;
         ),
         @NamedQuery(
                 name = "Supplier.findAll",
-                query = "SELECT d FROM Supplier d" // TODO weg
+                query = "SELECT d FROM Supplier d"
         ),
         @NamedQuery(
         		name="Supplier.findAllCustomersForSupplier",
@@ -60,7 +60,7 @@ public class Supplier {
     @OneToMany(mappedBy = "customer")
     private List<Order> ordersAsCustomer = Collections.emptyList();
     @OneToMany(mappedBy="supplier")
-    private List<TransportService> transportServices = Collections.emptyList();
+    private List<Carrier> carriers = Collections.emptyList();
 
     public Supplier(String name, String email, String address, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
                     List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
@@ -172,12 +172,8 @@ public class Supplier {
 		this.logo = logo;
 	}
 
-	public List<TransportService> getTransportServices() {
-		return transportServices;
-	}
-
-	public void setTransportServices(List<TransportService> transportServices) {
-		this.transportServices = transportServices;
+	public void setCarriers(List<Carrier> carriers) {
+		this.carriers = carriers;
 	}
 
 	@Override

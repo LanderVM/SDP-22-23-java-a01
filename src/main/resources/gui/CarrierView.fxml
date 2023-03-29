@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.TransportServiceOverviewController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.CarrierViewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="4.0" prefWidth="121.40000915527344" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="16.0" prefWidth="403.1999206542969" />
@@ -125,18 +125,18 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveTransportServices" prefHeight="78.0" prefWidth="308.0" text="Save" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveCarrier" prefHeight="78.0" prefWidth="308.0" text="Save" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <font>
             <Font size="36.0" />
          </font>
       </Button>
-      <TableView fx:id="tblTransportServices" editable="true" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
+      <TableView fx:id="tblCarriers" editable="true" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
           <placeholder>
 	        <Label text="No Carriers found" />
 	    </placeholder>
 	    <columns>
-            <TableColumn fx:id="tblTransportservicesClmName" prefWidth="92.79997712373734" text="Name" />
-            <TableColumn fx:id="tblTransportservicesClmStatus" prefWidth="16.0" text="Status" />
+            <TableColumn fx:id="tblCarrierClmName" prefWidth="92.79997712373734" text="Name" />
+            <TableColumn fx:id="tblCarriersClmStatus" prefWidth="16.0" text="Status" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

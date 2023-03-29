@@ -33,7 +33,7 @@ public class EmployeesOverviewController extends GridPane{
 	@FXML
 	private Label LblUser;
 	@FXML
-	private Hyperlink btnTransportServices;
+	private Hyperlink btnCarriers;
 	@FXML
 	private Hyperlink btnBoxes;
 	@FXML
@@ -105,7 +105,7 @@ public class EmployeesOverviewController extends GridPane{
 				email = newEmployee.getAccountName();
 				id = newEmployee.getEmployeeId();
 
-				// Table info TransportService
+				// Table info Carriers
 				txtName.setText(newEmployee.getName());
 				txtFirstName.setText(newEmployee.getSurname());
 				txtTelephone.setText(newEmployee.getTelephone());
@@ -126,7 +126,7 @@ public class EmployeesOverviewController extends GridPane{
 	
 	@FXML 
 	private void showCarrier() {		
-		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"), "Transport Service");
+		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
 	}
 	
 	@FXML 
@@ -148,7 +148,7 @@ public class EmployeesOverviewController extends GridPane{
 			userController.updateUser(txtEmail.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), txtMobilePhone.getText(),
 					choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(),
 					txtCountry.getText());
-			showInfo("Employee updated succesfully", String.format("Updated user %s", email));
+			showInfo("Employee updated successfully", String.format("Updated user %s", email));
 		} catch (InvalidUserEmailException e) {
 			showError("Email changed", "The email cannot be changed");
 		} catch (NumberFormatException e) {

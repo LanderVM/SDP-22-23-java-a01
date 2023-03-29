@@ -22,7 +22,7 @@ public class CustomerOrdersView {
 
 	public SimpleIntegerProperty getOrderPropertyId() {
 		return orderPropertyId;
-	} // TODO consistency between getters view
+	}
 
 	public SimpleObjectProperty<LocalDate> getOrderPropertyDate() {
 		return orderPropertyDate;

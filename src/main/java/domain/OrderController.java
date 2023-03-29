@@ -11,18 +11,18 @@ import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.OrderDao;
-import persistence.TransportServiceDao;
+import persistence.CarrierDao;
 
 public class OrderController {
 
 
     private final OrderDao orderDao;
-    private final TransportServiceDao transportServiceDao;
+    private final CarrierDao carrierDao;
     private ObservableList<OrderView> orderList = FXCollections.emptyObservableList();
 
-    public OrderController(OrderDao orderDao,TransportServiceDao transportServiceDao) {
+    public OrderController(OrderDao orderDao, CarrierDao carrierDao) {
         this.orderDao = orderDao;
-        this.transportServiceDao = transportServiceDao;
+        this.carrierDao = carrierDao;
     }
 
     public ObservableList<OrderView> getOrderList(int userId, boolean postedOnly) {
@@ -50,17 +50,17 @@ public class OrderController {
         return FXCollections.observableArrayList(list.stream().map(el->new ProductView(el.getProduct(),el.getCount())).toList());
     }
 
-    public void processOrder(int orderId, String transportServiceName,int supplierId) throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException {
+    public void processOrder(int orderId, String carrierName,int supplierId) throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException {
         Order order = orderDao.get(orderId);
         if (order==null)
         	throw new EntityDoesntExistException("There is no order for given orderId!");
-        TransportService transportService =  transportServiceDao.getForSupplier(transportServiceName, supplierId);
-        if (transportService==null)
-        	throw new EntityDoesntExistException("There is no transport service for given transportServiceName and supplierId!");
+        Carrier carrier =  carrierDao.getForSupplier(carrierName, supplierId);
+        if (carrier ==null)
+        	throw new EntityDoesntExistException("There is no Carrier for given carrierName and supplierId!");
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 
-        order.setTransportService(transportService);
+        order.setCarrier(carrier);
         order.setStatus(Status.PROCESSED);
         order.addNotification(new Notification(order));
         order.generateTrackingCode();

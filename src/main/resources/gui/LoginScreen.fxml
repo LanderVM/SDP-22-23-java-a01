@@ -82,7 +82,7 @@
                 <Insets/>
             </GridPane.margin>
         </Label>
-        <Button fx:id="btnSignInWarhouse" mnemonicParsing="false" onAction="#tmpSignInWarhouse" prefHeight="60.0"
+        <Button fx:id="btnSignInWarhouse" mnemonicParsing="false" onAction="#tmpSignInWarehouse" prefHeight="60.0"
                 prefWidth="194.0" text="Sign In Warehouse" GridPane.rowIndex="5"/>
         <Button fx:id="btnSignInAdmin" mnemonicParsing="false" onAction="#tmpSignInAdmin" prefHeight="50.0"
                 prefWidth="195.0" text="Sign In Admin" GridPane.columnIndex="2" GridPane.rowIndex="5"/>

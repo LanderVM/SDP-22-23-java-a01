@@ -26,7 +26,7 @@ public class CustomerView {
 
 	public SimpleStringProperty getEmail() {
 		return email;
-	} // TODO consistency between getters view
+	}
 
 	public SimpleStringProperty getName() {
 		return name;

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import domain.OrderController;
-import domain.TransportServiceController;
+import domain.CarrierController;
 import domain.UserController;
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
@@ -54,7 +54,7 @@ public class OrdersOverviewController extends GridPane {
     @FXML
     private TableColumn<OrderView, String> PackagingColumnOrderTable;
     @FXML
-    private TableColumn<OrderView, String> TransportServiceColumnOrderTable;
+    private TableColumn<OrderView, String> carrierColumnOrderTable;
     @FXML
     private TableColumn<OrderView, String> TrackingColumnOrderTable;
     @FXML
@@ -73,11 +73,11 @@ public class OrdersOverviewController extends GridPane {
     private ListView<String> CustomerDetailsList;
 
     @FXML
-    private ChoiceBox<String> choiceBoxTransportServices;
+    private ChoiceBox<String> choiceBoxCarriers;
     @FXML
     private Pane PaneOrderProcess;
     @FXML
-    private Label lblSelectTransportService;
+    private Label lblSelectCarriers;
     @FXML
     private Button btnProcessOrder;
 
@@ -86,14 +86,14 @@ public class OrdersOverviewController extends GridPane {
 
     private final OrderController orderController;
     private final UserController userController;
-    private final TransportServiceController transportServiceController;
+    private final CarrierController carrierController;
     private ObservableList<OrderView> orderList;
 
     public OrdersOverviewController(OrderController orderController, UserController userController,
-                                    TransportServiceController transportServiceController) {
+                                    CarrierController carrierController) {
         this.orderController = orderController;
         this.userController = userController;
-        this.transportServiceController = transportServiceController;
+        this.carrierController = carrierController;
     }
 
     private void showAlert(String title, String message, AlertType alertType) {
@@ -118,7 +118,7 @@ public class OrdersOverviewController extends GridPane {
         IdColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().orderIdProperty());
         StatusColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         PackagingColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().packagingProperty());
-        TransportServiceColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().transportServiceProperty());
+        carrierColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().carrierProperty());
         TrackingColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().trackingCodeProperty());
         TotalPriceColumnOrderTable.setCellValueFactory(cellData -> cellData.getValue().totalPriceProperty());
 
@@ -137,14 +137,14 @@ public class OrdersOverviewController extends GridPane {
         orderList = orderController.getOrderList(userController.userId(), false);
         TableOrdersView.setItems(orderList);
 
-        // TransportServices
-        ObservableList<String> transportServiceNames = transportServiceController.getTransportServicesNames(userController.supplierIdFromUser());
+        // Carriers
+        ObservableList<String> carrierNames = carrierController.getCarrierNames(userController.supplierIdFromUser());
 
-        if (transportServiceNames.size() == 0)
+        if (carrierNames.size() == 0)
             showAlert("Error", "There are no active Carriers at the moment." + lineSeparator() + "Please try again later.", AlertType.ERROR);
 
-        choiceBoxTransportServices.setItems(transportServiceNames);
-        choiceBoxTransportServices.setValue(transportServiceNames.get(0));
+        choiceBoxCarriers.setItems(carrierNames);
+        choiceBoxCarriers.setValue(carrierNames.get(0));
 
         // Orders
         TableOrdersView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
@@ -155,7 +155,7 @@ public class OrdersOverviewController extends GridPane {
             int orderId = newOrder.getOrderId();
             OrderDetailsTable.setItems(orderController.getOrderByIdView(orderId));
 
-            if (orderController.getOrderById(orderId).getTransportService() == null)
+            if (orderController.getOrderById(orderId).getCarrier() == null)
                 PaneOrderProcess.setVisible(true);
 
             setCustomerInfo(orderId);
@@ -174,10 +174,10 @@ public class OrdersOverviewController extends GridPane {
 
     @FXML
     private void ProcessOrder() {
-        String selectionTransportService = choiceBoxTransportServices.getSelectionModel().getSelectedItem();
+        String selectionCarrier = choiceBoxCarriers.getSelectionModel().getSelectedItem();
         int orderId = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
-            orderController.processOrder(orderId, selectionTransportService, userController.supplierIdFromUser());
+            orderController.processOrder(orderId, selectionCarrier, userController.supplierIdFromUser());
             showAlert("Successful", "Order has been processed.", AlertType.INFORMATION);
         } catch (EntityNotFoundException | OrderStatusException | EntityDoesntExistException exception) {
             showAlert("Error", exception.getMessage(), AlertType.ERROR);

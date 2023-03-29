@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class ContactPersonSupplierView {
 	
-	private SimpleStringProperty email;
-	private SimpleStringProperty name;
+	private final SimpleStringProperty email;
+	private final SimpleStringProperty name;
 	
 	public ContactPersonSupplierView (ContactPersonSupplier contactPersonSupplier) {
 		email = new SimpleStringProperty(contactPersonSupplier.getEmail());
@@ -15,7 +15,7 @@ public class ContactPersonSupplierView {
 
 	public SimpleStringProperty getEmail() {
 		return email;
-	} // TODO getters consistency between views
+	}
 
 	public SimpleStringProperty getName() {
 		return name;

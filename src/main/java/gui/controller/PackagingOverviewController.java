@@ -100,7 +100,7 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void showCarrier() {
-		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"), "Carriers");
+		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
 	}
 
 	@FXML

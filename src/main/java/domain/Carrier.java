@@ -7,51 +7,51 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "transport_service")
+@Table(name = "carrier")
 @NamedQueries({
         @NamedQuery(
-                name = "TransportService.findById",
-                query = "SELECT w FROM TransportService w WHERE w.transportServiceId = ?1"
+                name = "Carrier.findById",
+                query = "SELECT w FROM Carrier w WHERE w.carrierId = ?1"
         ),
         @NamedQuery(
-                name = "TransportService.findAll",
-                query = "SELECT d FROM TransportService d"
+                name = "Carrier.findAll",
+                query = "SELECT d FROM Carrier d"
         ),
         @NamedQuery(
-                name = "TransportService.findByName",
-                query = "SELECT d FROM TransportService d WHERE d.name = ?1"
+                name = "Carrier.findByName",
+                query = "SELECT d FROM Carrier d WHERE d.name = ?1"
         ),
         @NamedQuery(
-                name = "TransportService.findNameExists",
-                query = "SELECT d FROM TransportService d WHERE d.name = ?1" // TODO where supplier id = supplier id
+                name = "Carrier.findNameExists",
+                query = "SELECT d FROM Carrier d WHERE d.name = ?1"
         ),
         @NamedQuery(
-        		name = "TransportService.findAllNames",
-                query = "SELECT d.name FROM TransportService d"
+        		name = "Carrier.findAllNames",
+                query = "SELECT d.name FROM Carrier d"
         ),
         @NamedQuery(
-        		name = "TransportService.findAllNamesForSupplier",
-                query = "SELECT d.name FROM TransportService d WHERE d.supplier.supplierId = ?1"
+        		name = "Carrier.findAllNamesForSupplier",
+                query = "SELECT d.name FROM Carrier d WHERE d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
-        		name = "TransportService.findAllForSupplier",
-                query = "SELECT d FROM TransportService d WHERE d.supplier.supplierId = ?1"
+        		name = "Carrier.findAllForSupplier",
+                query = "SELECT d FROM Carrier d WHERE d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
-        		name = "TransportService.findNameExistsForSupplier", 
-        		query = "SELECT d FROM TransportService d WHERE d.supplier.supplierId = :supplierId  AND d.name = :name"
+        		name = "Carrier.findNameExistsForSupplier",
+        		query = "SELECT d FROM Carrier d WHERE d.supplier.supplierId = :supplierId  AND d.name = :name"
         ),
         @NamedQuery(
-                name = "TransportService.findByNameForSupplier",
-                query = "SELECT d FROM TransportService d WHERE d.supplier.supplierId = :supplierId AND d.name = :name"
+                name = "Carrier.findByNameForSupplier",
+                query = "SELECT d FROM Carrier d WHERE d.supplier.supplierId = :supplierId AND d.name = :name"
         )
 })
-public class TransportService {
+public class Carrier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transport_service_id")
-    private int transportServiceId;
+    @Column(name = "carrier_id")
+    private int carrierId;
     @Column(name = "name")
     private String name = "";
     @OneToMany
@@ -63,7 +63,7 @@ public class TransportService {
     @Column(name = "is_active")
     private boolean active = true;
 
-    public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails,Supplier supplier ,boolean active) {
+    public Carrier(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, Supplier supplier , boolean active) {
         this.name = name;
         this.setContactPersonList(contactPersonList);
         this.setTrackingCodeDetails(trackingCodeDetails);
@@ -71,7 +71,7 @@ public class TransportService {
         this.active = active;
     }
 
-    protected TransportService() {
+    protected Carrier() {
     }
 
     public String getName() {
@@ -82,8 +82,8 @@ public class TransportService {
         this.name = name;
     }
 
-    public int getTransportServiceId() {
-        return transportServiceId;
+    public int getCarrierId() {
+        return carrierId;
     }
 
     public List<ContactPerson> getContactPersonList() {
@@ -128,19 +128,19 @@ public class TransportService {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TransportService that = (TransportService) o;
-        return transportServiceId == that.transportServiceId;
+        Carrier that = (Carrier) o;
+        return carrierId == that.carrierId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transportServiceId);
+        return Objects.hash(carrierId);
     }
 
     @Override
     public String toString() {
-        return "TransportService{" +
-                "transportServiceId=" + transportServiceId +
+        return "Carrier{" +
+                "CarrierId=" + carrierId +
                 ", name='" + name + '\'' +
                 ", contactPersonList=" + contactPersonList +
                 ", trackingCodeDetails=" + trackingCodeDetails +

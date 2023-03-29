@@ -64,7 +64,7 @@ public class Order {
     @ManyToOne
     private Packaging packaging;
     @ManyToOne
-    private TransportService transportService;
+    private Carrier carrier;
     @Column(name = "tracking_code")
     private String trackingCode;
     @ManyToOne
@@ -78,19 +78,19 @@ public class Order {
 
 
     public Order(LocalDate date, String adress, List<Product> productsList, Status status,
-                 TransportService transportService, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
-        this(date,adress,productsList,status,transportService, packaging);
+                 Carrier carrier, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
+        this(date,adress,productsList,status, carrier, packaging);
         this.setOriginalAcquisitionPrice(originalAcquisitionPrice);
         this.setSupplier(supplier);
         this.setCustomer(customer);
     }
 
-	public Order(LocalDate date,String address, List<Product> productsList, Status status,
-            TransportService transportService, Packaging packaging) {
+	public Order(LocalDate date, String address, List<Product> productsList, Status status,
+                 Carrier carrier, Packaging packaging) {
 		this.address = address;
     	this.setDate(date);
     	this.setStatus(status);
-    	this.setTransportService(transportService);
+    	this.setCarrier(carrier);
     	this.setPackaging(packaging);
     	this.orderLines = new ArrayList<>();
     	makeOrderlines(productsList);
@@ -147,12 +147,12 @@ public class Order {
         this.packaging = packagingType;
     }
 
-    public TransportService getTransportService() {
-        return transportService;
+    public Carrier getCarrier() {
+        return carrier;
     }
 
-    public void setTransportService(TransportService transportService) {
-        this.transportService = transportService;
+    public void setCarrier(Carrier carrier) {
+        this.carrier = carrier;
     }
 
     public String getTrackingCode() {
@@ -161,7 +161,7 @@ public class Order {
 
     public void generateTrackingCode() {
         SecureRandom secureRandom = new SecureRandom();
-        TrackingCodeDetails trackingCodeDetails = getTransportService().getTrackingCodeDetails();
+        TrackingCodeDetails trackingCodeDetails = getCarrier().getTrackingCodeDetails();
 
         int leftLimit = 48;
         int rightLimit = trackingCodeDetails.isIntegersOnly() ? 57 : 90;
@@ -256,7 +256,7 @@ public class Order {
                 ", orderLines=" + orderLines +
                 ", status=" + status +
                 ", packaging=" + packaging +
-                ", transportService=" + transportService +
+                ", carrier=" + carrier +
                 ", trackingCode=" + trackingCode +
                 ", originalAcquisitionPrice=" + originalAcquisitionPrice +
                 '}';

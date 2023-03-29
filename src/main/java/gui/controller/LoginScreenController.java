@@ -1,7 +1,6 @@
 package gui.controller;
 
 import domain.UserController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -46,7 +45,7 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeAdmin() {
-		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/TransportServiceOverview.fxml"), "Transport Services");
+		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
 	}
 	
 	private void showLoginError(String message) {
@@ -58,7 +57,7 @@ public class LoginScreenController extends GridPane {
 	}
 	
 	@FXML
-	private void tmpSignInWarhouse() {
+	private void tmpSignInWarehouse() {
 		txtEmail.setText("testMagazijnier@mail.com");
 		txtPassword.setText("testMagazijnier");
 	}	

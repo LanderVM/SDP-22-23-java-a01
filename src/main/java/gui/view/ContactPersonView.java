@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class ContactPersonView {
 
-    private SimpleStringProperty email;
-    private SimpleStringProperty phoneNumber;
+    private final SimpleStringProperty email;
+    private final SimpleStringProperty phoneNumber;
 
     public ContactPersonView(ContactPerson contactPerson) {
         email = new SimpleStringProperty(contactPerson.getEmail());

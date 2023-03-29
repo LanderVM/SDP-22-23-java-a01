@@ -8,35 +8,35 @@ import javafx.collections.ObservableList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class TransportServiceView {
+public class CarrierDTO {
 
-    private final SimpleIntegerProperty transportServiceId;
+    private final SimpleIntegerProperty carrierId;
     private final SimpleStringProperty name;
-    private final SimpleListProperty<ContactPersonView> contactPeople; // TODO ContactpersonView
+    private final SimpleListProperty<ContactPersonView> contactPeople;
     private final SimpleIntegerProperty characterCount;
     private final SimpleBooleanProperty integersOnly;
     private final SimpleStringProperty prefix;
     private final SimpleObjectProperty<VerificationType> verificationType;
     private final SimpleBooleanProperty active;
 
-    public TransportServiceView(TransportService transportService) {
-        transportServiceId = new SimpleIntegerProperty(transportService.getTransportServiceId());
-        name = new SimpleStringProperty(transportService.getName());
-        contactPeople = new SimpleListProperty<>(transportService.getContactPersonList().stream().map(ContactPersonView::new).collect(Collectors.toCollection(FXCollections::observableArrayList)));
-        TrackingCodeDetails trackingCodeDetails = transportService.getTrackingCodeDetails();
+    public CarrierDTO(Carrier carrier) {
+        carrierId = new SimpleIntegerProperty(carrier.getCarrierId());
+        name = new SimpleStringProperty(carrier.getName());
+        contactPeople = new SimpleListProperty<>(carrier.getContactPersonList().stream().map(ContactPersonView::new).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        TrackingCodeDetails trackingCodeDetails = carrier.getTrackingCodeDetails();
         characterCount = new SimpleIntegerProperty(trackingCodeDetails.getCharacterCount());
         integersOnly = new SimpleBooleanProperty(trackingCodeDetails.isIntegersOnly());
         prefix = new SimpleStringProperty(trackingCodeDetails.getPrefix());
         verificationType = new SimpleObjectProperty<>(trackingCodeDetails.getVerificationType());
-        active = new SimpleBooleanProperty(transportService.isActive());
+        active = new SimpleBooleanProperty(carrier.isActive());
     }
 
-    public int getTransportServiceId() {
-        return transportServiceId.get();
+    public int getCarrierId() {
+        return carrierId.get();
     }
 
-    public SimpleIntegerProperty transportServiceIdProperty() {
-        return transportServiceId;
+    public SimpleIntegerProperty carrierIdProperty() {
+        return carrierId;
     }
 
     public String getName() {

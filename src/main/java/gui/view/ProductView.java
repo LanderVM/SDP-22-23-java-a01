@@ -19,7 +19,7 @@ public class ProductView {
 		this.productName = new SimpleStringProperty(product.getName());
 		this.amount = new SimpleIntegerProperty(amount);
 		this.untitPrice = new SimpleDoubleProperty(product.getPrice().doubleValue());
-		this.totalPrice = new SimpleObjectProperty<>(product.getPrice().multiply(BigDecimal.valueOf(amount))); // TODO
+		this.totalPrice = new SimpleObjectProperty<>(product.getPrice().multiply(BigDecimal.valueOf(amount)));
 	}
 
 	public SimpleStringProperty productNameProperty() {
