@@ -30,7 +30,7 @@ public class UserTests {
     String accountName = "testAdmin@mail.com";
     String surname = "Test";
     String name = "Admin";
-    String password = "testAdmin"; 
+    String password = "testPassword"; 
     String country = "Belgium";   
     String city = "Aalst";         
     String postalCode = "9300";
@@ -38,7 +38,6 @@ public class UserTests {
     int houseNumber = 1;  
     String box = "A2";
     String telephone = "12 34 56 78";
-    String mobilePhone = "0412 34 56 78";
     String function = "Magazijnier";
 
     Supplier supplier;
@@ -47,7 +46,7 @@ public class UserTests {
     @BeforeEach
     public void beforeEach() {
     	supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-    	user = new User(accountName, password, true, surname, name, telephone, mobilePhone,
+    	user = new User(accountName, password, true, surname, name, telephone, 
         		address, houseNumber, box, city, postalCode, country, supplier);
     }
     
@@ -62,13 +61,13 @@ public class UserTests {
             userController.checkUser(accountName, password);
             userController.getEmployees();
             
-            userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
+            userController.addUser("testAdmin@mail.com","testPassword", "Test", "Admin", "02 70 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
         }
 
         @Test
         public void addUser_UserAlreadyExists_throwsUserAlreadyExistsExeption() {
         	when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(true);
-            assertThrows(UserAlreadyExistsException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(UserAlreadyExistsException.class, () -> userController.addUser("testAdmin@mail.com","testPassword", "Test", "Admin", "02 70 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
         }
 
        
@@ -76,26 +75,26 @@ public class UserTests {
         public void addUser_BlankName_throwsIllegalArgumentException() {
             when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(false);
 
-            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
-            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
-            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "", "", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
-            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "  ", "      ", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com","testPassword", "Test", "", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com","testPassword", "", "Admin",  "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com","testPassword", "", "",  "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com","testPassword", "  ", "      ",  "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
         }
         
         @Test
         public void addUser_BlankAccountName_throwsIllegalArgumentException() {
         	when(userDaoJpa.exists("")).thenReturn(false);
         	when(userDaoJpa.exists("  ")).thenReturn(false);
-            assertThrows(IllegalArgumentException.class, () -> userController.addUser("", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));         
-            assertThrows(IllegalArgumentException.class, () -> userController.addUser("  ", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));         
+            assertThrows(IllegalArgumentException.class, () -> userController.addUser("", "testPassword", "Test", "Admin",  "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));         
+            assertThrows(IllegalArgumentException.class, () -> userController.addUser("  ", "testPassword", "Test", "Admin",  "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));         
         }
 
         @Test
         public void addUser_InvalidHouseNumber_throwsNumberFormatException() {
         	when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(false);
-            assertThrows(NumberFormatException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 0, "B2", "Aalst", "9300", "Belgium", new Supplier()));
-            assertThrows(NumberFormatException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", -1, "B2", "Aalst", "9300", "Belgium", new Supplier()));
-            assertThrows(NumberFormatException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", -99, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(NumberFormatException.class, () -> userController.addUser("testAdmin@mail.com", "testPassword", "Test", "Admin", "0470 25 25 25", "admin", "doeStreet", 0, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(NumberFormatException.class, () -> userController.addUser("testAdmin@mail.com", "testPassword", "Test", "Admin", "0470 25 25 25", "admin", "doeStreet", -1, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(NumberFormatException.class, () -> userController.addUser("testAdmin@mail.com", "testPassword", "Test", "Admin", "0470 25 25 25", "admin", "doeStreet", -99, "B2", "Aalst", "9300", "Belgium", new Supplier()));
         }
     }
 
@@ -109,7 +108,7 @@ public class UserTests {
             userController.checkUser(accountName, password);
             userController.getEmployees();
             
-            userController.updateUser(accountName, surname, name, telephone, mobilePhone, function,
+            userController.updateUser(accountName,password, surname, name, telephone, function,
             		address, houseNumber, box, city, postalCode, country);
 
             User updatedUser = userDaoJpa.get(accountName);
@@ -123,35 +122,35 @@ public class UserTests {
             assertEquals(updatedUser.getHouseNumber(), houseNumber);
             assertEquals(updatedUser.getBox(), box);
             assertEquals(updatedUser.getTelephone(), telephone);
-            assertEquals(updatedUser.getMobilePhone(), mobilePhone);
+            assertEquals(updatedUser.getPassword(), password);
             assertFalse(updatedUser.isAdmin());
         }
         
         @Test
         public void updateUser_BlankName_throwsInvalidNameException() {
-        	User user = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", "02 70 25 25", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
+        	User user = new User("testAdmin@mail.com", "testPassword", true, "Test", "Admin", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
 
             when(userDaoJpa.get("testAdmin@mail.com")).thenReturn(user);
         
-            assertThrows(IllegalArgumentException.class, () -> userController.updateUser(accountName, "", name, telephone, mobilePhone, function,
+            assertThrows(IllegalArgumentException.class, () -> userController.updateUser(accountName,password, "", name, telephone, function,
             		address, houseNumber, box, city, postalCode, country));
-            assertThrows(IllegalArgumentException.class, () -> userController.updateUser(accountName, surname, "", telephone, mobilePhone, function,
+            assertThrows(IllegalArgumentException.class, () -> userController.updateUser(accountName,password, surname, "", telephone, function,
             		address, houseNumber, box, city, postalCode, country));
-            assertThrows(IllegalArgumentException.class, () -> userController.updateUser("", surname, name, telephone, mobilePhone, function,
+            assertThrows(IllegalArgumentException.class, () -> userController.updateUser("",password, surname, name, telephone, function,
             		address, houseNumber, box, city, postalCode, country));
         }
 
         @Test
         public void updateUser_InvalidHouseNumber_throwsInvalidNameException() {
-        	User user = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", "02 70 25 25", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
+        	User user = new User("testAdmin@mail.com", "testPassword", true, "Test", "Admin", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
 
             when(userDaoJpa.get("testAdmin@mail.com")).thenReturn(user);
         
-            assertThrows(NumberFormatException.class, () -> userController.updateUser(accountName, surname, name, telephone, mobilePhone, function,
+            assertThrows(NumberFormatException.class, () -> userController.updateUser(accountName,password, surname, name, telephone, function,
             		address, 0, box, city, postalCode, country));
-            assertThrows(NumberFormatException.class, () -> userController.updateUser(accountName, surname, name, telephone, mobilePhone, function,
+            assertThrows(NumberFormatException.class, () -> userController.updateUser(accountName,password, surname, name, telephone, function,
             		address, -1, box, city, postalCode, country));    
-            assertThrows(NumberFormatException.class, () -> userController.updateUser(accountName, surname, name, telephone, mobilePhone, function,
+            assertThrows(NumberFormatException.class, () -> userController.updateUser(accountName,password, surname, name, telephone, function,
             		address, -99, box, city, postalCode, country));
         }
         

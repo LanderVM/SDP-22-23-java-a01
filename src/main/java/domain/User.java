@@ -51,14 +51,12 @@ public class User {
     private String box = "";
     @Column(name = "phone_number")
     private String telephone = "";
-    @Column(name = "mobile_phone_number")
-    private String mobilePhone = "";
     @Column(name = "is_admin")
     private boolean isAdmin = false;
     @ManyToOne
     private Supplier supplier;
 
-    public User(String accountName, String password, boolean isAdmin, String surname, String name, String telephone, String mobilePhone,
+    public User(String accountName, String password, boolean isAdmin, String surname, String name, String telephone,
                 String address, int houseNumber, String box, String city, String postalCode, String country, Supplier supplier) {
         setAccountName(accountName);
         setPassword(password);
@@ -66,7 +64,6 @@ public class User {
         setSurname(surname);
         setName(name);
         setTelephone(telephone);
-        setMobilePhone(mobilePhone);
         setAddress(address);
         setHouseNumber(houseNumber);
         setBox(box);
@@ -184,13 +181,7 @@ public class User {
         this.telephone = telephone;
     }
 
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
-
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
-    }
+   
 
     public Supplier getSupplier() {
         return supplier;
@@ -221,7 +212,7 @@ public class User {
         return "User [userId=" + userId + ", accountName=" + accountName + ", surname=" + surname + ", name=" + name
                 + ", password=" + password + ", country=" + country + ", City=" + city + ", postalCode=" + postalCode
                 + ", address=" + address + ", houseNumber=" + houseNumber + ", telephone=" + telephone
-                + ", mobilePhone=" + mobilePhone + ", isAdmin=" + isAdmin + ", supplier=" + supplier + "]";
+                +  ", isAdmin=" + isAdmin + ", supplier=" + supplier + "]";
     }
 
 }

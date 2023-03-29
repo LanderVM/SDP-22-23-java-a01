@@ -18,7 +18,7 @@ public class UserDTO {
     private final SimpleStringProperty surname;
     private final SimpleStringProperty name;
     private final SimpleStringProperty telephone;
-    private final SimpleStringProperty mobilePhone;
+    private final SimpleStringProperty password;
     private final SimpleStringProperty street;
     private final SimpleIntegerProperty houseNumber;
     private final SimpleStringProperty box;
@@ -26,6 +26,7 @@ public class UserDTO {
     private final SimpleStringProperty postalCode;
     private final SimpleStringProperty country;
     private final SimpleStringProperty function;
+    private final SimpleStringProperty fullName;
 
 
     public UserDTO(User user) {
@@ -34,7 +35,7 @@ public class UserDTO {
         surname = new SimpleStringProperty(user.getSurname());
         name = new SimpleStringProperty(user.getName());
         telephone = new SimpleStringProperty(user.getTelephone());
-        mobilePhone = new SimpleStringProperty(user.getMobilePhone());
+        password = new SimpleStringProperty(user.getPassword());
         street = new SimpleStringProperty(user.getAddress());
         houseNumber = new SimpleIntegerProperty(user.getHouseNumber());
         box = new SimpleStringProperty(user.getBox());
@@ -42,6 +43,7 @@ public class UserDTO {
         postalCode = new SimpleStringProperty(user.getPostalCode());
         country = new SimpleStringProperty(user.getCountry());
         function = new SimpleStringProperty(user.isAdmin() ? "Admin" : "Storeperson");
+        fullName = new SimpleStringProperty(user.getName() + user.getSurname());
     }
 
     public SimpleStringProperty getAccountNameProperty() {
@@ -54,6 +56,10 @@ public class UserDTO {
 
     public String getSurname() {
         return surname.get();
+    }
+    
+    public SimpleStringProperty getFullNameProperty() {
+        return fullName;
     }
 
     public int getEmployeeId() {
@@ -76,8 +82,8 @@ public class UserDTO {
         return telephone.get();
     }
 
-    public String getMobilePhone() {
-        return mobilePhone.get();
+    public String getPassword() {
+        return password.get();
     }
 
     public String getStreet() {

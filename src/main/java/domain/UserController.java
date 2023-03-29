@@ -53,16 +53,16 @@ public class UserController {
         return user.getSupplier().getSupplierId();
     }
 
-    public void addUser(String email, String surName, String name, String tp, String mp, String function, String street, int number, String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsException {
+    public void addUser(String email, String password, String surName, String name, String tp, String function, String street, int number, String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsException {
 
         if (userDao.exists(email)) throw new UserAlreadyExistsException();
 
-        User user = new User(email, "test", Objects.equals(function, "Admin"), surName, name, tp, mp, street, number, box, city, pc, counrty, supplier);
+        User user = new User(email, password, Objects.equals(function, "Admin"), surName, name, tp, street, number, box, city, pc, counrty, supplier);
         userDao.insert(user);
         userList.add(new UserDTO(user));
     }
 
-    public void updateUser(String email, String surName, String name, String tp, String mp, String funcion, String street, int number, String box, String city, String pc, String counrty) throws EntityNotFoundException, NumberFormatException {
+    public void updateUser(String email, String password, String surName, String name, String tp, String funcion, String street, int number, String box, String city, String pc, String counrty) throws EntityNotFoundException, NumberFormatException {
 
         if (email.isBlank() || email.isEmpty()) throw new IllegalArgumentException("Email mag niet leeg zijn");
 
@@ -71,7 +71,7 @@ public class UserController {
         user.setSurname(surName);
         user.setName(name);
         user.setTelephone(tp);
-        user.setMobilePhone(mp);
+        user.setPassword(password);
         user.setAdmin(Objects.equals(funcion, "admin"));
         user.setAddress(street);
         user.setHouseNumber(number);

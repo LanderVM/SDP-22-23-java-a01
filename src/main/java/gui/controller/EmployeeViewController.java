@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -44,7 +45,7 @@ public class EmployeeViewController extends GridPane {
     @FXML
     public Label lblFunction;
     @FXML
-    public Label lblMobilePhone;
+    public Label lblPassword;
     @FXML
     public Label lblTelephone;
     @FXML
@@ -62,7 +63,7 @@ public class EmployeeViewController extends GridPane {
     @FXML
     private TextField txtTelephone;
     @FXML
-    private TextField txtMobilePhone;
+    private PasswordField txtPassword;
     @FXML
     private TextField txtEmail;
     @FXML
@@ -88,6 +89,7 @@ public class EmployeeViewController extends GridPane {
 
     private final UserController userController;
     private String email;
+    private String password;
 
     public EmployeeViewController(UserController userController) {
         this.userController = userController;
@@ -99,7 +101,7 @@ public class EmployeeViewController extends GridPane {
         lblUser.setText(userController.toString());
         btnSave.setDisable(true);
 
-        tblEmployeesColumnName.setCellValueFactory(cellData -> cellData.getValue().getAccountNameProperty());
+        tblEmployeesColumnName.setCellValueFactory(cellData -> cellData.getValue().getFullNameProperty());
         tblEmployeesColumnFunction.setCellValueFactory(cellData -> cellData.getValue().functionProperty());
 
         choiceBoxFunction.setItems(UserDTO.getRolesObservableList());
@@ -113,12 +115,13 @@ public class EmployeeViewController extends GridPane {
                 btnSave.setDisable(false);
                 btnNew.setDisable(false);
                 email = newEmployee.getAccountName();
+                password = newEmployee.getPassword();
 
                 // Table info Carriers
                 txtName.setText(newEmployee.getName());
                 txtFirstName.setText(newEmployee.getSurname());
                 txtTelephone.setText(newEmployee.getTelephone());
-                txtMobilePhone.setText(newEmployee.getMobilePhone());
+                txtPassword.setText(newEmployee.getPassword());
                 txtEmail.setText(newEmployee.getAccountName());
                 choiceBoxFunction.setValue(newEmployee.getFunction());
 
@@ -150,14 +153,18 @@ public class EmployeeViewController extends GridPane {
 
     @FXML
     private void saveEmployees() {
+    	
         try {
-            if (!txtEmail.getText().equals(email)) {
+            if (!txtEmail.getText().equals(email) || !txtPassword.getText().equals(password)) {
                 throw new InvalidUserEmailException();
             }
-            userController.updateUser(txtEmail.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), txtMobilePhone.getText(), choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(), txtCountry.getText());
+            
+            
+            userController.updateUser(txtEmail.getText(),txtPassword.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(), txtCountry.getText());
             showInfo("Employee updated successfully", String.format("Updated user %s", email));
+            
         } catch (InvalidUserEmailException e) {
-            showError("Email changed", "The email cannot be changed");
+            showError("Email/Password changed", "The email and/or password cannot be changed");
         } catch (NumberFormatException e) {
             showError("Invalid house number", "Please insert a valid number");
         } catch (IllegalArgumentException e) {
@@ -170,8 +177,8 @@ public class EmployeeViewController extends GridPane {
     @FXML
     private void addEmployees() {
         try {
-            userController.addUser(txtEmail.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), txtMobilePhone.getText(), choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(), txtCountry.getText(), userController.getSupplier());
-            showInfo("Employee created succesfully", String.format("created user %s", email));
+            userController.addUser(txtEmail.getText(),txtPassword.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(), txtCountry.getText(), userController.getSupplier());
+            showInfo("Employee created succesfully", String.format("created user %s", txtEmail.getText()));
         } catch (UserAlreadyExistsException e) {
             showError("Email already exists", String.format("There already exists a user with the email address of: %s", txtEmail.getText()));
         } catch (NumberFormatException e) {
@@ -184,7 +191,7 @@ public class EmployeeViewController extends GridPane {
         txtName.clear();
         txtFirstName.clear();
         txtTelephone.clear();
-        txtMobilePhone.clear();
+        txtPassword.clear();
         txtEmail.clear();
         choiceBoxFunction.setValue(null);
 

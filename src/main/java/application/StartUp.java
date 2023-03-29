@@ -66,8 +66,8 @@ public class StartUp extends Application {
         ContactPersonSupplier contactPersonSupplier3 = new ContactPersonSupplier("Erik Tanner", "erik.tanner@gmail.com", janInc);
         ContactPersonSupplier contactPersonSupplier4 = new ContactPersonSupplier("Elke Daems", "elke.daems@gmail.com", janInc);
 
-        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", "02 70 25 25", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", timCo);
-        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", "02 70 25 25", "0470 25 12 34", "gentStreet", 23, "A1", "Gent", "9000", "Belgium", janInc);
+        User admin = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", timCo);
+        User warehouseman = new User("testMagazijnier@mail.com", "testMagazijnier", false, "Tessa", "Magazijnier", "0470 25 12 34", "gentStreet", 23, "A1", "Gent", "9000", "Belgium", janInc);
 
         List<ContactPersonSupplier> listContactPersonSupplier1 = List.of(contactPersonSupplier1, contactPersonSupplier2);
         List<ContactPersonSupplier> listContactPersonSupplier2 = List.of(contactPersonSupplier3, contactPersonSupplier4);
