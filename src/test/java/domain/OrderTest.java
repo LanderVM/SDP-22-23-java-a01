@@ -2,7 +2,6 @@ package domain;
 
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
-import gui.view.OrderDTO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

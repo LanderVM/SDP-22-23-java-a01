@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 public class CarrierTests {
 
     @Mock
-    private CarrierDao transportServiceJPADao;
+    private CarrierDao carrierJPADao;
     @Mock
     private SupplierDao supplierDaoJpa;
     @InjectMocks
@@ -44,23 +44,28 @@ public class CarrierTests {
 
         @Test
         public void addTransportService_happyFlow() {
+        	String name = "bpost";
+        	int supplierId = 0;
+        	
         	contactPersonDTO = new ContactPersonDTO("test@mail.com", "0477982037");
-            when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(false);
+            when(carrierJPADao.existsForSupplier("bpost", 0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
+            when(carrierJPADao.getForSupplier(name, supplierId)).thenReturn(new Carrier());
+            
             carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonDTO), 10, false, "test", "POST_CODE", true, 0);
         }
 
         @Test
         public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
             contactPersonDTO = new ContactPersonDTO("test@mail.com", "0477982037");
-            when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(true);
+            when(carrierJPADao.existsForSupplier("bpost", 0)).thenReturn(true);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
             assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonDTO), 10, false, "test", "POST_CODE", true, 0));
         }
 
         @Test
         public void addTransportService_contactPersonListEmpty_throwsIllegalArgumentException() {
-            when(transportServiceJPADao.existsForSupplier("bpost",0)).thenReturn(false);
+            when(carrierJPADao.existsForSupplier("bpost",0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
             assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(), 10, false, "test", "POST_CODE", true, 0));
         }
@@ -68,7 +73,7 @@ public class CarrierTests {
         @Test
         public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
             contactPersonDTO = new ContactPersonDTO("test@mail.com", "0477982037");
-            when(transportServiceJPADao.existsForSupplier("bpost",0)).thenReturn(false);
+            when(carrierJPADao.existsForSupplier("bpost",0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
             assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonDTO), 10, false, "test", "invalid_type", true, 0));
         }
@@ -87,8 +92,8 @@ public class CarrierTests {
             carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
             contactPersonDTO = new ContactPersonDTO("email@email.com", "4994233050");
 
-            when(transportServiceJPADao.get(0)).thenReturn(carrier);
-            when(transportServiceJPADao.getAllForSupplier(-1)).thenReturn(List.of(carrier));
+            when(carrierJPADao.get(0)).thenReturn(carrier);
+            when(carrierJPADao.getAllForSupplier(-1)).thenReturn(List.of(carrier));
             
             carrierController.getCarriers(-1);
             
@@ -108,7 +113,7 @@ public class CarrierTests {
 				e.printStackTrace();
 			}
 
-            Carrier updatedCarrier = transportServiceJPADao.get(0);
+            Carrier updatedCarrier = carrierJPADao.get(0);
             TrackingCodeDetails updatedTrackingCodeDetails = updatedCarrier.getTrackingCodeDetails();
             assertEquals(updatedCarrier.getName(), name);
             assertEquals(updatedCarrier.getContactPersonList(), contactPersonList);
@@ -148,7 +153,7 @@ public class CarrierTests {
             final String verificationTypeValue = "POST_CODE";
             final boolean isActive = false;
             
-            when(transportServiceJPADao.get(0)).thenReturn(null);
+            when(carrierJPADao.get(0)).thenReturn(null);
             
             assertThrows(EntityDoesntExistException.class, () -> carrierController.updateCarrier(0, name, contactPersonList, characterCount, integersOnly, prefix, verificationTypeValue, isActive));
         }
