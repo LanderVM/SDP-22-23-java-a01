@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
         ),
         @NamedQuery(
                 name = "Order.findAllForUserPosted",
-                query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = ?1"
+                query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = (SELECT w.supplier.supplierId FROM User w WHERE w.userId = ?1)"
         ),
         @NamedQuery(
                 name = "Order.findAllForUserOpen",
