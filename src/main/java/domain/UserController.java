@@ -1,7 +1,5 @@
 package domain;
 
-import exceptions.EntityDoesntExistException;
-import exceptions.IncorrectPasswordException;
 import exceptions.InvalidNameException;
 import exceptions.UserAlreadyExistsExeption;
 import gui.view.UserDTO;
@@ -33,12 +31,10 @@ public class UserController {
         return this.userList;
     }
 
-    public void checkUser(String accountName, String password) throws EntityNotFoundException, IncorrectPasswordException, EntityDoesntExistException {
+    public void checkUser(String accountName, String password) {
         User fromDatabase = userDao.get(accountName);
-        if(fromDatabase==null)
-        	throw new EntityDoesntExistException("there is no user for given accountName");
-        if (!fromDatabase.getPassword().equals(password))
-            throw new IncorrectPasswordException();
+        if(fromDatabase==null || !fromDatabase.getPassword().equals(password))
+        	throw new IllegalArgumentException("Invalid login credentials!");
         user = fromDatabase;
     }
 

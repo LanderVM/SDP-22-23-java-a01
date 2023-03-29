@@ -52,11 +52,13 @@ public class TransportServiceController {
 
     public void updateTransportService(int id, String name, ObservableList<ContactPersonView> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) throws EntityDoesntExistException {
         if (contactPersonList.isEmpty())
-            throw new IllegalArgumentException("You must add at least one contact person for this Transport Service!");
+            throw new IllegalArgumentException("You must add at least one contact person for this Carrier!");
+        if (characterCount <= 0)
+            throw new IllegalArgumentException("Character count input must a positive number!");
         TransportService transportService = transportServiceDaoJpa.get(id);
         if(transportService==null)
-        	throw new EntityDoesntExistException("there is no transportService for given transportServiceId");
-        
+        	throw new EntityDoesntExistException("Database did not find a Carrier with this id!");
+
         List<ContactPerson> list = contactPersonList.stream().map(el-> new ContactPerson(el.getEmail(),el.getPhoneNumber())).toList();
         
         transportService.setName(name);

@@ -27,15 +27,13 @@ public class TrackingCodeDetails {
     protected TrackingCodeDetails() {
     }
 
-    public int getTrackingCodeDetailsId() {
-        return trackingCodeDetailsId;
-    }
-
     public int getCharacterCount() {
         return characterCount;
     }
 
     public void setCharacterCount(int characterCount) {
+        if (this.characterCount <= 0)
+            throw new IllegalArgumentException("Character count must be a positive number!");
         this.characterCount = characterCount;
     }
 

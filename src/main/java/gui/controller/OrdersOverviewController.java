@@ -17,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -27,6 +26,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import util.FXStageUtil;
+
+import static java.lang.System.lineSeparator;
 
 public class OrdersOverviewController extends GridPane {
 
@@ -89,6 +90,7 @@ public class OrdersOverviewController extends GridPane {
     private final OrderController orderController;
     private final UserController userController;
     private final TransportServiceController transportServiceController;
+    private ObservableList<OrderView> orderList;
 
     public OrdersOverviewController(OrderController orderController, UserController userController,
                                     TransportServiceController transportServiceController) {
@@ -97,7 +99,13 @@ public class OrdersOverviewController extends GridPane {
         this.transportServiceController = transportServiceController;
     }
 
-    ObservableList<OrderView> orderList;
+    private void showAlert(String title, String message, AlertType alertType) {
+        alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     @FXML
     private void initialize() {
@@ -135,10 +143,9 @@ public class OrdersOverviewController extends GridPane {
         // TransportServices
         ObservableList<String> transportServiceNames = transportServiceController.getTransportServicesNames(userController.supplierIdFromUser());
 
-        if (transportServiceNames.size() == 0) {
-            alert = new Alert(AlertType.ERROR, "There are no active transport services at the moment.\nPlease try again later.", ButtonType.CLOSE);
-            alert.showAndWait();
-        }
+        if (transportServiceNames.size() == 0)
+            showAlert("Error", "There are no active Carriers at the moment." + lineSeparator() + "Please try again later.", AlertType.ERROR);
+
         choiceBoxTransportServices.setItems(transportServiceNames);
         choiceBoxTransportServices.setValue(transportServiceNames.get(0));
 
@@ -174,26 +181,19 @@ public class OrdersOverviewController extends GridPane {
         int orderId = TableOrdersView.getSelectionModel().getSelectedItem().getOrderId();
         try {
             orderController.processOrder(orderId, selectionTransportService, userController.supplierIdFromUser());
-            alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("Successfully processed the order!");
-            alert.showAndWait();
-        } catch (EntityNotFoundException | OrderStatusException | EntityDoesntExistException e) {
-            e.printStackTrace();
+            showAlert("Successful", "Order has been processed.", AlertType.INFORMATION);
+        } catch (EntityNotFoundException | OrderStatusException | EntityDoesntExistException exception) {
+            showAlert("Error", exception.getMessage(), AlertType.ERROR);
         }
         reselectProcessedOrder(orderId);
     }
 
     private void reselectProcessedOrder(int orderId) {
-        int index = 0;
-        for (int i = 0; i < TableOrdersView.getItems().size(); i++) {
-            if (TableOrdersView.getItems().get(i).getOrderId() == orderId) {
-                index = i;
+        for (OrderView orderView : TableOrdersView.getItems())
+            if (orderView.getOrderId() == orderId) {
+                TableOrdersView.getSelectionModel().select(orderView);
                 break;
             }
-        }
-        TableOrdersView.getSelectionModel().select(index);
     }
 
     @FXML

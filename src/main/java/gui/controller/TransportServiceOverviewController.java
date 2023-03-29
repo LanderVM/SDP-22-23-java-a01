@@ -5,6 +5,7 @@ import domain.UserController;
 import exceptions.EntityDoesntExistException;
 import gui.view.ContactPersonView;
 import gui.view.TransportServiceView;
+import jakarta.persistence.NoResultException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import util.FXStageUtil;
+
+import java.util.Objects;
 
 public class TransportServiceOverviewController extends GridPane {
 
@@ -68,10 +71,11 @@ public class TransportServiceOverviewController extends GridPane {
 	@FXML
 	private Button btnCurrentActionSave;
 
+    private Alert alert;
+
 	private final UserController userController;
 	private final TransportServiceController transportServiceController;
 	private int transportServiceId = -1; // TODO
-	private String transportServiceName;
 	private boolean currentActionCreate;
 	private ObservableList<ContactPersonView> listForAddedContactPersons;
 	private ObservableList<ContactPersonView> listForAllContactPersons;
@@ -82,6 +86,14 @@ public class TransportServiceOverviewController extends GridPane {
 		this.userController = userController;
 		this.transportServiceController = transportServiceController;
 	}
+
+    private void showAlert(String title, String message, AlertType alertType) {
+        alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 	@FXML
 	private void initialize() {
@@ -117,7 +129,6 @@ public class TransportServiceOverviewController extends GridPane {
 						btnSave.setDisable(false);
 						btnAddContactPerson.setDisable(false);
 						btnRemoveContactPerson.setDisable(true);
-						transportServiceName = newService.getName();
 						transportServiceId = newService.getTransportServiceId();
 
 						// Table info TransportService
@@ -137,6 +148,8 @@ public class TransportServiceOverviewController extends GridPane {
 
 						tblContactPerson.getSelectionModel().selectedItemProperty()
 								.addListener((observableValue2, oldContactPerson, newContactPerson) -> {
+                                    if (newContactPerson == null)
+                                        return;
 									btnRemoveContactPerson.setDisable(false);
 									selectedContactPersonEmail = newContactPerson.getEmail();
 								});
@@ -146,89 +159,39 @@ public class TransportServiceOverviewController extends GridPane {
 
 	@FXML
 	private void saveTransportServices() {
-
 		try {
 			transportServiceController.updateTransportService(transportServiceId, txtName.getText(),
 					listForAllContactPersons, Integer.parseInt(txtCharacterAmount.getText()),
 					chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
 					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
-		} catch (NumberFormatException e) {
-			e.printStackTrace(); // TODO
-		} catch (EntityDoesntExistException e) {
-			e.printStackTrace();
+			showAlert("Successful", "Changes to Carrier have been saved.", AlertType.INFORMATION);
+		} catch (NumberFormatException numberFormatException) {
+			showAlert("Invalid Input", "Character amount input must be a valid number!", AlertType.ERROR);
+		} catch (NoResultException | EntityDoesntExistException e) {
+			showAlert("Internal Error", "Database did not find any Carrier with this id!", AlertType.ERROR);
+		} catch (IllegalArgumentException illegalArgumentException) {
+			showAlert("Invalid Action", illegalArgumentException.getMessage(), AlertType.ERROR);
 		}
 		reselectTransportService(transportServiceId);
 	}
 
 	@FXML
 	private void addToContactPersonsList() {
-		if (!currentActionCreate) {
 			if (txtAddEmail.getText().isBlank() || txtAddPhoneNumber.getText().isBlank()) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Incorrect data");
-				alert.setHeaderText(null);
-				alert.setContentText("Contact person needs an email address and phonenumber");
-				alert.showAndWait();
+                showAlert("Invalid Input", "Phone number and email address must be filled in!", AlertType.ERROR);
+				return;
 			}
-
-			// checkIfContactPersonIsAlreadyAdded(txtAddEmail.getText(),
-			// txtAddPhoneNumber.getText());
-
-			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),
-					txtAddPhoneNumber.getText());
-			listForAllContactPersons.add(contactPersonView);
-			listForAddedContactPersons.add(contactPersonView);
-		} else {
-			if (txtAddEmail.getText().isBlank() || txtAddPhoneNumber.getText().isBlank()) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Incorrect data");
-				alert.setHeaderText(null);
-				alert.setContentText("Contact person needs an email address and phonenumber");
-				alert.showAndWait();
-			}
-
-			ContactPersonView contactPersonView = new ContactPersonView(txtAddEmail.getText(),
-					txtAddPhoneNumber.getText());
-			listForAllContactPersons.add(contactPersonView);
-		}
+			ContactPersonView contactPerson = new ContactPersonView(txtAddEmail.getText(), txtAddPhoneNumber.getText());
+			listForAllContactPersons.add(contactPerson);
+			if (!currentActionCreate)
+				listForAddedContactPersons.add(contactPerson);
 	}
 
 	@FXML
 	void removeContactPerson() {
-		if (!currentActionCreate) {
-			boolean isAddedContactPerson = false;
-			for (ContactPersonView cpv : listForAddedContactPersons) {
-				if (cpv.getEmail().equals(selectedContactPersonEmail))
-					isAddedContactPerson = true;
-			}
-			if (isAddedContactPerson) {
-				int indexCvp = 0;
-				for (int i = 0; i < listForAddedContactPersons.size(); i++) {
-					if (listForAddedContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
-						indexCvp = i;
-				}
-				listForAddedContactPersons.remove(indexCvp);
-				for (int i = 0; i < listForAllContactPersons.size(); i++) {
-					if (listForAllContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
-						indexCvp = i;
-				}
-				listForAllContactPersons.remove(indexCvp);
-			} else {
-				int indexCvp = 0;
-				for (int i = 0; i < listForAllContactPersons.size(); i++) {
-					if (listForAllContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
-						indexCvp = i;
-				}
-				listForAllContactPersons.remove(indexCvp);
-			}
-		} else {
-			int indexCvp = 0;
-			for (int i = 0; i < listForAllContactPersons.size(); i++) {
-				if (listForAllContactPersons.get(i).getEmail().equals(selectedContactPersonEmail))
-					indexCvp = i;
-			}
-			listForAllContactPersons.remove(indexCvp);
-		}
+        if (!currentActionCreate)
+            listForAddedContactPersons.removeIf(contactPerson -> Objects.equals(contactPerson.getEmail(), selectedContactPersonEmail));
+        listForAllContactPersons.removeIf(contactPerson -> Objects.equals(contactPerson.getEmail(), selectedContactPersonEmail));
 	}
 
 	@FXML
@@ -238,19 +201,12 @@ public class TransportServiceOverviewController extends GridPane {
 					Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
 					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(),
 					userController.supplierIdFromUser());
+			showAlert("Creation Successful", "Carrier has been added.", AlertType.INFORMATION);
 			initializeSaveTransportService();
-		} catch (NumberFormatException ex) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Incorrect data");
-			alert.setHeaderText(null);
-			alert.setContentText("Please fill in all the fields");
-			alert.showAndWait();
-		} catch (IllegalArgumentException ex) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Incorrect data");
-			alert.setHeaderText(null);
-			alert.setContentText(ex.getMessage());
-			alert.showAndWait();
+		} catch (NumberFormatException e) {
+			showAlert("Invalid Input", "Character amount input must be a valid number!", AlertType.ERROR);
+		} catch (IllegalArgumentException illegalArgumentException) {
+			showAlert("Invalid Input", illegalArgumentException.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -264,15 +220,12 @@ public class TransportServiceOverviewController extends GridPane {
 		initializeSaveTransportService();
 	}
 
-	private void reselectTransportService(int tsId) {
-		int index = 0;
-		for (int i = 0; i < tblTransportServices.getItems().size(); i++) {
-			if (tblTransportServices.getItems().get(i).getTransportServiceId() == tsId) {
-				index = i;
+	private void reselectTransportService(int carrierId) {
+		for (TransportServiceView carrierView : tblTransportServices.getItems())
+			if (carrierView.getTransportServiceId() == carrierId) {
+                tblTransportServices.getSelectionModel().select(carrierView);
 				break;
 			}
-		}
-		tblTransportServices.getSelectionModel().select(index);
 	}
 
 	@FXML
@@ -291,7 +244,7 @@ public class TransportServiceOverviewController extends GridPane {
 	}
 
 	private void initializeCreateTransportService() {
-		lblCurrentAction.setText("Current action: creating a service");
+		lblCurrentAction.setText("Current Action: Adding a Carrier");
 		tblContactPerson.getSelectionModel().clearSelection();
 		tblTransportServices.getSelectionModel().clearSelection();
 		listForAddedContactPersons.clear();
@@ -315,7 +268,7 @@ public class TransportServiceOverviewController extends GridPane {
 	}
 
 	private void initializeSaveTransportService() {
-		lblCurrentAction.setText("Current action: updating a service");
+		lblCurrentAction.setText("Current Action: Updating a Carrier");
 		tblContactPerson.getSelectionModel().clearSelection();
 		tblTransportServices.getSelectionModel().clearSelection();
 		listForAddedContactPersons.clear();
@@ -337,7 +290,6 @@ public class TransportServiceOverviewController extends GridPane {
 						btnSave.setDisable(false);
 						btnAddContactPerson.setDisable(false);
 						btnRemoveContactPerson.setDisable(true);
-						transportServiceName = newService.getName();
 						transportServiceId = newService.getTransportServiceId();
 
 						// Table info TransportService

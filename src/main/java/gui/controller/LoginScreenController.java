@@ -1,10 +1,6 @@
 package gui.controller;
 
 import domain.UserController;
-import exceptions.EntityDoesntExistException;
-import exceptions.IncorrectPasswordException;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,15 +29,15 @@ public class LoginScreenController extends GridPane {
 	}
 
 	@FXML
-	void SignIn(ActionEvent event) {
+	void SignIn() {
 		try {
 			userController.checkUser(txtEmail.getText(), txtPassword.getText());
 			if (userController.userIsAdmin())
 				goToHomeAdmin();
 			else
 				goToHomeWarehouseOperator();
-		} catch (NoResultException | IncorrectPasswordException | EntityNotFoundException | EntityDoesntExistException e) {
-			showLoginError();
+		} catch (IllegalArgumentException illegalArgumentException) {
+			showLoginError(illegalArgumentException.getMessage());
 		}
 	}
 
@@ -53,11 +49,11 @@ public class LoginScreenController extends GridPane {
 		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/TransportServiceOverview.fxml"), "Transport Services");
 	}
 	
-	private void showLoginError () {
-		Alert alert = new Alert(AlertType.INFORMATION);
+	private void showLoginError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Login Error");
 		alert.setHeaderText(null);
-		alert.setContentText("Provided credentials were incorrect!");
+		alert.setContentText(message);
 		alert.showAndWait();
 	}
 	
