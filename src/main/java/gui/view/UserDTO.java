@@ -43,7 +43,7 @@ public class UserDTO {
         postalCode = new SimpleStringProperty(user.getPostalCode());
         country = new SimpleStringProperty(user.getCountry());
         function = new SimpleStringProperty(user.isAdmin() ? "Admin" : "Storeperson");
-        fullName = new SimpleStringProperty(user.getName() + user.getSurname());
+        fullName = new SimpleStringProperty(user.getName() + " " + user.getSurname());
     }
 
     public SimpleStringProperty getAccountNameProperty() {
