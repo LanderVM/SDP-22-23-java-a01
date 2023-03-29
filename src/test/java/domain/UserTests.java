@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,23 +9,28 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import exceptions.UserAlreadyExistsException;
+import gui.view.UserDTO;
 import persistence.impl.UserDaoJpa;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 public class UserTests {
 
     @Mock
     private UserDaoJpa userDaoJpa;
+    @Mock
+    private UserDTO userDTO;
     @InjectMocks
     private UserController userController;
 
     String accountName = "testAdmin@mail.com";
     String surname = "Test";
     String name = "Admin";
-    String password = "pass"; 
+    String password = "testAdmin"; 
     String country = "Belgium";   
     String city = "Aalst";         
     String postalCode = "9300";
@@ -33,13 +39,29 @@ public class UserTests {
     String box = "A2";
     String telephone = "12 34 56 78";
     String mobilePhone = "0412 34 56 78";
-    String function = "magazijnier";
+    String function = "Magazijnier";
 
+    Supplier supplier;
+    User user;
+    
+    @BeforeEach
+    public void beforeEach() {
+    	supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
+    	user = new User(accountName, password, true, surname, name, telephone, mobilePhone,
+        		address, houseNumber, box, city, postalCode, country, supplier);
+    }
+    
     @Nested
     class AddTests {
         @Test
         public void addUser_happyFlow() throws NumberFormatException, UserAlreadyExistsException {
             when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(false);
+            when(userDaoJpa.getAllForSupplier(-1)).thenReturn(List.of());
+            when(userDaoJpa.get(accountName)).thenReturn(user);
+            
+            userController.checkUser(accountName, password);
+            userController.getEmployees();
+            
             userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
         }
 
@@ -81,14 +103,16 @@ public class UserTests {
     class UpdateTests {
         @Test
         public void updateService_happyFlow() {
-            User user = new User("testAdmin@mail.com", "testAdmin", true, "Test", "Admin", "02 70 25 25", "0470 25 25 25", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
-
-            when(userDaoJpa.get("testAdmin@mail.com")).thenReturn(user);
-                     
+            when(userDaoJpa.get(accountName)).thenReturn(user);
+            when(userDaoJpa.getAllForSupplier(-1)).thenReturn(List.of(user));       
+            
+            userController.checkUser(accountName, password);
+            userController.getEmployees();
+            
             userController.updateUser(accountName, surname, name, telephone, mobilePhone, function,
             		address, houseNumber, box, city, postalCode, country);
 
-            User updatedUser = userDaoJpa.get("testAdmin@mail.com");
+            User updatedUser = userDaoJpa.get(accountName);
             assertEquals(updatedUser.getAccountName(), accountName);
             assertEquals(updatedUser.getName(), name);
             assertEquals(updatedUser.getSurname(), surname);

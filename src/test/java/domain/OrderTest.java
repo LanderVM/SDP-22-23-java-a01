@@ -2,7 +2,7 @@ package domain;
 
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
-import jakarta.persistence.EntityNotFoundException;
+import gui.view.OrderDTO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class OrderTest {
 
+
     @Mock
     OrderDaoJpa orderDao;
     @Mock
@@ -32,10 +33,9 @@ public class OrderTest {
     @InjectMocks
     OrderController orderController;
 
+    Order order;
     Supplier supplier;
     Supplier customer;
-    
-    Order order;
     Carrier carrier;
 
     @BeforeEach
@@ -46,19 +46,22 @@ public class OrderTest {
     }
     
     @Test
-    public void processOrder_happyFlow() throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException  {
-        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, carrier, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
-        when(orderDao.get(1)).thenReturn(order);
+    public void processOrder_happyFlow() throws OrderStatusException, EntityDoesntExistException  {
+    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, carrier, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+        when(orderDao.get(0)).thenReturn(order);
         when(carrierDao.getForSupplier("test", 0)).thenReturn(carrier);
-
-		orderController.processOrder(1, carrier.getName(),0);
+        when(orderDao.getAllForUser(0)).thenReturn(List.of(order));
+        
+        orderController.getOrderList(0, false);
+        
+		orderController.processOrder(0, carrier.getName(),0);
 		
-        Order orderAfterUpdate = orderDao.get(1);
-
+        Order orderAfterUpdate = orderDao.get(0);
+        
         assertEquals(carrier, orderAfterUpdate.getCarrier());
         assertEquals(Status.PROCESSED, orderAfterUpdate.getStatus());
         assertEquals(1, orderAfterUpdate.getNotifications().size());
-        verify(orderDao, times(2)).get(1);
+        verify(orderDao, times(2)).get(0);
     }
     
     @Test

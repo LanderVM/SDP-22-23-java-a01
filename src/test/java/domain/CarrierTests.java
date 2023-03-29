@@ -88,7 +88,10 @@ public class CarrierTests {
             contactPersonDTO = new ContactPersonDTO("email@email.com", "4994233050");
 
             when(transportServiceJPADao.get(0)).thenReturn(carrier);
-
+            when(transportServiceJPADao.getAllForSupplier(-1)).thenReturn(List.of(carrier));
+            
+            carrierController.getCarriers(-1);
+            
             final String name = "new name";
             final ObservableList<ContactPersonDTO> contactPersonObservableList = FXCollections.observableArrayList(contactPersonDTO);
             final int characterCount = 14;
