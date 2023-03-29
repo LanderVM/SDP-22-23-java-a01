@@ -53,16 +53,4 @@ public class LoginViewController extends GridPane {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    @FXML
-    private void tmpSignInWarehouse() {
-        txtEmail.setText("testMagazijnier@mail.com");
-        txtPassword.setText("testMagazijnier");
-    }
-
-    @FXML
-    private void tmpSignInAdmin() {
-        txtEmail.setText("testAdmin@mail.com");
-        txtPassword.setText("testAdmin");
-    }
 }
