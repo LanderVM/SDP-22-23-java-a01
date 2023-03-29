@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:controller="gui.controller.LoginScreenController" maxHeight="-Infinity" maxWidth="-Infinity"
+<GridPane fx:controller="gui.controller.LoginViewController" maxHeight="-Infinity" maxWidth="-Infinity"
           minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0"
           style="-fx-background-color: #EC4842;" xmlns="http://javafx.com/javafx/19"
           xmlns:fx="http://javafx.com/fxml/1">

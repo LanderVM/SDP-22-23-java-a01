@@ -18,7 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import util.FXStageUtil;
 
-public class CustomersOverviewController extends GridPane {
+public class CustomerViewController extends GridPane {
 
 	@FXML
 	public Label lblName;
@@ -60,7 +60,7 @@ public class CustomersOverviewController extends GridPane {
 	private final SupplierController supplierController;
 	private final UserController userController;
 
-	public CustomersOverviewController(UserController userController, SupplierController supplierController) {
+	public CustomerViewController(UserController userController, SupplierController supplierController) {
 		this.userController = userController;
 		this.supplierController = supplierController;
 	}
@@ -110,12 +110,12 @@ public class CustomersOverviewController extends GridPane {
 
 	@FXML
 	void showOrders() {
-		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/OrderView.fxml"), "Orders");
+		FXStageUtil.setScene(CustomerViewController.class.getResource("/gui/OrderView.fxml"), "Orders");
 	}
 
 	@FXML
 	private void logOut() {
-		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
+		FXStageUtil.setScene(CustomerViewController.class.getResource("/gui/LoginView.fxml"), "Log In");
 	}
 
 }

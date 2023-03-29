@@ -7,7 +7,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import util.FXStageUtil;
 
-public class LoginScreenController extends GridPane {
+public class LoginViewController extends GridPane {
 	@FXML
 	public Label lblLogin;
 	@FXML
@@ -23,7 +23,7 @@ public class LoginScreenController extends GridPane {
 
 	private final UserController userController;
 
-	public LoginScreenController(UserController userController) {
+	public LoginViewController(UserController userController) {
 		this.userController = userController;
 	}
 
@@ -41,11 +41,11 @@ public class LoginScreenController extends GridPane {
 	}
 
 	private void goToHomeWarehouseOperator() {
-		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/OrderView.fxml"), "Orders Overview");
+		FXStageUtil.setScene(LoginViewController.class.getResource("/gui/OrderView.fxml"), "Orders Overview");
 	}
 
 	private void goToHomeAdmin() {
-		FXStageUtil.setScene(LoginScreenController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
+		FXStageUtil.setScene(LoginViewController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
 	}
 	
 	private void showLoginError(String message) {

@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import util.FXStageUtil;
 
-public class PackagingOverviewController {
+public class PackagingViewController {
 	@FXML
 	private Label lblUser;
     @FXML
@@ -49,7 +49,7 @@ public class PackagingOverviewController {
 	private final UserController userController;
 	private final PackagingController packagingController;
 
-    public PackagingOverviewController(UserController userController, PackagingController packagingController) {
+    public PackagingViewController(UserController userController, PackagingController packagingController) {
 		this.userController = userController;
 		this.packagingController = packagingController;
 	}
@@ -95,12 +95,12 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void showEmployees() {
-		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/EmployeeView.fxml"), "Employees");
+		FXStageUtil.setScene(PackagingViewController.class.getResource("/gui/EmployeeView.fxml"), "Employees");
 	}
 
 	@FXML
 	private void showCarrier() {
-		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
+		FXStageUtil.setScene(PackagingViewController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
 	}
 
 	@FXML
@@ -145,7 +145,7 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void logOut() {
-		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
+		FXStageUtil.setScene(PackagingViewController.class.getResource("/gui/LoginView.fxml"), "Log In");
 	}
 
 }

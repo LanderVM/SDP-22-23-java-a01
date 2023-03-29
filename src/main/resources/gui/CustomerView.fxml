@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.CustomersOverviewController">
+<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.CustomerViewController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="826.4000244140625" minWidth="10.0" percentWidth="2.0" prefWidth="332.79998779296875" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="826.4000244140625" minWidth="10.0" percentWidth="25.0" prefWidth="332.79998779296875" />
@@ -102,55 +102,60 @@
           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
         </columnResizePolicy>
     </TableView>
-   <GridPane maxHeight="123.0" prefHeight="123.0" prefWidth="1920.0" style="-fx-background-color: #EC4842;" GridPane.columnSpan="5">
-      <columnConstraints>
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="20.0" />
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="27.0" prefWidth="100.0" />
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="28.0" />
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" />
-      </columnConstraints>
-      <rowConstraints>
-         <RowConstraints maxHeight="123.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-      <children>
-         <Label fx:id="lblUser" alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="621.0" text="John Doe" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-            <font>
-               <Font size="36.0" />
-            </font>
-         </Label>
-         <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="240.0" style="-fx-font-family: arial; -fx-font-size: 48;" text="Log Out" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="LEFT">
-            <font>
-               <Font size="48.0" />
-            </font>
-            <padding>
-               <Insets left="50.0" />
-            </padding>
-            <opaqueInsets>
-               <Insets />
-            </opaqueInsets>
-         </Hyperlink>
-         <Label prefHeight="135.0" prefWidth="397.0" style="-fx-background-color: grey; -fx-font-family: arial;" text="Customers" textFill="WHITE" GridPane.columnIndex="1">
-            <font>
-               <Font size="48.0" />
-            </font>
-            <GridPane.margin>
-               <Insets />
-            </GridPane.margin>
-            <padding>
-               <Insets left="50.0" />
-            </padding>
-         </Label>
-         <Hyperlink onAction="#showOrders" prefHeight="123.0" prefWidth="403.0" style="-fx-font-size: 48; -fx-font-family: arial;" text="Orders" textFill="WHITE">
-            <font>
-               <Font size="48.0" />
-            </font>
-            <GridPane.margin>
-               <Insets />
-            </GridPane.margin>
-            <padding>
-               <Insets left="50.0" />
-            </padding>
-         </Hyperlink>
-      </children>
-   </GridPane>
+    <GridPane maxHeight="123.0" prefHeight="123.0" prefWidth="1920.0" style="-fx-background-color: #EC4842;"
+              GridPane.columnSpan="5">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="20.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="27.0"
+                               prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="28.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="123.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <Label fx:id="lblUser" alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="621.0" text="John Doe"
+               textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+           <font>
+               <Font size="36.0"/>
+           </font>
+        </Label>
+        <Hyperlink onAction="#logOut" prefHeight="123.0" prefWidth="240.0"
+                   style="-fx-font-family: arial; -fx-font-size: 48;" text="Log Out" textFill="WHITE"
+                   GridPane.columnIndex="3" GridPane.halignment="LEFT">
+           <font>
+               <Font size="48.0"/>
+           </font>
+           <padding>
+               <Insets left="50.0"/>
+           </padding>
+           <opaqueInsets>
+               <Insets/>
+           </opaqueInsets>
+        </Hyperlink>
+        <Label prefHeight="135.0" prefWidth="397.0" style="-fx-background-color: grey; -fx-font-family: arial;"
+               text="Customers" textFill="WHITE" GridPane.columnIndex="1">
+           <font>
+               <Font size="48.0"/>
+           </font>
+           <GridPane.margin>
+               <Insets/>
+           </GridPane.margin>
+           <padding>
+               <Insets left="50.0"/>
+           </padding>
+        </Label>
+        <Hyperlink onAction="#showOrders" prefHeight="123.0" prefWidth="403.0"
+                   style="-fx-font-size: 48; -fx-font-family: arial;" text="Orders" textFill="WHITE">
+           <font>
+               <Font size="48.0"/>
+           </font>
+           <GridPane.margin>
+               <Insets/>
+           </GridPane.margin>
+           <padding>
+               <Insets left="50.0"/>
+           </padding>
+        </Hyperlink>
+    </GridPane>
 </GridPane>

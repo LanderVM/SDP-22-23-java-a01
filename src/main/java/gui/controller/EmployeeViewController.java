@@ -5,22 +5,19 @@ import exceptions.InvalidUserEmailException;
 import exceptions.UserAlreadyExistsException;
 import gui.view.UserDTO;
 import jakarta.persistence.NoResultException;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import util.FXStageUtil;
 
-public class EmployeesOverviewController extends GridPane{
+public class EmployeeViewController extends GridPane{
 
 	@FXML
 	public Label lblUser;
@@ -29,13 +26,29 @@ public class EmployeesOverviewController extends GridPane{
 	@FXML
 	public Label lblName;
 	@FXML
-	private ImageView imgDelaware;
+	public Label lblPostalCode;
 	@FXML
-	private Label LblUser;
+	public Label lblCountry;
 	@FXML
-	private Hyperlink btnCarriers;
+	public Label lblCity;
 	@FXML
-	private Hyperlink btnBoxes;
+	public GridPane GridPaneAdressInfo;
+	@FXML
+	public Label lblBox;
+	@FXML
+	public Label lblStreet;
+	@FXML
+	public Label lblEmail;
+	@FXML
+	public Label lblNumber;
+	@FXML
+	public Label lblFunction;
+	@FXML
+	public Label lblMobilePhone;
+	@FXML
+	public Label lblTelephone;
+	@FXML
+	public Label lblFirstName;
 	@FXML
 	private TableView<UserDTO> tblEmployees;
 	@FXML
@@ -75,10 +88,8 @@ public class EmployeesOverviewController extends GridPane{
 	
     private final UserController userController;
     private String email;
-	private int id = -1;
-	private ObservableList<UserDTO> userList;
 
-	public EmployeesOverviewController(UserController userController) {
+	public EmployeeViewController(UserController userController) {
 		this.userController = userController;
 	}
 
@@ -103,7 +114,6 @@ public class EmployeesOverviewController extends GridPane{
 				btnSave.setDisable(false);
 				btnNew.setDisable(false);
 				email = newEmployee.getAccountName();
-				id = newEmployee.getEmployeeId();
 
 				// Table info Carriers
 				txtName.setText(newEmployee.getName());
@@ -125,18 +135,18 @@ public class EmployeesOverviewController extends GridPane{
 	}
 	
 	@FXML 
-	private void showCarrier() {		
-		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
+	private void showCarrier() {
+		FXStageUtil.setScene(EmployeeViewController.class.getResource("/gui/CarrierView.fxml"), "Carriers");
 	}
 	
 	@FXML 
 	private void logOut() {
-		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
+		FXStageUtil.setScene(EmployeeViewController.class.getResource("/gui/LoginView.fxml"), "Log In");
 	}
 	
 	@FXML 
 	private void showBoxes() {	
-		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/PackagingView.fxml"), "Packaging");
+		FXStageUtil.setScene(EmployeeViewController.class.getResource("/gui/PackagingView.fxml"), "Packaging");
 	}
 	
 	@FXML 

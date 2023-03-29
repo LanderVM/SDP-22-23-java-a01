@@ -28,7 +28,7 @@ import util.FXStageUtil;
 
 import static java.lang.System.lineSeparator;
 
-public class OrdersOverviewController extends GridPane {
+public class OrderViewController extends GridPane {
 
     @FXML
     private Label lblUser;
@@ -89,8 +89,8 @@ public class OrdersOverviewController extends GridPane {
     private final CarrierController carrierController;
     private ObservableList<OrderDTO> orderList;
 
-    public OrdersOverviewController(OrderController orderController, UserController userController,
-                                    CarrierController carrierController) {
+    public OrderViewController(OrderController orderController, UserController userController,
+                               CarrierController carrierController) {
         this.orderController = orderController;
         this.userController = userController;
         this.carrierController = carrierController;
@@ -195,12 +195,12 @@ public class OrdersOverviewController extends GridPane {
 
     @FXML
     public void showCustomers() {
-        FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/CustomerView.fxml"), "Customers");
+        FXStageUtil.setScene(OrderViewController.class.getResource("/gui/CustomerView.fxml"), "Customers");
     }
 
     @FXML
     private void logOut() {
-        FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
+        FXStageUtil.setScene(OrderViewController.class.getResource("/gui/LoginView.fxml"), "Log In");
     }
 
 }

@@ -10,11 +10,11 @@ import domain.PackagingController;
 import domain.SupplierController;
 import domain.CarrierController;
 import domain.UserController;
-import gui.controller.CustomersOverviewController;
-import gui.controller.EmployeesOverviewController;
-import gui.controller.LoginScreenController;
-import gui.controller.OrdersOverviewController;
-import gui.controller.PackagingOverviewController;
+import gui.controller.CustomerViewController;
+import gui.controller.EmployeeViewController;
+import gui.controller.LoginViewController;
+import gui.controller.OrderViewController;
+import gui.controller.PackagingViewController;
 import gui.controller.CarrierViewController;
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXMLLoader;
@@ -57,18 +57,18 @@ public class FXStageUtil {
     private static void setLoader(URL location) {
         loader = new FXMLLoader();
         loader.setControllerFactory(controller -> {
-            if (controller == LoginScreenController.class)
-                return new LoginScreenController(USER_CONTROLLER);
-            if (controller == OrdersOverviewController.class)
-                return new OrdersOverviewController(ORDER_CONTROLLER, USER_CONTROLLER, CARRIER_CONTROLLER);
-            if (controller == CustomersOverviewController.class)
-                return new CustomersOverviewController(USER_CONTROLLER, SUPPLIER_CONTROLLER);
+            if (controller == LoginViewController.class)
+                return new LoginViewController(USER_CONTROLLER);
+            if (controller == OrderViewController.class)
+                return new OrderViewController(ORDER_CONTROLLER, USER_CONTROLLER, CARRIER_CONTROLLER);
+            if (controller == CustomerViewController.class)
+                return new CustomerViewController(USER_CONTROLLER, SUPPLIER_CONTROLLER);
             if (controller == CarrierViewController.class)
                 return new CarrierViewController(USER_CONTROLLER, CARRIER_CONTROLLER);
-            if (controller == EmployeesOverviewController.class)
-                return new EmployeesOverviewController(USER_CONTROLLER);
-            if (controller == PackagingOverviewController.class)
-                return new PackagingOverviewController(USER_CONTROLLER, PACKAGING_CONTROLLER);
+            if (controller == EmployeeViewController.class)
+                return new EmployeeViewController(USER_CONTROLLER);
+            if (controller == PackagingViewController.class)
+                return new PackagingViewController(USER_CONTROLLER, PACKAGING_CONTROLLER);
             else {
                 try {
                     return controller.getConstructor().newInstance();

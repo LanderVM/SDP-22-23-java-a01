@@ -53,12 +53,12 @@ public class UserController {
     	return user.getSupplier().getSupplierId();
     }
 
-    public void addUser(String email, String surName, String name, String tp, String mp, String funcion, String street, int number,
+    public void addUser(String email, String surName, String name, String tp, String mp, String function, String street, int number,
     		String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsException {
 
     	if(userDao.exists(email)) throw new UserAlreadyExistsException();
 
-        User user = new User(email, "test", Objects.equals(funcion, "admin"), surName, name, tp, mp, street, number, box, city, pc, counrty, supplier);
+        User user = new User(email, "test", Objects.equals(function, "Admin"), surName, name, tp, mp, street, number, box, city, pc, counrty, supplier);
     	userDao.insert(user);
     	userList.add(new UserDTO(user));
     }
