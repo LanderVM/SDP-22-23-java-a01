@@ -6,7 +6,6 @@ import exceptions.EntityDoesntExistException;
 import gui.view.ContactPersonView;
 import gui.view.TransportServiceView;
 import jakarta.persistence.NoResultException;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -98,7 +97,7 @@ public class TransportServiceOverviewController extends GridPane {
 	@FXML
 	private void initialize() {
 		lblUser.setText(userController.toString());
-		lblCurrentAction.setText("Current action: update a service");
+		lblCurrentAction.setText("Current Action: Updating a Carrier");
 		currentActionCreate = false;
 		btnCurrentActionSave.setDisable(true);
 		btnCreateService.setVisible(false);
@@ -113,9 +112,7 @@ public class TransportServiceOverviewController extends GridPane {
 
 		// Table TransportService
 		tblTransportservicesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-		tblTransportservicesClmStatus.setCellValueFactory(
-				cellData -> cellData.getValue().activeProperty().get() ? new SimpleStringProperty("Active")
-						: new SimpleStringProperty("Inactive"));
+		tblTransportservicesClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
 
 		tblTransportServices.setItems(transportServiceController.getTransportServices(userController.supplierIdFromUser()));
 

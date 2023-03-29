@@ -3,9 +3,8 @@ package gui.view;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import domain.Rolles;
+import domain.Roles;
 import domain.User;
-import jakarta.persistence.Column;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,30 +14,27 @@ import javafx.collections.ObservableList;
 public class UserDTO {
 	
 	
-	private SimpleIntegerProperty employeeId;
-    private SimpleStringProperty accountName;
-    private SimpleStringProperty surname;
-    private SimpleStringProperty name;
-    private SimpleStringProperty password;
-    private SimpleBooleanProperty isAdmin;
-    private SimpleStringProperty telephone;
-    private SimpleStringProperty mobilePhone;
-    private SimpleStringProperty street;
-    private SimpleIntegerProperty houseNumber;
-    private SimpleStringProperty box;
-    private SimpleStringProperty city;
-    private SimpleStringProperty postalCode;
-    private SimpleStringProperty country;
-    private SimpleStringProperty function;
+	private final SimpleIntegerProperty employeeId;
+    private final SimpleStringProperty accountName;
+    private final SimpleStringProperty surname;
+    private final SimpleStringProperty name;
+    private final SimpleBooleanProperty isAdmin;
+    private final SimpleStringProperty telephone;
+    private final SimpleStringProperty mobilePhone;
+    private final SimpleStringProperty street;
+    private final SimpleIntegerProperty houseNumber;
+    private final SimpleStringProperty box;
+    private final SimpleStringProperty city;
+    private final SimpleStringProperty postalCode;
+    private final SimpleStringProperty country;
+    private final SimpleStringProperty function;
     
     
 	public UserDTO(User user) {
-		
 		employeeId = new SimpleIntegerProperty(user.getUserId());
 		accountName = new SimpleStringProperty(user.getAccountName());
 		surname = new SimpleStringProperty(user.getSurname());
 		name = new SimpleStringProperty(user.getName());
-		password = new SimpleStringProperty(user.getPassword());
 		isAdmin = new SimpleBooleanProperty(user.isAdmin());
 		telephone = new SimpleStringProperty(user.getTelephone());
 		mobilePhone = new SimpleStringProperty(user.getMobilePhone());
@@ -48,8 +44,8 @@ public class UserDTO {
 		city = new SimpleStringProperty(user.getCity());
 		postalCode = new SimpleStringProperty(user.getPostalCode());
 		country = new SimpleStringProperty(user.getCountry());
-		function = new SimpleStringProperty(user.isAdmin() ? "admin" : "magazijnier");
-				
+		function = new SimpleStringProperty(user.isAdmin() ? "Admin" : "Storeperson");
+
 	}
 
 	public SimpleStringProperty getAccountNameProperty() {
@@ -60,7 +56,7 @@ public class UserDTO {
 		return accountName.get();
 	}
 
-	public SimpleStringProperty getSurnameProperty() {
+	public SimpleStringProperty surnameProperty() {
 		return surname;
 	}
 	
@@ -72,7 +68,7 @@ public class UserDTO {
         return employeeId.get();
     }
 
-	public SimpleStringProperty getNameProperty() {
+	public SimpleStringProperty nameProperty() {
 		return name;
 	}
 	
@@ -80,31 +76,21 @@ public class UserDTO {
         return name.get();
     }
 
-
-	public SimpleStringProperty getPasswordProperty() {
-		return password;
-	}
-	
-	public String getPassword() {
-		return password.get();
-	}
-
-
-	public SimpleBooleanProperty getIsAdminProperty() {
+	public SimpleBooleanProperty isAdminProperty() {
 		return isAdmin;
 	}
 	public boolean isAdmin() {
-		return isAdmin();
+		return isAdmin.get();
 	}
 
-	public SimpleStringProperty getFunctionProperty() {
+	public SimpleStringProperty functionProperty() {
 		return function;
 	}
 	public String getFunction() {
 		return function.get();
 	}
 
-	public SimpleStringProperty getTelephoneProperty() {
+	public SimpleStringProperty telephoneProperty() {
 		return telephone;
 	}
 	
@@ -112,7 +98,7 @@ public class UserDTO {
 		return telephone.get();
 	}
 
-	public SimpleStringProperty getMobilePhoneProperty() {
+	public SimpleStringProperty mobilePhoneProperty() {
 		return mobilePhone;
 	}
 	
@@ -120,7 +106,7 @@ public class UserDTO {
 		return mobilePhone.get();
 	}
 
-	public SimpleStringProperty getStreetProperty() {
+	public SimpleStringProperty streetProperty() {
 		return street;
 	}
 
@@ -128,7 +114,7 @@ public class UserDTO {
 		return street.get();
 	}
 
-	public SimpleIntegerProperty getHouseNumberProperty() {
+	public SimpleIntegerProperty houseNumberProperty() {
 		return houseNumber;
 	}	
 	public String getHouseNumber() {
@@ -136,7 +122,7 @@ public class UserDTO {
 	}
 
 	
-	public SimpleStringProperty getBoxProperty() {
+	public SimpleStringProperty boxProperty() {
 		return box;
 	}
 	public String getBox() {
@@ -144,7 +130,7 @@ public class UserDTO {
 	}
 
 	
-	public SimpleStringProperty getCityProperty() {
+	public SimpleStringProperty cityProperty() {
 		return city;
 	}
 	public String getCity() {
@@ -152,7 +138,7 @@ public class UserDTO {
 	}
 
 	
-	public SimpleStringProperty getPostalCodeProperty() {
+	public SimpleStringProperty postalCodeProperty() {
 		return postalCode;
 	}
 	public String getPostalCode() {
@@ -160,7 +146,7 @@ public class UserDTO {
 	}
 
 	
-	public SimpleStringProperty getCountryProperty() {
+	public SimpleStringProperty countryProperty() {
 		return country;
 	}
 	public String getCountry() {
@@ -168,8 +154,8 @@ public class UserDTO {
 	}
 	
 	
-    public static ObservableList<String> getRollesObservableList () {
-    	return FXCollections.observableList(Arrays.stream(Rolles.values()).map(Rolles::toString)
+    public static ObservableList<String> getRolesObservableList() {
+    	return FXCollections.observableList(Arrays.stream(Roles.values()).map(Roles::toString)
 				.collect(Collectors.toList()));
     }
     

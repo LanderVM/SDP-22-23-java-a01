@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.TransportServiceOverviewController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="25.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.TransportServiceOverviewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4000274658204" minWidth="10.0" percentWidth="4.0" prefWidth="121.40000915527344" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.5999908447266" minWidth="10.0" percentWidth="16.0" prefWidth="403.1999206542969" />
@@ -113,7 +101,7 @@
          <children>
             <TableView fx:id="tblContactPerson" editable="true" prefHeight="448.0" prefWidth="380.0" style="-fx-font-size: 20px;">
                <columns>
-                  <TableColumn fx:id="ColumnTableContactPersons" prefWidth="75.0" text="Contact Persons">
+                  <TableColumn fx:id="ColumnTableContactPersons" prefWidth="75.0" text="Contact People">
                      <columns>
                         <TableColumn fx:id="tblContactPersonClmPhone" prefWidth="75.0" text="Phone" />
                         <TableColumn fx:id="tblContactPersonClmEmail" prefWidth="75.0" text="E-mail" />
@@ -144,7 +132,7 @@
       </Button>
       <TableView fx:id="tblTransportServices" editable="true" prefHeight="737.0" prefWidth="456.0" style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="4">
           <placeholder>
-	        <Label text="No transortservices found" />
+	        <Label text="No Carriers found" />
 	    </placeholder>
 	    <columns>
             <TableColumn fx:id="tblTransportservicesClmName" prefWidth="92.79997712373734" text="Name" />
@@ -198,7 +186,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="txtName" prefHeight="59.0" prefWidth="339.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <TextField fx:id="txtName" prefHeight="59.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
@@ -231,7 +219,7 @@
             <Font size="36.0" />
          </font>
       </Button>
-      <Button fx:id="btnRemoveContactPerson" alignment="CENTER" mnemonicParsing="false" onAction="#removeContactPerson" prefHeight="51.0" prefWidth="303.0" text="Remove contact person" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+      <Button fx:id="btnRemoveContactPerson" alignment="CENTER" mnemonicParsing="false" onAction="#removeContactPerson" prefHeight="51.0" prefWidth="303.0" text="Remove Contact Person" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <font>
             <Font size="24.0" />
          </font>
@@ -244,12 +232,12 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Label>
-      <Button fx:id="btnCurrentActionSave" mnemonicParsing="false" onAction="#switchActionToSave" prefHeight="70.0" prefWidth="262.0" text="save a transport service" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="btnCurrentActionSave" mnemonicParsing="false" onAction="#switchActionToSave" prefHeight="70.0" prefWidth="262.0" text="Update Carriers" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnCurrentActionCreate" mnemonicParsing="false" onAction="#switchActionToCreate" prefHeight="72.0" prefWidth="245.0" text="creating a transport service" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="btnCurrentActionCreate" mnemonicParsing="false" onAction="#switchActionToCreate" prefHeight="72.0" prefWidth="245.0" text="Add Carrier" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>

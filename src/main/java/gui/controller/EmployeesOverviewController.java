@@ -90,9 +90,9 @@ public class EmployeesOverviewController extends GridPane{
 		btnSave.setDisable(true);
 
 		tblEmployeesColumnName.setCellValueFactory(cellData -> cellData.getValue().getAccountNameProperty());
-		tblEmployeesColumnFunction.setCellValueFactory(cellData -> cellData.getValue().getFunctionProperty());
+		tblEmployeesColumnFunction.setCellValueFactory(cellData -> cellData.getValue().functionProperty());
 
-		choiceBoxFunction.setItems(UserDTO.getRollesObservableList());
+		choiceBoxFunction.setItems(UserDTO.getRolesObservableList());
 
 		tblEmployees.setItems(userController.getEmployees());
 
@@ -157,10 +157,7 @@ public class EmployeesOverviewController extends GridPane{
 		} catch (IllegalArgumentException e) {
 			showError("Input error", e.getMessage());
 		} catch (NoResultException ex) {
-			showError("Error with update", String.format("Cannot update user with email: %s, because it does not exists.", email));
-		} catch (Exception e) {
-			showError("Error", "Something went wrong while trying to update a employee");
-			System.out.println(e);
+			showError("Error with update", String.format("Cannot update user with email: %s, because it does not exist.", email));
 		}
 	}
 	
@@ -177,9 +174,6 @@ public class EmployeesOverviewController extends GridPane{
 			showError("Invalid house number", "Please insert a valid house number");
 		} catch (InvalidNameException e) {
 			showError("Empty field error", e.getMessage());
-		} catch (Exception e) {
-			showError("Error", "Something went wrong while trying to create a new employee");
-			System.out.println(e); // TODO
 		}
 	}
 	

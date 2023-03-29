@@ -27,7 +27,7 @@ public class PackagingOverviewController {
 	@FXML
 	private TableColumn<PackagingDTO, BigDecimal> tblBoxesClmPrice;
 	@FXML
-	private TableColumn<PackagingDTO, Boolean> tblBoxesClmActive;
+	private TableColumn<PackagingDTO, String> tblBoxesClmActive;
 	@FXML
 	private TextArea txtName;
 	@FXML
@@ -56,7 +56,6 @@ public class PackagingOverviewController {
 		this.userController = userController;
 		this.packagingController = packagingController;
 	}
-
 
 	@FXML
 	private void initialize() {

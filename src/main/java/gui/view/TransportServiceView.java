@@ -91,8 +91,8 @@ public class TransportServiceView {
         return active.get();
     }
 
-    public SimpleBooleanProperty activeProperty() {
-        return active;
+    public SimpleStringProperty activeProperty() {
+        return new SimpleStringProperty(isActive() ? "Active" : "Disabled");
     }
     
     public static ObservableList<String> getVerficationTypesObservableList () {

@@ -90,7 +90,7 @@ public class PackagingDTO {
         return active.get();
     }
 
-    public SimpleBooleanProperty activeProperty() {
-        return active;
+    public SimpleStringProperty activeProperty() {
+        return new SimpleStringProperty(isActive() ? "Active" : "Disabled");
     }
 }

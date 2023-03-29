@@ -44,7 +44,7 @@
             <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             <RowConstraints minHeight="10.0" percentHeight="22.0" prefHeight="30.0" vgrow="SOMETIMES"/>
         </rowConstraints>
-        <TextField fx:id="txtEmail" promptText="e-mail" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <TextField fx:id="txtEmail" promptText="email" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <opaqueInsets>
                 <Insets/>
             </opaqueInsets>
