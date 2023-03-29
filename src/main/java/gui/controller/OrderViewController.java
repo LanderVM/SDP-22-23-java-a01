@@ -130,6 +130,10 @@ public class OrderViewController extends GridPane {
         OnlyPostedOrdersCheckBox.selectedProperty().addListener(((observableValue, inactive, t1) -> {
             orderList = orderController.getOrderList(userController.userId(), !inactive);
             TableOrdersView.setItems(orderList);
+            ProductsTableView.getItems().clear();
+            OrderDetailsTable.getItems().clear();
+            CustomerDetailsList.getItems().clear();
+            TableOrdersView.getSelectionModel().select(0);
         }));
 
         orderList = orderController.getOrderList(userController.userId(), false);
@@ -179,6 +183,7 @@ public class OrderViewController extends GridPane {
             showAlert("Error", exception.getMessage(), AlertType.ERROR);
         }
         reselectProcessedOrder(orderId);
+        OnlyPostedOrdersCheckBox.setSelected(false);
     }
 
     private void reselectProcessedOrder(int orderId) {

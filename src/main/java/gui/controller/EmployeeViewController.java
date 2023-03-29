@@ -161,7 +161,7 @@ public class EmployeeViewController extends GridPane {
             
             
             userController.updateUser(txtEmail.getText(),txtPassword.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(), txtCountry.getText());
-            showInfo("Employee updated successfully", String.format("Updated user %s", email));
+            showInfo("Employee updated successfully", String.format("Updated user %s", txtEmail.getText()));
             clearFields();
             btnSave.setDisable(true);
             
