@@ -32,8 +32,8 @@ public class UserController {
 
     public void checkUser(String accountName, String password) {
         User fromDatabase = userDao.get(accountName);
-        if(fromDatabase==null || !fromDatabase.getPassword().equals(password))
-        	throw new IllegalArgumentException("Invalid login credentials!");
+        if (fromDatabase == null || !fromDatabase.getPassword().equals(password))
+            throw new IllegalArgumentException("Invalid login credentials!");
         user = fromDatabase;
     }
 
@@ -42,47 +42,45 @@ public class UserController {
     }
 
     public Supplier getSupplier() {
-    	return user.getSupplier();
+        return user.getSupplier();
     }
 
-    public int userId () {
-    	return user.getUserId();
+    public int userId() {
+        return user.getUserId();
     }
 
-    public int supplierIdFromUser () {
-    	return user.getSupplier().getSupplierId();
+    public int supplierIdFromUser() {
+        return user.getSupplier().getSupplierId();
     }
 
-    public void addUser(String email, String surName, String name, String tp, String mp, String function, String street, int number,
-    		String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsException {
+    public void addUser(String email, String surName, String name, String tp, String mp, String function, String street, int number, String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsException {
 
-    	if(userDao.exists(email)) throw new UserAlreadyExistsException();
+        if (userDao.exists(email)) throw new UserAlreadyExistsException();
 
         User user = new User(email, "test", Objects.equals(function, "Admin"), surName, name, tp, mp, street, number, box, city, pc, counrty, supplier);
-    	userDao.insert(user);
-    	userList.add(new UserDTO(user));
+        userDao.insert(user);
+        userList.add(new UserDTO(user));
     }
 
-    public void updateUser(String email, String surName, String name, String tp, String mp, String funcion, String street, int number,
-    		String box, String city, String pc, String counrty) throws EntityNotFoundException, NumberFormatException {
+    public void updateUser(String email, String surName, String name, String tp, String mp, String funcion, String street, int number, String box, String city, String pc, String counrty) throws EntityNotFoundException, NumberFormatException {
 
-    	if(email.isBlank() || email.isEmpty()) throw new IllegalArgumentException("Email mag niet leeg zijn");
+        if (email.isBlank() || email.isEmpty()) throw new IllegalArgumentException("Email mag niet leeg zijn");
 
-    	User user = userDao.get(email);
+        User user = userDao.get(email);
 
-    	user.setSurname(surName);
-    	user.setName(name);
-    	user.setTelephone(tp);
-    	user.setMobilePhone(mp);
-    	user.setAdmin(Objects.equals(funcion, "admin"));
-    	user.setAddress(street);
-    	user.setHouseNumber(number);
-    	user.setBox(box);
-    	user.setCity(city);
-    	user.setPostalCode(pc);
-    	user.setCountry(counrty);
+        user.setSurname(surName);
+        user.setName(name);
+        user.setTelephone(tp);
+        user.setMobilePhone(mp);
+        user.setAdmin(Objects.equals(funcion, "admin"));
+        user.setAddress(street);
+        user.setHouseNumber(number);
+        user.setBox(box);
+        user.setCity(city);
+        user.setPostalCode(pc);
+        user.setCountry(counrty);
 
-    	userDao.update(user);
+        userDao.update(user);
         userList.set(getIndex(user.getUserId()), new UserDTO(user));
     }
 
@@ -96,6 +94,6 @@ public class UserController {
     }
 
     public String toString() {
-    	return String.format("%s %s",user.getSurname(), user.getName());
+        return String.format("%s %s", user.getSurname(), user.getName());
     }
 }

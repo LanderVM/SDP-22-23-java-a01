@@ -32,38 +32,19 @@ public class Notification {
         this.customer = order.getCustomer();
     }
 
-    public int getNotificationId() {
-        return notificationId;
-    }
-
-    public Supplier getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Supplier customer) {
-        this.customer = customer;
-    }
-    
     public Order getOrder() {
         return order;
     }
-    
 
     public void setOrder(Order order) {
-    	if(order==null)
-    		throw new IllegalArgumentException("order may not be null!");
-		this.order = order;
-	}
-
-	public LocalDate getDate() {
-        return date;
+        if (order == null) throw new IllegalArgumentException("order may not be null!");
+        this.order = order;
     }
 
-	public void setDate(LocalDate date) {
-		if (date==null)
-			throw new IllegalArgumentException("date may not be null!");
-		this.date = date;
-	}
-	
+    public void setDate(LocalDate date) {
+        if (date == null) throw new IllegalArgumentException("date may not be null!");
+        this.date = date;
+    }
+
 
 }

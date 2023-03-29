@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ContactPersonSupplierDao extends GenericDao<ContactPersonSupplier> {
 
-    List<ContactPersonSupplier> getAllForSupplier (String email);
+    List<ContactPersonSupplier> getAllForSupplier(String email);
 }

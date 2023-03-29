@@ -26,20 +26,20 @@ import java.util.Objects;
                 query = "SELECT d FROM Carrier d WHERE d.name = ?1"
         ),
         @NamedQuery(
-        		name = "Carrier.findAllNames",
+                name = "Carrier.findAllNames",
                 query = "SELECT d.name FROM Carrier d"
         ),
         @NamedQuery(
-        		name = "Carrier.findAllNamesForSupplier",
+                name = "Carrier.findAllNamesForSupplier",
                 query = "SELECT d.name FROM Carrier d WHERE d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
-        		name = "Carrier.findAllForSupplier",
+                name = "Carrier.findAllForSupplier",
                 query = "SELECT d FROM Carrier d WHERE d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
-        		name = "Carrier.findNameExistsForSupplier",
-        		query = "SELECT d FROM Carrier d WHERE d.supplier.supplierId = :supplierId  AND d.name = :name"
+                name = "Carrier.findNameExistsForSupplier",
+                query = "SELECT d FROM Carrier d WHERE d.supplier.supplierId = :supplierId  AND d.name = :name"
         ),
         @NamedQuery(
                 name = "Carrier.findByNameForSupplier",
@@ -63,7 +63,7 @@ public class Carrier {
     @Column(name = "is_active")
     private boolean active = true;
 
-    public Carrier(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, Supplier supplier , boolean active) {
+    public Carrier(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails, Supplier supplier, boolean active) {
         this.name = name;
         this.setContactPersonList(contactPersonList);
         this.setTrackingCodeDetails(trackingCodeDetails);
@@ -91,8 +91,8 @@ public class Carrier {
     }
 
     void setContactPersonList(List<ContactPerson> contactPersonList) {
-    	if(contactPersonList==null)
-    		throw new IllegalArgumentException("contactPersonList may not be null!");
+        if (contactPersonList == null)
+            throw new IllegalArgumentException("contactPersonList may not be null!");
         this.contactPersonList = contactPersonList;
     }
 
@@ -101,12 +101,12 @@ public class Carrier {
     }
 
     public void setTrackingCodeDetails(TrackingCodeDetails trackingCodeDetails) {
-    	if(trackingCodeDetails==null)
-    		throw new IllegalArgumentException("trackingCodeDetails may not be null!");
-		this.trackingCodeDetails = trackingCodeDetails;
-	}
+        if (trackingCodeDetails == null)
+            throw new IllegalArgumentException("trackingCodeDetails may not be null!");
+        this.trackingCodeDetails = trackingCodeDetails;
+    }
 
-	public boolean isActive() {
+    public boolean isActive() {
         return active;
     }
 
@@ -115,16 +115,16 @@ public class Carrier {
     }
 
     public Supplier getSupplier() {
-		return supplier;
-	}
+        return supplier;
+    }
 
-	public void setSupplier(Supplier supplier) {
-		if(supplier==null)
-			throw new IllegalArgumentException("supplier may not be null!");
-		this.supplier = supplier;
-	}
+    public void setSupplier(Supplier supplier) {
+        if (supplier == null)
+            throw new IllegalArgumentException("supplier may not be null!");
+        this.supplier = supplier;
+    }
 
-	@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

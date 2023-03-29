@@ -1,10 +1,10 @@
 package domain;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "packaging")
@@ -22,9 +22,9 @@ import jakarta.persistence.*;
 				query = "SELECT p FROM Packaging p WHERE p.supplier.supplierId = ?1"
 		),
 		@NamedQuery(
-		        name = "Packaging.findExists",
-		        query = "SELECT p FROM Packaging p WHERE p.packagingId = ?1"
-        ),
+				name = "Packaging.findExists",
+				query = "SELECT p FROM Packaging p WHERE p.packagingId = ?1"
+		),
 		@NamedQuery(
 				name = "Packaging.findNameExists",
 				query = "SELECT p FROM Packaging p WHERE p.name = ?1 AND p.supplier.supplierId = ?2"

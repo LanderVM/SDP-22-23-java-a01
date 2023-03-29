@@ -1,38 +1,19 @@
 package util;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
-
 import application.StartUp;
-import domain.OrderController;
-import domain.PackagingController;
-import domain.SupplierController;
-import domain.CarrierController;
-import domain.UserController;
-import gui.controller.CustomerViewController;
-import gui.controller.EmployeeViewController;
-import gui.controller.LoginViewController;
-import gui.controller.OrderViewController;
-import gui.controller.PackagingViewController;
-import gui.controller.CarrierViewController;
+import domain.*;
+import gui.controller.*;
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import persistence.ContactPersonSupplierDao;
-import persistence.OrderDao;
-import persistence.PackagingDao;
-import persistence.SupplierDao;
-import persistence.CarrierDao;
-import persistence.UserDao;
-import persistence.impl.ContactPersonSupplierDaoJpa;
-import persistence.impl.OrderDaoJpa;
-import persistence.impl.PackagingDaoJpa;
-import persistence.impl.SupplierDaoJpa;
-import persistence.impl.CarrierDaoJpa;
-import persistence.impl.UserDaoJpa;
+import persistence.*;
+import persistence.impl.*;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 public class FXStageUtil {
     private static Stage stage;
@@ -65,8 +46,7 @@ public class FXStageUtil {
                 return new CustomerViewController(USER_CONTROLLER, SUPPLIER_CONTROLLER);
             if (controller == CarrierViewController.class)
                 return new CarrierViewController(USER_CONTROLLER, CARRIER_CONTROLLER);
-            if (controller == EmployeeViewController.class)
-                return new EmployeeViewController(USER_CONTROLLER);
+            if (controller == EmployeeViewController.class) return new EmployeeViewController(USER_CONTROLLER);
             if (controller == PackagingViewController.class)
                 return new PackagingViewController(USER_CONTROLLER, PACKAGING_CONTROLLER);
             else {

@@ -39,10 +39,8 @@ public class Product implements Serializable {
     }
 
     public void setPrice(BigDecimal price) {
-    	if (price==null)
-    		throw new IllegalArgumentException("price may not be null!");
-    	if(price.compareTo(BigDecimal.ZERO)<0)
-    		throw new IllegalArgumentException("price may not be negative!");
+        if (price == null) throw new IllegalArgumentException("price may not be null!");
+        if (price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException("price may not be negative!");
         this.price = price;
     }
 
@@ -50,7 +48,7 @@ public class Product implements Serializable {
         return this.price;
     }
 
-	@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -67,10 +65,6 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "productId=" + productId +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                '}';
+        return "Product{" + "productId=" + productId + ", name='" + name + '\'' + ", price=" + price + '}';
     }
 }

@@ -25,27 +25,15 @@ public class ContactPerson {
     protected ContactPerson() {
     }
 
-    public int getContactPersonId() {
-        return contactPersonId;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    } 
-
-	@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -60,10 +48,6 @@ public class ContactPerson {
 
     @Override
     public String toString() {
-        return "ContactPerson{" +
-                "contactPersonId=" + contactPersonId +
-                ", email='" + email + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                '}';
+        return "ContactPerson{" + "contactPersonId=" + contactPersonId + ", email='" + email + '\'' + ", phoneNumber=" + phoneNumber + '}';
     }
 }

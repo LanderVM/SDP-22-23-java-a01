@@ -12,9 +12,9 @@ public class ContactPersonDTO {
         email = new SimpleStringProperty(contactPerson.getEmail());
         phoneNumber = new SimpleStringProperty(contactPerson.getPhoneNumber());
     }
-    
+
     public ContactPersonDTO(String email, String phoneNumber) {
-    	this.email = new SimpleStringProperty(email);
+        this.email = new SimpleStringProperty(email);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
     }
 

@@ -27,7 +27,7 @@ public class OrderDTO {
         totalPrice = new SimpleObjectProperty<>(order.getOriginalAcquisitionPrice());
         status = new SimpleObjectProperty<>(order.getStatus());
         packaging = new SimpleStringProperty(order.getPackaging().getName());
-        carrier = new SimpleStringProperty(order.getCarrier() == null ?  "None" : order.getCarrier().getName());
+        carrier = new SimpleStringProperty(order.getCarrier() == null ? "None" : order.getCarrier().getName());
         trackingCode = new SimpleStringProperty(order.getTrackingCode());
     }
 
@@ -39,24 +39,12 @@ public class OrderDTO {
         return orderId;
     }
 
-    public String getCompany() {
-        return company.get();
-    }
-
     public SimpleStringProperty companyProperty() {
         return company;
     }
 
-    public LocalDate getDate() {
-        return date.get();
-    }
-
     public SimpleObjectProperty<LocalDate> dateProperty() {
         return date;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice.get();
     }
 
     public SimpleObjectProperty<BigDecimal> totalPriceProperty() {
@@ -70,16 +58,16 @@ public class OrderDTO {
     public SimpleStringProperty statusProperty() {
         return new SimpleStringProperty(status.get().toString());
     }
-    
+
     public SimpleStringProperty packagingProperty() {
-    	return packaging;
+        return packaging;
     }
-    
+
     public SimpleStringProperty carrierProperty() {
-    	return carrier;
+        return carrier;
     }
-    
+
     public SimpleStringProperty trackingCodeProperty() {
-    	return trackingCode;
+        return trackingCode;
     }
 }

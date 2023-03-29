@@ -10,32 +10,31 @@ import java.math.BigDecimal;
 
 public class ProductDTO {
 
-	private final SimpleStringProperty productName;
-	private final SimpleIntegerProperty amount;
-	private final SimpleDoubleProperty unitPrice;
-	private final SimpleObjectProperty<BigDecimal> totalPrice;
-	
-	public ProductDTO(Product product, int amount) {
-		this.productName = new SimpleStringProperty(product.getName());
-		this.amount = new SimpleIntegerProperty(amount);
-		this.unitPrice = new SimpleDoubleProperty(product.getPrice().doubleValue());
-		this.totalPrice = new SimpleObjectProperty<>(product.getPrice().multiply(BigDecimal.valueOf(amount)));
-	}
+    private final SimpleStringProperty productName;
+    private final SimpleIntegerProperty amount;
+    private final SimpleDoubleProperty unitPrice;
+    private final SimpleObjectProperty<BigDecimal> totalPrice;
 
-	public SimpleStringProperty productNameProperty() {
-		return productName;
-	}
-	
-	public SimpleDoubleProperty unitPriceProperty() {
-		return unitPrice;
-	}
-	
-	public SimpleObjectProperty<BigDecimal> totalPriceProperty() {
-		return totalPrice;
-	}
-	
-	public SimpleIntegerProperty amountProperty() {
-		return amount;
-	}
-	
+    public ProductDTO(Product product, int amount) {
+        this.productName = new SimpleStringProperty(product.getName());
+        this.amount = new SimpleIntegerProperty(amount);
+        this.unitPrice = new SimpleDoubleProperty(product.getPrice().doubleValue());
+        this.totalPrice = new SimpleObjectProperty<>(product.getPrice().multiply(BigDecimal.valueOf(amount)));
+    }
+
+    public SimpleStringProperty productNameProperty() {
+        return productName;
+    }
+
+    public SimpleDoubleProperty unitPriceProperty() {
+        return unitPrice;
+    }
+
+    public SimpleObjectProperty<BigDecimal> totalPriceProperty() {
+        return totalPrice;
+    }
+
+    public SimpleIntegerProperty amountProperty() {
+        return amount;
+    }
 }

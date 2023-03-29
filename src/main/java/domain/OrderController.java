@@ -1,8 +1,5 @@
 package domain;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
 import gui.view.OrderDTO;
@@ -10,8 +7,11 @@ import gui.view.ProductDTO;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import persistence.OrderDao;
 import persistence.CarrierDao;
+import persistence.OrderDao;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderController {
 
@@ -42,21 +42,20 @@ public class OrderController {
     }
 
     public Supplier getCustomerForOrder(int orderId) {
-		return orderDao.getCustomerForOrder(orderId);
-	}
-
-    public ObservableList<ProductDTO> getProductsList(int orderId) {
-    	List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
-        return FXCollections.observableArrayList(list.stream().map(el->new ProductDTO(el.getProduct(),el.getCount())).toList());
+        return orderDao.getCustomerForOrder(orderId);
     }
 
-    public void processOrder(int orderId, String carrierName,int supplierId) throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException {
+    public ObservableList<ProductDTO> getProductsList(int orderId) {
+        List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
+        return FXCollections.observableArrayList(list.stream().map(el -> new ProductDTO(el.getProduct(), el.getCount())).toList());
+    }
+
+    public void processOrder(int orderId, String carrierName, int supplierId) throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException {
         Order order = orderDao.get(orderId);
-        if (order==null)
-        	throw new EntityDoesntExistException("There is no order for given orderId!");
-        Carrier carrier =  carrierDao.getForSupplier(carrierName, supplierId);
-        if (carrier ==null)
-        	throw new EntityDoesntExistException("There is no Carrier for given carrierName and supplierId!");
+        if (order == null) throw new EntityDoesntExistException("There is no order for given orderId!");
+        Carrier carrier = carrierDao.getForSupplier(carrierName, supplierId);
+        if (carrier == null)
+            throw new EntityDoesntExistException("There is no Carrier for given carrierName and supplierId!");
         if (!order.getStatus().equals(Status.POSTED))
             throw new OrderStatusException("Order must have status POSTED in order to get processed!");
 

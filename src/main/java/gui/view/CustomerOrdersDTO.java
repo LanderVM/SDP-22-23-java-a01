@@ -12,24 +12,23 @@ public class CustomerOrdersDTO {
     private final SimpleIntegerProperty orderPropertyId;
     private final SimpleObjectProperty<LocalDate> orderPropertyDate;
     private final SimpleObjectProperty<Status> orderPropertyStatus;
-    
+
     public CustomerOrdersDTO(Order order) {
-    	orderPropertyId = new SimpleIntegerProperty(order.getOrderId());
-    	orderPropertyDate = new SimpleObjectProperty<>(order.getDate());
-    	orderPropertyStatus = new SimpleObjectProperty<>(order.getStatus());
+        orderPropertyId = new SimpleIntegerProperty(order.getOrderId());
+        orderPropertyDate = new SimpleObjectProperty<>(order.getDate());
+        orderPropertyStatus = new SimpleObjectProperty<>(order.getStatus());
     }
 
-	public SimpleIntegerProperty getOrderPropertyId() {
-		return orderPropertyId;
-	}
+    public SimpleIntegerProperty getOrderPropertyId() {
+        return orderPropertyId;
+    }
 
-	public SimpleObjectProperty<LocalDate> getOrderPropertyDate() {
-		return orderPropertyDate;
-	}
+    public SimpleObjectProperty<LocalDate> getOrderPropertyDate() {
+        return orderPropertyDate;
+    }
 
-	public SimpleObjectProperty<Status> getOrderPropertyStatus() {
-		return orderPropertyStatus;
-	}
-
+    public SimpleObjectProperty<Status> getOrderPropertyStatus() {
+        return orderPropertyStatus;
+    }
 }
 

@@ -36,8 +36,7 @@ public class TrackingCodeDetails {
     }
 
     public void setCharacterCount(int characterCount) {
-        if (this.characterCount <= 0)
-            throw new IllegalArgumentException("Character count must be a positive number!");
+        if (this.characterCount <= 0) throw new IllegalArgumentException("Character count must be a positive number!");
         this.characterCount = characterCount;
     }
 
@@ -62,8 +61,7 @@ public class TrackingCodeDetails {
     }
 
     public void setVerificationType(VerificationType verificationType) {
-    	if(verificationType==null)
-    		throw new IllegalArgumentException("verificationType may not be null!");
+        if (verificationType == null) throw new IllegalArgumentException("verificationType may not be null!");
         this.verificationType = verificationType;
     }
 
@@ -82,12 +80,6 @@ public class TrackingCodeDetails {
 
     @Override
     public String toString() {
-        return "TrackingCodeDetails{" +
-                "trackingCodeDetailsId=" + trackingCodeDetailsId +
-                ", characterCount=" + characterCount +
-                ", integersOnly=" + integersOnly +
-                ", prefix='" + prefix + '\'' +
-                ", verificationType=" + verificationType +
-                '}';
+        return "TrackingCodeDetails{" + "trackingCodeDetailsId=" + trackingCodeDetailsId + ", characterCount=" + characterCount + ", integersOnly=" + integersOnly + ", prefix='" + prefix + '\'' + ", verificationType=" + verificationType + '}';
     }
 }

@@ -1,18 +1,18 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import gui.view.PackagingDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.PackagingDao;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PackagingController {
 
     private final PackagingDao packagingDao;
-    private final UserController userController; // TODO
+    private final UserController userController;
     private ObservableList<PackagingDTO> packagingList = FXCollections.emptyObservableList();
     private int supplierId = -1;
 
@@ -38,8 +38,7 @@ public class PackagingController {
     private void validatePackagingType(String packagingType) {
         if (packagingType == null || packagingType.isBlank() || packagingType.isEmpty())
             throw new IllegalArgumentException("Packaging type must not be empty!");
-        if (!PackagingType.exists(packagingType))
-            throw new IllegalArgumentException("Packaging type does not exist!");
+        if (!PackagingType.exists(packagingType)) throw new IllegalArgumentException("Packaging type does not exist!");
     }
 
     public void addPackaging(String name, double width, double height, double length, double price, String packagingType, boolean active) {
@@ -53,8 +52,7 @@ public class PackagingController {
     }
 
     public void updatePackaging(int packagingId, String name, double width, double height, double length, double price, String packagingType, boolean active) {
-        if (packagingId <= 0)
-            throw new IllegalArgumentException("Packaging ID must not be 0 or negative!");
+        if (packagingId <= 0) throw new IllegalArgumentException("Packaging ID must not be 0 or negative!");
         validatePackagingType(packagingType);
 
         Packaging packaging = packagingDao.get(packagingId);
@@ -84,8 +82,7 @@ public class PackagingController {
     }
 
 
-    public static ObservableList<String> getPackagingTypesObservableList () {
-    	return FXCollections.observableList(Arrays.stream(PackagingType.values()).map(PackagingType::name)
-				.collect(Collectors.toList()));
+    public static ObservableList<String> getPackagingTypesObservableList() {
+        return FXCollections.observableList(Arrays.stream(PackagingType.values()).map(PackagingType::name).collect(Collectors.toList()));
     }
 }

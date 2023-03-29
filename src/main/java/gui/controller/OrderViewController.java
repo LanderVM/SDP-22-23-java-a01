@@ -89,8 +89,7 @@ public class OrderViewController extends GridPane {
     private final CarrierController carrierController;
     private ObservableList<OrderDTO> orderList;
 
-    public OrderViewController(OrderController orderController, UserController userController,
-                               CarrierController carrierController) {
+    public OrderViewController(OrderController orderController, UserController userController, CarrierController carrierController) {
         this.orderController = orderController;
         this.userController = userController;
         this.carrierController = carrierController;
@@ -131,8 +130,7 @@ public class OrderViewController extends GridPane {
         OnlyPostedOrdersCheckBox.selectedProperty().addListener(((observableValue, inactive, t1) -> {
             orderList = orderController.getOrderList(userController.userId(), !inactive);
             TableOrdersView.setItems(orderList);
-        }
-        ));
+        }));
 
         orderList = orderController.getOrderList(userController.userId(), false);
         TableOrdersView.setItems(orderList);
@@ -149,14 +147,12 @@ public class OrderViewController extends GridPane {
         // Orders
         TableOrdersView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
             PaneOrderProcess.setVisible(false);
-            if (newOrder == null)
-                return;
+            if (newOrder == null) return;
 
             int orderId = newOrder.getOrderId();
             OrderDetailsTable.setItems(orderController.getOrderByIdView(orderId));
 
-            if (orderController.getOrderById(orderId).getCarrier() == null)
-                PaneOrderProcess.setVisible(true);
+            if (orderController.getOrderById(orderId).getCarrier() == null) PaneOrderProcess.setVisible(true);
 
             setCustomerInfo(orderId);
             ProductsTableView.setItems(orderController.getProductsList(orderId));

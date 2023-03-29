@@ -1,11 +1,11 @@
 package domain;
 
+import jakarta.persistence.*;
+import logoMapper.LogoMapper;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import jakarta.persistence.*;
-import logoMapper.LogoMapper;
 
 @Entity
 @Table(name = "supplier")
@@ -27,12 +27,12 @@ import logoMapper.LogoMapper;
                 query = "SELECT d FROM Supplier d"
         ),
         @NamedQuery(
-        		name="Supplier.findAllCustomersForSupplier",
-        		query="SELECT DISTINCT c FROM Supplier s JOIN s.ordersAsSupplier o JOIN o.customer c WHERE s.supplierId = ?1"
+                name = "Supplier.findAllCustomersForSupplier",
+                query = "SELECT DISTINCT c FROM Supplier s JOIN s.ordersAsSupplier o JOIN o.customer c WHERE s.supplierId = ?1"
         ),
         @NamedQuery(
-        		name ="Supplier.getAllOrdersForCustomer",
-        		query ="SELECT c.ordersAsCustomer FROM Supplier c WHERE c.email = ?1"
+                name = "Supplier.getAllOrdersForCustomer",
+                query = "SELECT c.ordersAsCustomer FROM Supplier c WHERE c.email = ?1"
         )
 })
 public class Supplier {
@@ -49,22 +49,22 @@ public class Supplier {
     private String address = "";
     @Column(name = "phone_number")
     private String phoneNumber = "";
-    @OneToOne(mappedBy="supplier", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "supplier", cascade = CascadeType.PERSIST)
     private Logo logo = LogoMapper.makeLogo("/images/testImg.jpg", this);
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST)
     private List<ContactPersonSupplier> contactPersons = Collections.emptyList();
-    @OneToMany(mappedBy="supplier")
+    @OneToMany(mappedBy = "supplier")
     private List<User> users = Collections.emptyList();
     @OneToMany(mappedBy = "supplier")
     private List<Order> ordersAsSupplier = Collections.emptyList();
     @OneToMany(mappedBy = "customer")
     private List<Order> ordersAsCustomer = Collections.emptyList();
-    @OneToMany(mappedBy="supplier")
+    @OneToMany(mappedBy = "supplier")
     private List<Carrier> carriers = Collections.emptyList();
 
     public Supplier(String name, String email, String address, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
-                    List<Order> ordersAsCustomer,List<ContactPersonSupplier> contactPersons,List<User> users) {
-        this(name,email,address,phoneNumber,logoLocation);
+                    List<Order> ordersAsCustomer, List<ContactPersonSupplier> contactPersons, List<User> users) {
+        this(name, email, address, phoneNumber, logoLocation);
         this.setOrdersAsSupplier(ordersAsSupplier);
         this.setOrdersAsCustomer(ordersAsCustomer);
         this.setContactPersons(contactPersons);
@@ -87,10 +87,10 @@ public class Supplier {
     }
 
     public int getSupplierId() {
-		return supplierId;
-	}
+        return supplierId;
+    }
 
-	public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -110,73 +110,43 @@ public class Supplier {
         return address;
     }
 
-    public void setAddress(String adress) {
-        this.address = adress;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public byte[] getLogo() {
-    	return logo.getLogo();
-    }
-    
-    public List<Order> getOrdersAsSupplier() {
-        return ordersAsSupplier;
+        return logo.getLogo();
     }
 
     public void setOrdersAsSupplier(List<Order> ordersAsSupplier) {
-    	if(ordersAsSupplier == null)
-    		throw new IllegalArgumentException("ordersAsSupplier may not be null!");
+        if (ordersAsSupplier == null)
+            throw new IllegalArgumentException("ordersAsSupplier may not be null!");
         this.ordersAsSupplier = ordersAsSupplier;
     }
 
-    public List<Order> getOrdersAsCustomer() {
-        return ordersAsCustomer;
-    }
-    
     public void setOrdersAsCustomer(List<Order> ordersAsCustomer) {
-    	if(ordersAsCustomer==null)
-    		throw new IllegalArgumentException("ordersAsCustomer may not be null!");
+        if (ordersAsCustomer == null)
+            throw new IllegalArgumentException("ordersAsCustomer may not be null!");
         this.ordersAsCustomer = ordersAsCustomer;
     }
-    
-    
 
-    public List<ContactPersonSupplier> getContactPersons() {
-		return contactPersons;
-	}
+    public void setContactPersons(List<ContactPersonSupplier> contactPersons) {
+        if (contactPersons == null)
+            throw new IllegalArgumentException("contactPersons may not be null!");
+        this.contactPersons = contactPersons;
+    }
 
-	public void setContactPersons(List<ContactPersonSupplier> contactPersons) {
-		if (contactPersons==null)
-			throw new IllegalArgumentException("contactPersons may not be null!");
-		this.contactPersons = contactPersons;
-	}
+    public void setUsers(List<User> users) {
+        if (users == null)
+            throw new IllegalArgumentException("users may not be null!");
+        this.users = users;
+    }
 
-	public List<User> getUsers() {
-		return users;
-	}
+    public void setCarriers(List<Carrier> carriers) {
+        this.carriers = carriers;
+    }
 
-	public void setUsers(List<User> users) {
-		if(users==null)
-			throw new IllegalArgumentException("users may not be null!");
-		this.users = users;
-	}
-
-	public void setLogo(Logo logo) {
-		this.logo = logo;
-	}
-
-	public void setCarriers(List<Carrier> carriers) {
-		this.carriers = carriers;
-	}
-
-	@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -189,9 +159,9 @@ public class Supplier {
         return Objects.hash(supplierId);
     }
 
-	@Override
-	public String toString() {
-		return "Supplier [supplierId=" + supplierId + ", name=" + name + ", email=" + email +" ]";
-	}
-    
+    @Override
+    public String toString() {
+        return "Supplier [supplierId=" + supplierId + ", name=" + name + ", email=" + email + " ]";
+    }
+
 }

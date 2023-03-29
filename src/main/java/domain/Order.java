@@ -1,13 +1,13 @@
 package domain;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer_order")
@@ -21,31 +21,31 @@ import jakarta.persistence.*;
                 query = "SELECT d FROM Order d WHERE d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
-        		name = "Order.findAllForSupplier",
+                name = "Order.findAllForSupplier",
                 query = "SELECT d FROM Order d WHERE d.supplier.supplierId = ?1" // TODO
         ),
         @NamedQuery(
-        		name="Order.findAllForUser",
-        		query = "SELECT d FROM Order d WHERE d.supplier.supplierId = (SELECT w.supplier.supplierId FROM User w WHERE w.userId = ?1)"
+                name = "Order.findAllForUser",
+                query = "SELECT d FROM Order d WHERE d.supplier.supplierId = (SELECT w.supplier.supplierId FROM User w WHERE w.userId = ?1)"
         ),
         @NamedQuery(
-        		name = "Order.getOrderLinesForOrder", 
-        		query = "SELECT d.orderLines FROM Order d WHERE d.orderId = ?1"
-        		
+                name = "Order.getOrderLinesForOrder",
+                query = "SELECT d.orderLines FROM Order d WHERE d.orderId = ?1"
+
         ),
         @NamedQuery(
-        		name = "Order.getCustomerForOrder", 
-        		query = "SELECT d.customer FROM Order d WHERE d.orderId = ?1"
+                name = "Order.getCustomerForOrder",
+                query = "SELECT d.customer FROM Order d WHERE d.orderId = ?1"
         ),
         @NamedQuery(
-        		name="Order.findAllForUserPosted",
-        		query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = ?1"
+                name = "Order.findAllForUserPosted",
+                query = "SELECT d FROM Order d WHERE d.status = domain.Status.POSTED AND d.supplier.supplierId = ?1"
         ),
         @NamedQuery(
-        		name="Order.findAllForUserOpen",
-        		query = "SELECT d FROM Order d WHERE d.status != domain.Status.DELIVERED AND d.customer.supplierId = ?1"
+                name = "Order.findAllForUserOpen",
+                query = "SELECT d FROM Order d WHERE d.status != domain.Status.DELIVERED AND d.customer.supplierId = ?1"
         )
-        
+
 })
 public class Order {
 
@@ -57,7 +57,7 @@ public class Order {
     private String address = "";
     @Column(name = "order_date")
     private LocalDate date;
-    @OneToMany(mappedBy="order",cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<OrderLine> orderLines;
     @Column(name = "order_status")
     private Status status;
@@ -79,21 +79,21 @@ public class Order {
 
     public Order(LocalDate date, String adress, List<Product> productsList, Status status,
                  Carrier carrier, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
-        this(date,adress,productsList,status, carrier, packaging);
+        this(date, adress, productsList, status, carrier, packaging);
         this.setOriginalAcquisitionPrice(originalAcquisitionPrice);
         this.setSupplier(supplier);
         this.setCustomer(customer);
     }
 
-	public Order(LocalDate date, String address, List<Product> productsList, Status status,
+    public Order(LocalDate date, String address, List<Product> productsList, Status status,
                  Carrier carrier, Packaging packaging) {
-		this.address = address;
-    	this.setDate(date);
-    	this.setStatus(status);
-    	this.setCarrier(carrier);
-    	this.setPackaging(packaging);
-    	this.orderLines = new ArrayList<>();
-    	makeOrderlines(productsList);
+        this.address = address;
+        this.setDate(date);
+        this.setStatus(status);
+        this.setCarrier(carrier);
+        this.setPackaging(packaging);
+        this.orderLines = new ArrayList<>();
+        makeOrderlines(productsList);
     }
 
     protected Order() {
@@ -103,27 +103,13 @@ public class Order {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-    	if (address.isEmpty())
-    		throw new IllegalArgumentException("Adress needs to be filled in!");
-        this.address = address;
-    }
-
     public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
-    	if(date==null)
-    		throw new IllegalArgumentException("date may not be null!");
+        if (date == null)
+            throw new IllegalArgumentException("date may not be null!");
         this.date = date;
     }
 
@@ -132,8 +118,8 @@ public class Order {
     }
 
     public void setStatus(Status status) {
-    	if(status==null)
-    		throw new IllegalArgumentException("status may not be null!");
+        if (status == null)
+            throw new IllegalArgumentException("status may not be null!");
         this.status = status;
     }
 
@@ -142,8 +128,8 @@ public class Order {
     }
 
     public void setPackaging(Packaging packagingType) {
-    	if (packagingType == null)
-    		throw new IllegalArgumentException("Packaging must not be null!");
+        if (packagingType == null)
+            throw new IllegalArgumentException("Packaging must not be null!");
         this.packaging = packagingType;
     }
 
@@ -181,12 +167,13 @@ public class Order {
     }
 
     public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
-    	if (originalAcquisitionPrice==null)
-    		throw new IllegalArgumentException("originalAcquisitionPrice may not be null!");
-    	if (originalAcquisitionPrice.compareTo(BigDecimal.ZERO)<0)
-    		throw new IllegalArgumentException("originalAcquisitionPrice may not be negative!");
+        if (originalAcquisitionPrice == null)
+            throw new IllegalArgumentException("originalAcquisitionPrice may not be null!");
+        if (originalAcquisitionPrice.compareTo(BigDecimal.ZERO) < 0)
+            throw new IllegalArgumentException("originalAcquisitionPrice may not be negative!");
         this.originalAcquisitionPrice = originalAcquisitionPrice;
     }
+
     public Supplier getSupplier() {
         return supplier;
     }
@@ -212,24 +199,24 @@ public class Order {
             throw new RuntimeException("Notification doesn't belong to this order"); // TODO testing & proper exception
         notifications.add(notification);
     }
-    
-    public void makeOrderlines(List<Product> productsList) {
-    	if (productsList==null)
-    		throw new IllegalArgumentException("productsList may not be null!");
-    	if (productsList.isEmpty()) 
-    		throw new IllegalArgumentException("productsList may not be empty!");
-		List<List<Product>> list = new ArrayList<>();
-		Map<Object, List<Product>>map = productsList.stream().collect(Collectors.groupingBy(Product::getName));
-        for (Entry<Object, List<Product>> e:map.entrySet()) {
-        	list.add(e.getValue());
-        }
-        for (List<Product> l:list) {
-				orderLines.add(new OrderLine(l,this));
-        }
-		
-	}
 
-	@Override
+    public void makeOrderlines(List<Product> productsList) {
+        if (productsList == null)
+            throw new IllegalArgumentException("productsList may not be null!");
+        if (productsList.isEmpty())
+            throw new IllegalArgumentException("productsList may not be empty!");
+        List<List<Product>> list = new ArrayList<>();
+        Map<Object, List<Product>> map = productsList.stream().collect(Collectors.groupingBy(Product::getName));
+        for (Entry<Object, List<Product>> e : map.entrySet()) {
+            list.add(e.getValue());
+        }
+        for (List<Product> l : list) {
+            orderLines.add(new OrderLine(l, this));
+        }
+
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -19,22 +19,24 @@ public class OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
         List<Order> result = entityManager.createNamedQuery("Order.findAllForSupplier", Order.class).setParameter(1, supplierId).getResultList();
         return Collections.unmodifiableList(result);
     }
+
     public List<Order> getAllForUser(int id) {
-    	return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUser", Order.class).setParameter(1, id).getResultList());
-    }
-    public List<OrderLine> getOrderLinesForOrder (int orderId) {
-    	return entityManager.createNamedQuery("Order.getOrderLinesForOrder",OrderLine.class).setParameter(1, orderId).getResultList();
+        return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUser", Order.class).setParameter(1, id).getResultList());
     }
 
-	public Supplier getCustomerForOrder(int orderId) {
-		return entityManager.createNamedQuery("Order.getCustomerForOrder",Supplier.class).setParameter(1,orderId).getSingleResult();
-	}
-	
-	public List<Order> getAllForUserPosted(int userId) {
-    	return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserPosted", Order.class).setParameter(1, userId).getResultList());
+    public List<OrderLine> getOrderLinesForOrder(int orderId) {
+        return entityManager.createNamedQuery("Order.getOrderLinesForOrder", OrderLine.class).setParameter(1, orderId).getResultList();
     }
 
-	public List<Order> getAllForUserOpen(int userId) {
-		return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserOpen", Order.class).setParameter(1, userId).getResultList());
-	}
+    public Supplier getCustomerForOrder(int orderId) {
+        return entityManager.createNamedQuery("Order.getCustomerForOrder", Supplier.class).setParameter(1, orderId).getSingleResult();
+    }
+
+    public List<Order> getAllForUserPosted(int userId) {
+        return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserPosted", Order.class).setParameter(1, userId).getResultList());
+    }
+
+    public List<Order> getAllForUserOpen(int userId) {
+        return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserOpen", Order.class).setParameter(1, userId).getResultList());
+    }
 }

@@ -23,7 +23,7 @@ public class PackagingDTO {
     private final SimpleDoubleProperty height;
 
     public PackagingDTO(Packaging packaging) {
-    	this.id = new SimpleIntegerProperty(packaging.getPackagingId());
+        this.id = new SimpleIntegerProperty(packaging.getPackagingId());
         this.name = new SimpleStringProperty(packaging.getName());
         this.packagingType = new SimpleObjectProperty<>(packaging.getType());
         this.dimensions = new SimpleStringProperty(String.format("%.1f x %.1f x %.1f", packaging.getWidth(), packaging.getHeight(), packaging.getLength()));
@@ -32,16 +32,12 @@ public class PackagingDTO {
         this.width = new SimpleDoubleProperty(packaging.getWidth());
         this.length = new SimpleDoubleProperty(packaging.getLength());
         this.height = new SimpleDoubleProperty(packaging.getHeight());
-        
     }
 
     public int getPackagingId() {
         return id.get();
     }
 
-    public SimpleIntegerProperty packagingIdProperty() {
-        return id;
-    }
     public String getName() {
         return name.get();
     }
@@ -49,7 +45,7 @@ public class PackagingDTO {
     public SimpleStringProperty nameProperty() {
         return name;
     }
-    
+
 
     public PackagingType getPackagingType() {
         return packagingType.get();
@@ -59,22 +55,20 @@ public class PackagingDTO {
         return packagingType;
     }
 
-    public String getDimensions() {
-        return dimensions.get();
-    }
-
     public SimpleStringProperty dimensionsProperty() {
         return dimensions;
     }
-    
+
     public Double getWidth() {
-    	return width.get();
+        return width.get();
     }
+
     public Double getLength() {
-    	return length.get();
+        return length.get();
     }
+
     public Double getHeight() {
-    	return height.get();
+        return height.get();
     }
 
     public BigDecimal getPrice() {

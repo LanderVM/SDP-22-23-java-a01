@@ -1,8 +1,7 @@
 package domain;
 
 public enum Roles {
-    ADMIN,
-    STOREPERSON;
+    ADMIN, STOREPERSON;
 
     @Override
     public String toString() {

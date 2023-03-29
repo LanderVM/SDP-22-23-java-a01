@@ -25,290 +25,274 @@ import java.util.Objects;
 
 public class CarrierViewController extends GridPane {
 
-	@FXML
-	private Label lblUser;
-	@FXML
-	private Label lblCurrentAction;
-	@FXML
-	private TableView<CarrierDTO> tblCarriers;
-	@FXML
-	private TableColumn<CarrierDTO, String> tblCarrierClmName;
-	@FXML
-	private TableColumn<CarrierDTO, String> tblCarriersClmStatus;
-	@FXML
-	private TableView<ContactPersonDTO> tblContactPerson;
-	@FXML
-	private TableColumn<ContactPersonDTO, String> tblContactPersonClmPhone;
-	@FXML
-	private TableColumn<ContactPersonDTO, String> tblContactPersonClmEmail;
-	@FXML
-	private CheckBox chkboxIsActive;
-	@FXML
-	private CheckBox chkboxOnlyNumbers;
-	@FXML
-	private TextField txtName;
-	@FXML
-	private TextField txtCharacterAmount;
-	@FXML
-	private TextField txtPrefix;
-	@FXML
-	private ChoiceBox<String> ChoiceBoxExtraVerificationCode;
-	@FXML
-	private TextField txtAddPhoneNumber;
-	@FXML
-	private TextField txtAddEmail;
-	@FXML
-	private Button btnSave;
-	@FXML
-	private Button btnCreateService;
-	@FXML
-	private Button btnAddContactPerson;
-	@FXML
-	private Button btnRemoveContactPerson;
-	@FXML
-	private Button btnCurrentActionCreate;
-	@FXML
-	private Button btnCurrentActionSave;
+    @FXML
+    private Label lblUser;
+    @FXML
+    private Label lblCurrentAction;
+    @FXML
+    private TableView<CarrierDTO> tblCarriers;
+    @FXML
+    private TableColumn<CarrierDTO, String> tblCarrierClmName;
+    @FXML
+    private TableColumn<CarrierDTO, String> tblCarriersClmStatus;
+    @FXML
+    private TableView<ContactPersonDTO> tblContactPerson;
+    @FXML
+    private TableColumn<ContactPersonDTO, String> tblContactPersonClmPhone;
+    @FXML
+    private TableColumn<ContactPersonDTO, String> tblContactPersonClmEmail;
+    @FXML
+    private CheckBox chkboxIsActive;
+    @FXML
+    private CheckBox chkboxOnlyNumbers;
+    @FXML
+    private TextField txtName;
+    @FXML
+    private TextField txtCharacterAmount;
+    @FXML
+    private TextField txtPrefix;
+    @FXML
+    private ChoiceBox<String> ChoiceBoxExtraVerificationCode;
+    @FXML
+    private TextField txtAddPhoneNumber;
+    @FXML
+    private TextField txtAddEmail;
+    @FXML
+    private Button btnSave;
+    @FXML
+    private Button btnCreateService;
+    @FXML
+    private Button btnAddContactPerson;
+    @FXML
+    private Button btnRemoveContactPerson;
+    @FXML
+    private Button btnCurrentActionCreate;
+    @FXML
+    private Button btnCurrentActionSave;
 
-	private final UserController userController;
-	private final CarrierController carrierController;
-	private int carrierId = -1;
-	private boolean currentActionCreate;
-	private ObservableList<ContactPersonDTO> listForAddedContactPersons;
-	private ObservableList<ContactPersonDTO> listForAllContactPersons;
-	private String selectedContactPersonEmail;
+    private final UserController userController;
+    private final CarrierController carrierController;
+    private int carrierId = -1;
+    private boolean currentActionCreate;
+    private ObservableList<ContactPersonDTO> listForAddedContactPersons;
+    private ObservableList<ContactPersonDTO> listForAllContactPersons;
+    private String selectedContactPersonEmail;
 
-	public CarrierViewController(UserController userController,
-								 CarrierController carrierController) {
-		this.userController = userController;
-		this.carrierController = carrierController;
-	}
+    public CarrierViewController(UserController userController, CarrierController carrierController) {
+        this.userController = userController;
+        this.carrierController = carrierController;
+    }
 
     private void showAlert(String title, String message, AlertType alertType) {
-		Alert alert = new Alert(alertType);
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-	@FXML
-	private void initialize() {
-		lblUser.setText(userController.toString());
-		lblCurrentAction.setText("Current Action: Updating a Carrier");
-		currentActionCreate = false;
-		btnCurrentActionSave.setDisable(true);
-		btnCreateService.setVisible(false);
-		btnSave.setDisable(true);
-		btnAddContactPerson.setDisable(true);
-		btnRemoveContactPerson.setDisable(true);
+    @FXML
+    private void initialize() {
+        lblUser.setText(userController.toString());
+        lblCurrentAction.setText("Current Action: Updating a Carrier");
+        currentActionCreate = false;
+        btnCurrentActionSave.setDisable(true);
+        btnCreateService.setVisible(false);
+        btnSave.setDisable(true);
+        btnAddContactPerson.setDisable(true);
+        btnRemoveContactPerson.setDisable(true);
 
-		listForAllContactPersons = FXCollections.observableArrayList();
-		listForAddedContactPersons = FXCollections.observableArrayList();
+        listForAllContactPersons = FXCollections.observableArrayList();
+        listForAddedContactPersons = FXCollections.observableArrayList();
 
-		ChoiceBoxExtraVerificationCode.setItems(CarrierDTO.getVerficationTypesObservableList());
+        ChoiceBoxExtraVerificationCode.setItems(CarrierDTO.getVerficationTypesObservableList());
 
-		// Table Carrier
-		tblCarrierClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-		tblCarriersClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
+        // Table Carrier
+        tblCarrierClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        tblCarriersClmStatus.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
 
-		tblCarriers.setItems(carrierController.getCarriers(userController.supplierIdFromUser()));
+        tblCarriers.setItems(carrierController.getCarriers(userController.supplierIdFromUser()));
 
-		tblCarriers.getSelectionModel().selectedItemProperty()
-				.addListener((observableValue, oldService, newService) -> {
-					if (newService != null) {
+        tblCarriers.getSelectionModel().selectedItemProperty().addListener((observableValue, oldService, newService) -> {
+            if (newService != null) {
 
-						listForAddedContactPersons.clear();
-						listForAllContactPersons.clear();
+                listForAddedContactPersons.clear();
+                listForAllContactPersons.clear();
 
-						btnSave.setDisable(false);
-						btnAddContactPerson.setDisable(false);
-						btnRemoveContactPerson.setDisable(true);
-						carrierId = newService.getCarrierId();
+                btnSave.setDisable(false);
+                btnAddContactPerson.setDisable(false);
+                btnRemoveContactPerson.setDisable(true);
+                carrierId = newService.getCarrierId();
 
-						// Table info Carrier
-						txtName.setText(newService.getName());
-						txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
-						txtPrefix.setText(newService.getPrefix());
-						chkboxIsActive.setSelected(newService.isActive());
-						chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
-						ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
+                // Table info Carrier
+                txtName.setText(newService.getName());
+                txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
+                txtPrefix.setText(newService.getPrefix());
+                chkboxIsActive.setSelected(newService.isActive());
+                chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
+                ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
 
-						// Table ContactPerson Carrier
-						tblContactPersonClmPhone
-								.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-						tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-						listForAllContactPersons.addAll(newService.getContactPeople());
-						tblContactPerson.setItems(listForAllContactPersons);
+                // Table ContactPerson Carrier
+                tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+                tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+                listForAllContactPersons.addAll(newService.getContactPeople());
+                tblContactPerson.setItems(listForAllContactPersons);
 
-						tblContactPerson.getSelectionModel().selectedItemProperty()
-								.addListener((observableValue2, oldContactPerson, newContactPerson) -> {
-                                    if (newContactPerson == null)
-                                        return;
-									btnRemoveContactPerson.setDisable(false);
-									selectedContactPersonEmail = newContactPerson.getEmail();
-								});
-					}
-				});
-	}
+                tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue2, oldContactPerson, newContactPerson) -> {
+                    if (newContactPerson == null) return;
+                    btnRemoveContactPerson.setDisable(false);
+                    selectedContactPersonEmail = newContactPerson.getEmail();
+                });
+            }
+        });
+    }
 
-	@FXML
-	private void saveCarrier() {
-		try {
-			carrierController.updateCarrier(carrierId, txtName.getText(),
-					listForAllContactPersons, Integer.parseInt(txtCharacterAmount.getText()),
-					chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
-					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
-			showAlert("Successful", "Changes to Carrier have been saved.", AlertType.INFORMATION);
-		} catch (NumberFormatException numberFormatException) {
-			showAlert("Invalid Input", "Character amount input must be a valid number!", AlertType.ERROR);
-		} catch (NoResultException | EntityDoesntExistException e) {
-			showAlert("Internal Error", "Database did not find any Carrier with this id!", AlertType.ERROR);
-		} catch (IllegalArgumentException illegalArgumentException) {
-			showAlert("Invalid Action", illegalArgumentException.getMessage(), AlertType.ERROR);
-		}
-		reselectCarrier(carrierId);
-	}
+    @FXML
+    private void saveCarrier() {
+        try {
+            carrierController.updateCarrier(carrierId, txtName.getText(), listForAllContactPersons, Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(), ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected());
+            showAlert("Successful", "Changes to Carrier have been saved.", AlertType.INFORMATION);
+        } catch (NumberFormatException numberFormatException) {
+            showAlert("Invalid Input", "Character amount input must be a valid number!", AlertType.ERROR);
+        } catch (NoResultException | EntityDoesntExistException e) {
+            showAlert("Internal Error", "Database did not find any Carrier with this id!", AlertType.ERROR);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            showAlert("Invalid Action", illegalArgumentException.getMessage(), AlertType.ERROR);
+        }
+        reselectCarrier(carrierId);
+    }
 
-	@FXML
-	private void addToContactPersonsList() {
-			if (txtAddEmail.getText().isBlank() || txtAddPhoneNumber.getText().isBlank()) {
-                showAlert("Invalid Input", "Phone number and email address must be filled in!", AlertType.ERROR);
-				return;
-			}
-			ContactPersonDTO contactPerson = new ContactPersonDTO(txtAddEmail.getText(), txtAddPhoneNumber.getText());
-			listForAllContactPersons.add(contactPerson);
-			if (!currentActionCreate)
-				listForAddedContactPersons.add(contactPerson);
-	}
+    @FXML
+    private void addToContactPersonsList() {
+        if (txtAddEmail.getText().isBlank() || txtAddPhoneNumber.getText().isBlank()) {
+            showAlert("Invalid Input", "Phone number and email address must be filled in!", AlertType.ERROR);
+            return;
+        }
+        ContactPersonDTO contactPerson = new ContactPersonDTO(txtAddEmail.getText(), txtAddPhoneNumber.getText());
+        listForAllContactPersons.add(contactPerson);
+        if (!currentActionCreate) listForAddedContactPersons.add(contactPerson);
+    }
 
-	@FXML
-	void removeContactPerson() {
+    @FXML
+    void removeContactPerson() {
         if (!currentActionCreate)
             listForAddedContactPersons.removeIf(contactPerson -> Objects.equals(contactPerson.getEmail(), selectedContactPersonEmail));
         listForAllContactPersons.removeIf(contactPerson -> Objects.equals(contactPerson.getEmail(), selectedContactPersonEmail));
-	}
+    }
 
-	@FXML
-	private void createService() {
-		try {
-			carrierController.addCarrier(txtName.getText(), listForAllContactPersons,
-					Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(),
-					ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(),
-					userController.supplierIdFromUser());
-			showAlert("Creation Successful", "Carrier has been added.", AlertType.INFORMATION);
-			initializeSaveCarrier();
-		} catch (NumberFormatException e) {
-			showAlert("Invalid Input", "Character amount input must be a valid number!", AlertType.ERROR);
-		} catch (IllegalArgumentException illegalArgumentException) {
-			showAlert("Invalid Input", illegalArgumentException.getMessage(), AlertType.ERROR);
-		}
-	}
+    @FXML
+    private void createService() {
+        try {
+            carrierController.addCarrier(txtName.getText(), listForAllContactPersons, Integer.parseInt(txtCharacterAmount.getText()), chkboxOnlyNumbers.isSelected(), txtPrefix.getText(), ChoiceBoxExtraVerificationCode.getSelectionModel().getSelectedItem(), chkboxIsActive.isSelected(), userController.supplierIdFromUser());
+            showAlert("Creation Successful", "Carrier has been added.", AlertType.INFORMATION);
+            initializeSaveCarrier();
+        } catch (NumberFormatException e) {
+            showAlert("Invalid Input", "Character amount input must be a valid number!", AlertType.ERROR);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            showAlert("Invalid Input", illegalArgumentException.getMessage(), AlertType.ERROR);
+        }
+    }
 
-	@FXML
-	void switchActionToCreate() {
-		initializeCreateCarrier();
-	}
+    @FXML
+    void switchActionToCreate() {
+        initializeCreateCarrier();
+    }
 
-	@FXML
-	void switchActionToSave() {
-		initializeSaveCarrier();
-	}
+    @FXML
+    void switchActionToSave() {
+        initializeSaveCarrier();
+    }
 
-	private void reselectCarrier(int carrierId) {
-		for (CarrierDTO carrierView : tblCarriers.getItems())
-			if (carrierView.getCarrierId() == carrierId) {
+    private void reselectCarrier(int carrierId) {
+        for (CarrierDTO carrierView : tblCarriers.getItems())
+            if (carrierView.getCarrierId() == carrierId) {
                 tblCarriers.getSelectionModel().select(carrierView);
-				break;
-			}
-	}
+                break;
+            }
+    }
 
-	@FXML
-	private void showEmployees() {
-		FXStageUtil.setScene(CarrierController.class.getResource("/gui/EmployeeView.fxml"), "Employees");
-	}
+    @FXML
+    private void showEmployees() {
+        FXStageUtil.setScene(CarrierController.class.getResource("/gui/EmployeeView.fxml"), "Employees");
+    }
 
-	@FXML
-	private void showBoxes() {
-		FXStageUtil.setScene(CarrierController.class.getResource("/gui/PackagingView.fxml"), "Packaging");
-	}
+    @FXML
+    private void showBoxes() {
+        FXStageUtil.setScene(CarrierController.class.getResource("/gui/PackagingView.fxml"), "Packaging");
+    }
 
-	@FXML
-	private void logOut() {
-		FXStageUtil.setScene(CarrierController.class.getResource("/gui/LoginView.fxml"), "Log In");
-	}
+    @FXML
+    private void logOut() {
+        FXStageUtil.setScene(CarrierController.class.getResource("/gui/LoginView.fxml"), "Log In");
+    }
 
-	private void initializeCreateCarrier() {
-		lblCurrentAction.setText("Current Action: Adding a Carrier");
-		tblContactPerson.getSelectionModel().clearSelection();
-		tblCarriers.getSelectionModel().clearSelection();
-		listForAddedContactPersons.clear();
-		listForAllContactPersons.clear();
-		btnAddContactPerson.setDisable(false);
-		tblCarriers.setVisible(false);
-		currentActionCreate = true;
-		btnCurrentActionCreate.setDisable(true);
-		btnCurrentActionSave.setDisable(false);
-		btnCreateService.setVisible(true);
-		btnSave.setVisible(false);
-		tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-		tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-		tblContactPerson.setItems(listForAllContactPersons);
-		tblContactPerson.getSelectionModel().selectedItemProperty()
-				.addListener((observableValue, oldContactPerson, newContactPerson) -> {
-					btnRemoveContactPerson.setDisable(false);
-					selectedContactPersonEmail = newContactPerson.getEmail();
-				});
+    private void initializeCreateCarrier() {
+        lblCurrentAction.setText("Current Action: Adding a Carrier");
+        tblContactPerson.getSelectionModel().clearSelection();
+        tblCarriers.getSelectionModel().clearSelection();
+        listForAddedContactPersons.clear();
+        listForAllContactPersons.clear();
+        btnAddContactPerson.setDisable(false);
+        tblCarriers.setVisible(false);
+        currentActionCreate = true;
+        btnCurrentActionCreate.setDisable(true);
+        btnCurrentActionSave.setDisable(false);
+        btnCreateService.setVisible(true);
+        btnSave.setVisible(false);
+        tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+        tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+        tblContactPerson.setItems(listForAllContactPersons);
+        tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue, oldContactPerson, newContactPerson) -> {
+            btnRemoveContactPerson.setDisable(false);
+            selectedContactPersonEmail = newContactPerson.getEmail();
+        });
 
-	}
+    }
 
-	private void initializeSaveCarrier() {
-		lblCurrentAction.setText("Current Action: Updating a Carrier");
-		tblContactPerson.getSelectionModel().clearSelection();
-		tblCarriers.getSelectionModel().clearSelection();
-		listForAddedContactPersons.clear();
-		listForAllContactPersons.clear();
-		tblCarriers.setVisible(true);
-		btnAddContactPerson.setDisable(true);
-		currentActionCreate = false;
-		btnCurrentActionCreate.setDisable(false);
-		btnCurrentActionSave.setDisable(true);
-		btnCreateService.setVisible(false);
-		btnSave.setVisible(true);
-		tblCarriers.getSelectionModel().selectedItemProperty()
-				.addListener((observableValue, oldService, newService) -> {
-					if (newService != null) {
+    private void initializeSaveCarrier() {
+        lblCurrentAction.setText("Current Action: Updating a Carrier");
+        tblContactPerson.getSelectionModel().clearSelection();
+        tblCarriers.getSelectionModel().clearSelection();
+        listForAddedContactPersons.clear();
+        listForAllContactPersons.clear();
+        tblCarriers.setVisible(true);
+        btnAddContactPerson.setDisable(true);
+        currentActionCreate = false;
+        btnCurrentActionCreate.setDisable(false);
+        btnCurrentActionSave.setDisable(true);
+        btnCreateService.setVisible(false);
+        btnSave.setVisible(true);
+        tblCarriers.getSelectionModel().selectedItemProperty().addListener((observableValue, oldService, newService) -> {
+            if (newService != null) {
 
-						listForAddedContactPersons.clear();
-						listForAllContactPersons.clear();
+                listForAddedContactPersons.clear();
+                listForAllContactPersons.clear();
 
-						btnSave.setDisable(false);
-						btnAddContactPerson.setDisable(false);
-						btnRemoveContactPerson.setDisable(true);
-						carrierId = newService.getCarrierId();
+                btnSave.setDisable(false);
+                btnAddContactPerson.setDisable(false);
+                btnRemoveContactPerson.setDisable(true);
+                carrierId = newService.getCarrierId();
 
-						// Table info Carrier
-						txtName.setText(newService.getName());
-						txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
-						txtPrefix.setText(newService.getPrefix());
-						chkboxIsActive.setSelected(newService.isActive());
-						chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
-						ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
+                // Table info Carrier
+                txtName.setText(newService.getName());
+                txtCharacterAmount.setText(newService.characterCountProperty().getValue().toString());
+                txtPrefix.setText(newService.getPrefix());
+                chkboxIsActive.setSelected(newService.isActive());
+                chkboxOnlyNumbers.setSelected(newService.isIntegersOnly());
+                ChoiceBoxExtraVerificationCode.setValue(newService.getVerificationType().toString());
 
-						// Table ContactPerson Carrier
-						tblContactPersonClmPhone
-								.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-						tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-						listForAllContactPersons.addAll(newService.getContactPeople());
-						tblContactPerson.setItems(listForAllContactPersons);
+                // Table ContactPerson Carrier
+                tblContactPersonClmPhone.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+                tblContactPersonClmEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+                listForAllContactPersons.addAll(newService.getContactPeople());
+                tblContactPerson.setItems(listForAllContactPersons);
 
-						tblContactPerson.getSelectionModel().selectedItemProperty()
-								.addListener((observableValue2, oldContactPerson, newContactPerson) -> {
-									btnRemoveContactPerson.setDisable(false);
-									selectedContactPersonEmail = newContactPerson.getEmail();
-								});
-					}
-				});
-	}
+                tblContactPerson.getSelectionModel().selectedItemProperty().addListener((observableValue2, oldContactPerson, newContactPerson) -> {
+                    btnRemoveContactPerson.setDisable(false);
+                    selectedContactPersonEmail = newContactPerson.getEmail();
+                });
+            }
+        });
+    }
 
 }

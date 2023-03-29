@@ -18,7 +18,7 @@ import jakarta.persistence.*;
                 query = "SELECT u FROM User u WHERE u.userId = ?1"
         ),
         @NamedQuery(
-        		name = "User.findAllEmployeesForSupplier",
+                name = "User.findAllEmployeesForSupplier",
                 query = "SELECT u FROM User u WHERE u.supplier.supplierId = ?1"
         ),
 })
@@ -34,7 +34,7 @@ public class User {
     @Column(name = "surname")
     private String surname = "";
     @Column(name = "name")
-    private String name= "";
+    private String name = "";
     @Column(name = "password")
     private String password = "";
     @Column(name = "country")
@@ -59,7 +59,7 @@ public class User {
     private Supplier supplier;
 
     public User(String accountName, String password, boolean isAdmin, String surname, String name, String telephone, String mobilePhone,
-    		String address, int houseNumber, String box, String city, String postalCode, String country, Supplier supplier) {
+                String address, int houseNumber, String box, String city, String postalCode, String country, Supplier supplier) {
         setAccountName(accountName);
         setPassword(password);
         setAdmin(isAdmin);
@@ -71,26 +71,26 @@ public class User {
         setHouseNumber(houseNumber);
         setBox(box);
         setCity(city);
-        setPostalCode(postalCode);       
+        setPostalCode(postalCode);
         setCountry(country);
         setSupplier(supplier);
     }
 
     protected User() {
-    	supplier = new Supplier();
+        supplier = new Supplier();
     }
 
     public int getUserId() {
-		return userId;
-	}
+        return userId;
+    }
 
-	public String getAccountName() {
+    public String getAccountName() {
         return accountName;
     }
 
     void setAccountName(String accountName) {
-        if(accountName.isEmpty() || accountName.isBlank()) throw new IllegalArgumentException("Email cannot be empty");
-    	this.accountName = accountName;
+        if (accountName.isEmpty() || accountName.isBlank()) throw new IllegalArgumentException("Email cannot be empty");
+        this.accountName = accountName;
     }
 
     public String getPassword() {
@@ -114,7 +114,7 @@ public class User {
     }
 
     void setSurname(String surname) {
-    	if(surname.isEmpty() || surname.isBlank()) throw new IllegalArgumentException("First name can't be empty");
+        if (surname.isEmpty() || surname.isBlank()) throw new IllegalArgumentException("First name can't be empty");
         this.surname = surname;
     }
 
@@ -122,86 +122,86 @@ public class User {
         return name;
     }
 
-     void setName(String name) {
-    	 if(name.isEmpty() || surname.isBlank()) throw new IllegalArgumentException("Name can't be empty");
+    void setName(String name) {
+        if (name.isEmpty() || surname.isBlank()) throw new IllegalArgumentException("Name can't be empty");
         this.name = name;
     }
- 
+
     public String getAddress() {
-		return address;
-	}
+        return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getBox() {
-		return box;
-	}
+    public String getBox() {
+        return box;
+    }
 
-	public void setBox(String box) {
-		this.box = box;
-	}
+    public void setBox(String box) {
+        this.box = box;
+    }
 
-	public String getPostalCode() {
-		return postalCode;
-	}
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public int getHouseNumber() {
-		return houseNumber;
-	}
+    public int getHouseNumber() {
+        return houseNumber;
+    }
 
-	public void setHouseNumber(int houseNumber) {
-		if (houseNumber <= 0) throw new NumberFormatException();	
-		this.houseNumber = houseNumber;
-	}
+    public void setHouseNumber(int houseNumber) {
+        if (houseNumber <= 0) throw new NumberFormatException();
+        this.houseNumber = houseNumber;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getTelephone() {
-		return telephone;
-	}
+    public String getTelephone() {
+        return telephone;
+    }
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
-	public String getMobilePhone() {
-		return mobilePhone;
-	}
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
 
-	public void setMobilePhone(String mobilePhone) {
-		this.mobilePhone = mobilePhone;
-	}
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+    }
 
-	public Supplier getSupplier() {
-		return supplier;
-	}
+    public Supplier getSupplier() {
+        return supplier;
+    }
 
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
 
 
-	@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -216,12 +216,12 @@ public class User {
         return accountName.hashCode();
     }
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", accountName=" + accountName + ", surname=" + surname + ", name=" + name
-				+ ", password=" + password + ", country=" + country + ", City=" + city + ", postalCode=" + postalCode
-				+ ", address=" + address + ", houseNumber=" + houseNumber + ", telephone=" + telephone
-				+ ", mobilePhone=" + mobilePhone + ", isAdmin=" + isAdmin + ", supplier=" + supplier + "]";
-	}
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", accountName=" + accountName + ", surname=" + surname + ", name=" + name
+                + ", password=" + password + ", country=" + country + ", City=" + city + ", postalCode=" + postalCode
+                + ", address=" + address + ", houseNumber=" + houseNumber + ", telephone=" + telephone
+                + ", mobilePhone=" + mobilePhone + ", isAdmin=" + isAdmin + ", supplier=" + supplier + "]";
+    }
 
 }

@@ -35,10 +35,6 @@ public class CarrierDTO {
         return carrierId.get();
     }
 
-    public SimpleIntegerProperty carrierIdProperty() {
-        return carrierId;
-    }
-
     public String getName() {
         return name.get();
     }
@@ -51,14 +47,6 @@ public class CarrierDTO {
         return contactPeople.get();
     }
 
-    public SimpleListProperty<ContactPersonDTO> contactPeopleProperty() {
-        return contactPeople;
-    }
-
-    public int getCharacterCount() {
-        return characterCount.get();
-    }
-
     public SimpleIntegerProperty characterCountProperty() {
         return characterCount;
     }
@@ -67,24 +55,12 @@ public class CarrierDTO {
         return integersOnly.get();
     }
 
-    public SimpleBooleanProperty integersOnlyProperty() {
-        return integersOnly;
-    }
-
     public String getPrefix() {
         return prefix.get();
     }
 
-    public SimpleStringProperty prefixProperty() {
-        return prefix;
-    }
-
     public VerificationType getVerificationType() {
         return verificationType.get();
-    }
-
-    public SimpleObjectProperty<VerificationType> verificationTypeProperty() {
-        return verificationType;
     }
 
     public boolean isActive() {
@@ -94,9 +70,8 @@ public class CarrierDTO {
     public SimpleStringProperty activeProperty() {
         return new SimpleStringProperty(isActive() ? "Active" : "Disabled");
     }
-    
-    public static ObservableList<String> getVerficationTypesObservableList () {
-    	return FXCollections.observableList(Arrays.stream(VerificationType.values()).map(VerificationType::name)
-				.collect(Collectors.toList()));
+
+    public static ObservableList<String> getVerficationTypesObservableList() {
+        return FXCollections.observableList(Arrays.stream(VerificationType.values()).map(VerificationType::name).collect(Collectors.toList()));
     }
 }
