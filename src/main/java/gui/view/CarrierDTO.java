@@ -12,7 +12,7 @@ public class CarrierDTO {
 
     private final SimpleIntegerProperty carrierId;
     private final SimpleStringProperty name;
-    private final SimpleListProperty<ContactPersonView> contactPeople;
+    private final SimpleListProperty<ContactPersonDTO> contactPeople;
     private final SimpleIntegerProperty characterCount;
     private final SimpleBooleanProperty integersOnly;
     private final SimpleStringProperty prefix;
@@ -22,7 +22,7 @@ public class CarrierDTO {
     public CarrierDTO(Carrier carrier) {
         carrierId = new SimpleIntegerProperty(carrier.getCarrierId());
         name = new SimpleStringProperty(carrier.getName());
-        contactPeople = new SimpleListProperty<>(carrier.getContactPersonList().stream().map(ContactPersonView::new).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        contactPeople = new SimpleListProperty<>(carrier.getContactPersonList().stream().map(ContactPersonDTO::new).collect(Collectors.toCollection(FXCollections::observableArrayList)));
         TrackingCodeDetails trackingCodeDetails = carrier.getTrackingCodeDetails();
         characterCount = new SimpleIntegerProperty(trackingCodeDetails.getCharacterCount());
         integersOnly = new SimpleBooleanProperty(trackingCodeDetails.isIntegersOnly());
@@ -47,11 +47,11 @@ public class CarrierDTO {
         return name;
     }
 
-    public ObservableList<ContactPersonView> getContactPeople() {
+    public ObservableList<ContactPersonDTO> getContactPeople() {
         return contactPeople.get();
     }
 
-    public SimpleListProperty<ContactPersonView> contactPeopleProperty() {
+    public SimpleListProperty<ContactPersonDTO> contactPeopleProperty() {
         return contactPeople;
     }
 

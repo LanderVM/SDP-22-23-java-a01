@@ -21,7 +21,7 @@ public class StartUp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXStageUtil.setStage(primaryStage, StartUp.class.getResource("/gui/LoginScreen.fxml"), "Log In");
+        FXStageUtil.setStage(primaryStage, StartUp.class.getResource("/gui/LoginView.fxml"), "Log In");
     }
 
     @Override

@@ -8,17 +8,17 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.math.BigDecimal;
 
-public class ProductView {
+public class ProductDTO {
 
 	private final SimpleStringProperty productName;
 	private final SimpleIntegerProperty amount;
-	private final SimpleDoubleProperty untitPrice;
+	private final SimpleDoubleProperty unitPrice;
 	private final SimpleObjectProperty<BigDecimal> totalPrice;
 	
-	public ProductView(Product product, int amount) {
+	public ProductDTO(Product product, int amount) {
 		this.productName = new SimpleStringProperty(product.getName());
 		this.amount = new SimpleIntegerProperty(amount);
-		this.untitPrice = new SimpleDoubleProperty(product.getPrice().doubleValue());
+		this.unitPrice = new SimpleDoubleProperty(product.getPrice().doubleValue());
 		this.totalPrice = new SimpleObjectProperty<>(product.getPrice().multiply(BigDecimal.valueOf(amount)));
 	}
 
@@ -26,8 +26,8 @@ public class ProductView {
 		return productName;
 	}
 	
-	public SimpleDoubleProperty untitPriceProperty() {
-		return untitPrice;
+	public SimpleDoubleProperty unitPriceProperty() {
+		return unitPrice;
 	}
 	
 	public SimpleObjectProperty<BigDecimal> totalPriceProperty() {

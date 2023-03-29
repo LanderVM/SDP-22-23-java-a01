@@ -3,17 +3,17 @@ package gui.view;
 import domain.ContactPerson;
 import javafx.beans.property.SimpleStringProperty;
 
-public class ContactPersonView {
+public class ContactPersonDTO {
 
     private final SimpleStringProperty email;
     private final SimpleStringProperty phoneNumber;
 
-    public ContactPersonView(ContactPerson contactPerson) {
+    public ContactPersonDTO(ContactPerson contactPerson) {
         email = new SimpleStringProperty(contactPerson.getEmail());
         phoneNumber = new SimpleStringProperty(contactPerson.getPhoneNumber());
     }
     
-    public ContactPersonView(String email,String phoneNumber) {
+    public ContactPersonDTO(String email, String phoneNumber) {
     	this.email = new SimpleStringProperty(email);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
     }

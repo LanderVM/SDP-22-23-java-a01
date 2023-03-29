@@ -3,12 +3,12 @@ package gui.view;
 import domain.ContactPersonSupplier;
 import javafx.beans.property.SimpleStringProperty;
 
-public class ContactPersonSupplierView {
+public class ContactPersonSupplierDTO {
 	
 	private final SimpleStringProperty email;
 	private final SimpleStringProperty name;
 	
-	public ContactPersonSupplierView (ContactPersonSupplier contactPersonSupplier) {
+	public ContactPersonSupplierDTO(ContactPersonSupplier contactPersonSupplier) {
 		email = new SimpleStringProperty(contactPersonSupplier.getEmail());
 		name = new SimpleStringProperty(contactPersonSupplier.getName());
 	}

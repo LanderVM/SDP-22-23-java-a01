@@ -6,9 +6,9 @@ import java.time.LocalDate;
 import domain.Status;
 import domain.SupplierController;
 import domain.UserController;
-import gui.view.ContactPersonSupplierView;
-import gui.view.CustomerOrdersView;
-import gui.view.CustomerView;
+import gui.view.ContactPersonSupplierDTO;
+import gui.view.CustomerOrdersDTO;
+import gui.view.CustomerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -37,25 +37,25 @@ public class CustomersOverviewController extends GridPane {
 	@FXML
 	private ImageView logoImgView;
 	@FXML
-	private TableView<CustomerView> CustomersOverviewTable;
+	private TableView<CustomerDTO> CustomersOverviewTable;
 	@FXML
-	private TableColumn<CustomerView, String> nameCustomerCol;
+	private TableColumn<CustomerDTO, String> nameCustomerCol;
 	@FXML
-	private TableColumn<CustomerView, Number> numberOfOrdersCol;
+	private TableColumn<CustomerDTO, Number> numberOfOrdersCol;
 	@FXML
-	private TableView<CustomerOrdersView> ordersOfCustomerOverviewTable;
+	private TableView<CustomerOrdersDTO> ordersOfCustomerOverviewTable;
 	@FXML
-	private TableColumn<CustomerOrdersView, Number> idOrderOfCustomerCol;
+	private TableColumn<CustomerOrdersDTO, Number> idOrderOfCustomerCol;
 	@FXML
-	private TableColumn<CustomerOrdersView, LocalDate> dateOrderOfCustomerCol;
+	private TableColumn<CustomerOrdersDTO, LocalDate> dateOrderOfCustomerCol;
 	@FXML
-	private TableColumn<CustomerOrdersView, Status> statusOrderOfCustomerCol;
+	private TableColumn<CustomerOrdersDTO, Status> statusOrderOfCustomerCol;
 	@FXML
-	private TableView<ContactPersonSupplierView> contactpesronSupplierOverviewTable;
+	private TableView<ContactPersonSupplierDTO> contactpesronSupplierOverviewTable;
 	@FXML
-	private TableColumn<ContactPersonSupplierView, String> nameContactpersonSupplierCol;
+	private TableColumn<ContactPersonSupplierDTO, String> nameContactpersonSupplierCol;
 	@FXML
-	private TableColumn<ContactPersonSupplierView, String> emailContactpersonSupplierCol;
+	private TableColumn<ContactPersonSupplierDTO, String> emailContactpersonSupplierCol;
 
 	private final SupplierController supplierController;
 	private final UserController userController;
@@ -110,12 +110,12 @@ public class CustomersOverviewController extends GridPane {
 
 	@FXML
 	void showOrders() {
-		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/OrdersOverview.fxml"), "Orders");
+		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/OrderView.fxml"), "Orders");
 	}
 
 	@FXML
 	private void logOut() {
-		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
+		FXStageUtil.setScene(CustomersOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
 	}
 
 }

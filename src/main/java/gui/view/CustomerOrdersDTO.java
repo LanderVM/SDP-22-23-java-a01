@@ -7,17 +7,16 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import java.time.LocalDate;
 
-public class CustomerOrdersView {
+public class CustomerOrdersDTO {
 
     private final SimpleIntegerProperty orderPropertyId;
     private final SimpleObjectProperty<LocalDate> orderPropertyDate;
     private final SimpleObjectProperty<Status> orderPropertyStatus;
     
-    public CustomerOrdersView(Order order) {
+    public CustomerOrdersDTO(Order order) {
     	orderPropertyId = new SimpleIntegerProperty(order.getOrderId());
     	orderPropertyDate = new SimpleObjectProperty<>(order.getDate());
     	orderPropertyStatus = new SimpleObjectProperty<>(order.getStatus());
-       
     }
 
 	public SimpleIntegerProperty getOrderPropertyId() {

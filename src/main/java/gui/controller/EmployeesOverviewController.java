@@ -131,12 +131,12 @@ public class EmployeesOverviewController extends GridPane{
 	
 	@FXML 
 	private void logOut() {
-		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
+		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
 	}
 	
 	@FXML 
 	private void showBoxes() {	
-		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/PackagingOverview.fxml"), "Packaging");
+		FXStageUtil.setScene(EmployeesOverviewController.class.getResource("/gui/PackagingView.fxml"), "Packaging");
 	}
 	
 	@FXML 

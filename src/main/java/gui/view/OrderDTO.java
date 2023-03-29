@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class OrderView {
+public class OrderDTO {
 
     private final SimpleIntegerProperty orderId;
     private final SimpleStringProperty company;
@@ -20,7 +20,7 @@ public class OrderView {
     private final SimpleStringProperty carrier;
     private final SimpleStringProperty trackingCode;
 
-    public OrderView(Order order) {
+    public OrderDTO(Order order) {
         orderId = new SimpleIntegerProperty(order.getOrderId());
         company = new SimpleStringProperty(order.getCustomer().getName());
         date = new SimpleObjectProperty<>(order.getDate());

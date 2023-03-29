@@ -1,6 +1,6 @@
 package domain;
 
-import gui.view.ContactPersonView;
+import gui.view.ContactPersonDTO;
 import gui.view.CarrierDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +37,7 @@ public class CarrierController {
     	return FXCollections.observableArrayList(carrierDaoJpa.getAllNamesForSupplier(supplierId));
     }
 
-    public void addCarrier(String name, ObservableList<ContactPersonView> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive, int supplierId) {
+    public void addCarrier(String name, ObservableList<ContactPersonDTO> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive, int supplierId) {
     	Supplier supplier = supplierDaoJpa.get(supplierId);
         if (carrierDaoJpa.existsForSupplier(name,supplierId))
             throw new IllegalArgumentException("A Carrier with the name " + name + " already exists!");
@@ -50,7 +50,7 @@ public class CarrierController {
         carrierViewList.add(new CarrierDTO(carrier));
     }
 
-    public void updateCarrier(int id, String name, ObservableList<ContactPersonView> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) throws EntityDoesntExistException {
+    public void updateCarrier(int id, String name, ObservableList<ContactPersonDTO> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) throws EntityDoesntExistException {
         if (contactPersonList.isEmpty())
             throw new IllegalArgumentException("You must add at least one contact person for this Carrier!");
         if (characterCount <= 0)

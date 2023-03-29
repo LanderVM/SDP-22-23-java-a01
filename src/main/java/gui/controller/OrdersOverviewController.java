@@ -8,8 +8,8 @@ import domain.CarrierController;
 import domain.UserController;
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
-import gui.view.OrderView;
-import gui.view.ProductView;
+import gui.view.OrderDTO;
+import gui.view.ProductDTO;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,42 +33,42 @@ public class OrdersOverviewController extends GridPane {
     @FXML
     private Label lblUser;
     @FXML
-    private TableView<OrderView> TableOrdersView;
+    private TableView<OrderDTO> TableOrdersView;
     @FXML
-    private TableColumn<OrderView, Number> NumberColumnTable;
+    private TableColumn<OrderDTO, Number> NumberColumnTable;
     @FXML
-    private TableColumn<OrderView, LocalDate> DateColumnTable;
+    private TableColumn<OrderDTO, LocalDate> DateColumnTable;
     @FXML
-    private TableColumn<OrderView, String> CompanyColumnTable;
+    private TableColumn<OrderDTO, String> CompanyColumnTable;
     @FXML
-    private TableColumn<OrderView, String> StatusColumnTable;
+    private TableColumn<OrderDTO, String> StatusColumnTable;
 
 
     @FXML
-    private TableView<OrderView> OrderDetailsTable;
+    private TableView<OrderDTO> OrderDetailsTable;
     @FXML
-    private TableColumn<OrderView, Number> IdColumnOrderTable;
+    private TableColumn<OrderDTO, Number> IdColumnOrderTable;
 
     @FXML
-    private TableColumn<OrderView, String> StatusColumnOrderTable;
+    private TableColumn<OrderDTO, String> StatusColumnOrderTable;
     @FXML
-    private TableColumn<OrderView, String> PackagingColumnOrderTable;
+    private TableColumn<OrderDTO, String> PackagingColumnOrderTable;
     @FXML
-    private TableColumn<OrderView, String> carrierColumnOrderTable;
+    private TableColumn<OrderDTO, String> carrierColumnOrderTable;
     @FXML
-    private TableColumn<OrderView, String> TrackingColumnOrderTable;
+    private TableColumn<OrderDTO, String> TrackingColumnOrderTable;
     @FXML
-    private TableColumn<OrderView, BigDecimal> TotalPriceColumnOrderTable;
+    private TableColumn<OrderDTO, BigDecimal> TotalPriceColumnOrderTable;
     @FXML
-    private TableView<ProductView> ProductsTableView;
+    private TableView<ProductDTO> ProductsTableView;
     @FXML
-    private TableColumn<ProductView, String> ProductColumnTable;
+    private TableColumn<ProductDTO, String> ProductColumnTable;
     @FXML
-    private TableColumn<ProductView, Number> AmountColumnTable;
+    private TableColumn<ProductDTO, Number> AmountColumnTable;
     @FXML
-    private TableColumn<ProductView, Number> UnitPriceColumnTable;
+    private TableColumn<ProductDTO, Number> UnitPriceColumnTable;
     @FXML
-    private TableColumn<ProductView, BigDecimal> TotalPriceColumnTable;
+    private TableColumn<ProductDTO, BigDecimal> TotalPriceColumnTable;
     @FXML
     private ListView<String> CustomerDetailsList;
 
@@ -87,7 +87,7 @@ public class OrdersOverviewController extends GridPane {
     private final OrderController orderController;
     private final UserController userController;
     private final CarrierController carrierController;
-    private ObservableList<OrderView> orderList;
+    private ObservableList<OrderDTO> orderList;
 
     public OrdersOverviewController(OrderController orderController, UserController userController,
                                     CarrierController carrierController) {
@@ -124,7 +124,7 @@ public class OrdersOverviewController extends GridPane {
 
         //fill Products table of specified order
         ProductColumnTable.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
-        UnitPriceColumnTable.setCellValueFactory(cellData -> cellData.getValue().untitPriceProperty());
+        UnitPriceColumnTable.setCellValueFactory(cellData -> cellData.getValue().unitPriceProperty());
         AmountColumnTable.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
         TotalPriceColumnTable.setCellValueFactory(cellData -> cellData.getValue().totalPriceProperty());
 
@@ -186,21 +186,21 @@ public class OrdersOverviewController extends GridPane {
     }
 
     private void reselectProcessedOrder(int orderId) {
-        for (OrderView orderView : TableOrdersView.getItems())
-            if (orderView.getOrderId() == orderId) {
-                TableOrdersView.getSelectionModel().select(orderView);
+        for (OrderDTO orderDTO : TableOrdersView.getItems())
+            if (orderDTO.getOrderId() == orderId) {
+                TableOrdersView.getSelectionModel().select(orderDTO);
                 break;
             }
     }
 
     @FXML
     public void showCustomers() {
-        FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/CustomersOverview.fxml"), "Customers");
+        FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/CustomerView.fxml"), "Customers");
     }
 
     @FXML
     private void logOut() {
-        FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
+        FXStageUtil.setScene(OrdersOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
     }
 
 }

@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import exceptions.EntityDoesntExistException;
 import exceptions.OrderStatusException;
-import gui.view.OrderView;
-import gui.view.ProductView;
+import gui.view.OrderDTO;
+import gui.view.ProductDTO;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,23 +18,23 @@ public class OrderController {
 
     private final OrderDao orderDao;
     private final CarrierDao carrierDao;
-    private ObservableList<OrderView> orderList = FXCollections.emptyObservableList();
+    private ObservableList<OrderDTO> orderList = FXCollections.emptyObservableList();
 
     public OrderController(OrderDao orderDao, CarrierDao carrierDao) {
         this.orderDao = orderDao;
         this.carrierDao = carrierDao;
     }
 
-    public ObservableList<OrderView> getOrderList(int userId, boolean postedOnly) {
+    public ObservableList<OrderDTO> getOrderList(int userId, boolean postedOnly) {
         if (postedOnly)
-            this.orderList = FXCollections.observableList(orderDao.getAllForUserPosted(userId).stream().map(OrderView::new).collect(Collectors.toList()));
+            this.orderList = FXCollections.observableList(orderDao.getAllForUserPosted(userId).stream().map(OrderDTO::new).collect(Collectors.toList()));
         else
-            this.orderList = FXCollections.observableList(orderDao.getAllForUser(userId).stream().map(OrderView::new).collect(Collectors.toList()));
+            this.orderList = FXCollections.observableList(orderDao.getAllForUser(userId).stream().map(OrderDTO::new).collect(Collectors.toList()));
         return this.orderList;
     }
 
-    public ObservableList<OrderView> getOrderByIdView(int id) {
-        return FXCollections.observableArrayList(new OrderView(orderDao.get(id)));
+    public ObservableList<OrderDTO> getOrderByIdView(int id) {
+        return FXCollections.observableArrayList(new OrderDTO(orderDao.get(id)));
     }
 
     public Order getOrderById(int orderId) {
@@ -45,9 +45,9 @@ public class OrderController {
 		return orderDao.getCustomerForOrder(orderId);
 	}
 
-    public ObservableList<ProductView> getProductsList(int orderId) {
+    public ObservableList<ProductDTO> getProductsList(int orderId) {
     	List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
-        return FXCollections.observableArrayList(list.stream().map(el->new ProductView(el.getProduct(),el.getCount())).toList());
+        return FXCollections.observableArrayList(list.stream().map(el->new ProductDTO(el.getProduct(),el.getCount())).toList());
     }
 
     public void processOrder(int orderId, String carrierName,int supplierId) throws EntityNotFoundException, OrderStatusException, EntityDoesntExistException {
@@ -66,11 +66,11 @@ public class OrderController {
         order.generateTrackingCode();
 
         orderDao.update(order);
-        orderList.set(getIndex(order.getOrderId()), new OrderView(order));
+        orderList.set(getIndex(order.getOrderId()), new OrderDTO(order));
     }
 
     private int getIndex(int orderId) {
-        List<OrderView> correspondingDTOs = orderList.stream().filter(dto -> dto.getOrderId() == orderId).toList();
+        List<OrderDTO> correspondingDTOs = orderList.stream().filter(dto -> dto.getOrderId() == orderId).toList();
         if (correspondingDTOs.isEmpty())
             throw new IllegalArgumentException("There is no OrderDTO matching this orderId!");
         if (correspondingDTOs.size() > 1)

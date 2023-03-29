@@ -3,7 +3,7 @@ package gui.controller;
 import domain.CarrierController;
 import domain.UserController;
 import exceptions.EntityDoesntExistException;
-import gui.view.ContactPersonView;
+import gui.view.ContactPersonDTO;
 import gui.view.CarrierDTO;
 import jakarta.persistence.NoResultException;
 import javafx.collections.FXCollections;
@@ -36,11 +36,11 @@ public class CarrierViewController extends GridPane {
 	@FXML
 	private TableColumn<CarrierDTO, String> tblCarriersClmStatus;
 	@FXML
-	private TableView<ContactPersonView> tblContactPerson;
+	private TableView<ContactPersonDTO> tblContactPerson;
 	@FXML
-	private TableColumn<ContactPersonView, String> tblContactPersonClmPhone;
+	private TableColumn<ContactPersonDTO, String> tblContactPersonClmPhone;
 	@FXML
-	private TableColumn<ContactPersonView, String> tblContactPersonClmEmail;
+	private TableColumn<ContactPersonDTO, String> tblContactPersonClmEmail;
 	@FXML
 	private CheckBox chkboxIsActive;
 	@FXML
@@ -74,8 +74,8 @@ public class CarrierViewController extends GridPane {
 	private final CarrierController carrierController;
 	private int carrierId = -1;
 	private boolean currentActionCreate;
-	private ObservableList<ContactPersonView> listForAddedContactPersons;
-	private ObservableList<ContactPersonView> listForAllContactPersons;
+	private ObservableList<ContactPersonDTO> listForAddedContactPersons;
+	private ObservableList<ContactPersonDTO> listForAllContactPersons;
 	private String selectedContactPersonEmail;
 
 	public CarrierViewController(UserController userController,
@@ -176,7 +176,7 @@ public class CarrierViewController extends GridPane {
                 showAlert("Invalid Input", "Phone number and email address must be filled in!", AlertType.ERROR);
 				return;
 			}
-			ContactPersonView contactPerson = new ContactPersonView(txtAddEmail.getText(), txtAddPhoneNumber.getText());
+			ContactPersonDTO contactPerson = new ContactPersonDTO(txtAddEmail.getText(), txtAddPhoneNumber.getText());
 			listForAllContactPersons.add(contactPerson);
 			if (!currentActionCreate)
 				listForAddedContactPersons.add(contactPerson);
@@ -225,17 +225,17 @@ public class CarrierViewController extends GridPane {
 
 	@FXML
 	private void showEmployees() {
-		FXStageUtil.setScene(CarrierController.class.getResource("/gui/EmployeesOverview.fxml"), "Employees");
+		FXStageUtil.setScene(CarrierController.class.getResource("/gui/EmployeeView.fxml"), "Employees");
 	}
 
 	@FXML
 	private void showBoxes() {
-		FXStageUtil.setScene(CarrierController.class.getResource("/gui/PackagingOverview.fxml"), "Packaging");
+		FXStageUtil.setScene(CarrierController.class.getResource("/gui/PackagingView.fxml"), "Packaging");
 	}
 
 	@FXML
 	private void logOut() {
-		FXStageUtil.setScene(CarrierController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
+		FXStageUtil.setScene(CarrierController.class.getResource("/gui/LoginView.fxml"), "Log In");
 	}
 
 	private void initializeCreateCarrier() {

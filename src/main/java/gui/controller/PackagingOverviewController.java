@@ -95,7 +95,7 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void showEmployees() {
-		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/EmployeesOverview.fxml"), "Employees");
+		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/EmployeeView.fxml"), "Employees");
 	}
 
 	@FXML
@@ -145,7 +145,7 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void logOut() {
-		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/LoginScreen.fxml"), "Log In");
+		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/LoginView.fxml"), "Log In");
 	}
 
 }

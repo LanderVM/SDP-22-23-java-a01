@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import exceptions.EntityDoesntExistException;
-import gui.view.ContactPersonView;
+import gui.view.ContactPersonDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.SupplierDao;
@@ -31,7 +31,7 @@ public class CarrierTests {
     private CarrierController carrierController;
 
     private Supplier supplier;
-    private ContactPersonView contactPersonView;
+    private ContactPersonDTO contactPersonDTO;
     Carrier carrier;
 
     @Nested
@@ -44,18 +44,18 @@ public class CarrierTests {
 
         @Test
         public void addTransportService_happyFlow() {
-        	contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
+        	contactPersonDTO = new ContactPersonDTO("test@mail.com", "0477982037");
             when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
-            carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0);
+            carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonDTO), 10, false, "test", "POST_CODE", true, 0);
         }
 
         @Test
         public void addTransportService_nameNotUnique_throwsIllegalArgumentException() {
-            contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
+            contactPersonDTO = new ContactPersonDTO("test@mail.com", "0477982037");
             when(transportServiceJPADao.existsForSupplier("bpost", 0)).thenReturn(true);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
-            assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "POST_CODE", true, 0));
+            assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonDTO), 10, false, "test", "POST_CODE", true, 0));
         }
 
         @Test
@@ -67,10 +67,10 @@ public class CarrierTests {
 
         @Test
         public void addTransportService_invalidVerificationType_throwsIllegalArgumentException() {
-            contactPersonView = new ContactPersonView("test@mail.com", "0477982037");
+            contactPersonDTO = new ContactPersonDTO("test@mail.com", "0477982037");
             when(transportServiceJPADao.existsForSupplier("bpost",0)).thenReturn(false);
             when(supplierDaoJpa.get(0)).thenReturn(supplier);
-            assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonView), 10, false, "test", "invalid_type", true, 0));
+            assertThrows(IllegalArgumentException.class, () -> carrierController.addCarrier("bpost", FXCollections.observableArrayList(contactPersonDTO), 10, false, "test", "invalid_type", true, 0));
         }
     }
 
@@ -85,12 +85,12 @@ public class CarrierTests {
         @Test
         public void updateService_happyFlow() {
             carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
-            contactPersonView = new ContactPersonView("email@email.com", "4994233050");
+            contactPersonDTO = new ContactPersonDTO("email@email.com", "4994233050");
 
             when(transportServiceJPADao.get(0)).thenReturn(carrier);
 
             final String name = "new name";
-            final ObservableList<ContactPersonView> contactPersonObservableList = FXCollections.observableArrayList(contactPersonView);
+            final ObservableList<ContactPersonDTO> contactPersonObservableList = FXCollections.observableArrayList(contactPersonDTO);
             final int characterCount = 14;
             final boolean integersOnly = true;
             final String prefix = "new";
@@ -121,7 +121,7 @@ public class CarrierTests {
             carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
 
             final String name = "new name";
-            final ObservableList<ContactPersonView> contactPersonList = FXCollections.observableArrayList();
+            final ObservableList<ContactPersonDTO> contactPersonList = FXCollections.observableArrayList();
             final int characterCount = 14;
             final boolean integersOnly = true;
             final String prefix = "new";
@@ -134,11 +134,11 @@ public class CarrierTests {
         @Test
         public void updateService_transportServiceIsNull_throwsEntityDoesntExistException() {
         	
-        	contactPersonView = new ContactPersonView("email@email.com", "4994233050");
+        	contactPersonDTO = new ContactPersonDTO("email@email.com", "4994233050");
         	carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
         	
         	final String name = "new name";
-            final ObservableList<ContactPersonView> contactPersonList = FXCollections.observableArrayList(contactPersonView);
+            final ObservableList<ContactPersonDTO> contactPersonList = FXCollections.observableArrayList(contactPersonDTO);
             final int characterCount = 14;
             final boolean integersOnly = true;
             final String prefix = "new";
