@@ -45,7 +45,13 @@ public class CarrierController {
         TrackingCodeDetails trackingCodeDetails = new TrackingCodeDetails(characterCount, isIntegersOnly, prefix, VerificationType.valueOf(verificationTypeValue));
         Carrier carrier = new Carrier(name, list, trackingCodeDetails, supplier, isActive);
         carrierDaoJpa.insert(carrier);
-        carrierViewList.add(new CarrierDTO(carrier));
+        
+        int carrierId = carrierDaoJpa.getForSupplier(name, supplierId).getCarrierId();
+        
+        CarrierDTO carrierDTO = new CarrierDTO(carrier);
+        carrierDTO.setCarrierId(carrierId);
+        
+        carrierViewList.add(carrierDTO);
     }
 
     public void updateCarrier(int id, String name, ObservableList<ContactPersonDTO> contactPersonList, int characterCount, boolean isIntegersOnly, String prefix, String verificationTypeValue, boolean isActive) throws EntityDoesntExistException {
@@ -64,7 +70,7 @@ public class CarrierController {
         carrier.getTrackingCodeDetails().setPrefix(prefix);
         carrier.getTrackingCodeDetails().setVerificationType(VerificationType.valueOf(verificationTypeValue));
         carrier.setActive(isActive);
-
+        
         carrierDaoJpa.update(carrier);
         carrierViewList.set(getIndex(carrier.getCarrierId()), new CarrierDTO(carrier));
     }

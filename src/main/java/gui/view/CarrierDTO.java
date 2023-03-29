@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class CarrierDTO {
 
-    private final SimpleIntegerProperty carrierId;
+    private SimpleIntegerProperty carrierId;
     private final SimpleStringProperty name;
     private final SimpleListProperty<ContactPersonDTO> contactPeople;
     private final SimpleIntegerProperty characterCount;
@@ -33,6 +33,10 @@ public class CarrierDTO {
 
     public int getCarrierId() {
         return carrierId.get();
+    }
+    
+    public void setCarrierId (int id) {
+    	this.carrierId = new SimpleIntegerProperty(id);
     }
 
     public String getName() {

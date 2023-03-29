@@ -201,6 +201,8 @@ public class EmployeeViewController extends GridPane {
         txtCity.clear();
         txtPostalCode.clear();
         txtCountry.clear();
+        
+        tblEmployees.getSelectionModel().clearSelection();
     }
 
     private void showInfo(String title, String details) {
