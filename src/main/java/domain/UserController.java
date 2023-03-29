@@ -3,6 +3,7 @@ package domain;
 import exceptions.UserAlreadyExistsException;
 import gui.view.UserDTO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.UserDao;
@@ -31,7 +32,12 @@ public class UserController {
     }
 
     public void checkUser(String accountName, String password) {
-        User fromDatabase = userDao.get(accountName);
+    	User fromDatabase;
+    	try {
+    		fromDatabase = userDao.get(accountName);
+    	}catch (NoResultException e) {
+    		throw new IllegalArgumentException("Invalid login credentials!");
+    	}
         if (fromDatabase == null || !fromDatabase.getPassword().equals(password))
             throw new IllegalArgumentException("Invalid login credentials!");
         user = fromDatabase;
