@@ -46,6 +46,9 @@ public class PackagingViewController {
     @FXML
     private Button btnAdd;
 
+    @FXML
+    private Button btnClear2;
+    
     private final UserController userController;
     private final PackagingController packagingController;
 
@@ -65,7 +68,7 @@ public class PackagingViewController {
     @FXML
     private void initialize() {
         lblUser.setText(userController.toString());
-
+        btnUpdate.setDisable(true);
         // Table Boxes
 
         tblBoxesClmName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -81,6 +84,7 @@ public class PackagingViewController {
 
         tblBoxes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldPackaging, newPackaging) -> {
             if (newPackaging == null) return;
+            btnUpdate.setDisable(false);
             txtName.setText(newPackaging.getName());
             choiceBoxType.setValue(newPackaging.getPackagingType().toString());
             txtWidth.setText(newPackaging.getWidth().toString());
@@ -122,6 +126,8 @@ public class PackagingViewController {
         try {
             packagingController.updatePackaging(tblBoxes.getSelectionModel().getSelectedItem().getPackagingId(), txtName.getText(), Double.parseDouble(txtWidth.getText()), Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()), Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(), chkIsActive.isSelected());
             showAlert("Successful", "Packaging has been updated.", AlertType.INFORMATION);
+            btnUpdate.setDisable(true);
+            clearPackaging();
         } catch (IllegalArgumentException illegalArgumentException) {
             String message;
             if (illegalArgumentException.getMessage().startsWith("For input string"))
@@ -131,6 +137,18 @@ public class PackagingViewController {
             else message = illegalArgumentException.getMessage();
             showAlert("Error", message, AlertType.ERROR);
         }
+    }
+    
+    @FXML
+    private void clearPackaging() {
+    	txtName.clear();
+    	choiceBoxType.setValue(null);
+    	txtWidth.clear();
+    	txtHeight.clear();
+    	txtLength.clear();
+    	txtPrice.clear();
+    	chkIsActive.setSelected(false);
+    	tblBoxes.getSelectionModel().clearSelection();
     }
 
     @FXML

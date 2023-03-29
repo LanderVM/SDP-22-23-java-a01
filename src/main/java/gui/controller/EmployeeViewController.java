@@ -1,4 +1,4 @@
-package gui.controller;
+	package gui.controller;
 
 import domain.UserController;
 import exceptions.InvalidUserEmailException;
@@ -162,6 +162,8 @@ public class EmployeeViewController extends GridPane {
             
             userController.updateUser(txtEmail.getText(),txtPassword.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(), txtCountry.getText());
             showInfo("Employee updated successfully", String.format("Updated user %s", email));
+            clearFields();
+            btnSave.setDisable(true);
             
         } catch (InvalidUserEmailException e) {
             showError("Email/Password changed", "The email and/or password cannot be changed");
@@ -177,13 +179,18 @@ public class EmployeeViewController extends GridPane {
     @FXML
     private void addEmployees() {
         try {
+        	if(txtEmail.getText().equals(null) || txtPassword.getText().equals(null)) {
+        		throw new NoResultException();
+        	}
             userController.addUser(txtEmail.getText(),txtPassword.getText(), txtFirstName.getText(), txtName.getText(), txtTelephone.getText(), choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(), txtCountry.getText(), userController.getSupplier());
             showInfo("Employee created succesfully", String.format("created user %s", txtEmail.getText()));
-        } catch (UserAlreadyExistsException e) {
+        } catch(NoResultException e ) {
+        	showError("Error with update", String.format("Cannot update user with email: %s, because it does not exist.", email));
+        }catch (UserAlreadyExistsException e) {
             showError("Email already exists", String.format("There already exists a user with the email address of: %s", txtEmail.getText()));
         } catch (NumberFormatException e) {
             showError("Invalid house number", "Please insert a valid house number");
-        }
+        } 
     }
 
     @FXML
@@ -201,6 +208,8 @@ public class EmployeeViewController extends GridPane {
         txtCity.clear();
         txtPostalCode.clear();
         txtCountry.clear();
+        tblEmployees.getSelectionModel().clearSelection();
+        
     }
 
     private void showInfo(String title, String details) {
