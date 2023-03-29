@@ -3,19 +3,12 @@ package domain;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import exceptions.InvalidNameException;
-import exceptions.UserAlreadyExistsExeption;
-import jakarta.persistence.Column;
-import persistence.impl.TransportServiceDaoJpa;
+import exceptions.UserAlreadyExistsException;
 import persistence.impl.UserDaoJpa;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -45,7 +38,7 @@ public class UserTests {
     @Nested
     class AddTests {
         @Test
-        public void addUser_happyFlow() throws NumberFormatException, UserAlreadyExistsExeption, InvalidNameException {
+        public void addUser_happyFlow() throws NumberFormatException, UserAlreadyExistsException {
             when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(false);
             userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier());
         }
@@ -53,12 +46,12 @@ public class UserTests {
         @Test
         public void addUser_UserAlreadyExists_throwsUserAlreadyExistsExeption() {
         	when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(true);
-            assertThrows(UserAlreadyExistsExeption.class, () -> userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
+            assertThrows(UserAlreadyExistsException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "Admin", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
         }
 
        
         @Test
-        public void addUser_BlankName_throwsIllegalArgumentException(String mail, String surName, String name, String pn, String mp, String password, String sn, int hn, String box, String city, String pc, String country) {
+        public void addUser_BlankName_throwsIllegalArgumentException() {
             when(userDaoJpa.exists("testAdmin@mail.com")).thenReturn(false);
 
             assertThrows(IllegalArgumentException.class, () -> userController.addUser("testAdmin@mail.com", "Test", "", "02 70 25 25", "0470 25 25 25", "admin", "doeStreet", 23, "B2", "Aalst", "9300", "Belgium", new Supplier()));
@@ -107,7 +100,7 @@ public class UserTests {
             assertEquals(updatedUser.getBox(), box);
             assertEquals(updatedUser.getTelephone(), telephone);
             assertEquals(updatedUser.getMobilePhone(), mobilePhone);
-            assertEquals(updatedUser.isAdmin(), false);
+            assertFalse(updatedUser.isAdmin());
         }
         
         @Test

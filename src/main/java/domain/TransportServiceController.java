@@ -17,7 +17,7 @@ public class TransportServiceController {
 
     private final TransportServiceDao transportServiceDaoJpa;
     private final SupplierDao supplierDaoJpa;
-    private ObservableList<TransportServiceView> transportServiceList = FXCollections.emptyObservableList();
+    private ObservableList<TransportServiceView> transportServiceList = FXCollections.observableArrayList();
     private int supplierId;
 
     public TransportServiceController(TransportServiceDao transportServiceDaoJpa,SupplierDao supplierDaoJpa) {

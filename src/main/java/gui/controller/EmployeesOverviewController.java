@@ -1,9 +1,8 @@
 package gui.controller;
 
 import domain.UserController;
-import exceptions.InvalidNameException;
 import exceptions.InvalidUserEmailException;
-import exceptions.UserAlreadyExistsExeption;
+import exceptions.UserAlreadyExistsException;
 import gui.view.UserDTO;
 import jakarta.persistence.NoResultException;
 import javafx.collections.ObservableList;
@@ -168,12 +167,10 @@ public class EmployeesOverviewController extends GridPane{
 					choiceBoxFunction.getValue(), txtStreet.getText(), Integer.parseInt(txtNumber.getText()), txtBox.getText(), txtCity.getText(), txtPostalCode.getText(),
 					txtCountry.getText(), userController.getSupplier());
 			showInfo("Employee created succesfully", String.format("created user %s", email));
-		} catch (UserAlreadyExistsExeption e) {
+		} catch (UserAlreadyExistsException e) {
 			showError("Email already exists", String.format("There already exists a user with the email address of: %s", txtEmail.getText()));
 		} catch (NumberFormatException e) {
 			showError("Invalid house number", "Please insert a valid house number");
-		} catch (InvalidNameException e) {
-			showError("Empty field error", e.getMessage());
 		}
 	}
 	

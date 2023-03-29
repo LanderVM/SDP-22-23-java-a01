@@ -1,7 +1,6 @@
 package domain;
 
-import exceptions.InvalidNameException;
-import exceptions.UserAlreadyExistsExeption;
+import exceptions.UserAlreadyExistsException;
 import gui.view.UserDTO;
 import jakarta.persistence.EntityNotFoundException;
 import javafx.collections.FXCollections;
@@ -55,9 +54,9 @@ public class UserController {
     }
 
     public void addUser(String email, String surName, String name, String tp, String mp, String funcion, String street, int number,
-    		String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsExeption, InvalidNameException {
+    		String box, String city, String pc, String counrty, Supplier supplier) throws NumberFormatException, UserAlreadyExistsException {
 
-    	if(userDao.exists(email)) throw new UserAlreadyExistsExeption();
+    	if(userDao.exists(email)) throw new UserAlreadyExistsException();
 
         User user = new User(email, "test", Objects.equals(funcion, "admin"), surName, name, tp, mp, street, number, box, city, pc, counrty, supplier);
     	userDao.insert(user);
