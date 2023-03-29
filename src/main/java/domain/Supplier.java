@@ -41,31 +41,24 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "supplier_id")
     private int supplierId = -1;
-
+    @Column(name = "name")
     private String name = "";
-
+    @Column(name = "email")
     private String email = "";
-
+    @Column(name = "address")
     private String address = "";
-
     @Column(name = "phone_number")
     private String phoneNumber = "";
-    
     @OneToOne(mappedBy="supplier", cascade = CascadeType.PERSIST)
     private Logo logo = LogoMapper.makeLogo("/images/testImg.jpg", this);
-    
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST)
     private List<ContactPersonSupplier> contactPersons = Collections.emptyList();
-    
     @OneToMany(mappedBy="supplier")
     private List<User> users = Collections.emptyList();
-
     @OneToMany(mappedBy = "supplier")
     private List<Order> ordersAsSupplier = Collections.emptyList();
-
     @OneToMany(mappedBy = "customer")
     private List<Order> ordersAsCustomer = Collections.emptyList();
-    
     @OneToMany(mappedBy="supplier")
     private List<TransportService> transportServices = Collections.emptyList();
 

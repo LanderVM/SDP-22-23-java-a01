@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,8 +13,9 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private int productId;
-    
+    @Column(name = "name")
     private String name = "";
+    @Column(name = "price")
     private BigDecimal price;
 
     public Product(String name, BigDecimal price) {

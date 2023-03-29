@@ -5,16 +5,20 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "trackingcodedetails")
+@Table(name = "tracking_code_details")
 public class TrackingCodeDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tracking_code_details_id")
     private int trackingCodeDetailsId;
+    @Column(name = "character_count")
     private int characterCount = 0;
+    @Column(name = "is_integers_only")
     private boolean integersOnly = false;
+    @Column(name = "tracking_code_prefix")
     private String prefix = "";
+    @Column(name = "verification_type")
     private VerificationType verificationType;
 
     public TrackingCodeDetails(int characterCount, boolean integersOnly, String prefix, VerificationType verificationType) {

@@ -2,18 +2,19 @@ package domain;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "contact_person")
 public class ContactPerson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contact_person_id")
     private int contactPersonId;
-
+    @Column(name = "email")
     private String email = "";
+    @Column(name = "phone_number")
     private String phoneNumber = "";
 
     public ContactPerson(String email, String phoneNumber) {

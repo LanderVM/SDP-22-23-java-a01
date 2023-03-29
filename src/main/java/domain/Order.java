@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "customer_order")
 @NamedQueries({
         @NamedQuery(
                 name = "Order.findById",
@@ -53,36 +53,27 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private int orderId;
-
+    @Column(name = "delivery_address")
     private String address = "";
-
     @Column(name = "order_date")
     private LocalDate date;
-    
     @OneToMany(mappedBy="order",cascade=CascadeType.PERSIST)
     private List<OrderLine> orderLines;
-    
+    @Column(name = "order_status")
     private Status status;
-
     @ManyToOne
     private Packaging packaging;
-
     @ManyToOne
     private TransportService transportService;
-
     @Column(name = "tracking_code")
     private String trackingCode;
-
     @ManyToOne
     private Supplier supplier;
-    
     @ManyToOne
     private Supplier customer;
-
     @Column(name = "original_acquisition_price")
     private BigDecimal originalAcquisitionPrice;
-
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order")
     private Set<Notification> notifications = new HashSet<>();
 
 

@@ -7,23 +7,20 @@ import java.util.Objects;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="order_lines")
+@Table(name="order_line")
 public class OrderLine implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_line_id")
 	private int orderLineId;
-
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Order order;
-	
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Product product;
-	
+	@Column(name = "product_count")
 	private int count;
-	
-	
+
 	public OrderLine (List<Product> products, Order order) {
 		if (products==null)
 			throw new IllegalArgumentException("products may not be null!");

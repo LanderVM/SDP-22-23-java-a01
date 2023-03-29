@@ -52,15 +52,15 @@ public class TransportService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transport_service_id")
     private int transportServiceId;
+    @Column(name = "name")
     private String name = "";
     @OneToMany
     private List<ContactPerson> contactPersonList;
     @OneToOne
     private TrackingCodeDetails trackingCodeDetails;
-    
     @ManyToOne
     private Supplier supplier;
-    
+    @Column(name = "is_active")
     private boolean active = true;
 
     public TransportService(String name, List<ContactPerson> contactPersonList, TrackingCodeDetails trackingCodeDetails,Supplier supplier ,boolean active) {

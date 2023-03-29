@@ -5,18 +5,17 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "order_notification")
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id", nullable = false)
     private int notificationId;
-
     @ManyToOne
     private Order order;
-
     @ManyToOne
     private Supplier customer;
-
+    @Column(name = "order_date")
     private LocalDate date;
 
     protected Notification() {

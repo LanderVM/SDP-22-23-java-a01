@@ -31,22 +31,30 @@ public class User {
 
     @Column(name = "email")
     private String accountName = "";
+    @Column(name = "surname")
     private String surname = "";
+    @Column(name = "name")
     private String name= "";
-    private String password = ""; 
-    private String country = "";   
+    @Column(name = "password")
+    private String password = "";
+    @Column(name = "country")
+    private String country = "";
+    @Column(name = "city")
     private String city = "";
     @Column(name = "postal_code")
     private String postalCode = "";
-    private String address = "";   
-    @Column(name = "home_address")
-    private int houseNumber = 0;  
+    @Column(name = "street")
+    private String address = "";
+    @Column(name = "house_number")
+    private int houseNumber = 0;
+    @Column(name = "box")
     private String box = "";
+    @Column(name = "phone_number")
     private String telephone = "";
-    @Column(name = "mobile_phone")
+    @Column(name = "mobile_phone_number")
     private String mobilePhone = "";
+    @Column(name = "is_admin")
     private boolean isAdmin = false;
-    
     @ManyToOne
     private Supplier supplier;
 
@@ -81,7 +89,7 @@ public class User {
     }
 
     void setAccountName(String accountName) {
-        if(accountName.isEmpty() || accountName.isBlank() || accountName == "") throw new IllegalArgumentException("Email cannot be empty");
+        if(accountName.isEmpty() || accountName.isBlank()) throw new IllegalArgumentException("Email cannot be empty");
     	this.accountName = accountName;
     }
 
@@ -106,7 +114,7 @@ public class User {
     }
 
     void setSurname(String surname) {
-    	if(surname.isEmpty() || surname == null || surname.isBlank()) throw new IllegalArgumentException("First name can't be empty");
+    	if(surname.isEmpty() || surname.isBlank()) throw new IllegalArgumentException("First name can't be empty");
         this.surname = surname;
     }
 
@@ -115,7 +123,7 @@ public class User {
     }
 
      void setName(String name) {
-    	 if(name.isEmpty() || surname.isBlank() || name == null) throw new IllegalArgumentException("Name can't be empty");
+    	 if(name.isEmpty() || surname.isBlank()) throw new IllegalArgumentException("Name can't be empty");
         this.name = name;
     }
  

@@ -2,15 +2,10 @@ package domain;
 
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="conactpersons_supplier")
+@Table(name="supplier_contact_person")
 @NamedQueries({
 	@NamedQuery(
 			name="ContactPersonSupplier.findAllForSupplier",
@@ -18,10 +13,12 @@ import jakarta.persistence.Table;
 	)
 })
 public class ContactPersonSupplier {
-	
-	private String name = "";
+
 	@Id
+	@Column(name = "email_id")
 	private String email = "";
+	@Column(name = "full_name")
+	private String name = "";
 	@ManyToOne
 	private Supplier supplier;
 	
@@ -81,9 +78,4 @@ public class ContactPersonSupplier {
 	public String toString() {
 		return "ContactPersonSupplier [name=" + name + ", email=" + email + ", supplier=" + supplier + "]";
 	}
-
-	
-	
-	
-	
 }

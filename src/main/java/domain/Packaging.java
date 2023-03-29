@@ -36,28 +36,20 @@ public class Packaging implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "packaging_id")
     private int packagingId = -1;
-
     @Column(name = "name")
 	private String name = "";
-
 	@Column(name = "packaging_type")
 	private PackagingType type = PackagingType.STANDARD;
-
 	@Column(name = "height")
 	private double height = 0;
-
 	@Column(name = "width")
 	private double width = 0;
-
 	@Column(name = "length")
 	private double length = 0;
-
 	@Column(name = "price")
 	private BigDecimal price;
-
 	@Column(name = "is_active")
 	private boolean active = true;
-
 	@ManyToOne
 	private Supplier supplier = new Supplier("UNKNOWN");
 

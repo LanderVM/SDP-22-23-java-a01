@@ -8,23 +8,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="logo")
+@Table(name="company_log")
 public class Logo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "logo_id")
 	private int id;
-
 	@Lob
     private byte[] logo = new byte[0];
-	
 	@OneToOne
 	private Supplier supplier;
 
