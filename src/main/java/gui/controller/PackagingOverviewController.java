@@ -15,8 +15,7 @@ import util.FXStageUtil;
 public class PackagingOverviewController {
 	@FXML
 	private Label lblUser;
-    private Alert alert;
-	@FXML
+    @FXML
 	private TableView<PackagingDTO> tblBoxes;
 	@FXML
 	private TableColumn<PackagingDTO, String> tblBoxesClmName;
@@ -49,12 +48,18 @@ public class PackagingOverviewController {
 
 	private final UserController userController;
 	private final PackagingController packagingController;
-	private ObservableList<PackagingDTO> packagingList;
-	private int packagingId = -1; // TODO check out
 
-	public PackagingOverviewController(UserController userController, PackagingController packagingController) {
+    public PackagingOverviewController(UserController userController, PackagingController packagingController) {
 		this.userController = userController;
 		this.packagingController = packagingController;
+	}
+
+	private void showAlert(String title, String message, AlertType alertType) {
+        Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 	@FXML
@@ -69,7 +74,7 @@ public class PackagingOverviewController {
 		tblBoxesClmPrice.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
 		tblBoxesClmActive.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
 
-		packagingList = packagingController.getPackagingList();
+        ObservableList<PackagingDTO> packagingList = packagingController.getPackagingList();
 		tblBoxes.setItems(packagingList);
 
 		choiceBoxType.setItems(PackagingController.getPackagingTypesObservableList());
@@ -77,19 +82,15 @@ public class PackagingOverviewController {
 		tblBoxes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldPackaging, newPackaging) -> {
 			if (newPackaging == null)
 				return;
-			this.packagingId = newPackaging.getPackagingId();
-					txtName.setText(newPackaging.getName());
-					choiceBoxType.setValue(newPackaging.getPackagingType().toString());
-					txtWidth.setText(newPackaging.getWidth().toString());
-					txtHeight.setText(newPackaging.getHeight().toString());
-					txtLength.setText(newPackaging.getLength().toString());
-					txtPrice.setText(newPackaging.getPrice().toString());
-					chkIsActive.setSelected(newPackaging.isActive());
+            txtName.setText(newPackaging.getName());
+            choiceBoxType.setValue(newPackaging.getPackagingType().toString());
+            txtWidth.setText(newPackaging.getWidth().toString());
+            txtHeight.setText(newPackaging.getHeight().toString());
+            txtLength.setText(newPackaging.getLength().toString());
+            txtPrice.setText(newPackaging.getPrice().toString());
+            chkIsActive.setSelected(newPackaging.isActive());
 				}
-		
 		);
-		
-		
 	}
 
 	@FXML
@@ -99,41 +100,27 @@ public class PackagingOverviewController {
 
 	@FXML
 	private void showCarrier() {
-		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"),
-				"Transport Services");
+		FXStageUtil.setScene(PackagingOverviewController.class.getResource("/gui/TransportServiceOverview.fxml"), "Carriers");
 	}
 
 	@FXML
 	private void addPackaging() {
-        String message;
         try {
             packagingController.addPackaging(txtName.getText(), Double.parseDouble(txtWidth.getText()),
                     Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),
                     Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(),
                     chkIsActive.isSelected());
-		            alert = new Alert(AlertType.CONFIRMATION);
-		    		alert.setTitle("Success");
-		    		alert.setHeaderText(null);
-		    		message= "Succesfully added a packaging.";
-		    		
-    		
-			// TODO alert wanneer successvol
+            showAlert("Successful", "Packaging has been added.", AlertType.INFORMATION);
         } catch (IllegalArgumentException illegalArgumentException) {
-            alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Unsuccessful");
-            alert.setHeaderText(null);
-           
-            if (illegalArgumentException.getMessage().startsWith("For input string")) {
+            String message;
+            if (illegalArgumentException.getMessage().startsWith("For input string"))
                 message = "Invalid input: " + illegalArgumentException.getMessage().substring(17);
-            } else if (illegalArgumentException.getMessage().startsWith("empty String")) {
-                message = "Dimensions and price are required!";
-            } else {
+            else if (illegalArgumentException.getMessage().startsWith("empty String"))
+                message = "Dimensions and Price are required!";
+            else
                 message = illegalArgumentException.getMessage();
-            }
-            
-        } // TODO extract deze catch naar aparte methode voor zowel addPackaging als updatePackaging
-        	alert.setContentText(message);
-            alert.showAndWait();
+            showAlert("Error", message, AlertType.ERROR);
+        }
 	}
 
 	@FXML
@@ -143,21 +130,16 @@ public class PackagingOverviewController {
 					Double.parseDouble(txtHeight.getText()), Double.parseDouble(txtLength.getText()),
 					Double.parseDouble(txtPrice.getText()), choiceBoxType.getSelectionModel().getSelectedItem(),
 					chkIsActive.isSelected());
-			// TODO alert wanneer successvol
+			showAlert("Successful", "Packaging has been updated.", AlertType.INFORMATION);
 		} catch (IllegalArgumentException illegalArgumentException) {
-			alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("Unsuccessful");
-			alert.setHeaderText(null);
-			String message;
-			if (illegalArgumentException.getMessage().startsWith("For input string")) {
-				message = "Invalid input: " + illegalArgumentException.getMessage().substring(17);
-			} else if (illegalArgumentException.getMessage().startsWith("empty String")) {
-				message = "Dimensions and price are required!";
-			} else {
-				message = illegalArgumentException.getMessage();
-			}
-			alert.setContentText(message);
-			alert.showAndWait();
+            String message;
+            if (illegalArgumentException.getMessage().startsWith("For input string"))
+                message = "Invalid input: " + illegalArgumentException.getMessage().substring(17);
+            else if (illegalArgumentException.getMessage().startsWith("empty String"))
+                message = "Dimensions and Price are required!";
+            else
+                message = illegalArgumentException.getMessage();
+            showAlert("Error", message, AlertType.ERROR);
 		}
 	}
 
