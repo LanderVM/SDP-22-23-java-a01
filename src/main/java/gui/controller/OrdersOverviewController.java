@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import domain.OrderController;
-import domain.Status;
 import domain.TransportServiceController;
 import domain.UserController;
 import exceptions.EntityDoesntExistException;
@@ -42,7 +41,7 @@ public class OrdersOverviewController extends GridPane {
     @FXML
     private TableColumn<OrderView, String> CompanyColumnTable;
     @FXML
-    private TableColumn<OrderView, Status> StatusColumnTable;
+    private TableColumn<OrderView, String> StatusColumnTable;
 
 
     @FXML
@@ -51,7 +50,7 @@ public class OrdersOverviewController extends GridPane {
     private TableColumn<OrderView, Number> IdColumnOrderTable;
 
     @FXML
-    private TableColumn<OrderView, Status> StatusColumnOrderTable;
+    private TableColumn<OrderView, String> StatusColumnOrderTable;
     @FXML
     private TableColumn<OrderView, String> PackagingColumnOrderTable;
     @FXML
@@ -85,8 +84,6 @@ public class OrdersOverviewController extends GridPane {
     @FXML
     private CheckBox OnlyPostedOrdersCheckBox;
 
-    private Alert alert;
-
     private final OrderController orderController;
     private final UserController userController;
     private final TransportServiceController transportServiceController;
@@ -100,7 +97,7 @@ public class OrdersOverviewController extends GridPane {
     }
 
     private void showAlert(String title, String message, AlertType alertType) {
-        alert = new Alert(alertType);
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

@@ -67,8 +67,8 @@ public class OrderView {
         return status.get();
     }
 
-    public SimpleObjectProperty<Status> statusProperty() {
-        return status;
+    public SimpleStringProperty statusProperty() {
+        return new SimpleStringProperty(status.get().toString());
     }
     
     public SimpleStringProperty packagingProperty() {
