@@ -19,12 +19,13 @@ public class TrackingCodeDetails {
     @Column(name = "tracking_code_prefix")
     private String prefix = "";
     @Column(name = "verification_type")
-    private VerificationType verificationType;
+    private String verificationType;
 
-    public TrackingCodeDetails(int characterCount, boolean integersOnly, String prefix, VerificationType verificationType) {
+    public TrackingCodeDetails(int characterCount, boolean integersOnly, String prefix, String verificationType) {
         this.characterCount = characterCount;
         this.integersOnly = integersOnly;
         this.prefix = prefix;
+        System.out.println(verificationType);
         this.setVerificationType(verificationType);
     }
 
@@ -56,11 +57,11 @@ public class TrackingCodeDetails {
         this.prefix = prefix;
     }
 
-    public VerificationType getVerificationType() {
+    public String getVerificationType() {
         return verificationType;
     }
 
-    public void setVerificationType(VerificationType verificationType) {
+    public void setVerificationType(String verificationType) {
         if (verificationType == null) throw new IllegalArgumentException("verificationType may not be null!");
         this.verificationType = verificationType;
     }

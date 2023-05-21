@@ -16,7 +16,7 @@ public class CarrierDTO {
     private final SimpleIntegerProperty characterCount;
     private final SimpleBooleanProperty integersOnly;
     private final SimpleStringProperty prefix;
-    private final SimpleObjectProperty<VerificationType> verificationType;
+    private final SimpleStringProperty verificationType;
     private final SimpleBooleanProperty active;
 
     public CarrierDTO(Carrier carrier) {
@@ -27,7 +27,7 @@ public class CarrierDTO {
         characterCount = new SimpleIntegerProperty(trackingCodeDetails.getCharacterCount());
         integersOnly = new SimpleBooleanProperty(trackingCodeDetails.isIntegersOnly());
         prefix = new SimpleStringProperty(trackingCodeDetails.getPrefix());
-        verificationType = new SimpleObjectProperty<>(trackingCodeDetails.getVerificationType());
+        verificationType = new SimpleStringProperty(trackingCodeDetails.getVerificationType());
         active = new SimpleBooleanProperty(carrier.isActive());
     }
 
@@ -63,7 +63,7 @@ public class CarrierDTO {
         return prefix.get();
     }
 
-    public VerificationType getVerificationType() {
+    public String getVerificationType() {
         return verificationType.get();
     }
 

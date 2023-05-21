@@ -89,7 +89,7 @@ public class CarrierTests {
     	
         @Test
         public void updateService_happyFlow() {
-            carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
+            carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", "POST_CODE"), supplier, true);
             contactPersonDTO = new ContactPersonDTO("email@email.com", "4994233050");
 
             when(carrierJPADao.get(0)).thenReturn(carrier);
@@ -126,7 +126,7 @@ public class CarrierTests {
 
         @Test
         public void updateService_emptyContactPersonList_throwsIllegalArgumentException() {
-            carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
+            carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", "POST_CODE"), supplier, true);
 
             final String name = "new name";
             final ObservableList<ContactPersonDTO> contactPersonList = FXCollections.observableArrayList();
@@ -143,7 +143,7 @@ public class CarrierTests {
         public void updateService_transportServiceIsNull_throwsEntityDoesntExistException() {
         	
         	contactPersonDTO = new ContactPersonDTO("email@email.com", "4994233050");
-        	carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE), supplier, true);
+        	carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", "POST_CODE"), supplier, true);
         	
         	final String name = "new name";
             final ObservableList<ContactPersonDTO> contactPersonList = FXCollections.observableArrayList(contactPersonDTO);

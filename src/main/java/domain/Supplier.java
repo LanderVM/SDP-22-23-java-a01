@@ -43,10 +43,21 @@ public class Supplier {
     private int supplierId = -1;
     @Column(name = "name")
     private String name = "";
-    @Column(name = "email")
+    @Column(name = "supplier_email")
     private String email = "";
-    @Column(name = "address")
-    private String address = "";
+    @Column(name = "delivery_street")
+    private String delivery_street = "";
+    @Column(name = "delivery_box")
+    private String delivery_box ="";
+    @Column(name = "delivery_city")
+    private String delivery_city = "";
+    @Column(name = "delivery_country")
+    private String delivery_country = "";
+    @Column(name = "delivery_house_number")
+    private Integer delivery_house_number = 0;
+    @Column(name = "delivery_postal_code")
+    private String delivery_postal_code = "";
+    
     @Column(name = "phone_number")
     private String phoneNumber = "";
     @OneToOne(mappedBy = "supplier", cascade = CascadeType.PERSIST)
@@ -74,7 +85,7 @@ public class Supplier {
     public Supplier(String name, String email, String address, String phoneNumber, String logoLocation) {
         this.name = name;
         this.email = email;
-        this.address = address;
+        this.delivery_country = address;
         this.phoneNumber = phoneNumber;
         this.logo = LogoMapper.makeLogo(logoLocation, this);
     }
@@ -107,7 +118,7 @@ public class Supplier {
     }
 
     public String getAddress() {
-        return address;
+        return delivery_country;
     }
 
     public String getPhoneNumber() {

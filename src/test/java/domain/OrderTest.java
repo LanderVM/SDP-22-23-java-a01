@@ -41,7 +41,7 @@ public class OrderTest {
     public void setup() {
         supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
         customer = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
-        carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", VerificationType.POST_CODE),supplier, true);
+        carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", "POST_CODE"),supplier, true);
     }
     
     @Test
@@ -95,7 +95,7 @@ public class OrderTest {
     
     @Test
     public void testGenerateTrackingCode() {
-    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, new Carrier("bpost", List.of(new ContactPerson("contact1", "contact1@gmail.com")), new TrackingCodeDetails(10, true, "32", VerificationType.POST_CODE),supplier, true), new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, new Carrier("bpost", List.of(new ContactPerson("contact1", "contact1@gmail.com")), new TrackingCodeDetails(10, true, "32", "POST_CODE"),supplier, true), new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         
         order.generateTrackingCode();
         String trackingCode = order.getTrackingCode();

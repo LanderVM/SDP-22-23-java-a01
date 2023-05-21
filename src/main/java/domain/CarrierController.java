@@ -42,7 +42,7 @@ public class CarrierController {
         if (contactPersonList.isEmpty())
             throw new IllegalArgumentException("You must add at least one contact person for this Carrier!");
         List<ContactPerson> list = contactPersonList.stream().map(el -> new ContactPerson(el.getEmail(), el.getPhoneNumber())).toList();
-        TrackingCodeDetails trackingCodeDetails = new TrackingCodeDetails(characterCount, isIntegersOnly, prefix, VerificationType.valueOf(verificationTypeValue));
+        TrackingCodeDetails trackingCodeDetails = new TrackingCodeDetails(characterCount, isIntegersOnly, prefix, verificationTypeValue);
         Carrier carrier = new Carrier(name, list, trackingCodeDetails, supplier, isActive);
         carrierDaoJpa.insert(carrier);
         
@@ -68,7 +68,7 @@ public class CarrierController {
         carrier.getTrackingCodeDetails().setCharacterCount(characterCount);
         carrier.getTrackingCodeDetails().setIntegersOnly(isIntegersOnly);
         carrier.getTrackingCodeDetails().setPrefix(prefix);
-        carrier.getTrackingCodeDetails().setVerificationType(VerificationType.valueOf(verificationTypeValue));
+        carrier.getTrackingCodeDetails().setVerificationType(verificationTypeValue);
         carrier.setActive(isActive);
         
         carrierDaoJpa.update(carrier);

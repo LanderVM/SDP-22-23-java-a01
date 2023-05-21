@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "company_log")
+@Table(name = "company_logo")
 public class Logo {
 
     @Id
