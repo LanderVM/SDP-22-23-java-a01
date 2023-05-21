@@ -46,7 +46,7 @@ public class OrderTest {
     
     @Test
     public void processOrder_happyFlow() throws OrderStatusException, EntityDoesntExistException  {
-    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, carrier, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+    	order = new Order(LocalDate.now(), "Belgie", "Lokeren", "9160", "Honkstraat", 33, "", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.POSTED, carrier, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(0)).thenReturn(order);
         when(carrierDao.getForSupplier("test", 0)).thenReturn(carrier);
         when(orderDao.getAllForUser(0)).thenReturn(List.of(order));
@@ -65,7 +65,7 @@ public class OrderTest {
     
     @Test
     public void processOrder_orderDoesntExist_throwsEntityDoesntExistException () {
-    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+    	order = new Order(LocalDate.now(), "Belgie", "Lokeren", "9160", "Honkstraat", 33, "", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(null);
         
         assertThrows(EntityDoesntExistException.class, () -> orderController.processOrder(1, carrier.getName(),0));
@@ -74,7 +74,7 @@ public class OrderTest {
     
     @Test
     public void processOrder_transportServiceDoesntExist_throwsEntityDoesntExistException () {
-    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+    	order = new Order(LocalDate.now(), "Belgie", "Lokeren", "9160", "Honkstraat", 33, "", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
         when(carrierDao.getForSupplier("test", 0)).thenReturn(null);
         assertThrows(EntityDoesntExistException.class, () -> orderController.processOrder(1, carrier.getName(),0));
@@ -84,7 +84,7 @@ public class OrderTest {
 
     @Test
     public void processOrder_invalidBeginStatus_throwsOrderStatusException() {
-        order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+        order = new Order(LocalDate.now(), "Belgie", "Lokeren", "9160", "Honkstraat", 33, "", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, null, new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         when(orderDao.get(1)).thenReturn(order);
         when(carrierDao.getForSupplier("test", 0)).thenReturn(carrier);
 
@@ -95,7 +95,7 @@ public class OrderTest {
     
     @Test
     public void testGenerateTrackingCode() {
-    	order = new Order(LocalDate.now(), "Stortlaan 76 Gent", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, new Carrier("bpost", List.of(new ContactPerson("contact1", "contact1@gmail.com")), new TrackingCodeDetails(10, true, "32", "POST_CODE"),supplier, true), new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
+    	order = new Order(LocalDate.now(), "Belgie", "Lokeren", "9160", "Honkstraat", 33, "", List.of(new Product("Test product 1", new BigDecimal("10.30")), new Product("Test product 2", new BigDecimal("9.80"))), Status.DISPATCHED, new Carrier("bpost", List.of(new ContactPerson("contact1", "contact1@gmail.com")), new TrackingCodeDetails(10, true, "32", "POST_CODE"),supplier, true), new Packaging("Packaging", 2, 3, 4, 15, PackagingType.STANDARD, true, supplier), supplier, customer, new BigDecimal("7.70"));
         
         order.generateTrackingCode();
         String trackingCode = order.getTrackingCode();

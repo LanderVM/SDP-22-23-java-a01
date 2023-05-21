@@ -44,7 +44,12 @@ public class OrderController {
     public Supplier getCustomerForOrder(int orderId) {
         return orderDao.getCustomerForOrder(orderId);
     }
-
+    
+    public void getPrice(int orderId) {
+        List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
+        list.stream().forEach(el -> System.out.println(el.getOriginalAcquisitionPrice()));
+    }
+    
     public ObservableList<ProductDTO> getProductsList(int orderId) {
         List<OrderLine> list = orderDao.getOrderLinesForOrder(orderId);
         return FXCollections.observableArrayList(list.stream().map(el -> new ProductDTO(el.getProduct(), el.getCount())).toList());

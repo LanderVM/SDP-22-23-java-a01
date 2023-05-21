@@ -3,6 +3,7 @@ package domain;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,10 +21,13 @@ public class OrderLine implements Serializable {
     private Product product;
     @Column(name = "product_count")
     private int count;
+    @Column(name = "original_acquisition_price")
+    private BigDecimal originalAcquisitionPrice;
 
     public OrderLine(List<Product> products, Order order) {
         if (products == null) throw new IllegalArgumentException("products may not be null!");
         if (products.isEmpty()) throw new IllegalArgumentException("products may not be empty!");
+        this.setOriginalAcquisitionPrice(originalAcquisitionPrice);
         this.setOrder(order);
         this.count = products.size();
         this.product = products.get(0);
@@ -49,6 +53,18 @@ public class OrderLine implements Serializable {
         return count;
     }
 
+    public BigDecimal getOriginalAcquisitionPrice() {
+        return originalAcquisitionPrice;
+    }
+
+    public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
+        if (originalAcquisitionPrice == null)
+            throw new IllegalArgumentException("originalAcquisitionPrice may not be null!");
+        if (originalAcquisitionPrice.compareTo(BigDecimal.ZERO) < 0)
+            throw new IllegalArgumentException("originalAcquisitionPrice may not be negative!");
+        this.originalAcquisitionPrice = originalAcquisitionPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,7 +80,8 @@ public class OrderLine implements Serializable {
 
     @Override
     public String toString() {
-        return "OrderLine [orderId=" + order.getOrderId() + ", productId=" + product.getProductId() + ", count=" + count + "]";
+        return "OrderLine [orderId=" + order.getOrderId() + ", productId=" + product.getProductId() + ", count=" + count + 
+                ", originalAcquisitionPrice=" + originalAcquisitionPrice +"]";
     }
 
 

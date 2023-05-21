@@ -29,8 +29,8 @@ public class LoginViewController extends GridPane {
 
     @FXML
     void SignIn() {
-        txtEmail.setText("testAdmin@mail.com");
-        txtPassword.setText("testAdmin");
+        txtEmail.setText("testMagazijnier@mail.com");
+        txtPassword.setText("testMagazijnier");
         try {
             userController.checkUser(txtEmail.getText(), txtPassword.getText());
             if (userController.userIsAdmin()) goToHomeAdmin();

@@ -53,8 +53,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private int orderId;
-    @Column(name = "delivery_address")
-    private String address = "";
+    @Column(name = "delivery_country")
+    private String delivery_country = "";
+    @Column(name = "delivery_city")
+    private String delivery_city = "";
+    @Column(name = "delivery_postal_code")
+    private String delivery_postal_code = "";
+    @Column(name = "delivery_street")
+    private String delivery_street = "";
+    @Column(name = "delivery_house_number")
+    private Integer delivery_house_number = 0;
+    @Column(name = "delivery_box")
+    private String delivery_box ="";
     @Column(name = "order_date")
     private LocalDate date;
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
@@ -71,23 +81,25 @@ public class Order {
     private Supplier supplier;
     @ManyToOne
     private Supplier customer;
-    @Column(name = "original_acquisition_price")
-    private BigDecimal originalAcquisitionPrice;
     @OneToMany(mappedBy = "order")
     private Set<Notification> notifications = new HashSet<>();
 
 
-    public Order(LocalDate date, String adress, List<Product> productsList, Status status,
+    public Order(LocalDate date, String delivery_country, String delivery_city, String delivery_postal_code, String delivery_street, Integer delivery_house_number, String delivery_box, List<Product> productsList, Status status,
                  Carrier carrier, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
-        this(date, adress, productsList, status, carrier, packaging);
-        this.setOriginalAcquisitionPrice(originalAcquisitionPrice);
+        this(date, delivery_country, delivery_city, delivery_postal_code, delivery_street, delivery_house_number, delivery_box, productsList, status, carrier, packaging);
         this.setSupplier(supplier);
         this.setCustomer(customer);
     }
 
-    public Order(LocalDate date, String address, List<Product> productsList, Status status,
+    public Order(LocalDate date, String delivery_country, String delivery_city, String delivery_postal_code, String delivery_street, Integer delivery_house_number, String delivery_box, List<Product> productsList, Status status,
                  Carrier carrier, Packaging packaging) {
-        this.address = address;
+    	this.delivery_country = delivery_country;
+        this.delivery_city = delivery_city;
+        this.delivery_postal_code = delivery_postal_code;
+        this.delivery_street = delivery_street;
+        this.delivery_house_number = delivery_house_number;
+        this.delivery_box = delivery_box;
         this.setDate(date);
         this.setStatus(status);
         this.setCarrier(carrier);
@@ -140,6 +152,10 @@ public class Order {
     public void setCarrier(Carrier carrier) {
         this.carrier = carrier;
     }
+    
+    public BigDecimal getOriginalAcquisitionPrice() {
+        return new BigDecimal(12);
+    }
 
     public String getTrackingCode() {
         return trackingCode;
@@ -160,18 +176,6 @@ public class Order {
                         .limit(targetLength)
                         .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                         .toString();
-    }
-
-    public BigDecimal getOriginalAcquisitionPrice() {
-        return originalAcquisitionPrice;
-    }
-
-    public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {
-        if (originalAcquisitionPrice == null)
-            throw new IllegalArgumentException("originalAcquisitionPrice may not be null!");
-        if (originalAcquisitionPrice.compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("originalAcquisitionPrice may not be negative!");
-        this.originalAcquisitionPrice = originalAcquisitionPrice;
     }
 
     public Supplier getSupplier() {
@@ -245,7 +249,6 @@ public class Order {
                 ", packaging=" + packaging +
                 ", carrier=" + carrier +
                 ", trackingCode=" + trackingCode +
-                ", originalAcquisitionPrice=" + originalAcquisitionPrice +
                 '}';
     }
 }
