@@ -39,8 +39,8 @@ public class OrderTest {
 
     @BeforeEach
     public void setup() {
-        supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-        customer = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
+        supplier = new Supplier("Tim CO", "tim@mail.com", "Belgie", "Brussel", "1000", "Zandstraat", 20, "A", "0426343211", "/images/testImg.jpg");
+        customer = new Supplier("Jan INC", "jan@mail.com", "Belgie", "Brussel", "1210", "Koningsstraat", 236, "B", "0456443212", "/images/testImg.jpg");
         carrier = new Carrier("test", List.of(), new TrackingCodeDetails(13, false, "testprefix", "POST_CODE"),supplier, true);
     }
     

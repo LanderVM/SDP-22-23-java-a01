@@ -45,18 +45,18 @@ public class Supplier {
     private String name = "";
     @Column(name = "supplier_email")
     private String email = "";
-    @Column(name = "delivery_street")
-    private String delivery_street = "";
-    @Column(name = "delivery_box")
-    private String delivery_box ="";
-    @Column(name = "delivery_city")
-    private String delivery_city = "";
     @Column(name = "delivery_country")
     private String delivery_country = "";
-    @Column(name = "delivery_house_number")
-    private Integer delivery_house_number = 0;
+    @Column(name = "delivery_city")
+    private String delivery_city = "";
     @Column(name = "delivery_postal_code")
     private String delivery_postal_code = "";
+    @Column(name = "delivery_street")
+    private String delivery_street = "";
+    @Column(name = "delivery_house_number")
+    private Integer delivery_house_number = 0;
+    @Column(name = "delivery_box")
+    private String delivery_box ="";
     
     @Column(name = "phone_number")
     private String phoneNumber = "";
@@ -73,19 +73,24 @@ public class Supplier {
     @OneToMany(mappedBy = "supplier")
     private List<Carrier> carriers = Collections.emptyList();
 
-    public Supplier(String name, String email, String address, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
+    public Supplier(String name, String email, String delivery_country, String delivery_city, String delivery_postal_code, String delivery_street, Integer delivery_house_number, String delivery_box, String phoneNumber, String logoLocation, List<Order> ordersAsSupplier,
                     List<Order> ordersAsCustomer, List<ContactPersonSupplier> contactPersons, List<User> users) {
-        this(name, email, address, phoneNumber, logoLocation);
+        this(name, email, delivery_country, phoneNumber, logoLocation, logoLocation, delivery_house_number, logoLocation, logoLocation, logoLocation);
         this.setOrdersAsSupplier(ordersAsSupplier);
         this.setOrdersAsCustomer(ordersAsCustomer);
         this.setContactPersons(contactPersons);
         this.setUsers(users);
     }
 
-    public Supplier(String name, String email, String address, String phoneNumber, String logoLocation) {
+    public Supplier(String name, String email, String delivery_country, String delivery_city, String delivery_postal_code, String delivery_street, Integer delivery_house_number, String delivery_box, String phoneNumber, String logoLocation) {
         this.name = name;
         this.email = email;
-        this.delivery_country = address;
+        this.delivery_country = delivery_country;
+        this.delivery_city = delivery_city;
+        this.delivery_postal_code = delivery_postal_code;
+        this.delivery_street = delivery_street;
+        this.delivery_house_number = delivery_house_number;
+        this.delivery_box = delivery_box;
         this.phoneNumber = phoneNumber;
         this.logo = LogoMapper.makeLogo(logoLocation, this);
     }
@@ -118,8 +123,24 @@ public class Supplier {
     }
 
     public String getAddress() {
-        return delivery_country;
+        StringBuilder addressBuilder = new StringBuilder();
+
+        addressBuilder.append(delivery_street)
+                .append(" ")
+                .append(delivery_house_number);
+                if(!delivery_box.isEmpty() && delivery_box!=null) {
+                	addressBuilder.append(" ").append(delivery_box);
+                }
+                addressBuilder.append(", ")
+                .append(delivery_postal_code)
+                .append(" ")
+                .append(delivery_city)
+                .append(", ")
+                .append(delivery_country);
+
+        return addressBuilder.toString();
     }
+
 
     public String getPhoneNumber() {
         return phoneNumber;

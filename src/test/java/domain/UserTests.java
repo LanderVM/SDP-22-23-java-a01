@@ -45,7 +45,7 @@ public class UserTests {
     
     @BeforeEach
     public void beforeEach() {
-    	supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
+    	supplier = new Supplier("Tim CO", "tim@mail.com", "Belgie", "Brussel", "1210", "Koningsstraat", 236, "B", "0426343211", "/images/testImg.jpg");
     	user = new User(accountName, password, true, surname, name, telephone, 
         		address, houseNumber, box, city, postalCode, country, supplier);
     }

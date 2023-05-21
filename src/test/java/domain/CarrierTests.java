@@ -39,7 +39,7 @@ public class CarrierTests {
 
         @BeforeEach
         public void setupAddTests() {
-            supplier = new Supplier("SupplIT", "contact@supplit.com", "Belgische Silicon Valley", "0499273659", "/images/testImg.jpg", List.of(), List.of(), List.of(), List.of());
+            supplier = new Supplier("SupplIT", "contact@supplit.com", "Belgie", "Aalst", "9300", "Moorselbaan", 164, "", "0499273659", "/images/testImg.jpg", List.of(), List.of(), List.of(), List.of());
         }
 
         @Test
@@ -84,7 +84,7 @@ public class CarrierTests {
     	
     	@BeforeEach
         public void setupAddTests() {
-            supplier = new Supplier("SupplIT", "contact@supplit.com", "Belgische Silicon Valley", "0499273659", "/images/testImg.jpg", List.of(), List.of(), List.of(), List.of());
+            supplier = new Supplier("SupplIT", "contact@supplit.com", "Belgie", "Aalst", "9300", "Moorselbaan", 164, "", "0499273659", "/images/testImg.jpg", List.of(), List.of(), List.of(), List.of());
         }
     	
         @Test

@@ -33,7 +33,7 @@ public class PackagingTest {
     public class AddPackagingTests {
         @BeforeEach
         public void setup() {
-            supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
+            supplier = new Supplier("Tim CO", "tim@mail.com", "Belgie", "Brussel", "1210", "Koningsstraat", 236, "B", "0426343211", "/images/testImg.jpg");
             packagingController = new PackagingController(packagingDao, userController, new ArrayList<>());
         }
 
@@ -79,7 +79,7 @@ public class PackagingTest {
     public class UpdatePackagingTests {
         @BeforeEach
         public void setup() {
-            supplier = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
+            supplier = new Supplier("Tim CO", "tim@mail.com", "Belgie", "Brussel", "1210", "Koningsstraat", 236, "B", "0426343211", "/images/testImg.jpg");
             packaging = new Packaging("name", 2.0, 3.0, 4.0, 2.0, PackagingType.STANDARD, true, supplier);
             packagingController = new PackagingController(packagingDao, userController, new ArrayList<>(List.of(new PackagingDTO(packaging))));
         }

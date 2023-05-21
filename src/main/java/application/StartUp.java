@@ -40,8 +40,8 @@ public class StartUp extends Application {
          */
 
         // Suppliers with TrackingService and User
-        Supplier timCo = new Supplier("Tim CO", "tim@mail.com", "Timlaan 24 1000 Brussel", "0426343211", "/images/testImg.jpg");
-        Supplier janInc = new Supplier("Jan INC", "jan@mail.com", "Janstraat 12 9000 Aalst", "0456443212", "/images/testImg.jpg");
+        Supplier timCo = new Supplier("Tim CO", "tim@mail.com", "Belgie", "Brussel", "1210", "Koningsstraat", 236, "B", "0426343211", "/images/testImg.jpg");
+        Supplier janInc = new Supplier("Jan INC", "jan@mail.com", "Belgie", "Aalst", "9300", "Moorselbaan", 164, "", "0456443212", "/images/testImg.jpg");
 
         TrackingCodeDetails bpostDetails = new TrackingCodeDetails(10, true, "32", "POST_CODE");
         TrackingCodeDetails postnlDetails = new TrackingCodeDetails(13, false, "testprefix", "ORDER_ID");
