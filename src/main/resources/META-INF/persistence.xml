@@ -19,10 +19,10 @@
         <class>domain.Packaging</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/sdp2?serverTimezone=UTC"/>
-            <property name="jakarta.persistence.jdbc.user" value="SDP2"/>
+                      value="jdbc:mysql://vichogent.be:40058/SDP2DBA01?serverTimezone=UTC"/>
+            <property name="jakarta.persistence.jdbc.user" value="SDP2A01"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.password" value="P@$$w0rd"/>
+            <property name="jakarta.persistence.jdbc.password" value="fq4Vr12HS4z90q1m7mE5"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
         </properties>
     </persistence-unit>
