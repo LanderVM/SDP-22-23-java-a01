@@ -15,20 +15,26 @@ public class Notification {
     private Order order;
     @ManyToOne
     private Supplier customer;
-    @Column(name = "order_date")
+    @Column(name = "notification_date")
     private LocalDate date;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "message")
+    private String message;
 
     protected Notification() {
     }
 
-    public Notification(Order order, LocalDate date) {
+    public Notification(Order order, LocalDate date, String status, String message) {
         this.setOrder(order);
         this.setDate(date);
+        this.status = status;
+        this.message = message;
         this.customer = order.getCustomer();
     }
 
     public Notification(Order order) {
-        this(order, LocalDate.now());
+        this(order, LocalDate.now(), "new", "Your order has been processed.");
         this.customer = order.getCustomer();
     }
 

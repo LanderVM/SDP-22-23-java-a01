@@ -96,8 +96,8 @@ public class StartUp extends Application {
         Order order4 = new Order(LocalDate.now(), "Belgie", "Bilzen", "3740", "Munsterbilzenstraat", 56, "", List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, janIncMediumCustom, janInc, timCo, new BigDecimal("21.20"));
 
         Notification postedNotification = new Notification(order1);
-        Notification processedNotification = new Notification(order2, LocalDate.of(2023, 3, 12));
-        Notification deliveredNotification = new Notification(order2, LocalDate.of(2023, 3, 14));
+        Notification processedNotification = new Notification(order2, LocalDate.of(2023, 3, 12), "new", "Your order has been processed.");
+        Notification deliveredNotification = new Notification(order2, LocalDate.of(2023, 3, 14), "new", "Your order has been processed.");
 
 
         order1.addNotification(postedNotification);
