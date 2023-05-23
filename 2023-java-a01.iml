@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
-          <factory-entry name="orders" value="7494a8a5-1ddc-42fa-b4a3-93b689fae275" />
+          <factory-entry name="orders" value="4ce50efd-4eb0-4692-bc94-e45a835f8711" />
           <factory-entry name="user" value="7494a8a5-1ddc-42fa-b4a3-93b689fae275" />
         </datasource-mapping>
         <naming-strategy-map />

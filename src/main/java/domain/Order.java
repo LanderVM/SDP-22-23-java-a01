@@ -154,7 +154,7 @@ public class Order {
     }
     
     public BigDecimal getOriginalAcquisitionPrice() {
-        return new BigDecimal(12);
+        return orderLines.stream().map(OrderLine::getOriginalAcquisitionPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public String getTrackingCode() {
