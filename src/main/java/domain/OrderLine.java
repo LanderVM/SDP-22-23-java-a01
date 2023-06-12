@@ -27,7 +27,7 @@ public class OrderLine implements Serializable {
     public OrderLine(List<Product> products, Order order) {
         if (products == null) throw new IllegalArgumentException("products may not be null!");
         if (products.isEmpty()) throw new IllegalArgumentException("products may not be empty!");
-        this.setOriginalAcquisitionPrice(originalAcquisitionPrice);
+        this.setOriginalAcquisitionPrice(order.getOriginalAcquisitionPrice());
         this.setOrder(order);
         this.count = products.size();
         this.product = products.get(0);
@@ -54,7 +54,7 @@ public class OrderLine implements Serializable {
     }
 
     public BigDecimal getOriginalAcquisitionPrice() {
-        return originalAcquisitionPrice;
+        return originalAcquisitionPrice.multiply(BigDecimal.valueOf(count));
     }
 
     public void setOriginalAcquisitionPrice(BigDecimal originalAcquisitionPrice) {

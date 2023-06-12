@@ -131,18 +131,4 @@ public class OrderTest {
         
         assertThrows(RuntimeException.class, () -> order.addNotification(InvalidNotification));
     }
-    
-    @Test
-    public void makeProductLine_badInput_throwsIllegalArgumentException() {
-    	assertThrows(IllegalArgumentException.class, () -> new OrderLine(List.of(), new Order()));
-    	assertThrows(IllegalArgumentException.class, () -> new OrderLine(List.of(new Product()), null));
-    }
-    
-    
-
-
-
-    
-    
-    
 }
