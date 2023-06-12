@@ -200,7 +200,7 @@ public class Order {
 
     public void addNotification(Notification notification) {
         if (!notification.getOrder().equals(this))
-            throw new RuntimeException("Notification doesn't belong to this order"); // TODO testing & proper exception
+            throw new RuntimeException("Notification doesn't belong to this order");
         notifications.add(notification);
     }
 
