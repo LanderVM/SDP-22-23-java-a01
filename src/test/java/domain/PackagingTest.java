@@ -108,7 +108,7 @@ public class PackagingTest {
                 "Klein, 2.0, 3.5, 4.0, -1, STANDARD, true", // invalid price
                 "Klein, 2.0, 3.5, 4.0, 0, STANDARD, true",
         })
-        public void addPackaging_invalidFields_throwsIllegalArgumentException(String name, double width, double height, double length, double price, String packagingType, boolean active) {
+        public void updatePackaging_invalidFields_throwsIllegalArgumentException(String name, double width, double height, double length, double price, String packagingType, boolean active) {
             when(packagingDao.get(1)).thenReturn(packaging);
             assertThrows(IllegalArgumentException.class, () -> packagingController.updatePackaging(1, name, width, height, length, price, packagingType, active));
         }
@@ -119,7 +119,7 @@ public class PackagingTest {
                 "Klein, 2.0, 3.5, 4.0, 0, , true",
                 "Klein, 2.0, 3.5, 4.0, 0, invalid, true",
         })
-        public void addPackaging_invalidPackagingType_throwsIllegalArgumentException(String name, double width, double height, double length, double price, String packagingType, boolean active) {
+        public void updatePackaging_invalidPackagingType_throwsIllegalArgumentException(String name, double width, double height, double length, double price, String packagingType, boolean active) {
             assertThrows(IllegalArgumentException.class, () -> packagingController.updatePackaging(1, name, width, height, length, price, packagingType, active));
         }
 
