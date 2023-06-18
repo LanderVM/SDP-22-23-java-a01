@@ -44,8 +44,15 @@ import java.util.stream.Collectors;
         @NamedQuery(
                 name = "Order.findAllForUserOpen",
                 query = "SELECT d FROM Order d WHERE d.status != domain.Status.DELIVERED AND d.customer.supplierId = ?1"
+        ),
+        @NamedQuery(
+                name = "Order.getUserDataForProcessedMail",
+                query = "SELECT NEW gui.view.OrderTrackingMailDTO(d.customer.email, " +
+                        "d.trackingCode, " +
+                        "CASE WHEN d.carrier.trackingCodeDetails.verificationType = 'POST_CODE' then d.delivery_postal_code " +
+                        "WHEN d.carrier.trackingCodeDetails.verificationType = 'ORDER_ID' then d.orderId ELSE '' END) " +
+                        "FROM Order d WHERE d.orderId = ?1"
         )
-
 })
 public class Order {
 

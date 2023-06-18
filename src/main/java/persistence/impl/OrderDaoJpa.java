@@ -3,6 +3,7 @@ package persistence.impl;
 import domain.Order;
 import domain.OrderLine;
 import domain.Supplier;
+import gui.view.OrderTrackingMailDTO;
 import jakarta.persistence.EntityManager;
 import persistence.OrderDao;
 
@@ -38,5 +39,10 @@ public class OrderDaoJpa extends GenericDaoJpa<Order> implements OrderDao {
 
     public List<Order> getAllForUserOpen(int userId) {
         return Collections.unmodifiableList(entityManager.createNamedQuery("Order.findAllForUserOpen", Order.class).setParameter(1, userId).getResultList());
+    }
+
+    @Override
+    public OrderTrackingMailDTO getUserDataForProcessedMail(int orderId) {
+        return entityManager.createNamedQuery("Order.getUserDataForProcessedMail", OrderTrackingMailDTO.class).setParameter(1, orderId).getSingleResult();
     }
 }

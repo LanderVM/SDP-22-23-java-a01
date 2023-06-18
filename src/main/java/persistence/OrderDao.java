@@ -3,6 +3,7 @@ package persistence;
 import domain.Order;
 import domain.OrderLine;
 import domain.Supplier;
+import gui.view.OrderTrackingMailDTO;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface OrderDao extends GenericDao<Order> {
     List<Order> getAllForUserPosted(int userId);
 
     List<Order> getAllForUserOpen(int userId);
+
+    OrderTrackingMailDTO getUserDataForProcessedMail(int orderId);
 }
