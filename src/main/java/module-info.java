@@ -16,6 +16,8 @@ module SDP2_Java_a01 {
     requires javafx.base;
     requires jakarta.persistence;
     requires java.desktop;
+	requires org.json;
+	requires mailjet.client;
 
 
     opens domain;
