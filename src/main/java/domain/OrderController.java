@@ -140,39 +140,41 @@ public class OrderController {
     }
 
     private String getEmailHtmlFromFile(String filePath, String trackingCode, String verificationCode) throws URISyntaxException, IOException {
-    	String htmlContent = "<!DOCTYPE html>\r\n"
-        		+ "<html>\r\n"
-        		+ "<head>\r\n"
-        		+ "    <title>Order Details</title>\r\n"
-        		+ "    <style>\r\n"
-        		+ "        body {\r\n"
-        		+ "            font-family: Arial, sans-serif;\r\n"
-        		+ "            background-color: #f9f9f9;\r\n"
-        		+ "            margin: 0;\r\n"
-        		+ "            padding: 20px;\r\n"
-        		+ "        }\r\n"
-        		+ "        h3 {\r\n"
-        		+ "            color: #333333;\r\n"
-        		+ "        }\r\n"
-        		+ "        p {\r\n"
-        		+ "            color: #666666;\r\n"
-        		+ "        }\r\n"
-        		+ "        .order-details {\r\n"
-        		+ "            background-color: #ffffff;\r\n"
-        		+ "            border-radius: 5px;\r\n"
-        		+ "            padding: 20px;\r\n"
-        		+ "            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n"
-        		+ "        }\r\n"
-        		+ "    </style>\r\n"
-        		+ "</head>\r\n"
-        		+ "<body>\r\n"
-        		+ "    <div class=\"order-details\">\r\n"
-        		+ "        <h3>Order Details</h3>\r\n"
-        		+ "        <p>Tracking Code: {{TRACKING_CODE}}</p>\r\n"
-        		+ "        <p>Verification Code: {{VERIFICATION_CODE}}</p>\r\n"
-        		+ "    </div>\r\n"
-        		+ "</body>\r\n"
-        		+ "</html>\r\n";
+    	String htmlContent = """
+                <!DOCTYPE html>\r
+                <html>\r
+                <head>\r
+                    <title>Order Details</title>\r
+                    <style>\r
+                        body {\r
+                            font-family: Arial, sans-serif;\r
+                            background-color: #f9f9f9;\r
+                            margin: 0;\r
+                            padding: 20px;\r
+                        }\r
+                        h3 {\r
+                            color: #333333;\r
+                        }\r
+                        p {\r
+                            color: #666666;\r
+                        }\r
+                        .order-details {\r
+                            background-color: #ffffff;\r
+                            border-radius: 5px;\r
+                            padding: 20px;\r
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r
+                        }\r
+                    </style>\r
+                </head>\r
+                <body>\r
+                    <div class="order-details">\r
+                        <h3>Order Details</h3>\r
+                        <p>Tracking Code: {{TRACKING_CODE}}</p>\r
+                        <p>Verification Code: {{VERIFICATION_CODE}}</p>\r
+                    </div>\r
+                </body>\r
+                </html>\r
+                """;
     	/*try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath)) {
     		System.out.println(inputStream);
             //if (inputStream != null) {
