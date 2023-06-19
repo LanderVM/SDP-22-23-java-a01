@@ -88,12 +88,12 @@ public class StartUp extends Application {
         Packaging janIncMediumCustomOld = new Packaging("MediumOld", 5.0, 4.5, 6.6, 13.50, PackagingType.STANDARD, false, janInc);
         //
         //" 33 "
-        Order order1 = new Order(LocalDate.now().minusDays(3), "Belgie", "Lokeren", "9160", "Honkstraat", 33, "", List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, timCoBigCustom, timCo, janInc, new BigDecimal("3.00"));
-        Order order2 = new Order(LocalDate.now().minusDays(2), "Belgie", "Haaltert", "9451", "Bellelaan", 12, "", List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost2, janIncMediumCustomOld, janInc, timCo, new BigDecimal("24.70"));
+        Order order1 = new Order(LocalDate.now().minusDays(3), "Belgie", "Lokeren", "9160", "Honkstraat", 33, "", List.of(product1, product1, product1, product1, product2, product2), Status.POSTED, null, timCoBigCustom, timCo, janInc, new Customer("auth0id_a", "customer1@mail.com", "Customer1", "", timCo, janInc));
+        Order order2 = new Order(LocalDate.now().minusDays(2), "Belgie", "Haaltert", "9451", "Bellelaan", 12, "", List.of(product3, product4, product4, product4, product5, product5), Status.DELIVERED, bpost2, janIncMediumCustomOld, janInc, timCo, new Customer("auth0id_a", "customer1@mail.com", "Customer1", "", janInc, timCo));
         order2.generateTrackingCode();
-        Order order3 = new Order(LocalDate.now().minusDays(1), "Belgie", "Gent", "9000", "Sint-Veerleplein", 11, "A0", List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl1, timCoSmallStandard, timCo, janInc, new BigDecimal("23.80"));
+        Order order3 = new Order(LocalDate.now().minusDays(1), "Belgie", "Gent", "9000", "Sint-Veerleplein", 11, "A0", List.of(product1, product3, product3, product4, product4, product5), Status.DISPATCHED, postnl1, timCoSmallStandard, timCo, janInc, new Customer("auth0id_a", "customer1@mail.com", "Customer1", "", timCo, janInc));
         order3.generateTrackingCode();
-        Order order4 = new Order(LocalDate.now(), "Belgie", "Bilzen", "3740", "Munsterbilzenstraat", 56, "", List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, janIncMediumCustom, janInc, timCo, new BigDecimal("21.20"));
+        Order order4 = new Order(LocalDate.now(), "Belgie", "Bilzen", "3740", "Munsterbilzenstraat", 56, "", List.of(product1, product1, product3, product4, product5, product5), Status.POSTED, null, janIncMediumCustom, janInc, timCo, new Customer("auth0id_a", "customer1@mail.com", "Customer1", "", janInc, timCo));
 
         Notification postedNotification = new Notification(order1);
         Notification processedNotification = new Notification(order2, LocalDate.of(2023, 3, 12), "new", "Your order has been processed.");

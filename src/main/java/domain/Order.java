@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
         ),
         @NamedQuery(
                 name = "Order.getUserDataForProcessedMail",
-                query = "SELECT NEW gui.view.OrderTrackingMailDTO(d.customer.email, " +
+                query = "SELECT NEW gui.view.OrderTrackingMailDTO(d.boughtBy.email, " +
                         "d.trackingCode, " +
                         "CASE WHEN d.carrier.trackingCodeDetails.verificationType = 'POST_CODE' then d.delivery_postal_code " +
                         "WHEN d.carrier.trackingCodeDetails.verificationType = 'ORDER_ID' then d.orderId ELSE '' END) " +
@@ -90,17 +90,20 @@ public class Order {
     private Supplier customer;
     @OneToMany(mappedBy = "order")
     private Set<Notification> notifications = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "CUSTOMER_id")
+    private Customer boughtBy;
 
 
     public Order(LocalDate date, String delivery_country, String delivery_city, String delivery_postal_code, String delivery_street, Integer delivery_house_number, String delivery_box, List<Product> productsList, Status status,
-                 Carrier carrier, Packaging packaging, Supplier supplier, Supplier customer, BigDecimal originalAcquisitionPrice) {
-        this(date, delivery_country, delivery_city, delivery_postal_code, delivery_street, delivery_house_number, delivery_box, productsList, status, carrier, packaging);
+                 Carrier carrier, Packaging packaging, Supplier supplier, Supplier customer, Customer boughtBy) {
+        this(date, delivery_country, delivery_city, delivery_postal_code, delivery_street, delivery_house_number, delivery_box, productsList, status, carrier, packaging, boughtBy);
         this.setSupplier(supplier);
         this.setCustomer(customer);
     }
 
     public Order(LocalDate date, String delivery_country, String delivery_city, String delivery_postal_code, String delivery_street, Integer delivery_house_number, String delivery_box, List<Product> productsList, Status status,
-                 Carrier carrier, Packaging packaging) {
+                 Carrier carrier, Packaging packaging, Customer boughtBy) {
     	this.delivery_country = delivery_country;
         this.delivery_city = delivery_city;
         this.delivery_postal_code = delivery_postal_code;
@@ -112,6 +115,7 @@ public class Order {
         this.setCarrier(carrier);
         this.setPackaging(packaging);
         this.orderLines = new ArrayList<>();
+        this.boughtBy = boughtBy;
         makeOrderlines(productsList);
     }
 

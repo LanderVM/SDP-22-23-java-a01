@@ -17,6 +17,7 @@
         <class>domain.Notification</class>
         <class>domain.OrderLine</class>
         <class>domain.Packaging</class>
+        <class>domain.Customer</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:mysql://vichogent.be:40058/SDP2DBA01?serverTimezone=UTC"/>
