@@ -93,7 +93,7 @@ public class OrderController {
         orderList.set(getIndex(order.getOrderId()), new OrderDTO(order));
         
         OrderTrackingMailDTO orderTrackingMailDTO = orderDao.getUserDataForProcessedMail(orderId);
-        sendMail(orderTrackingMailDTO);
+        System.out.printf("Email succsefully sended: %b", sendMail(orderTrackingMailDTO)); 
     }
 
     private int getIndex(int orderId) {
@@ -110,6 +110,8 @@ public class OrderController {
     	String trackingCode = orderTrackingMail.trackingCode();
     	String verificationCode = orderTrackingMail.verificationCode();
     	
+    	System.out.printf("%s, %s, %s", email, trackingCode, verificationCode);
+    	
         MailjetClient client = new MailjetClient("1a4d488a3c09949ad2389515fa70481b", "5fa37c3c46b4b63dc0637536c4c81c0a");
         String htmlFilePath = "/email/emailLayout.html";
         String htmlContent;
@@ -121,8 +123,6 @@ public class OrderController {
 		} catch (URISyntaxException | IOException e1) {
 			return false;
 		}
-		/*System.out.println(htmlContent);
-		return false;*/
 		
         MailjetRequest emailRequest = new MailjetRequest(Emailv31.resource)
                 .property(Email.FROMEMAIL, "delawareTrackAndTrace@gmail.com")
