@@ -1,33 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Details</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 20px;
-        }
-        h3 {
-            color: #333333;
-        }
-        p {
-            color: #666666;
-        }
-        .order-details {
-            background-color: #ffffff;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
-<body>
-    <div class="order-details">
-        <h3>Order Details</h3>
-        <p>Tracking Code: {{TRACKING_CODE}}</p>
-        <p>Verification Code: {{VERIFICATION_CODE}}</p>
+
+<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px;">
+    <div
+        style="background-color: #ffffff; border-radius: 5px; padding: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: #333333;">Order Details</h3>
+        <p>Your order has been processed, you can <a href="https://sdp2-a01.hogenttiproject.be/track/{{TRACKING_CODE}}/{{VERIFICATION_CODE}}">track your order</a> with the following order details</p>
+        <p style="color: #666666;">Tracking Code: {{TRACKING_CODE}}</p>
+        <p style="color: #666666;">Verification Code: {{VERIFICATION_CODE}}</p>
     </div>
 </body>
+
 </html>

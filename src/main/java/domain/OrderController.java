@@ -93,7 +93,7 @@ public class OrderController {
         orderList.set(getIndex(order.getOrderId()), new OrderDTO(order));
         
         OrderTrackingMailDTO orderTrackingMailDTO = orderDao.getUserDataForProcessedMail(orderId);
-        System.out.printf("Email succsefully sended: %b", sendMail(orderTrackingMailDTO)); 
+        sendMail(orderTrackingMailDTO);
     }
 
     private int getIndex(int orderId) {
@@ -110,19 +110,13 @@ public class OrderController {
     	String trackingCode = orderTrackingMail.trackingCode();
     	String verificationCode = orderTrackingMail.verificationCode();
     	
-    	System.out.printf("%s, %s, %s", email, trackingCode, verificationCode);
-    	
         MailjetClient client = new MailjetClient("1a4d488a3c09949ad2389515fa70481b", "5fa37c3c46b4b63dc0637536c4c81c0a");
-        String htmlFilePath = "/email/emailLayout.html";
-        String htmlContent;
-		try {
-			htmlContent = getEmailHtmlFromFile(htmlFilePath, trackingCode, verificationCode);
-			if(htmlContent.isBlank()) {
-				return false;
-			}
-		} catch (URISyntaxException | IOException e1) {
+        String htmlContent = getEmailHtmlFromFile("src/main/resources/email/emailLayout.html");
+		if(htmlContent.isBlank() || htmlContent == null) {
 			return false;
 		}
+		
+		htmlContent = htmlContent.replace("{{TRACKING_CODE}}", trackingCode).replace("{{VERIFICATION_CODE}}", verificationCode);
 		
         MailjetRequest emailRequest = new MailjetRequest(Emailv31.resource)
                 .property(Email.FROMEMAIL, "delawareTrackAndTrace@gmail.com")
@@ -139,54 +133,14 @@ public class OrderController {
         }
     }
 
-    private String getEmailHtmlFromFile(String filePath, String trackingCode, String verificationCode) throws URISyntaxException, IOException {
-    	String htmlContent = """
-                <!DOCTYPE html>\r
-                <html>\r
-                <head>\r
-                    <title>Order Details</title>\r
-                    <style>\r
-                        body {\r
-                            font-family: Arial, sans-serif;\r
-                            background-color: #f9f9f9;\r
-                            margin: 0;\r
-                            padding: 20px;\r
-                        }\r
-                        h3 {\r
-                            color: #333333;\r
-                        }\r
-                        p {\r
-                            color: #666666;\r
-                        }\r
-                        .order-details {\r
-                            background-color: #ffffff;\r
-                            border-radius: 5px;\r
-                            padding: 20px;\r
-                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r
-                        }\r
-                    </style>\r
-                </head>\r
-                <body>\r
-                    <div class="order-details">\r
-                        <h3>Order Details</h3>\r
-                        <p>Tracking Code: {{TRACKING_CODE}}</p>\r
-                        <p>Verification Code: {{VERIFICATION_CODE}}</p>\r
-                    </div>\r
-                </body>\r
-                </html>\r
-                """;
-    	/*try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath)) {
-    		System.out.println(inputStream);
-            //if (inputStream != null) {
-                htmlContent = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-                System.out.println(htmlContent);*/
-                return htmlContent.replace("{{TRACKING_CODE}}", trackingCode)
-                                 .replace("{{VERIFICATION_CODE}}", verificationCode);
-            /*}
-        } catch (IOException e) {
-            throw e;
-        }
-        return "";*/
+    private String getEmailHtmlFromFile(String filePath) {
+		Path path = Paths.get(filePath);
+		try {
+			return Files.readString(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
     }
 
 }
